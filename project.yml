@@ -1,0 +1,76 @@
+name: Telly
+options:
+  bundleIdPrefix: com.johncorser
+  deploymentTarget:
+    iOS: "18.0"
+    tvOS: "18.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: JW5SC3NYUV
+    CODE_SIGN_STYLE: Automatic
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  Telly:
+    type: application
+    supportedDestinations: [iOS, tvOS]
+    sources:
+      - path: Telly
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.johncorser.telly
+        GENERATE_INFOPLIST_FILE: "YES"
+        INFOPLIST_KEY_CFBundleDisplayName: Telly
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: "NO"
+        INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.entertainment"
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: "YES"
+        INFOPLIST_KEY_UILaunchScreen_Generation: "YES"
+        # iPhone(1) + iPad(2) + Apple TV(3). A single value must list every
+        # family the app ships to, or xcodebuild filters out that platform's
+        # destinations; each SDK ignores the families it doesn't recognise.
+        TARGETED_DEVICE_FAMILY: "1,2,3"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
+  TellyTests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS, tvOS]
+    sources:
+      - path: TellyTests
+    dependencies:
+      - target: Telly
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.johncorser.telly.tests
+        GENERATE_INFOPLIST_FILE: "YES"
+
+  TellyUITests:
+    type: bundle.ui-testing
+    supportedDestinations: [iOS, tvOS]
+    sources:
+      - path: TellyUITests
+      - path: Features
+        buildPhase: resources
+    dependencies:
+      - target: Telly
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.johncorser.telly.uitests
+        GENERATE_INFOPLIST_FILE: "YES"
+
+schemes:
+  Telly:
+    build:
+      targets:
+        Telly: all
+    test:
+      targets:
+        - TellyTests
+        - TellyUITests
+      gatherCoverageData: true
+      coverageTargets:
+        - Telly

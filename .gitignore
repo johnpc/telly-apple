@@ -1,0 +1,26 @@
+# Xcode
+build/
+DerivedData/
+*.xcarchive
+*.xcresult
+xcuserdata/
+*.xcuserstate
+
+# NOTE: project.yml (xcodegen) is the source of truth, but the generated
+# .xcodeproj IS committed (convention parity with John's native repos + CI
+# reproducibility). Regenerate with `xcodegen generate` after editing project.yml.
+
+# SPM
+.build/
+.swiftpm/
+
+# Secrets / local
+.env
+*.p8
+private_keys/
+
+# macOS
+.DS_Store
+
+# Node (jscpd / duplication gate helper, if used)
+node_modules/
