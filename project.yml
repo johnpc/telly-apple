@@ -21,6 +21,11 @@ packages:
   SWCompression:
     url: https://github.com/tsolomko/SWCompression
     from: "4.9.1"
+  # SQLite persistence (mirrors the Android Room layer 1:1). An in-memory
+  # DatabaseQueue is the unit-test backend, so no separate fake store is needed.
+  GRDB:
+    url: https://github.com/groue/GRDB.swift
+    from: "6.0.0"
 
 targets:
   Telly:
@@ -30,6 +35,7 @@ targets:
       - path: Telly
     dependencies:
       - package: SWCompression
+      - package: GRDB
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.johncorser.telly
@@ -53,6 +59,7 @@ targets:
     dependencies:
       - target: Telly
       - package: SWCompression
+      - package: GRDB
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.johncorser.telly.tests
