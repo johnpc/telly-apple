@@ -10,14 +10,24 @@
 		0C4635D986E8377B2CAD2242 /* M3uParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */; };
 		1B1DB27D733CF47E31CD33D4 /* StepRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF0343E127E1F17FBEE8E6 /* StepRegistry.swift */; };
 		26597D957B6FB9D14691692A /* AcceptanceTests.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030A43B5DACCF03D16F744EA /* AcceptanceTests.generated.swift */; };
+		2D0CF1B8BB79FE37480115CD /* XmltvTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC541AF5A8B8B8429031427 /* XmltvTimestamp.swift */; };
+		2DB94E5C3639BBE59EA67920 /* XmltvTimestampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */; };
 		34AFA192FF5B6E7AF085C277 /* StepDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C95120BFE019A26B97DF4FC /* StepDefinitions.swift */; };
 		351CD8FAA8115430788B47FA /* onboarding.feature in Resources */ = {isa = PBXBuildFile; fileRef = F90A4D44A48A124479BF7170 /* onboarding.feature */; };
+		39F5AD4531A880CD005EAE52 /* NowNextResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */; };
 		3DB1295E43736FFC953773B1 /* M3uParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73B7301D50C245AB98680F7 /* M3uParser.swift */; };
+		468AEAB4FE7257D65A79038E /* XmltvTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911911F5CB370C8AD142854F /* XmltvTypes.swift */; };
 		4AD876CA4543793471FC4142 /* AcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2DC4D6F058AC249787519D /* AcceptanceTests.swift */; };
+		4F1BF8F530441CE2BA1291A0 /* XmltvEpisodeNum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA71F38E7ADF72CEB475D5A /* XmltvEpisodeNum.swift */; };
+		625AF02BB79E7FE3D13F180A /* XmltvParserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E3A740AA59FE5E94A9CF /* XmltvParserDelegate.swift */; };
 		66CFF187D80F0DF9242A8EBF /* GherkinParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31789076E7F4E06D0340FF /* GherkinParser.swift */; };
+		6A2F402410E34CFA2EFF487C /* XmltvElementReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D1227BBE1557C1D3C5311 /* XmltvElementReader.swift */; };
+		7A69B567FC802B74841531DB /* XmltvParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0376B2E232DEAE15C2DCEF69 /* XmltvParser.swift */; };
 		7CDE7636B43ED305BE1A500A /* TellyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1976ACB9C3233BD3A7E9AB /* TellyApp.swift */; };
+		80314401F98FDCA158A1FF7D /* NowNext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE592895ECE19026B765DD5 /* NowNext.swift */; };
 		841A40CE93CA925A21570D1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A5A8C96669009B439B3CCAD /* Assets.xcassets */; };
 		DF124DD1E7EB5AC3AC11FEF4 /* M3uModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA418FED683F1A3C08B547 /* M3uModels.swift */; };
+		F0DD40297E96DE33816EB2AF /* XmltvParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A631A01CB4753E2E28B24F4 /* XmltvParserTests.swift */; };
 		FD886AE63B3A5190A4E5DF1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B22847E90EAFA3E38A3D74 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +50,10 @@
 
 /* Begin PBXFileReference section */
 		030A43B5DACCF03D16F744EA /* AcceptanceTests.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTests.generated.swift; sourceTree = "<group>"; };
+		0376B2E232DEAE15C2DCEF69 /* XmltvParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvParser.swift; sourceTree = "<group>"; };
 		081CE4F3F308A626C04A4C68 /* TellyTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TellyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTimestampTests.swift; sourceTree = "<group>"; };
+		2AC541AF5A8B8B8429031427 /* XmltvTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTimestamp.swift; sourceTree = "<group>"; };
 		2C73DE1BC748EB029A1DAAEE /* Telly.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Telly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3uParserTests.swift; sourceTree = "<group>"; };
 		3C355744E958CD9D4670C063 /* TellyUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TellyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,12 +61,19 @@
 		4A5A8C96669009B439B3CCAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DFA418FED683F1A3C08B547 /* M3uModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3uModels.swift; sourceTree = "<group>"; };
 		66CF0343E127E1F17FBEE8E6 /* StepRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepRegistry.swift; sourceTree = "<group>"; };
+		7A631A01CB4753E2E28B24F4 /* XmltvParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvParserTests.swift; sourceTree = "<group>"; };
+		8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowNextResolverTests.swift; sourceTree = "<group>"; };
 		8E2DC4D6F058AC249787519D /* AcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTests.swift; sourceTree = "<group>"; };
+		911911F5CB370C8AD142854F /* XmltvTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTypes.swift; sourceTree = "<group>"; };
 		9C95120BFE019A26B97DF4FC /* StepDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDefinitions.swift; sourceTree = "<group>"; };
+		9C96E3A740AA59FE5E94A9CF /* XmltvParserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvParserDelegate.swift; sourceTree = "<group>"; };
 		A8B22847E90EAFA3E38A3D74 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AFE592895ECE19026B765DD5 /* NowNext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowNext.swift; sourceTree = "<group>"; };
+		B64D1227BBE1557C1D3C5311 /* XmltvElementReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvElementReader.swift; sourceTree = "<group>"; };
 		E73B7301D50C245AB98680F7 /* M3uParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3uParser.swift; sourceTree = "<group>"; };
 		EB1976ACB9C3233BD3A7E9AB /* TellyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellyApp.swift; sourceTree = "<group>"; };
 		F90A4D44A48A124479BF7170 /* onboarding.feature */ = {isa = PBXFileReference; path = onboarding.feature; sourceTree = "<group>"; };
+		FEA71F38E7ADF72CEB475D5A /* XmltvEpisodeNum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvEpisodeNum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -80,6 +100,7 @@
 		547D14DCBBB16DE7186057F7 /* Telly */ = {
 			isa = PBXGroup;
 			children = (
+				B59D10F5E95B98458DE192B2 /* Epg */,
 				96E6AC0FE7474F2765CC1496 /* Playlist */,
 				4A5A8C96669009B439B3CCAD /* Assets.xcassets */,
 				A8B22847E90EAFA3E38A3D74 /* ContentView.swift */,
@@ -114,8 +135,25 @@
 			isa = PBXGroup;
 			children = (
 				3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */,
+				8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */,
+				7A631A01CB4753E2E28B24F4 /* XmltvParserTests.swift */,
+				11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */,
 			);
 			path = TellyTests;
+			sourceTree = "<group>";
+		};
+		B59D10F5E95B98458DE192B2 /* Epg */ = {
+			isa = PBXGroup;
+			children = (
+				AFE592895ECE19026B765DD5 /* NowNext.swift */,
+				B64D1227BBE1557C1D3C5311 /* XmltvElementReader.swift */,
+				FEA71F38E7ADF72CEB475D5A /* XmltvEpisodeNum.swift */,
+				0376B2E232DEAE15C2DCEF69 /* XmltvParser.swift */,
+				9C96E3A740AA59FE5E94A9CF /* XmltvParserDelegate.swift */,
+				2AC541AF5A8B8B8429031427 /* XmltvTimestamp.swift */,
+				911911F5CB370C8AD142854F /* XmltvTypes.swift */,
+			);
+			path = Epg;
 			sourceTree = "<group>";
 		};
 		C78CF21776941B32837624EC /* Features */ = {
@@ -268,7 +306,14 @@
 				FD886AE63B3A5190A4E5DF1A /* ContentView.swift in Sources */,
 				DF124DD1E7EB5AC3AC11FEF4 /* M3uModels.swift in Sources */,
 				3DB1295E43736FFC953773B1 /* M3uParser.swift in Sources */,
+				80314401F98FDCA158A1FF7D /* NowNext.swift in Sources */,
 				7CDE7636B43ED305BE1A500A /* TellyApp.swift in Sources */,
+				6A2F402410E34CFA2EFF487C /* XmltvElementReader.swift in Sources */,
+				4F1BF8F530441CE2BA1291A0 /* XmltvEpisodeNum.swift in Sources */,
+				7A69B567FC802B74841531DB /* XmltvParser.swift in Sources */,
+				625AF02BB79E7FE3D13F180A /* XmltvParserDelegate.swift in Sources */,
+				2D0CF1B8BB79FE37480115CD /* XmltvTimestamp.swift in Sources */,
+				468AEAB4FE7257D65A79038E /* XmltvTypes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +322,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C4635D986E8377B2CAD2242 /* M3uParserTests.swift in Sources */,
+				39F5AD4531A880CD005EAE52 /* NowNextResolverTests.swift in Sources */,
+				F0DD40297E96DE33816EB2AF /* XmltvParserTests.swift in Sources */,
+				2DB94E5C3639BBE59EA67920 /* XmltvTimestampTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
