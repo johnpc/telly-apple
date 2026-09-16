@@ -35,4 +35,7 @@ final class AppEnvironment {
         AddPlaylistModel(fetch: HttpPlaylistFetcher.fetch, store: playlistStore,
                          now: { Int64(Date().timeIntervalSince1970 * 1000) })
     }
+
+    /// A fresh VLC-backed playback engine per presented player.
+    func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine() }
 }

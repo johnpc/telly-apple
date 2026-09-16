@@ -13,7 +13,9 @@ struct ContentView: View {
             if env.playlists.isEmpty {
                 WelcomeView(onAdd: { adding = true })
             } else {
-                ChannelListScreen(channelStore: env.channelStore, onAdd: { adding = true })
+                ChannelListScreen(channelStore: env.channelStore,
+                                  makeEngine: env.makeEngine,
+                                  onAdd: { adding = true })
             }
         }
         .fullScreenCover(isPresented: $adding) {

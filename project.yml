@@ -26,6 +26,12 @@ packages:
   GRDB:
     url: https://github.com/groue/GRDB.swift
     from: "6.0.0"
+  # VLCKit behind a protocol seam — IPTV serves raw MPEG-TS which AVPlayer
+  # cannot decode, so the real PlayerEngine wraps libVLC. Prebuilt XCFramework
+  # with iOS + tvOS slices; import as `VLCKitSPM`. App target only.
+  VLCKitSPM:
+    url: https://github.com/tylerjonesio/vlckit-spm
+    from: "3.6.0"
 
 targets:
   Telly:
@@ -36,6 +42,7 @@ targets:
     dependencies:
       - package: SWCompression
       - package: GRDB
+      - package: VLCKitSPM
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.johncorser.telly
