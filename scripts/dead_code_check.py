@@ -36,6 +36,8 @@ ENTRY_POINTS = {
     # UIKit / delegate witnesses
     "application", "sceneDidBecomeActive", "textFieldDidChangeSelection",
     "textField", "textInputMode",
+    # GRDB persistence-record witness (called by GRDB on insert, not by us)
+    "didInsert",
     # XCTest lifecycle
     "setUp", "tearDown", "runScenario",
 }

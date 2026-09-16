@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		060E18C8255F4AA1F3107C53 /* WizardEpgStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9CE1DA66DB1CF9821E07F8 /* WizardEpgStepView.swift */; };
+		0A75F51F7F599229F03CD0D9 /* VodClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E22503CE8CD1384F47467B /* VodClassifier.swift */; };
 		0C4635D986E8377B2CAD2242 /* M3uParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */; };
 		110D212129AE12BD5AF06644 /* PlaylistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE32CDF42DC851C835330F01 /* PlaylistEntity.swift */; };
+		1A29BBF48A30C0330EE3147E /* AddPlaylistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E11046F624FCD118944FBE /* AddPlaylistModel.swift */; };
+		1AB8F1F6D4FE45DEEDA69CF8 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */; };
 		1B1DB27D733CF47E31CD33D4 /* StepRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF0343E127E1F17FBEE8E6 /* StepRegistry.swift */; };
 		1EE319E6C895BDA1CF4F21E6 /* SWCompression in Frameworks */ = {isa = PBXBuildFile; productRef = A1372D91A16ECE3B5EA3AB16 /* SWCompression */; };
 		20790450B4BB88B6CD3C617D /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40913EE679CDA6A81F8C9B0E /* AppDatabase.swift */; };
+		20E6F7695D49F55EA09F0BCB /* AddPlaylistModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978E40923C0BD5A67EAD3E8D /* AddPlaylistModelTests.swift */; };
 		2311624430C68B2A4E03C32C /* PlaylistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BF4D21ECE4136B80416F /* PlaylistStore.swift */; };
 		24A5D5AB358021BA902FF427 /* ChannelEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6459607D004B96A0D9D926AC /* ChannelEntityTests.swift */; };
 		26597D957B6FB9D14691692A /* AcceptanceTests.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030A43B5DACCF03D16F744EA /* AcceptanceTests.generated.swift */; };
@@ -20,6 +25,7 @@
 		3343EA232EB0EAB218F1A5FE /* ReconnectPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A65977364D5895537F30 /* ReconnectPolicyTests.swift */; };
 		34AFA192FF5B6E7AF085C277 /* StepDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C95120BFE019A26B97DF4FC /* StepDefinitions.swift */; };
 		351CD8FAA8115430788B47FA /* onboarding.feature in Resources */ = {isa = PBXBuildFile; fileRef = F90A4D44A48A124479BF7170 /* onboarding.feature */; };
+		385AAFDE54DBCE3669FCA999 /* WizardTypeStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3790D465B52208F3EBBB91BC /* WizardTypeStepView.swift */; };
 		39F5AD4531A880CD005EAE52 /* NowNextResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */; };
 		3DB1295E43736FFC953773B1 /* M3uParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73B7301D50C245AB98680F7 /* M3uParser.swift */; };
 		468AEAB4FE7257D65A79038E /* XmltvTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911911F5CB370C8AD142854F /* XmltvTypes.swift */; };
@@ -35,25 +41,36 @@
 		66CFF187D80F0DF9242A8EBF /* GherkinParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31789076E7F4E06D0340FF /* GherkinParser.swift */; };
 		6A2F402410E34CFA2EFF487C /* XmltvElementReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D1227BBE1557C1D3C5311 /* XmltvElementReader.swift */; };
 		6ABECB2EEBB6BB49C98E31DD /* CoreSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40C931EC40BCB3E459C45A8 /* CoreSchema.swift */; };
+		6BBD28365E8F2C4D73DE4DCD /* PlaylistSummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBD0DCB6D86A13F1794F6FE /* PlaylistSummaryTests.swift */; };
+		6DEEB1CFDA6221302199C886 /* WizardProcessedStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C51D1E60038A37B6CE407 /* WizardProcessedStepView.swift */; };
 		789A545F1ABB75F2793A3565 /* ChannelUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72C528BC282E97C463256B /* ChannelUserState.swift */; };
 		7A25751B5AEC40A697291B37 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 26FF1BEB0FDDB1559EB47C2A /* GRDB */; };
 		7A69B567FC802B74841531DB /* XmltvParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0376B2E232DEAE15C2DCEF69 /* XmltvParser.swift */; };
 		7CDE7636B43ED305BE1A500A /* TellyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1976ACB9C3233BD3A7E9AB /* TellyApp.swift */; };
+		7EB3E4C17BB5F9EFB8E21ECF /* PlaylistSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E33824048D9B8A7E968723D /* PlaylistSummary.swift */; };
 		80314401F98FDCA158A1FF7D /* NowNext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE592895ECE19026B765DD5 /* NowNext.swift */; };
 		841A40CE93CA925A21570D1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A5A8C96669009B439B3CCAD /* Assets.xcassets */; };
 		93EEF21D80859196E3C1E961 /* SWCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 6938A520720D3E3EB82CC0D8 /* SWCompression */; };
+		A48E2133741A5EF0983FE138 /* UrlFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B41BEA510401C8A0D0BE9FC /* UrlFieldView.swift */; };
 		A8714A6573A02EE9246F8A77 /* ChannelImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909FB3CA9271132E09114364 /* ChannelImporter.swift */; };
 		B2C5AF7A257A7C9F7402C4FA /* ReconnectPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD5CB36B73671A605E222D /* ReconnectPolicy.swift */; };
 		B9CABC6DF3C487006321F321 /* CompressedXmltv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984EC2E8176F45E1711F5A76 /* CompressedXmltv.swift */; };
+		BF5C71431CD235D6BB848073 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639ED70131FE49348CC589BA /* WelcomeView.swift */; };
 		C853572B16CB7A97483A6E6A /* ChannelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3428C72EBEB454AD2CE0B5B6 /* ChannelStore.swift */; };
+		D185D838DBA0AF34C0175868 /* HttpUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA761F0C2AC5B545A070F9 /* HttpUrl.swift */; };
 		D53B3BE5A1B2F6604D8DD115 /* ChannelRecord+Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEF82B37AB908441A8656A /* ChannelRecord+Entity.swift */; };
 		D53F175E5064331E1E69DB0D /* ChannelRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6955066FC099926C6950564 /* ChannelRecord.swift */; };
+		D57F7EEE3473CADE5F8B8233 /* WizardUrlStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E64A3BF540099347299DA30 /* WizardUrlStepView.swift */; };
 		D831D7C36223E8AA438A33EB /* TvgOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B617FC4941B43EDF685A7A /* TvgOffset.swift */; };
+		DA1B1BED2B9ADAD4B2BE84FF /* AddPlaylistScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5A6C48D3900E38AE616489 /* AddPlaylistScreen.swift */; };
+		DCFD07384D5A31E7CDF25EA2 /* ChannelListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3D80BB7E4AA1D3685C35DF /* ChannelListScreen.swift */; };
 		DF124DD1E7EB5AC3AC11FEF4 /* M3uModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA418FED683F1A3C08B547 /* M3uModels.swift */; };
 		E120C056EF6F18CBBD55DC0D /* EpgOffsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BE5846F0E695DA3565F177 /* EpgOffsets.swift */; };
+		E24F8AAC388C30AFF3707F90 /* WizardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C75E52CDEC9F7474FCCDB38 /* WizardState.swift */; };
 		F0DD40297E96DE33816EB2AF /* XmltvParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A631A01CB4753E2E28B24F4 /* XmltvParserTests.swift */; };
 		F68583C2DAE121F4B0CE8D65 /* PlaylistStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74EFF331827B16223EC8123 /* PlaylistStoreTests.swift */; };
 		FB6FC45374EB5D59A85C1060 /* CompressedXmltvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCC66C6AF1F6B3B9B556A04 /* CompressedXmltvTests.swift */; };
+		FC1B9378CFDD73025A647ABA /* HttpPlaylistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */; };
 		FD886AE63B3A5190A4E5DF1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B22847E90EAFA3E38A3D74 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,11 +96,15 @@
 		0376B2E232DEAE15C2DCEF69 /* XmltvParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvParser.swift; sourceTree = "<group>"; };
 		081CE4F3F308A626C04A4C68 /* TellyTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TellyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTimestampTests.swift; sourceTree = "<group>"; };
+		1B41BEA510401C8A0D0BE9FC /* UrlFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlFieldView.swift; sourceTree = "<group>"; };
+		1E33824048D9B8A7E968723D /* PlaylistSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSummary.swift; sourceTree = "<group>"; };
 		2AC541AF5A8B8B8429031427 /* XmltvTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTimestamp.swift; sourceTree = "<group>"; };
 		2C73DE1BC748EB029A1DAAEE /* Telly.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Telly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30A1BF4D21ECE4136B80416F /* PlaylistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistStore.swift; sourceTree = "<group>"; };
 		310AA80E44CF4A8E35058A85 /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEntity.swift; sourceTree = "<group>"; };
+		33AA761F0C2AC5B545A070F9 /* HttpUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpUrl.swift; sourceTree = "<group>"; };
 		3428C72EBEB454AD2CE0B5B6 /* ChannelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelStore.swift; sourceTree = "<group>"; };
+		3790D465B52208F3EBBB91BC /* WizardTypeStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardTypeStepView.swift; sourceTree = "<group>"; };
 		3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3uParserTests.swift; sourceTree = "<group>"; };
 		3C355744E958CD9D4670C063 /* TellyUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TellyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F31789076E7F4E06D0340FF /* GherkinParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GherkinParser.swift; sourceTree = "<group>"; };
@@ -92,28 +113,41 @@
 		4DFA418FED683F1A3C08B547 /* M3uModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3uModels.swift; sourceTree = "<group>"; };
 		4ECEF82B37AB908441A8656A /* ChannelRecord+Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelRecord+Entity.swift"; sourceTree = "<group>"; };
 		5483AF43B34E97A74EF02761 /* ChannelSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSource.swift; sourceTree = "<group>"; };
+		55E22503CE8CD1384F47467B /* VodClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodClassifier.swift; sourceTree = "<group>"; };
+		5B3D80BB7E4AA1D3685C35DF /* ChannelListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListScreen.swift; sourceTree = "<group>"; };
 		5BCC66C6AF1F6B3B9B556A04 /* CompressedXmltvTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressedXmltvTests.swift; sourceTree = "<group>"; };
+		639ED70131FE49348CC589BA /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		6459607D004B96A0D9D926AC /* ChannelEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEntityTests.swift; sourceTree = "<group>"; };
 		66B617FC4941B43EDF685A7A /* TvgOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvgOffset.swift; sourceTree = "<group>"; };
 		66CF0343E127E1F17FBEE8E6 /* StepRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepRegistry.swift; sourceTree = "<group>"; };
+		6C75E52CDEC9F7474FCCDB38 /* WizardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardState.swift; sourceTree = "<group>"; };
+		6C9CE1DA66DB1CF9821E07F8 /* WizardEpgStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardEpgStepView.swift; sourceTree = "<group>"; };
 		7A631A01CB4753E2E28B24F4 /* XmltvParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvParserTests.swift; sourceTree = "<group>"; };
 		8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowNextResolverTests.swift; sourceTree = "<group>"; };
 		8E2DC4D6F058AC249787519D /* AcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTests.swift; sourceTree = "<group>"; };
 		909FB3CA9271132E09114364 /* ChannelImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelImporter.swift; sourceTree = "<group>"; };
 		911911F5CB370C8AD142854F /* XmltvTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTypes.swift; sourceTree = "<group>"; };
+		978E40923C0BD5A67EAD3E8D /* AddPlaylistModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistModelTests.swift; sourceTree = "<group>"; };
 		984EC2E8176F45E1711F5A76 /* CompressedXmltv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressedXmltv.swift; sourceTree = "<group>"; };
+		992C51D1E60038A37B6CE407 /* WizardProcessedStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardProcessedStepView.swift; sourceTree = "<group>"; };
+		9A5A6C48D3900E38AE616489 /* AddPlaylistScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistScreen.swift; sourceTree = "<group>"; };
 		9C95120BFE019A26B97DF4FC /* StepDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDefinitions.swift; sourceTree = "<group>"; };
 		9C96E3A740AA59FE5E94A9CF /* XmltvParserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvParserDelegate.swift; sourceTree = "<group>"; };
+		9E64A3BF540099347299DA30 /* WizardUrlStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardUrlStepView.swift; sourceTree = "<group>"; };
 		A40C931EC40BCB3E459C45A8 /* CoreSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreSchema.swift; sourceTree = "<group>"; };
 		A8B22847E90EAFA3E38A3D74 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AFE592895ECE19026B765DD5 /* NowNext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowNext.swift; sourceTree = "<group>"; };
 		B64D1227BBE1557C1D3C5311 /* XmltvElementReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvElementReader.swift; sourceTree = "<group>"; };
 		BDAD5CB36B73671A605E222D /* ReconnectPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectPolicy.swift; sourceTree = "<group>"; };
 		BE32CDF42DC851C835330F01 /* PlaylistEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEntity.swift; sourceTree = "<group>"; };
+		BEBD0DCB6D86A13F1794F6FE /* PlaylistSummaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSummaryTests.swift; sourceTree = "<group>"; };
 		C3BE5846F0E695DA3565F177 /* EpgOffsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgOffsets.swift; sourceTree = "<group>"; };
 		CB6C59E528CFF9F4244CC01E /* ChannelImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelImporterTests.swift; sourceTree = "<group>"; };
 		CE85A65977364D5895537F30 /* ReconnectPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectPolicyTests.swift; sourceTree = "<group>"; };
+		CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		D5E11046F624FCD118944FBE /* AddPlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistModel.swift; sourceTree = "<group>"; };
 		D74EFF331827B16223EC8123 /* PlaylistStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistStoreTests.swift; sourceTree = "<group>"; };
+		E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpPlaylistFetcher.swift; sourceTree = "<group>"; };
 		E6955066FC099926C6950564 /* ChannelRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRecord.swift; sourceTree = "<group>"; };
 		E73B7301D50C245AB98680F7 /* M3uParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3uParser.swift; sourceTree = "<group>"; };
 		EA72C528BC282E97C463256B /* ChannelUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelUserState.swift; sourceTree = "<group>"; };
@@ -166,10 +200,40 @@
 			);
 			sourceTree = "<group>";
 		};
+		375CEF2F1B0B9299E21D88B7 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */,
+				E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		488C4F95E799F5B7A3B76C78 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				D5E11046F624FCD118944FBE /* AddPlaylistModel.swift */,
+				9A5A6C48D3900E38AE616489 /* AddPlaylistScreen.swift */,
+				5B3D80BB7E4AA1D3685C35DF /* ChannelListScreen.swift */,
+				33AA761F0C2AC5B545A070F9 /* HttpUrl.swift */,
+				1E33824048D9B8A7E968723D /* PlaylistSummary.swift */,
+				1B41BEA510401C8A0D0BE9FC /* UrlFieldView.swift */,
+				639ED70131FE49348CC589BA /* WelcomeView.swift */,
+				6C9CE1DA66DB1CF9821E07F8 /* WizardEpgStepView.swift */,
+				992C51D1E60038A37B6CE407 /* WizardProcessedStepView.swift */,
+				6C75E52CDEC9F7474FCCDB38 /* WizardState.swift */,
+				3790D465B52208F3EBBB91BC /* WizardTypeStepView.swift */,
+				9E64A3BF540099347299DA30 /* WizardUrlStepView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		547D14DCBBB16DE7186057F7 /* Telly */ = {
 			isa = PBXGroup;
 			children = (
+				375CEF2F1B0B9299E21D88B7 /* App */,
 				B59D10F5E95B98458DE192B2 /* Epg */,
+				488C4F95E799F5B7A3B76C78 /* Onboarding */,
 				5FF8E5825349C17D8DB032F9 /* Persistence */,
 				D71DC2628AAAADCB6B0621AD /* Player */,
 				96E6AC0FE7474F2765CC1496 /* Playlist */,
@@ -204,6 +268,7 @@
 				E73B7301D50C245AB98680F7 /* M3uParser.swift */,
 				BE32CDF42DC851C835330F01 /* PlaylistEntity.swift */,
 				66B617FC4941B43EDF685A7A /* TvgOffset.swift */,
+				55E22503CE8CD1384F47467B /* VodClassifier.swift */,
 			);
 			path = Playlist;
 			sourceTree = "<group>";
@@ -224,6 +289,7 @@
 		B37F4B1B978FCA81445CDD03 /* TellyTests */ = {
 			isa = PBXGroup;
 			children = (
+				978E40923C0BD5A67EAD3E8D /* AddPlaylistModelTests.swift */,
 				6459607D004B96A0D9D926AC /* ChannelEntityTests.swift */,
 				CB6C59E528CFF9F4244CC01E /* ChannelImporterTests.swift */,
 				F06A6C4B7C8423DF4D41E23F /* ChannelStoreTests.swift */,
@@ -232,6 +298,7 @@
 				3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */,
 				8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */,
 				D74EFF331827B16223EC8123 /* PlaylistStoreTests.swift */,
+				BEBD0DCB6D86A13F1794F6FE /* PlaylistSummaryTests.swift */,
 				CE85A65977364D5895537F30 /* ReconnectPolicyTests.swift */,
 				7A631A01CB4753E2E28B24F4 /* XmltvParserTests.swift */,
 				11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */,
@@ -420,9 +487,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A29BBF48A30C0330EE3147E /* AddPlaylistModel.swift in Sources */,
+				DA1B1BED2B9ADAD4B2BE84FF /* AddPlaylistScreen.swift in Sources */,
 				20790450B4BB88B6CD3C617D /* AppDatabase.swift in Sources */,
+				1AB8F1F6D4FE45DEEDA69CF8 /* AppEnvironment.swift in Sources */,
 				62A08D697E6A866CE211DC32 /* ChannelEntity.swift in Sources */,
 				A8714A6573A02EE9246F8A77 /* ChannelImporter.swift in Sources */,
+				DCFD07384D5A31E7CDF25EA2 /* ChannelListScreen.swift in Sources */,
 				D53B3BE5A1B2F6604D8DD115 /* ChannelRecord+Entity.swift in Sources */,
 				D53F175E5064331E1E69DB0D /* ChannelRecord.swift in Sources */,
 				54070F54B8C9170E185D46A7 /* ChannelSource.swift in Sources */,
@@ -432,14 +503,25 @@
 				FD886AE63B3A5190A4E5DF1A /* ContentView.swift in Sources */,
 				6ABECB2EEBB6BB49C98E31DD /* CoreSchema.swift in Sources */,
 				E120C056EF6F18CBBD55DC0D /* EpgOffsets.swift in Sources */,
+				FC1B9378CFDD73025A647ABA /* HttpPlaylistFetcher.swift in Sources */,
+				D185D838DBA0AF34C0175868 /* HttpUrl.swift in Sources */,
 				DF124DD1E7EB5AC3AC11FEF4 /* M3uModels.swift in Sources */,
 				3DB1295E43736FFC953773B1 /* M3uParser.swift in Sources */,
 				80314401F98FDCA158A1FF7D /* NowNext.swift in Sources */,
 				110D212129AE12BD5AF06644 /* PlaylistEntity.swift in Sources */,
 				2311624430C68B2A4E03C32C /* PlaylistStore.swift in Sources */,
+				7EB3E4C17BB5F9EFB8E21ECF /* PlaylistSummary.swift in Sources */,
 				B2C5AF7A257A7C9F7402C4FA /* ReconnectPolicy.swift in Sources */,
 				7CDE7636B43ED305BE1A500A /* TellyApp.swift in Sources */,
 				D831D7C36223E8AA438A33EB /* TvgOffset.swift in Sources */,
+				A48E2133741A5EF0983FE138 /* UrlFieldView.swift in Sources */,
+				0A75F51F7F599229F03CD0D9 /* VodClassifier.swift in Sources */,
+				BF5C71431CD235D6BB848073 /* WelcomeView.swift in Sources */,
+				060E18C8255F4AA1F3107C53 /* WizardEpgStepView.swift in Sources */,
+				6DEEB1CFDA6221302199C886 /* WizardProcessedStepView.swift in Sources */,
+				E24F8AAC388C30AFF3707F90 /* WizardState.swift in Sources */,
+				385AAFDE54DBCE3669FCA999 /* WizardTypeStepView.swift in Sources */,
+				D57F7EEE3473CADE5F8B8233 /* WizardUrlStepView.swift in Sources */,
 				6A2F402410E34CFA2EFF487C /* XmltvElementReader.swift in Sources */,
 				4F1BF8F530441CE2BA1291A0 /* XmltvEpisodeNum.swift in Sources */,
 				7A69B567FC802B74841531DB /* XmltvParser.swift in Sources */,
@@ -453,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20E6F7695D49F55EA09F0BCB /* AddPlaylistModelTests.swift in Sources */,
 				24A5D5AB358021BA902FF427 /* ChannelEntityTests.swift in Sources */,
 				5CEA3890A0FD3BF92F752BC2 /* ChannelImporterTests.swift in Sources */,
 				54E66C55F838A6A6050394B6 /* ChannelStoreTests.swift in Sources */,
@@ -461,6 +544,7 @@
 				0C4635D986E8377B2CAD2242 /* M3uParserTests.swift in Sources */,
 				39F5AD4531A880CD005EAE52 /* NowNextResolverTests.swift in Sources */,
 				F68583C2DAE121F4B0CE8D65 /* PlaylistStoreTests.swift in Sources */,
+				6BBD28365E8F2C4D73DE4DCD /* PlaylistSummaryTests.swift in Sources */,
 				3343EA232EB0EAB218F1A5FE /* ReconnectPolicyTests.swift in Sources */,
 				F0DD40297E96DE33816EB2AF /* XmltvParserTests.swift in Sources */,
 				2DB94E5C3639BBE59EA67920 /* XmltvTimestampTests.swift in Sources */,

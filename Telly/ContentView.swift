@@ -1,22 +1,27 @@
 import SwiftUI
 
-/// Root shell. This is the onboarding-empty state until the playlist/guide
-/// slices land: "Telly doesn't provide any channels — add a playlist." Ported
-/// 1:1 from the Android welcome screen (telly `features/onboarding`).
+/// Root shell. Onboarding-empty until a playlist exists, then the channel list.
+/// Adding a playlist runs the wizard full-screen and reloads on completion.
+/// One codebase for iPhone/iPad/Apple TV; per-platform layout lives inside the
+/// leaf views, never here.
 struct ContentView: View {
+    @State private var env = AppEnvironment.makeShared()
+    @State private var adding = false
+
     var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "tv")
-                .font(.system(size: 64))
-                .foregroundStyle(.secondary)
-            Text("Telly")
-                .font(.largeTitle.bold())
-            Text("Add a playlist from your IPTV provider to start watching.")
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
+        Group {
+            if env.playlists.isEmpty {
+                WelcomeView(onAdd: { adding = true })
+            } else {
+                ChannelListScreen(channelStore: env.channelStore, onAdd: { adding = true })
+            }
         }
-        .padding()
+        .fullScreenCover(isPresented: $adding) {
+            AddPlaylistScreen(model: env.makeAddPlaylistModel()) {
+                adding = false
+                env.reload()
+            }
+        }
     }
 }
 
