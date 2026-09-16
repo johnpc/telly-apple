@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# telly-apple pre-commit hook: line limit -> gherkin sync -> unit tests -> build.
+# Intentionally lighter than quality.sh (skips the static Python gates +
+# coverage/CRAP, which run in quality.sh + CI) so commits stay fast.
+# Install with: bash scripts/install-hooks.sh
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+SCHEME="Telly"
+DESTINATION="${TELLY_DESTINATION:-platform=iOS Simulator,name=iPhone 17 Pro}"
+
+echo "▶ [1/4] Source file line limit"
+bash scripts/check_source_lines.sh
+
+echo "▶ [2/4] Acceptance tests in sync with .feature files"
+python3 scripts/generate_acceptance_tests.py --check
+
+echo "▶ [3/4] Unit tests"
+xcodebuild test \
+  -scheme "$SCHEME" \
+  -destination "$DESTINATION" \
+  -only-testing:"TellyTests" \
+  -derivedDataPath DerivedData \
+  -quiet
+
+echo "▶ [4/4] Build app"
+xcodebuild build \
+  -scheme "$SCHEME" \
+  -destination "$DESTINATION" \
+  -derivedDataPath DerivedData \
+  -quiet
+
+echo "✅ Pre-commit checks passed"

@@ -6,6 +6,10 @@ DerivedData/
 xcuserdata/
 *.xcuserstate
 
+# Quality-gate artifacts (regenerated on each run)
+coverage.json
+TestResults.xcresult
+
 # NOTE: project.yml (xcodegen) is the source of truth, but the generated
 # .xcodeproj IS committed (convention parity with John's native repos + CI
 # reproducibility). Regenerate with `xcodegen generate` after editing project.yml.

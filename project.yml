@@ -52,9 +52,9 @@ targets:
     type: bundle.ui-testing
     supportedDestinations: [iOS, tvOS]
     sources:
+      # .swift compile as sources; .feature files (unknown type) are bundled
+      # as resources so AcceptanceTests can look them up at runtime.
       - path: TellyUITests
-      - path: Features
-        buildPhase: resources
     dependencies:
       - target: Telly
     settings:
