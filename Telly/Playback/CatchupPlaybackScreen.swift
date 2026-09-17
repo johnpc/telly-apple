@@ -10,6 +10,7 @@ import SwiftUI
 struct CatchupPlaybackScreen: View {
     @State var model: CatchupPlaybackModel
     let request: CatchupRequest
+    @Environment(\.dismiss) private var dismiss
 
     init(model: CatchupPlaybackModel, request: CatchupRequest) {
         _model = State(initialValue: model)
@@ -30,6 +31,7 @@ struct CatchupPlaybackScreen: View {
             #endif
         }
         .task {
+            model.onExitToGuide = { dismiss() }
             model.start(request)
             while !Task.isCancelled {
                 try? await Task.sleep(for: .milliseconds(200))

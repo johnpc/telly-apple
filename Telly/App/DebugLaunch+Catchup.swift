@@ -13,6 +13,17 @@ extension DebugLaunch {
         args.contains("-tellyCatchup")
     }
 
+    /// Whether to route to the transport-row proof (scrubbed archive), driven by
+    /// the `#if DEBUG` position/paused overrides since sims can't decode the TS.
+    static func catchupTransportRequested(in args: [String]) -> Bool {
+        args.contains("-tellyCatchupTransport")
+    }
+
+    /// Whether the transport proof should surface the paused pill.
+    static func catchupPausedRequested(in args: [String]) -> Bool {
+        args.contains("-tellyCatchupPaused")
+    }
+
     /// One `default`-type catch-up channel: a fake local archive template
     /// (`utc`/`duration` tokens, no real host), a 7-day horizon, and a tvg-id
     /// matching ``catchupEpgDocument`` so the aired programme binds to it.

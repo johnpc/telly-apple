@@ -13,6 +13,7 @@ struct ContentView: View {
     @State var historyModel: HistoryListModel?
     @State var multiviewSession: MultiviewSession?
     @State var catchupTarget: GuidePlaybackTarget?
+    @State var catchupTransportModel: CatchupPlaybackModel?
     #endif
 
     var body: some View {

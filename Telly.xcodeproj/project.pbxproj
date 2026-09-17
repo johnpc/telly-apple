@@ -145,6 +145,7 @@
 		58A9C3F9DB2BABEF041C88B2 /* VLCKitPlayerEngine+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD69B16A6204B62B0D09CFE /* VLCKitPlayerEngine+Audio.swift */; };
 		59C56541C781ABB2D6BD1D1B /* PlaybackReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60695790FA29713F6F4EFD9 /* PlaybackReducerTests.swift */; };
 		5BF3F6867DE020282B0B3795 /* GuideRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE0F1175610370DBEC8AABA /* GuideRow.swift */; };
+		5C1D2FDBE4952EB14FE194BC /* ContentView+DebugTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9FE057C27056761D2F4AFC /* ContentView+DebugTransport.swift */; };
 		5CA7F564719F5537FA577C8F /* KeyValueStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA075A908EE3F8C650F0A3 /* KeyValueStore.swift */; };
 		5CEA3890A0FD3BF92F752BC2 /* ChannelImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6C59E528CFF9F4244CC01E /* ChannelImporterTests.swift */; };
 		5CF520DDBFDBAF6682FE4D5F /* EpgOffsetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFCF4055097168A8529BFC4 /* EpgOffsetsTests.swift */; };
@@ -606,6 +607,7 @@
 		AB23BF7F828B6C569D6B8A31 /* AppEnvironmentGuideWiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironmentGuideWiringTests.swift; sourceTree = "<group>"; };
 		AE2E4442DE30ED21130CC0C4 /* LivePlaybackModel+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LivePlaybackModel+Keys.swift"; sourceTree = "<group>"; };
 		AE81FCB5E00F524BCA01679C /* VLCKitPlayerEngine+Transport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VLCKitPlayerEngine+Transport.swift"; sourceTree = "<group>"; };
+		AE9FE057C27056761D2F4AFC /* ContentView+DebugTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+DebugTransport.swift"; sourceTree = "<group>"; };
 		AF518CE11F62EDAAF4389082 /* SettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
 		AFBC7827F93B2379F3363D77 /* QuickBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBarView.swift; sourceTree = "<group>"; };
 		AFE592895ECE19026B765DD5 /* NowNext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowNext.swift; sourceTree = "<group>"; };
@@ -910,6 +912,7 @@
 				A8B22847E90EAFA3E38A3D74 /* ContentView.swift */,
 				9105F63ED96290035385DB36 /* ContentView+Debug.swift */,
 				7F42D7B59194F0FF71DD9804 /* ContentView+DebugCatchup.swift */,
+				AE9FE057C27056761D2F4AFC /* ContentView+DebugTransport.swift */,
 				60DF4D6AFE37B2BA42924CC6 /* ContentView+GuideDebug.swift */,
 				7E59CFAB43CDEE56FCE7DA99 /* ContentView+HistoryDebug.swift */,
 				B1DEB9AD942DAD153C2225E9 /* ContentView+KeymapDebug.swift */,
@@ -1500,6 +1503,7 @@
 				B9CABC6DF3C487006321F321 /* CompressedXmltv.swift in Sources */,
 				90C4A576858614396767B029 /* ContentView+Debug.swift in Sources */,
 				FE86E0032234390696066A42 /* ContentView+DebugCatchup.swift in Sources */,
+				5C1D2FDBE4952EB14FE194BC /* ContentView+DebugTransport.swift in Sources */,
 				B9612E92945ECB9D6BBB70FD /* ContentView+GuideDebug.swift in Sources */,
 				FBF39CF56039195F722A0029 /* ContentView+HistoryDebug.swift in Sources */,
 				2DAAF472ACABEA73D4B6E04A /* ContentView+KeymapDebug.swift in Sources */,

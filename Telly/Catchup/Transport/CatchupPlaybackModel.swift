@@ -22,7 +22,10 @@ final class CatchupPlaybackModel {
     let keys: CatchupSeekKeys
     let skip: CatchupSkip
     let now: () -> Int
-    let onExitToGuide: () -> Void
+    /// Where BACK escapes when leaving the archive (not rewound-from-live): the
+    /// production `CatchupPlaybackScreen` overrides this to `dismiss()` the cover,
+    /// so it is `var` (init-injected default stays the factory's `{}`).
+    var onExitToGuide: () -> Void
 
     #if DEBUG
     /// Screenshot-only overrides so the transport row proof holds a scrubbed

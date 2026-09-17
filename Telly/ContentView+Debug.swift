@@ -16,6 +16,8 @@ extension ContentView {
             historyDemo
         } else if DebugLaunch.parentalChallengeRequested(in: debugArgs) {
             parentalChallengeDemo
+        } else if DebugLaunch.catchupTransportRequested(in: debugArgs) {
+            catchupTransportDemo
         } else if DebugLaunch.catchupDemoRequested(in: debugArgs) {
             catchupDemo
         } else if debugArgs.contains("-tellyMultiviewDemo") {
