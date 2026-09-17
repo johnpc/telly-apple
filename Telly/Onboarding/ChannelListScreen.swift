@@ -37,10 +37,19 @@ struct ChannelListScreen: View {
             }
             .navigationTitle("Channels")
             .toolbar { toolbarContent }
+            .searchable(text: $model.query, prompt: "Search channels")
+            .overlay { searchEmptyState }
         }
         .task { model.load() }
         .fullScreenCover(item: $target) { target in
             PlaybackScreen(streamUrl: target.url, engine: makeEngine())
+        }
+    }
+
+    /// Shown when a search yields nothing so the empty List isn't just blank.
+    @ViewBuilder private var searchEmptyState: some View {
+        if !model.query.isEmpty && model.rows.isEmpty {
+            ContentUnavailableView.search(text: model.query)
         }
     }
 
