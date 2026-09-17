@@ -274,5 +274,51 @@ struct DebugLaunchTests {
         #expect(now?.now?.details.title == "Evening News")
         #expect(now?.next?.details.title == "Late Documentary")
     }
+
+    @Test func myListSeedRequestedReadsFlag() {
+        #expect(DebugLaunch.myListSeedRequested(in: ["Telly", "-tellyMyListSeed"]))
+        #expect(!DebugLaunch.myListSeedRequested(in: ["Telly"]))
+        #expect(!DebugLaunch.myListSeedRequested(in: ["Telly", "-tellyHistorySeed"]))
+    }
+
+    // Builds the visible fixture channels the My List seed saves against.
+    private func myListFixture() throws -> (MyListStore, [ChannelEntity]) {
+        let db = try AppDatabase.makeInMemory()
+        let playlists = PlaylistStore(db: db)
+        _ = try playlists.add(sourceUrl: "u",
+                              playlist: DebugLaunch.fixturePlaylist(base: "http://127.0.0.1:8000/"),
+                              name: nil, nowMs: 0)
+        return (MyListStore(db: db), try ChannelStore(db: db).visibleChannels())
+    }
+
+    @Test func seedMyListSavesAnAiringAndAFutureRow() throws {
+        let (store, channels) = try myListFixture()
+        DebugLaunch.seedMyListIfRequested(into: store, channels: channels,
+                                          args: ["Telly", "-tellyMyListSeed"], now: 5_000_000)
+        let entries = try store.all()
+        #expect(entries.count == 2)
+        // Newest-added first: the airing-now row (addedAtMs == now) precedes the future one.
+        let airing = entries[0]
+        #expect(airing.channelKey == ChannelImporter.keyOf(channels[0]))
+        #expect(airing.startMs <= 5_000_000 && 5_000_000 < airing.endMs)
+        let future = entries[1]
+        #expect(future.channelKey == ChannelImporter.keyOf(channels[1]))
+        #expect(future.startMs > 5_000_000)
+    }
+
+    @Test func seedMyListIsANoOpWithoutTheFlag() throws {
+        let (store, channels) = try myListFixture()
+        DebugLaunch.seedMyListIfRequested(into: store, channels: channels,
+                                          args: ["Telly"], now: 5_000_000)
+        #expect(try store.all().isEmpty)
+    }
+
+    @Test func seedMyListIsIdempotent() throws {
+        let (store, channels) = try myListFixture()
+        let args = ["Telly", "-tellyMyListSeed"]
+        DebugLaunch.seedMyListIfRequested(into: store, channels: channels, args: args, now: 5_000_000)
+        DebugLaunch.seedMyListIfRequested(into: store, channels: channels, args: args, now: 5_000_000)
+        #expect(try store.all().count == 2)
+    }
 }
 #endif

@@ -19,6 +19,7 @@ struct ContentView: View {
     @State var groupsSeeded = false
     @State var vodModel: VodBrowseModel?
     @State var vodPlaybackModel: VodPlaybackModel?
+    @State var myListModel: MyListModel?
     #endif
 
     var body: some View {

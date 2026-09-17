@@ -36,51 +36,13 @@ extension ContentView {
             multiviewDemo
         } else if DebugLaunch.liveDemoRequested(in: debugArgs) {
             liveDemo
+        } else if DebugLaunch.myListSeedRequested(in: debugArgs) {
+            myListDemo
         } else if let url = DebugLaunch.autoplayUrl(in: debugArgs) {
             PlaybackScreen(streamUrl: url, engine: env.makeEngine())
         } else {
             mainContent.task { seedDebugFixtures() }
         }
-    }
-
-    @ViewBuilder var liveDemo: some View {
-        if let liveModel {
-            LivePlaybackScreen(model: liveModel)
-        } else {
-            Color.black.ignoresSafeArea().task { prepareLiveDemo() }
-        }
-    }
-
-    func prepareLiveDemo() {
-        applyKeymapOverrideIfRequested()
-        seedDebugFixtures()
-        let model = env.makeLivePlaybackModel()
-        if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
-        if DebugLaunch.forcedMultiviewOverlay(in: debugArgs) { model.debugPresentMultiviewOverlay() }
-        if DebugLaunch.forcedQuickBarOverlay(in: debugArgs) { model.debugPresentQuickBarOverlay() }
-        if let kind = DebugLaunch.forcedTrackPicker(in: debugArgs) { model.debugPresentTrackPicker(kind) }
-        seedInfoOverlayIfRequested(model)
-        seedPanelOverlayIfRequested(model)
-        deliverKeymapProofKeyIfNeeded(model)
-        liveModel = model
-    }
-
-    func seedPanelOverlayIfRequested(_ model: LivePlaybackModel) {
-        guard DebugLaunch.forcedPanelOverlay(in: debugArgs) else { return }
-        let nowMs = Int(Date().timeIntervalSince1970 * 1_000)
-        try? env.programStore.upsertReplacing(
-            document: DebugLaunch.guideEpgDocument(nowMs: nowMs), keepDescriptions: false)
-        env.guideEpgStore.refresh()
-        model.debugPresentPanelOverlay()
-    }
-
-    func seedInfoOverlayIfRequested(_ model: LivePlaybackModel) {
-        guard DebugLaunch.forcedInfoOverlay(in: debugArgs) else { return }
-        let nowMs = Int(Date().timeIntervalSince1970 * 1_000)
-        try? env.programStore.upsertReplacing(
-            document: DebugLaunch.infoFixtureDocument(nowMs: nowMs), keepDescriptions: false)
-        env.guideEpgStore.refresh()
-        model.debugPresentInfoOverlay()
     }
 
     func seedDebugFixtures() {
