@@ -8,12 +8,14 @@ struct SettingsScreen: View {
     @Bindable var settings: SettingsStore
     let parental: ParentalStore
     let backup: SettingsBackupModel
+    let playlists: PlaylistsSettingsModel
     let makeVisibilityEditModel: () -> VisibilityEditModel
     let onClose: () -> Void
 
     var body: some View {
         NavigationStack {
             Form {
+                SettingsPlaylistsSectionView(model: playlists)
                 SettingsGeneralSectionView(settings: settings)
                 SettingsPlaybackSectionView(settings: settings)
                 SettingsGuideSectionView(settings: settings)

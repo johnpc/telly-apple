@@ -11,6 +11,7 @@ extension ContentView {
         if DebugLaunch.settingsRequested(in: debugArgs) {
             SettingsScreen(settings: env.settings, parental: env.parentalStore,
                            backup: env.makeSettingsBackupModel(),
+                           playlists: env.makePlaylistsSettingsModel(),
                            makeVisibilityEditModel: env.makeVisibilityEditModel, onClose: {})
         } else if DebugLaunch.forcedGuide(in: debugArgs) {
             guideDemo

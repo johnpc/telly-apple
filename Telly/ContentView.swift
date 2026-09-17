@@ -42,6 +42,7 @@ struct ContentView: View {
                                   makeChannelEditModel: env.makeChannelEditModel,
                                   makeVisibilityEditModel: env.makeVisibilityEditModel,
                                   makeBackupModel: env.makeSettingsBackupModel,
+                                  makePlaylistsSettingsModel: env.makePlaylistsSettingsModel,
                                   settings: env.settings,
                                   parental: env.parentalStore,
                                   onAdd: { adding = true })

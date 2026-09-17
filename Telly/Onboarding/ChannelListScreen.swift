@@ -16,6 +16,7 @@ struct ChannelListScreen: View {
     let makeChannelEditModel: (String?) -> ChannelEditModel
     let makeVisibilityEditModel: () -> VisibilityEditModel
     let makeBackupModel: () -> SettingsBackupModel
+    let makePlaylistsSettingsModel: () -> PlaylistsSettingsModel
     let settings: SettingsStore
     let parental: ParentalStore
     let onAdd: () -> Void
@@ -31,6 +32,7 @@ struct ChannelListScreen: View {
          makeChannelEditModel: @escaping (String?) -> ChannelEditModel,
          makeVisibilityEditModel: @escaping () -> VisibilityEditModel,
          makeBackupModel: @escaping () -> SettingsBackupModel,
+         makePlaylistsSettingsModel: @escaping () -> PlaylistsSettingsModel,
          settings: SettingsStore,
          parental: ParentalStore,
          onAdd: @escaping () -> Void) {
@@ -42,6 +44,7 @@ struct ChannelListScreen: View {
         self.makeChannelEditModel = makeChannelEditModel
         self.makeVisibilityEditModel = makeVisibilityEditModel
         self.makeBackupModel = makeBackupModel
+        self.makePlaylistsSettingsModel = makePlaylistsSettingsModel
         self.settings = settings
         self.parental = parental
         self.onAdd = onAdd
@@ -68,6 +71,7 @@ struct ChannelListScreen: View {
         .sheet(isPresented: $showSettings) {
             SettingsScreen(settings: settings, parental: parental,
                            backup: makeBackupModel(),
+                           playlists: makePlaylistsSettingsModel(),
                            makeVisibilityEditModel: makeVisibilityEditModel,
                            onClose: { showSettings = false })
         }

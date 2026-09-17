@@ -47,6 +47,17 @@ extension AppEnvironment {
                             reload: { [weak self] in self?.reload() })
     }
 
+    /// The Playlists management model composing the update/refresh/EPG-source and
+    /// per-playlist settings seams; its add flow reuses the wizard `AddPlaylistModel`
+    /// and a restore/refresh republishes the playlist feed via `reload`.
+    func makePlaylistsSettingsModel() -> PlaylistsSettingsModel {
+        PlaylistsSettingsModel(
+            playlistStore: playlistStore, epgSourceStore: epgSourceStore,
+            channelStore: channelStore, settings: settings,
+            updater: makePlaylistUpdater(), makeAddModel: makeAddPlaylistModel,
+            reload: { [weak self] in self?.reload() })
+    }
+
     /// The single group-filter wiring both the guide feed and the channel list
     /// route through (built once in `init` and shared) plus the live snapshot:
     /// resolves each channel's playlist URL, then drops channels in groups the
