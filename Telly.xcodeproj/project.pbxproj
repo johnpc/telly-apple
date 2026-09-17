@@ -234,6 +234,7 @@
 		774917085FD52A9CBA65C2A9 /* DebugLaunch+Playlists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE28F85D0BD470F8304DFB /* DebugLaunch+Playlists.swift */; };
 		784C70DDFB71012E585C8521 /* SettingsStore+Keymap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9BDBAE8FA910E236FBA6AB /* SettingsStore+Keymap.swift */; };
 		789A545F1ABB75F2793A3565 /* ChannelUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72C528BC282E97C463256B /* ChannelUserState.swift */; };
+		78B9E1A170B20C319D339FB1 /* ContentView+GroupsDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF592E12D247CBE565B944BC /* ContentView+GroupsDebug.swift */; };
 		79106D71D290518C6EAE0359 /* AssignEpgOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402AEC9C2C595DD24A328561 /* AssignEpgOptionsTests.swift */; };
 		7A09FCF0D7C73FCCA3D6881D /* CatchupPlaybackModel+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30171C303D58077B5E3EA0E6 /* CatchupPlaybackModel+Keys.swift */; };
 		7A25751B5AEC40A697291B37 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 26FF1BEB0FDDB1559EB47C2A /* GRDB */; };
@@ -363,6 +364,7 @@
 		BC36F7A2831CD7B6E53FE6E2 /* ChannelListScreen+Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84ED3DEE3D16442F212DB2C /* ChannelListScreen+Toolbar.swift */; };
 		BC73967567595C18BA8905FB /* BulkFlagGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F317F1D25E52FB3D52D93 /* BulkFlagGateTests.swift */; };
 		BCFB11239754F01ED6A753DF /* ZapKeepFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9918F82FE3092A6EDB17AF /* ZapKeepFrame.swift */; };
+		BE1C52F97BC9348882D37BE4 /* DebugLaunchGroupsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E8671EB63FBE6928515C8 /* DebugLaunchGroupsTests.swift */; };
 		BE8981AC7D8ADDE08A96BC5E /* DebugLaunch+Tracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C4F85C67FC25A6C20A50C1 /* DebugLaunch+Tracks.swift */; };
 		BF5C71431CD235D6BB848073 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639ED70131FE49348CC589BA /* WelcomeView.swift */; };
 		BF89588C111AF0CA591A3DB3 /* CatchupNeighboursTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258FBD49BA35D22891C36617 /* CatchupNeighboursTests.swift */; };
@@ -387,6 +389,7 @@
 		CB30C9B6A000822F78317F5C /* CatchupKeyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF176FE3EF534FD7AD9D5BAE /* CatchupKeyPolicy.swift */; };
 		CB5E0E5FA7469CEE83C3764B /* CatchupPlayabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF245F33FC8A9F5109D7FB5 /* CatchupPlayabilityTests.swift */; };
 		CB643C2ABB4656B1F12B2F20 /* MultiviewFocusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555749CAD749DFF6FD0DCC66 /* MultiviewFocusTests.swift */; };
+		CB782CBA229943CB18B262ED /* DebugLaunch+Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5411F8E5E14257BE015B8EB /* DebugLaunch+Groups.swift */; };
 		CEF05E53D629FE63C080634F /* PlayerStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCEDF66246565A56BBABD8B /* PlayerStateTests.swift */; };
 		CFAFA9E88C54924A6756EEA8 /* CatchupMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9B9F8A27FCA9D22DC433C2 /* CatchupMode.swift */; };
 		CFB88D89BFEBCEA71FBEA04A /* SettingsBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DB1B73EFD8E99EE52033F6 /* SettingsBackupManager.swift */; };
@@ -757,6 +760,7 @@
 		98BE28F85D0BD470F8304DFB /* DebugLaunch+Playlists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DebugLaunch+Playlists.swift"; sourceTree = "<group>"; };
 		992C51D1E60038A37B6CE407 /* WizardProcessedStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardProcessedStepView.swift; sourceTree = "<group>"; };
 		9951AC46164C96B97D2C153A /* SettingsGeneralSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsGeneralSectionView.swift; sourceTree = "<group>"; };
+		9A4E8671EB63FBE6928515C8 /* DebugLaunchGroupsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLaunchGroupsTests.swift; sourceTree = "<group>"; };
 		9A5A6C48D3900E38AE616489 /* AddPlaylistScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistScreen.swift; sourceTree = "<group>"; };
 		9B64C3E29648CC2C96ABCDFD /* TouchGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchGesture.swift; sourceTree = "<group>"; };
 		9B65F7134484496BE5BA0CD8 /* VisibilityEditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityEditModel.swift; sourceTree = "<group>"; };
@@ -899,6 +903,7 @@
 		E40456273D25E6E83E2F32FC /* TrackPickerRowsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPickerRowsTests.swift; sourceTree = "<group>"; };
 		E4EF55F10AC0B083FBFCA674 /* GuideTimeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideTimeHeaderView.swift; sourceTree = "<group>"; };
 		E52762083AB16B5014F7D52E /* ChannelListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListModel.swift; sourceTree = "<group>"; };
+		E5411F8E5E14257BE015B8EB /* DebugLaunch+Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DebugLaunch+Groups.swift"; sourceTree = "<group>"; };
 		E5576130AE8AFB06AFBB927F /* ProgramRecord+Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgramRecord+Entity.swift"; sourceTree = "<group>"; };
 		E55C9FCE4B6E63A1AF16ABF8 /* VlcDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VlcDelegateProxy.swift; sourceTree = "<group>"; };
 		E6756590E3BFCF47630A2F89 /* SeekMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekMath.swift; sourceTree = "<group>"; };
@@ -954,6 +959,7 @@
 		FE6A31B855DA60358B0C20F5 /* DebugGuideSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugGuideSeed.swift; sourceTree = "<group>"; };
 		FEA71F38E7ADF72CEB475D5A /* XmltvEpisodeNum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvEpisodeNum.swift; sourceTree = "<group>"; };
 		FEFCF4055097168A8529BFC4 /* EpgOffsetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgOffsetsTests.swift; sourceTree = "<group>"; };
+		FF592E12D247CBE565B944BC /* ContentView+GroupsDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+GroupsDebug.swift"; sourceTree = "<group>"; };
 		FF96FBB8273C878AC527486A /* AboutInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfoTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1045,6 +1051,7 @@
 				378960B36436AF8BCF69A520 /* DebugLaunch.swift */,
 				7B55A60F579FC84B6E386B68 /* DebugLaunch+Catchup.swift */,
 				471C286834EAD81CFB6B343F /* DebugLaunch+Channels.swift */,
+				E5411F8E5E14257BE015B8EB /* DebugLaunch+Groups.swift */,
 				48A615BF62891CC0EC011E72 /* DebugLaunch+History.swift */,
 				034F0BEDACCD430153C41CEE /* DebugLaunch+Parental.swift */,
 				98BE28F85D0BD470F8304DFB /* DebugLaunch+Playlists.swift */,
@@ -1141,6 +1148,7 @@
 				9105F63ED96290035385DB36 /* ContentView+Debug.swift */,
 				7F42D7B59194F0FF71DD9804 /* ContentView+DebugCatchup.swift */,
 				AE9FE057C27056761D2F4AFC /* ContentView+DebugTransport.swift */,
+				FF592E12D247CBE565B944BC /* ContentView+GroupsDebug.swift */,
 				60DF4D6AFE37B2BA42924CC6 /* ContentView+GuideDebug.swift */,
 				7E59CFAB43CDEE56FCE7DA99 /* ContentView+HistoryDebug.swift */,
 				B1DEB9AD942DAD153C2225E9 /* ContentView+KeymapDebug.swift */,
@@ -1386,6 +1394,7 @@
 				F26DB071FF6C76812D55E148 /* CustomGroupChannelsTests.swift */,
 				C709D1ADF1B373B5C6523FE8 /* CustomGroupStoreTests.swift */,
 				0C660A31E271C20D5E8DE577 /* DebugLaunchCatchupTests.swift */,
+				9A4E8671EB63FBE6928515C8 /* DebugLaunchGroupsTests.swift */,
 				92CFE551B9482F12532943BB /* DebugLaunchPlaylistsTests.swift */,
 				308A11641EDF6FD88F8F435D /* DebugLaunchSearchTests.swift */,
 				1C9B9A456FE757E51945DDFF /* DebugLaunchTests.swift */,
@@ -1865,6 +1874,7 @@
 				90C4A576858614396767B029 /* ContentView+Debug.swift in Sources */,
 				FE86E0032234390696066A42 /* ContentView+DebugCatchup.swift in Sources */,
 				5C1D2FDBE4952EB14FE194BC /* ContentView+DebugTransport.swift in Sources */,
+				78B9E1A170B20C319D339FB1 /* ContentView+GroupsDebug.swift in Sources */,
 				B9612E92945ECB9D6BBB70FD /* ContentView+GuideDebug.swift in Sources */,
 				FBF39CF56039195F722A0029 /* ContentView+HistoryDebug.swift in Sources */,
 				2DAAF472ACABEA73D4B6E04A /* ContentView+KeymapDebug.swift in Sources */,
@@ -1885,6 +1895,7 @@
 				81E88E930E0ECDD0DA879E98 /* DebugGuideSeed.swift in Sources */,
 				5160F0BA5E298E36912401D0 /* DebugLaunch+Catchup.swift in Sources */,
 				B8334807A251499F66BF5651 /* DebugLaunch+Channels.swift in Sources */,
+				CB782CBA229943CB18B262ED /* DebugLaunch+Groups.swift in Sources */,
 				F4C677AA894C6396AE1BEE4C /* DebugLaunch+History.swift in Sources */,
 				C80765FA9375905A639FFCE0 /* DebugLaunch+Parental.swift in Sources */,
 				774917085FD52A9CBA65C2A9 /* DebugLaunch+Playlists.swift in Sources */,
@@ -2151,6 +2162,7 @@
 				A87C88598BD7F30072D68411 /* CustomGroupChannelsTests.swift in Sources */,
 				701FBB951BEAF1A5BB1EACB2 /* CustomGroupStoreTests.swift in Sources */,
 				AC0738B6B581C6FCC079FEE8 /* DebugLaunchCatchupTests.swift in Sources */,
+				BE1C52F97BC9348882D37BE4 /* DebugLaunchGroupsTests.swift in Sources */,
 				8340A4709F50A272C92B5F5C /* DebugLaunchPlaylistsTests.swift in Sources */,
 				4120AC99A6B012157DBE897D /* DebugLaunchSearchTests.swift in Sources */,
 				1E9DD8701A4EA1F4C149BC30 /* DebugLaunchTests.swift in Sources */,

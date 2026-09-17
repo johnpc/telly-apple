@@ -16,6 +16,7 @@ struct ContentView: View {
     @State var catchupTarget: GuidePlaybackTarget?
     @State var catchupTransportModel: CatchupPlaybackModel?
     @State var playlistsModel: PlaylistsSettingsModel?
+    @State var groupsSeeded = false
     #endif
 
     var body: some View {

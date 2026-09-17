@@ -21,6 +21,8 @@ extension ContentView {
             historyDemo
         } else if DebugLaunch.searchDebugRequested(in: debugArgs) {
             searchDebug
+        } else if DebugLaunch.groupsDebugRequested(in: debugArgs) {
+            groupsDebug
         } else if DebugLaunch.parentalChallengeRequested(in: debugArgs) {
             parentalChallengeDemo
         } else if DebugLaunch.catchupTransportRequested(in: debugArgs) {
