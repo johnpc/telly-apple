@@ -12,4 +12,11 @@ extension PlaylistsSettingsModel {
     func makeEpgAssignmentModel() -> EpgAssignmentModel {
         EpgAssignmentModel(store: channelStore, programStore: ProgramStore(db: channelStore.db))
     }
+
+    /// The Manage-Groups editor model (backing ``ManageGroupsScreen``); the
+    /// ``CustomGroupStore`` is built from the shared database the carrier's
+    /// ``ChannelStore`` already holds, so no capped file grows (same trick).
+    func makeManageGroupsModel() -> ManageGroupsModel {
+        ManageGroupsModel(store: CustomGroupStore(db: channelStore.db))
+    }
 }
