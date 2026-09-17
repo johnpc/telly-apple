@@ -14,6 +14,7 @@
 		0A75F51F7F599229F03CD0D9 /* VodClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E22503CE8CD1384F47467B /* VodClassifier.swift */; };
 		0C2DC3AEBE3854DCECF37046 /* TrackPickerRowsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40456273D25E6E83E2F32FC /* TrackPickerRowsTests.swift */; };
 		0C4635D986E8377B2CAD2242 /* M3uParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */; };
+		0DB6E4476FFC31870802EA1C /* GuideCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F9AF8A7E4482215D6BDE8 /* GuideCellLayout.swift */; };
 		0DCB101173B1EA61BAB0A449 /* InfoOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A73F70445666AF15908186 /* InfoOverlayView.swift */; };
 		103F93E4BD9C092C639EED0D /* ResizeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973982C69D0CE8F39A827C5 /* ResizeMode.swift */; };
 		10CCD9A096D40B5E0ED04928 /* PlayerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DEEC797F8FD8F217AF3A3F /* PlayerEngine.swift */; };
@@ -112,7 +113,9 @@
 		A640D64B37238FCF71658322 /* DebugLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378960B36436AF8BCF69A520 /* DebugLaunch.swift */; };
 		A83D1A0B71757F063E093217 /* SurroundAudioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62A5C11F0C4AC40C0A76784 /* SurroundAudioTests.swift */; };
 		A8714A6573A02EE9246F8A77 /* ChannelImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909FB3CA9271132E09114364 /* ChannelImporter.swift */; };
+		AA784893C5F2258344B76AB2 /* GuideCellLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F4FD0068833D246DD8CBE5 /* GuideCellLayoutTests.swift */; };
 		AF0539C35A9BFAB68CBBD175 /* ResizeModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C4CA49516137B28B6B11A3 /* ResizeModeTests.swift */; };
+		B108596165E58467B27FF21F /* GuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11345FDE4D29891DA5870A7 /* GuideCell.swift */; };
 		B2C5AF7A257A7C9F7402C4FA /* ReconnectPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD5CB36B73671A605E222D /* ReconnectPolicy.swift */; };
 		B826F580BB07CFE4540034AB /* VlcStateMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987AD818A024549B071BDBE1 /* VlcStateMappingTests.swift */; };
 		B9CABC6DF3C487006321F321 /* CompressedXmltv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984EC2E8176F45E1711F5A76 /* CompressedXmltv.swift */; };
@@ -134,6 +137,7 @@
 		D57F7EEE3473CADE5F8B8233 /* WizardUrlStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E64A3BF540099347299DA30 /* WizardUrlStepView.swift */; };
 		D6C65C673266F9B870DD7A25 /* BottomOverlayBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9EE2683B6BB1E018BECF81 /* BottomOverlayBar.swift */; };
 		D71C9230D2880789ABE244FD /* ProgramProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DB5CF85ED90CFFD665E5FD /* ProgramProgressTests.swift */; };
+		D77ABF40C9AEB8B1D47DA90B /* GuideCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FAD1887FCB280E4FE50A9 /* GuideCellTests.swift */; };
 		D7BCFDE5CA75D89CC4B2F541 /* PlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7AA888B99B0C554E7A1E93 /* PlayerState.swift */; };
 		D831D7C36223E8AA438A33EB /* TvgOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B617FC4941B43EDF685A7A /* TvgOffset.swift */; };
 		D8D0C6B12DE3BB27D7284E57 /* EpgSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA66C1D5E7DA6CEA7B4038A5 /* EpgSchema.swift */; };
@@ -185,6 +189,7 @@
 		11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTimestampTests.swift; sourceTree = "<group>"; };
 		148680C9B2DB597FFB1FF7A0 /* ChannelZapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelZapper.swift; sourceTree = "<group>"; };
 		14AC8D5939183EFF23730549 /* PendingZap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingZap.swift; sourceTree = "<group>"; };
+		19F4FD0068833D246DD8CBE5 /* GuideCellLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCellLayoutTests.swift; sourceTree = "<group>"; };
 		1A9674BB6F6F4077491E2A06 /* ChannelZapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelZapperTests.swift; sourceTree = "<group>"; };
 		1B41BEA510401C8A0D0BE9FC /* UrlFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlFieldView.swift; sourceTree = "<group>"; };
 		1C9B9A456FE757E51945DDFF /* DebugLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLaunchTests.swift; sourceTree = "<group>"; };
@@ -192,6 +197,7 @@
 		217DA577D0F88D7385009AA2 /* PlaybackKeyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackKeyPolicy.swift; sourceTree = "<group>"; };
 		22C4CA49516137B28B6B11A3 /* ResizeModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeModeTests.swift; sourceTree = "<group>"; };
 		23427A4417240AC10B0B2C7E /* EpgDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgDownloaderTests.swift; sourceTree = "<group>"; };
+		290FAD1887FCB280E4FE50A9 /* GuideCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCellTests.swift; sourceTree = "<group>"; };
 		2AC541AF5A8B8B8429031427 /* XmltvTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTimestamp.swift; sourceTree = "<group>"; };
 		2AF81DF98D2526C259FB0CCE /* PanelTimeouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelTimeouts.swift; sourceTree = "<group>"; };
 		2C73DE1BC748EB029A1DAAEE /* Telly.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Telly.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -303,7 +309,9 @@
 		D74EFF331827B16223EC8123 /* PlaylistStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistStoreTests.swift; sourceTree = "<group>"; };
 		D9DB5CF85ED90CFFD665E5FD /* ProgramProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramProgressTests.swift; sourceTree = "<group>"; };
 		DC8565DC3A8580F8A5606B52 /* RefreshScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshScheduler.swift; sourceTree = "<group>"; };
+		E11345FDE4D29891DA5870A7 /* GuideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCell.swift; sourceTree = "<group>"; };
 		E22365783B30FDCD895BCC09 /* EpgDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgDownloader.swift; sourceTree = "<group>"; };
+		E27F9AF8A7E4482215D6BDE8 /* GuideCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCellLayout.swift; sourceTree = "<group>"; };
 		E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpPlaylistFetcher.swift; sourceTree = "<group>"; };
 		E40456273D25E6E83E2F32FC /* TrackPickerRowsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPickerRowsTests.swift; sourceTree = "<group>"; };
 		E5576130AE8AFB06AFBB927F /* ProgramRecord+Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgramRecord+Entity.swift"; sourceTree = "<group>"; };
@@ -507,6 +515,8 @@
 				3A722ACF8D5F5A0C9BB05E30 /* EpgRefresherTests.swift */,
 				80CDEC3595A9E4BF0A4E7B88 /* EpgRepositoryTests.swift */,
 				8957794BBE325137D232EB25 /* FakePlayerEngine.swift */,
+				19F4FD0068833D246DD8CBE5 /* GuideCellLayoutTests.swift */,
+				290FAD1887FCB280E4FE50A9 /* GuideCellTests.swift */,
 				48A9F5FFF68774C764EFF990 /* GuideEpgStoreTests.swift */,
 				313E3F562A89B95A002594FD /* GuideGeometryTests.swift */,
 				33BDCF967A7D0A75E987266A /* GuideTimelineTests.swift */,
@@ -550,6 +560,8 @@
 				C3BE5846F0E695DA3565F177 /* EpgOffsets.swift */,
 				4AA958C21A27348FF819BA98 /* EpgRefresher.swift */,
 				EC46962DA6213D6AE285ACAB /* EpgRepository.swift */,
+				E11345FDE4D29891DA5870A7 /* GuideCell.swift */,
+				E27F9AF8A7E4482215D6BDE8 /* GuideCellLayout.swift */,
 				6F34F44A1997C1444F50B521 /* GuideGeometry.swift */,
 				63440A3C2F357D9DC500DFD4 /* GuideTimeline.swift */,
 				BD3023578C5A5280AC85EB12 /* GuideWindow.swift */,
@@ -779,6 +791,8 @@
 				C75EA0E1C2D0EDADD9AD16A7 /* EpgRefresher.swift in Sources */,
 				02953CE8E6810FEC755C5071 /* EpgRepository.swift in Sources */,
 				D8D0C6B12DE3BB27D7284E57 /* EpgSchema.swift in Sources */,
+				B108596165E58467B27FF21F /* GuideCell.swift in Sources */,
+				0DB6E4476FFC31870802EA1C /* GuideCellLayout.swift in Sources */,
 				451E456E72C6DE0ABA1D6575 /* GuideEpgStore.swift in Sources */,
 				4A4B1FFD4534FB07FA6FA5FC /* GuideGeometry.swift in Sources */,
 				4C62F1A6C8E975C47A08748D /* GuideTimeline.swift in Sources */,
@@ -869,6 +883,8 @@
 				DAC26A6F75D9F8CA896AF342 /* EpgRefresherTests.swift in Sources */,
 				01C4782F7461B5382BAEB201 /* EpgRepositoryTests.swift in Sources */,
 				F64CD4122F3CDE918FBC24E8 /* FakePlayerEngine.swift in Sources */,
+				AA784893C5F2258344B76AB2 /* GuideCellLayoutTests.swift in Sources */,
+				D77ABF40C9AEB8B1D47DA90B /* GuideCellTests.swift in Sources */,
 				C5B846D2AB5BC86E4AE6469A /* GuideEpgStoreTests.swift in Sources */,
 				657B8CAF92D1C6B41CB45225 /* GuideGeometryTests.swift in Sources */,
 				99DA6631F0EFAA45436CF7D9 /* GuideTimelineTests.swift in Sources */,
