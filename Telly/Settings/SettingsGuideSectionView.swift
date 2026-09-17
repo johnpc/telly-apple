@@ -1,9 +1,12 @@
 import SwiftUI
 
 /// The "Guide Data" settings group: how often the EPG refreshes ("Never" when
-/// disabled) and how many days of ended programmes to keep before trimming.
+/// disabled), how many days of ended programmes to keep, an app-wide "refresh
+/// EPG when a playlist changes" toggle, and a manual "Update EPG now" action.
 struct SettingsGuideSectionView: View {
     @Bindable var settings: SettingsStore
+    /// The forced EPG refresh reached by "Update EPG now" (injected by the host).
+    let updateEpgNow: () async -> Void
 
     var body: some View {
         Section("Guide Data") {
@@ -17,6 +20,8 @@ struct SettingsGuideSectionView: View {
                     Text("\(days) d").tag(days)
                 }
             }
+            Toggle("Update on Playlists Change", isOn: $settings.updateOnPlaylistsChange)
+            Button("Update EPG Now") { Task { await updateEpgNow() } }
         }
     }
 }

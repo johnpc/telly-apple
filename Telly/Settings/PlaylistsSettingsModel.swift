@@ -19,11 +19,13 @@ final class PlaylistsSettingsModel {
     let settings: SettingsStore
     let makeAddModel: () -> AddPlaylistModel
     private let updater: PlaylistUpdater
+    let refreshEpg: () async -> Void
     private let reload: () -> Void
 
     init(playlistStore: PlaylistStore, epgSourceStore: EpgSourceStore,
          channelStore: ChannelStore, settings: SettingsStore,
          updater: PlaylistUpdater, makeAddModel: @escaping () -> AddPlaylistModel,
+         refreshEpg: @escaping () async -> Void = {},
          reload: @escaping () -> Void) {
         self.playlistStore = playlistStore
         self.epgSourceStore = epgSourceStore
@@ -31,17 +33,25 @@ final class PlaylistsSettingsModel {
         self.settings = settings
         self.updater = updater
         self.makeAddModel = makeAddModel
+        self.refreshEpg = refreshEpg
         self.reload = reload
     }
 
     /// Re-reads the stored playlists into the observed feed.
     func load() { playlists = (try? playlistStore.all()) ?? [] }
 
-    /// Re-fetches one playlist, then republishes the list and channel feeds.
-    func updateNow(_ url: String) async { _ = await updater.update(url); refreshed() }
+    /// Re-fetches one playlist, republishes the feeds, then refreshes the EPG
+    /// when the change succeeded and "Update on playlists change" is enabled.
+    func updateNow(_ url: String) async {
+        let updated = await updater.update(url)
+        refreshed(); await maybeRefreshEpg(anyUpdated: updated)
+    }
 
-    /// Re-fetches every stored playlist in turn.
-    func updateAll() async { _ = await updater.updateAll(playlists.map(\.url)); refreshed() }
+    /// Re-fetches every stored playlist, then conditionally refreshes the EPG.
+    func updateAll() async {
+        let updated = await updater.updateAll(playlists.map(\.url))
+        refreshed(); await maybeRefreshEpg(anyUpdated: !updated.isEmpty)
+    }
 
     /// Deletes a playlist and cascades: its channels (via the store), its custom
     /// EPG sources, and every preference key it owned.

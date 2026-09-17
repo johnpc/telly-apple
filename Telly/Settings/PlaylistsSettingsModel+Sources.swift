@@ -55,4 +55,18 @@ extension PlaylistsSettingsModel {
     }
 
     func removeSource(id: Int64) { try? epgSourceStore.remove(id: id) }
+
+    // MARK: App-wide EPG refresh
+
+    /// The "Update EPG now" action: an unconditional forced EPG refresh.
+    func refreshEpgNow() async { await refreshEpg() }
+
+    /// Forces an EPG refresh iff the pure ``EpgRefreshPolicy`` says a completed
+    /// update warrants one under the current app-wide toggle — decision stays
+    /// testable and out of the view/`@Observable`.
+    func maybeRefreshEpg(anyUpdated: Bool) async {
+        guard EpgRefreshPolicy.shouldRefreshAfterPlaylistUpdate(
+            anyUpdated: anyUpdated, updateOnChange: settings.updateOnPlaylistsChange) else { return }
+        await refreshEpg()
+    }
 }

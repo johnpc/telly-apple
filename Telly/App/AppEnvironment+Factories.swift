@@ -22,6 +22,14 @@ extension AppEnvironment {
         guideEpgStore.refresh()
     }
 
+    /// Forced EPG refresh — the "Update EPG now" action and the post-playlist
+    /// -update trigger: re-fetches every source regardless of age, then
+    /// republishes the guide feed so freshly-imported programmes surface.
+    func refreshEpgNow() async {
+        try? await makeEpgRefresher().refreshAllNow()
+        guideEpgStore.refresh()
+    }
+
     /// A fresh VLC-backed playback engine per presented player.
     func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine() }
 

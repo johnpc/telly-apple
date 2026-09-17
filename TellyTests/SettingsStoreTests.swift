@@ -14,7 +14,24 @@ struct SettingsStoreTests {
         #expect(s.panelTimeoutSeconds == SettingsDefaults.panelTimeoutSeconds)
         #expect(s.epgRefreshHours == SettingsDefaults.epgRefreshHours)
         #expect(s.epgKeepPastDays == SettingsDefaults.epgKeepPastDays)
+        #expect(s.updateOnPlaylistsChange == SettingsDefaults.updateOnPlaylistsChange)
     }
+
+    @Test func updateOnPlaylistsChangeRoundTrips() {
+        let s = store()
+        s.updateOnPlaylistsChange = true
+        #expect(s.updateOnPlaylistsChange == true)
+        #expect(store2(s).updateOnPlaylistsChange == true)   // persisted through backing
+    }
+
+    @Test func resetRestoresUpdateOnPlaylistsChange() {
+        let s = store()
+        s.updateOnPlaylistsChange = true
+        s.resetToDefaults()
+        #expect(s.updateOnPlaylistsChange == SettingsDefaults.updateOnPlaylistsChange)
+    }
+
+    private func store2(_ from: SettingsStore) -> SettingsStore { SettingsStore(backing: from.backing) }
 
     @Test func use24hClockRoundTrips() {
         let s = store()

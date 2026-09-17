@@ -29,7 +29,10 @@ struct PlaylistsSettingsModelTests {
         let channels: ChannelStore
         let settings: SettingsStore
         let reloads: () -> Int
+        let epgRefreshes: () -> Int
     }
+
+    private final class Counter { var value = 0 }
 
     private func rig(fetch: @escaping (String) async throws -> String = { _ in m3u(["A"]) }) throws -> Rig {
         let db = try AppDatabase.makeInMemory()
@@ -38,13 +41,14 @@ struct PlaylistsSettingsModelTests {
         let channels = ChannelStore(db: db)
         let settings = SettingsStore(backing: InMemoryKeyValueStore())
         var count = 0
+        let epg = Counter()
         let model = PlaylistsSettingsModel(
             playlistStore: store, epgSourceStore: epgStore, channelStore: channels,
             settings: settings, updater: PlaylistUpdater(fetch: fetch, store: store, now: { 1 }),
             makeAddModel: { AddPlaylistModel(fetch: fetch, store: store, now: { 1 }) },
-            reload: { count += 1 })
+            refreshEpg: { epg.value += 1 }, reload: { count += 1 })
         return Rig(model: model, store: store, epgStore: epgStore, channels: channels,
-                   settings: settings, reloads: { count })
+                   settings: settings, reloads: { count }, epgRefreshes: { epg.value })
     }
 
     @discardableResult
@@ -77,6 +81,30 @@ struct PlaylistsSettingsModelTests {
         await r.model.updateAll()
         #expect(try r.channels.channels(playlistId: Int(id)).count == 2)
         #expect(r.reloads() >= 1)
+    }
+
+    @Test func updateTriggersEpgRefreshWhenToggleOn() async throws {
+        let r = try rig()
+        try seedA(r)
+        r.settings.updateOnPlaylistsChange = true
+        await r.model.updateNow(a)
+        #expect(r.epgRefreshes() == 1)
+        await r.model.updateAll()
+        #expect(r.epgRefreshes() == 2)
+    }
+
+    @Test func updateSkipsEpgRefreshWhenToggleOff() async throws {
+        let r = try rig()
+        try seedA(r)
+        await r.model.updateNow(a)          // toggle defaults off
+        await r.model.updateAll()
+        #expect(r.epgRefreshes() == 0)
+    }
+
+    @Test func refreshEpgNowAlwaysRefreshes() async throws {
+        let r = try rig()
+        await r.model.refreshEpgNow()       // unconditional, even with toggle off
+        #expect(r.epgRefreshes() == 1)
     }
 
     @Test func changeUrlSuccessRekeysSettingsAndSources() throws {

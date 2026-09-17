@@ -14,6 +14,7 @@ final class SettingsStore {
     private var rawTimeout: Int
     private var rawRefresh: Int
     private var rawKeep: Int
+    private var rawUpdateOnPlaylistsChange: Bool
     var rawKeyOk: Int
     var rawKeyUpDown: Int
     var rawKeyLeftRight: Int
@@ -26,6 +27,8 @@ final class SettingsStore {
         rawTimeout = backing.readInt(SettingsKey.panelTimeoutSeconds.rawValue) ?? SettingsDefaults.panelTimeoutSeconds
         rawRefresh = backing.readInt(SettingsKey.epgRefreshHours.rawValue) ?? SettingsDefaults.epgRefreshHours
         rawKeep = backing.readInt(SettingsKey.epgKeepPastDays.rawValue) ?? SettingsDefaults.epgKeepPastDays
+        rawUpdateOnPlaylistsChange = backing.readBool(SettingsKey.updateOnPlaylistsChange.rawValue)
+            ?? SettingsDefaults.updateOnPlaylistsChange
         rawKeyOk = backing.readInt(SettingsKey.playerKeyOk.rawValue) ?? SettingsDefaults.playerKeyOk
         rawKeyUpDown = backing.readInt(SettingsKey.playerKeyUpDown.rawValue) ?? SettingsDefaults.playerKeyUpDown
         rawKeyLeftRight = backing.readInt(SettingsKey.playerKeyLeftRight.rawValue) ?? SettingsDefaults.playerKeyLeftRight
@@ -60,6 +63,15 @@ final class SettingsStore {
         set { rawKeep = max(0, newValue); backing.writeInt(rawKeep, SettingsKey.epgKeepPastDays.rawValue) }
     }
 
+    /// Force a full EPG refresh after any playlist changes (default: false).
+    var updateOnPlaylistsChange: Bool {
+        get { rawUpdateOnPlaylistsChange }
+        set {
+            rawUpdateOnPlaylistsChange = newValue
+            backing.writeBool(newValue, SettingsKey.updateOnPlaylistsChange.rawValue)
+        }
+    }
+
     /// Restores every setting to its factory default by clearing the store.
     func resetToDefaults() {
         SettingsKey.allCases.forEach { backing.remove($0.rawValue) }
@@ -67,6 +79,7 @@ final class SettingsStore {
         rawTimeout = SettingsDefaults.panelTimeoutSeconds
         rawRefresh = SettingsDefaults.epgRefreshHours
         rawKeep = SettingsDefaults.epgKeepPastDays
+        rawUpdateOnPlaylistsChange = SettingsDefaults.updateOnPlaylistsChange
         rawKeyOk = SettingsDefaults.playerKeyOk
         rawKeyUpDown = SettingsDefaults.playerKeyUpDown
         rawKeyLeftRight = SettingsDefaults.playerKeyLeftRight

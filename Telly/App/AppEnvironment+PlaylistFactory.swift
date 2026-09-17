@@ -55,6 +55,7 @@ extension AppEnvironment {
             playlistStore: playlistStore, epgSourceStore: epgSourceStore,
             channelStore: channelStore, settings: settings,
             updater: makePlaylistUpdater(), makeAddModel: makeAddPlaylistModel,
+            refreshEpg: { [weak self] in await self?.refreshEpgNow() },
             reload: { [weak self] in self?.reload() })
     }
 
