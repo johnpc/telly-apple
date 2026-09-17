@@ -14,8 +14,14 @@ final class ChannelListModel {
     /// The name/number search query; a non-empty value searches globally,
     /// overriding the selected group (see ``rows``).
     var query = ""
+    /// Hides channels in disabled playlist groups; identity unless the composition
+    /// root wires the shared ``PlaylistGroupFilter`` in (default keeps every channel).
+    private let filter: ([ChannelEntity]) -> [ChannelEntity]
 
-    init(store: ChannelStore) { self.store = store }
+    init(store: ChannelStore, filter: @escaping ([ChannelEntity]) -> [ChannelEntity] = { $0 }) {
+        self.store = store
+        self.filter = filter
+    }
 
     /// The group names offered by the picker, with hidden pseudo-groups dropped.
     var groups: [String] { visibility.filter(ChannelListGroups.groupNames(channels)) }
@@ -29,7 +35,7 @@ final class ChannelListModel {
     }
 
     /// (Re)loads the visible channels from the store.
-    func load() { channels = (try? store.visibleChannels()) ?? [] }
+    func load() { channels = filter((try? store.visibleChannels()) ?? []) }
 
     /// Switches the active group filter.
     func select(_ group: String) { selectedGroup = group }

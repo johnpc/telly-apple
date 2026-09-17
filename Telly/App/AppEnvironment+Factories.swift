@@ -56,7 +56,7 @@ extension AppEnvironment {
     ) -> LivePlaybackModel {
         let key = "lastChannelId"
         let defaults = UserDefaults.standard
-        let channels = (try? channelStore.visibleChannels()) ?? []
+        let channels = filteredVisibleChannels()
         return LivePlaybackModel(
             engine: engineFactory(),
             channels: channels,

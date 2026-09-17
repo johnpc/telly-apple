@@ -35,11 +35,17 @@ final class AppEnvironment {
         channelStore = ChannelStore(db: database)
         programStore = ProgramStore(db: database)
         watchHistoryStore = WatchHistoryStore(db: database)
-        guideEpgStore = GuideEpgStore(
-            channelStore: channelStore, repository: EpgRepository(store: programStore), now: now)
-        channelListModel = ChannelListModel(store: channelStore)
         let resolvedSettings = settings ?? .standard
         self.settings = resolvedSettings
+        // One shared group-filter closure both feeds route through, so the
+        // wiring lives in a single place (the duplication gate flags copies).
+        let groupFilter: ([ChannelEntity]) -> [ChannelEntity] = { [playlistStore] channels in
+            AppEnvironment.groupFiltered(channels, playlistStore: playlistStore, settings: resolvedSettings)
+        }
+        guideEpgStore = GuideEpgStore(
+            channelStore: channelStore, repository: EpgRepository(store: programStore),
+            now: now, filter: groupFilter)
+        channelListModel = ChannelListModel(store: channelStore, filter: groupFilter)
         parentalStore = ParentalStore(secret: KeychainSecretStore(), backing: resolvedSettings.backing)
         reload()
     }

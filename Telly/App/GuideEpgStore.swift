@@ -11,21 +11,26 @@ final class GuideEpgStore {
     private let channelStore: ChannelStore
     private let repository: EpgRepository
     private let now: () -> Int
+    /// Hides channels in disabled playlist groups; identity unless the composition
+    /// root wires the shared ``PlaylistGroupFilter`` in (default keeps every channel).
+    private let filter: ([ChannelEntity]) -> [ChannelEntity]
 
     /// Latest now/next keyed by channel EPG id; empty until the first `refresh`.
     private(set) var nowNextByChannel: [String: NowNext] = [:]
 
-    init(channelStore: ChannelStore, repository: EpgRepository, now: @escaping () -> Int) {
+    init(channelStore: ChannelStore, repository: EpgRepository, now: @escaping () -> Int,
+         filter: @escaping ([ChannelEntity]) -> [ChannelEntity] = { $0 }) {
         self.channelStore = channelStore
         self.repository = repository
         self.now = now
+        self.filter = filter
     }
 
     /// Re-queries now/next for every visible channel at the current clock,
     /// applying each channel's EPG time offset. A read failure yields an empty
     /// feed rather than propagating — the guide simply shows no programme info.
     func refresh() {
-        let channels = (try? channelStore.visibleChannels()) ?? []
+        let channels = filter((try? channelStore.visibleChannels()) ?? [])
         let epgIds = channels.compactMap(\.epgId)
         let offsets = EpgOffsets.map(for: channels)
         nowNextByChannel = (try? repository.nowNext(

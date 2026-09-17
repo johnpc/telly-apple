@@ -30,4 +30,24 @@ extension AppEnvironment {
         _ = await makePlaylistRefresher().refreshOnStart()
         reload()
     }
+
+    /// The single group-filter wiring both the guide feed and the channel list
+    /// route through (built once in `init` and shared) plus the live snapshot:
+    /// resolves each channel's playlist URL, then drops channels in groups the
+    /// user disabled via the keyed setting. Centralised so the wiring exists once.
+    static func groupFiltered(_ channels: [ChannelEntity],
+                              playlistStore: PlaylistStore,
+                              settings: SettingsStore) -> [ChannelEntity] {
+        let index = PlaylistUrlIndex.build((try? playlistStore.all()) ?? [])
+        return PlaylistGroupFilter.visible(
+            channels, playlistUrlById: index,
+            groupEnabled: { settings.groupEnabled(url: $0, group: $1) })
+    }
+
+    /// The visible channels with disabled playlist groups removed — the live
+    /// player's snapshot seam (`makeLivePlaybackModel`).
+    func filteredVisibleChannels() -> [ChannelEntity] {
+        Self.groupFiltered((try? channelStore.visibleChannels()) ?? [],
+                           playlistStore: playlistStore, settings: settings)
+    }
 }
