@@ -9,6 +9,18 @@ struct ContentView: View {
     @State private var adding = false
 
     var body: some View {
+        #if DEBUG
+        if let url = DebugLaunch.autoplayUrl(in: ProcessInfo.processInfo.arguments) {
+            PlaybackScreen(streamUrl: url, engine: env.makeEngine())
+        } else {
+            mainContent.task { seedDebugFixtures() }
+        }
+        #else
+        mainContent
+        #endif
+    }
+
+    private var mainContent: some View {
         Group {
             if env.playlists.isEmpty {
                 WelcomeView(onAdd: { adding = true })
@@ -25,6 +37,15 @@ struct ContentView: View {
             }
         }
     }
+
+    #if DEBUG
+    private func seedDebugFixtures() {
+        DebugLaunch.seedIfRequested(into: env.playlistStore,
+                                    args: ProcessInfo.processInfo.arguments,
+                                    now: { Int64(Date().timeIntervalSince1970 * 1000) })
+        env.reload()
+    }
+    #endif
 }
 
 #Preview {

@@ -1,0 +1,53 @@
+#if DEBUG
+import Testing
+@testable import Telly
+
+/// The DEBUG screenshot harness's pure seeding logic: launch-arg parsing, the
+/// fixture playlist shape, and the idempotent seed into a real in-memory store.
+struct DebugLaunchTests {
+    @Test func autoplayUrlReadsTheFlagValue() {
+        let args = ["Telly", "-tellyAutoplayUrl", "http://127.0.0.1:8000/news.ts"]
+        #expect(DebugLaunch.autoplayUrl(in: args) == "http://127.0.0.1:8000/news.ts")
+    }
+
+    @Test func autoplayUrlIsNilWhenFlagAbsent() {
+        #expect(DebugLaunch.autoplayUrl(in: ["Telly"]) == nil)
+    }
+
+    @Test func autoplayUrlIsNilWhenFlagHasNoValue() {
+        #expect(DebugLaunch.autoplayUrl(in: ["Telly", "-tellyAutoplayUrl"]) == nil)
+    }
+
+    @Test func fixturePlaylistHasThreeChannelsRootedAtBase() {
+        let pl = DebugLaunch.fixturePlaylist(base: "http://127.0.0.1:8000/")
+        #expect(pl.epgURL == nil)
+        #expect(pl.channels.map(\.title) == ["News HD", "Movie Time", "Dead Channel"])
+        #expect(pl.channels.map(\.streamURL) == [
+            "http://127.0.0.1:8000/news.ts",
+            "http://127.0.0.1:8000/movie.mp4",
+            "http://127.0.0.1:8000/dead.ts",
+        ])
+        #expect(pl.channels.map(\.groupTitle) == ["Live", "VOD", "Live"])
+    }
+
+    @Test func seedIfRequestedAddsThePlaylistWhenFlagPresent() throws {
+        let db = try AppDatabase.makeInMemory()
+        let store = PlaylistStore(db: db)
+        DebugLaunch.seedIfRequested(into: store,
+                                    args: ["Telly", "-tellySeedBase", "http://127.0.0.1:8000/"],
+                                    now: { 42 })
+        let stored = try store.all()
+        #expect(stored.count == 1)
+        #expect(stored[0].name == "Fixtures")
+        #expect(stored[0].url == "http://127.0.0.1:8000/playlist.m3u")
+        #expect(stored[0].lastUpdatedMs == 42)
+    }
+
+    @Test func seedIfRequestedIsANoOpWithoutTheFlag() throws {
+        let db = try AppDatabase.makeInMemory()
+        let store = PlaylistStore(db: db)
+        DebugLaunch.seedIfRequested(into: store, args: ["Telly"], now: { 0 })
+        #expect(try store.all().isEmpty)
+    }
+}
+#endif

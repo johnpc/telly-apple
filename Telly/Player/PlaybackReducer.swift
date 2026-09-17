@@ -48,4 +48,23 @@ struct PlaybackReducer {
         state = .error(message)
         return .fail
     }
+
+    /// Pure raw-VLC-state → ``PlayerState`` mapping — the single tested seam the
+    /// VLC adapter feeds every state change through. Advances `state` and, only
+    /// for `.error`, returns the ``ErrorEffect`` the adapter must perform;
+    /// `.paused` leaves `state` unchanged (the adapter tracks the paused flag).
+    /// `.esAdded` is mapped to playing so a rendering stream leaves buffering
+    /// even when VLCKit never emits a clean `.playing`.
+    @discardableResult
+    mutating func onVlcState(_ vlc: VlcPlaybackState) -> ErrorEffect? {
+        switch vlc {
+        case .opening, .buffering: onBuffering()
+        case .esAdded, .playing: onPlaying()
+        case .ended: onEnded()
+        case .stopped: onStopped()
+        case .paused: break
+        case .error: return onError("Playback failed")
+        }
+        return nil
+    }
 }

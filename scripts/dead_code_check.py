@@ -36,6 +36,9 @@ ENTRY_POINTS = {
     # UIKit / delegate witnesses
     "application", "sceneDidBecomeActive", "textFieldDidChangeSelection",
     "textField", "textInputMode",
+    # ObjC VLCMediaPlayerDelegate callback invoked by VLCKit via the runtime
+    # (VlcDelegateProxy is set as player.delegate) — no static call site exists.
+    "mediaPlayerStateChanged",
     # GRDB persistence-record witness (called by GRDB on insert, not by us)
     "didInsert",
     # XCTest lifecycle
