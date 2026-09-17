@@ -16,6 +16,9 @@ protocol PlayerEngine {
     /// Current playback position, ms, within a finite (catch-up) stream.
     var positionMs: Int { get }
 
+    /// Total length of a finite (VOD / catch-up) stream, ms; 0 while unknown.
+    var durationMs: Int { get }
+
     /// Tunes the given stream URL and begins playback (fresh reconnect budget).
     func load(_ streamUrl: String)
     func stop()
@@ -30,4 +33,10 @@ protocol PlayerEngine {
 
     /// Mutes or unmutes this engine's audio; multiview mutes all but the active.
     func setMuted(_ muted: Bool)
+}
+
+/// A `0` duration default so live-only conformers (and existing fakes) need not
+/// implement it; the VLCKit adapter and finite-stream tests override it.
+extension PlayerEngine {
+    var durationMs: Int { 0 }
 }

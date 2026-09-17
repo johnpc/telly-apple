@@ -9,6 +9,8 @@ import VLCKitSPM
 extension VLCKitPlayerEngine {
     var positionMs: Int { Int(player.time.intValue) }
 
+    var durationMs: Int { Int(player.media?.length.intValue ?? 0) }
+
     func pause() { player.pause() }
 
     func resume() { player.play() }

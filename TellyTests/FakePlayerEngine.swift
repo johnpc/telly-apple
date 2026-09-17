@@ -12,6 +12,7 @@ final class FakePlayerEngine: PlayerEngine {
     var video: VideoDetails?
     var paused = false
     var positionMs = 0
+    var durationMs = 0
     var tracks: TrackFacade = NoTracks()
 
     private(set) var loaded: [String] = []
