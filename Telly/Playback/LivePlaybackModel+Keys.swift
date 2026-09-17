@@ -37,6 +37,14 @@ extension LivePlaybackModel {
         case let .popTo(back):
             activePicker = nil
             visibility.set(back)
+        case .openMultiview:
+            openMultiview()
+        case let .moveMultiviewActive(direction):
+            moveMultiviewActive(direction)
+        case .promoteMultiviewActive:
+            promoteMultiviewActive()
+        case .exitMultiview:
+            exitMultiview()
         case .nothing:
             break
         }

@@ -18,6 +18,7 @@ struct LivePlaybackScreen: View {
             infoOverlay
             quickBarOverlay
             panelOverlay
+            multiviewOverlay
             trackPickerOverlay
             stateOverlay
             #if !os(tvOS)
@@ -32,25 +33,19 @@ struct LivePlaybackScreen: View {
             }
         }
         .onDisappear { model.close() }
-        #if os(tvOS)
-        .focusable()
-        .onMoveCommand { direction in
-            switch direction {
-            case .up: _ = model.onKey(.up)
-            case .down: _ = model.onKey(.down)
-            case .left: _ = model.onKey(.left)
-            case .right: _ = model.onKey(.right)
-            @unknown default: break
-            }
-        }
-        .onTapGesture { _ = model.onKey(.ok) }
-        .onExitCommand { _ = model.onKey(.back) }
-        #else
+        .playbackKeyForwarder(model)
+        #if !os(tvOS)
         .gesture(DragGesture(minimumDistance: 0).onEnded { v in
             let g = TouchGesture.swipe(dx: v.translation.width, dy: v.translation.height)
             _ = model.onKey(TouchKeyMap.key(for: g, overlay: model.overlay))
         })
         #endif
+    }
+
+    @ViewBuilder private var multiviewOverlay: some View {
+        if case .multiview = model.overlay, let session = model.multiview {
+            MultiviewGridView(session: session)
+        }
     }
 
     @ViewBuilder private var surface: some View {

@@ -1,7 +1,7 @@
 import Foundation
 
 /// A D-pad move within the multiview grid.
-enum MultiviewDirection { case up, down, left, right }
+enum MultiviewDirection: Equatable, Sendable { case up, down, left, right }
 
 /// Pure 2D focus navigation over the multiview grid: steps the active tile one
 /// cell in `direction` with floor-mod wraparound at every edge, skipping index

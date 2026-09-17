@@ -24,6 +24,9 @@ indirect enum PlaybackOverlay: Equatable, Sendable {
     case panel
     /// Right-side sheet from long-OK on a panel row; BACK returns to the panel.
     case channelMenu(channelId: Int64)
+    /// The N-up multiview grid over the dimmed video; OK promotes the active
+    /// tile to fullscreen, MENU/BACK exit back to single-stream playback.
+    case multiview
     /// A screen pushed on top of another overlay; BACK pops to `back`.
     case pushed(back: PlaybackOverlay)
 }

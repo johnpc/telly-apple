@@ -12,6 +12,10 @@ import Foundation
 @Observable
 final class LivePlaybackModel {
     let engine: any PlayerEngine
+    /// Mints a fresh engine per multiview tile; defaulted to the real VLCKit one.
+    let makeEngine: @MainActor () -> any PlayerEngine
+    /// The live multiview session while the `.multiview` overlay is up, else nil.
+    var multiview: MultiviewSession?
     let channels: [ChannelEntity]
     // `internal` setter (not `private(set)`): `tune`/`start` live in sibling
     // extension files in this module and must assign it.
@@ -45,6 +49,7 @@ final class LivePlaybackModel {
 
     init(engine: any PlayerEngine,
          channels: [ChannelEntity],
+         makeEngine: @escaping @MainActor () -> any PlayerEngine = { VLCKitPlayerEngine() },
          keymap: PlayerKeymap = PlayerKeymap(),
          timeouts: PanelTimeouts = .default,
          now: @escaping () -> Int,
@@ -54,6 +59,7 @@ final class LivePlaybackModel {
          nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil }) {
         self.engine = engine
         self.channels = channels
+        self.makeEngine = makeEngine
         self.keymap = keymap
         self.timeouts = timeouts
         self.now = now

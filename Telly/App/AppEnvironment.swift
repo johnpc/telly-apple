@@ -86,6 +86,7 @@ final class AppEnvironment {
         return LivePlaybackModel(
             engine: makeEngine(),
             channels: (try? channelStore.visibleChannels()) ?? [],
+            makeEngine: { self.makeEngine() },
             now: { Int(Date().timeIntervalSince1970 * 1_000) },
             persistLastChannel: { defaults.set($0, forKey: key) },
             loadLastChannel: { defaults.object(forKey: key) as? Int },

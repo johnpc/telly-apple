@@ -29,7 +29,23 @@ enum PlaybackKeyPolicy {
         case .zapInfo: return withinZap(key, keymap)
         case .channelMenu: return dismissalOnly(key, .backToPanel)
         case .pushed(let back): return dismissalOnly(key, .popTo(back))
-        case .quickBar, .panel: return dismissalOnly(key, .dismiss)
+        // Quick bar is display-only in v1: OK is the documented multiview entry
+        // (until a quick-bar-selection slice lands); BACK still dismisses.
+        case .quickBar: return key == .ok ? .openMultiview : dismissalOnly(key, .dismiss)
+        case .panel: return dismissalOnly(key, .dismiss)
+        case .multiview: return withinMultiview(key)
+        }
+    }
+
+    private static func withinMultiview(_ key: PlaybackKey) -> PlaybackCommand? {
+        switch key {
+        case .up: return .moveMultiviewActive(.up)
+        case .down: return .moveMultiviewActive(.down)
+        case .left: return .moveMultiviewActive(.left)
+        case .right: return .moveMultiviewActive(.right)
+        case .ok: return .promoteMultiviewActive
+        case .back, .menu: return .exitMultiview
+        default: return nil
         }
     }
 

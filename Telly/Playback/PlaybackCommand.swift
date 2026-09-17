@@ -26,6 +26,14 @@ enum PlaybackCommand: Equatable, Sendable {
     case backToPanel
     /// One-level BACK from a pushed screen: pop to the given overlay.
     case popTo(PlaybackOverlay)
+    /// Open the N-up multiview grid over live playback.
+    case openMultiview
+    /// Move the active multiview tile one D-pad step (wrapping at edges).
+    case moveMultiviewActive(MultiviewDirection)
+    /// Promote the active multiview tile to fullscreen: exit, then tune it.
+    case promoteMultiviewActive
+    /// Leave multiview, returning to single-stream playback.
+    case exitMultiview
     /// The key is unbound in this context: do nothing.
     case nothing
 }

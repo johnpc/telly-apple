@@ -13,7 +13,7 @@ final class MultiviewSession {
     let maxColumns: Int
 
     init(grid: MultiviewGrid, maxColumns: Int = 2,
-         makeEngine: () -> any PlayerEngine) {
+         makeEngine: @MainActor () -> any PlayerEngine) {
         self.grid = grid
         self.maxColumns = maxColumns
         self.engines = grid.cells.map { _ in makeEngine() }

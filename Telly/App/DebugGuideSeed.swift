@@ -12,6 +12,13 @@ extension DebugLaunch {
         args.contains("-tellyGuide")
     }
 
+    /// Whether to pin the multiview overlay open over live playback with an
+    /// engine-free session (fake colour+name tiles, nothing decoded) — set by
+    /// `-tellyOverlay multiview`, the deterministic multiview screenshot proof.
+    static func forcedMultiviewOverlay(in args: [String]) -> Bool {
+        value(for: "-tellyOverlay", in: args) == "multiview"
+    }
+
     /// Seeds the synthetic guide EPG (`guideEpgDocument`) so the grid renders real
     /// titled cells with the now-line inside one. A no-op unless `-tellyGuide` is
     /// set; never touches the real provider EPG.

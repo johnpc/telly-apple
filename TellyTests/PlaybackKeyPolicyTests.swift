@@ -11,7 +11,7 @@ struct PlaybackKeyPolicyTests {
         let expected: PlaybackCommand
     }
 
-    static let rows: [Row] = bare + info + transport + zap + dismissal
+    static let rows: [Row] = bare + info + transport + zap + dismissal + multiview
 
     @Test(arguments: rows)
     func policyMapsKeyToCommand(_ row: Row) {
@@ -72,8 +72,21 @@ struct PlaybackKeyPolicyTests {
         Row(overlay: .pushed(back: .panel), key: .back, expected: .popTo(.panel)),
         Row(overlay: .pushed(back: .panel), key: .ok, expected: .nothing),
         Row(overlay: .quickBar, key: .back, expected: .dismiss),
-        Row(overlay: .quickBar, key: .ok, expected: .nothing),
+        // Quick bar is display-only in v1 → OK is the documented multiview entry.
+        Row(overlay: .quickBar, key: .ok, expected: .openMultiview),
         Row(overlay: .panel, key: .back, expected: .dismiss),
         Row(overlay: .panel, key: .ok, expected: .nothing),
+    ]
+
+    static let multiview: [Row] = [
+        Row(overlay: .multiview, key: .up, expected: .moveMultiviewActive(.up)),
+        Row(overlay: .multiview, key: .down, expected: .moveMultiviewActive(.down)),
+        Row(overlay: .multiview, key: .left, expected: .moveMultiviewActive(.left)),
+        Row(overlay: .multiview, key: .right, expected: .moveMultiviewActive(.right)),
+        Row(overlay: .multiview, key: .ok, expected: .promoteMultiviewActive),
+        Row(overlay: .multiview, key: .back, expected: .exitMultiview),
+        Row(overlay: .multiview, key: .menu, expected: .exitMultiview),
+        Row(overlay: .multiview, key: .channelUp, expected: .nothing),
+        Row(overlay: .multiview, key: .longOk, expected: .nothing),
     ]
 }
