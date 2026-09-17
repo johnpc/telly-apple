@@ -84,6 +84,9 @@ extension ContentView {
             env.channelListModel.select(group)
         }
         env.channelListModel.load()
+        if let q = DebugLaunch.forcedChannelSearch(in: debugArgs) {
+            env.channelListModel.query = q
+        }
     }
 }
 #endif

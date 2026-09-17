@@ -144,6 +144,11 @@ struct DebugLaunchTests {
         #expect(DebugLaunch.forcedChannelGroup(in: ["Telly"]) == nil)
     }
 
+    @Test func forcedChannelSearchReadsFlag() {
+        #expect(DebugLaunch.forcedChannelSearch(in: ["Telly", "-tellyChannelSearch", "Movie"]) == "Movie")
+        #expect(DebugLaunch.forcedChannelSearch(in: ["Telly"]) == nil)
+    }
+
     @Test func seedFavoritesFlagsFirstTwoVisibleChannels() throws {
         let db = try AppDatabase.makeInMemory()
         let playlists = PlaylistStore(db: db)

@@ -8,6 +8,12 @@ extension DebugLaunch {
         value(for: "-tellyChannelGroup", in: args)
     }
 
+    /// The search query to prefill for the screenshot proof
+    /// (`-tellyChannelSearch Movie`), or nil.
+    static func forcedChannelSearch(in args: [String]) -> String? {
+        value(for: "-tellyChannelSearch", in: args)
+    }
+
     /// Flags the first two visible channels favourite so the Favorites filter
     /// and the star indicator render populated — set by `-tellySeedFavorite`.
     /// Idempotent (skips channels already favourite); a no-op without the flag.
