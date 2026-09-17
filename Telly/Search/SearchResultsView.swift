@@ -44,11 +44,35 @@ struct SearchResultsView: View {
     }
 
     @ViewBuilder private func airingRow(_ hit: SearchProgramHit) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(hit.title)
-            Text(hit.timeText + (hit.remaining.map { " · \($0)" } ?? ""))
-                .font(.caption).foregroundStyle(.secondary)
+        let row = HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(hit.title)
+                Text(hit.timeText + (hit.remaining.map { " · \($0)" } ?? ""))
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            Spacer(minLength: 12)
+            bookmarkButton(hit)
         }
+        #if os(tvOS)
+        row
+        #else
+        row.swipeActions(edge: .trailing) {
+            Button { model.toggleMyList(hit) } label: {
+                Label(MyListToggle.label(saved: model.isSaved(hit)), systemImage: "bookmark")
+            }
+        }
+        #endif
+    }
+
+    /// A separately focusable/tappable bookmark toggle for one airing; filled
+    /// when saved to My List. Keeps the row itself free for tune/focus behavior.
+    @ViewBuilder private func bookmarkButton(_ hit: SearchProgramHit) -> some View {
+        Button { model.toggleMyList(hit) } label: {
+            Image(systemName: model.isSaved(hit) ? "bookmark.fill" : "bookmark")
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(.tint)
+        .accessibilityLabel(MyListToggle.label(saved: model.isSaved(hit)))
     }
 
     @ViewBuilder private var detailCard: some View {

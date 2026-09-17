@@ -13,6 +13,7 @@ final class SearchModel {
     let history: SearchHistory
     let now: () -> Int
     let timeZone: TimeZone
+    let myListStore: MyListStore?
 
     var query: String = ""
     private(set) var results = SearchResults()
@@ -23,13 +24,17 @@ final class SearchModel {
     private(set) var focusedProgram: SearchProgramHit?
     /// Non-nil launches the fullscreen player at the tuned channel's stream.
     var tuneTarget: SearchTuneTarget?
+    /// Saved-airing identity keys backing the row bookmark glyph (My List state).
+    var myListKeys: Set<String> = []
 
     init(repository: SearchRepository, history: SearchHistory,
-         now: @escaping () -> Int, timeZone: TimeZone) {
+         now: @escaping () -> Int, timeZone: TimeZone, myListStore: MyListStore? = nil) {
         self.repository = repository
         self.history = history
         self.now = now
         self.timeZone = timeZone
+        self.myListStore = myListStore
+        refreshMyListKeys()
     }
 
     /// Reads the persisted recent queries into the landing list (called on appear).

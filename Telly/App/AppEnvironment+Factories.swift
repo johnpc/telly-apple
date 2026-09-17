@@ -54,7 +54,7 @@ extension AppEnvironment {
                                          epg: EpgRepository(store: programStore)),
             history: SearchHistory(store: settings.backing,
                                    saveEnabled: { [settings] in settings.saveSearchHistory }),
-            now: clock, timeZone: .current)
+            now: clock, timeZone: .current, myListStore: myListStore())
     }
 
     /// The guide grid's observable state over the current channel + programme

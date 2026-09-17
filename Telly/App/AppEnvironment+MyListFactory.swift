@@ -8,8 +8,12 @@ extension AppEnvironment {
     /// The My List screen's observable state over the `my_list` store bound to
     /// the shared database handle, the wall clock, and the local time zone.
     func makeMyListModel() -> MyListModel {
-        MyListModel(store: MyListStore(db: channelStore.db),
+        MyListModel(store: myListStore(),
                     channelStore: channelStore,
                     now: clock, timeZone: .current)
     }
+
+    /// The `my_list` store bound to the shared channel-store DB handle — reused
+    /// by the Search add/remove entry point so both surfaces write one table.
+    func myListStore() -> MyListStore { MyListStore(db: channelStore.db) }
 }

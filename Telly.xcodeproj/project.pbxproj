@@ -528,8 +528,10 @@
 		F4C677AA894C6396AE1BEE4C /* DebugLaunch+History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A615BF62891CC0EC011E72 /* DebugLaunch+History.swift */; };
 		F64CD4122F3CDE918FBC24E8 /* FakePlayerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8957794BBE325137D232EB25 /* FakePlayerEngine.swift */; };
 		F68583C2DAE121F4B0CE8D65 /* PlaylistStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74EFF331827B16223EC8123 /* PlaylistStoreTests.swift */; };
+		F7CC3A4342025053029E3628 /* SearchModelMyListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97EF49505E66ED628DE4D1 /* SearchModelMyListTests.swift */; };
 		F875BC23E3E80ACA4A0D9EB1 /* GuideCellsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BA7D47EFD28A33508C5B /* GuideCellsBuilder.swift */; };
 		FA40A140201985A060E7EAED /* ChannelPanelGroupsColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6939E107E0ABB98E7CFCF5D /* ChannelPanelGroupsColumnView.swift */; };
+		FB5CDFC3969190C951C5326C /* SearchModel+MyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9425707276B766B8470A7A10 /* SearchModel+MyList.swift */; };
 		FB6FC45374EB5D59A85C1060 /* CompressedXmltvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCC66C6AF1F6B3B9B556A04 /* CompressedXmltvTests.swift */; };
 		FBF39CF56039195F722A0029 /* ContentView+HistoryDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59CFAB43CDEE56FCE7DA99 /* ContentView+HistoryDebug.swift */; };
 		FC1B9378CFDD73025A647ABA /* HttpPlaylistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */; };
@@ -862,6 +864,7 @@
 		92B4F14D413611405212BC4E /* VodPositionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodPositionRecord.swift; sourceTree = "<group>"; };
 		92CFE551B9482F12532943BB /* DebugLaunchPlaylistsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLaunchPlaylistsTests.swift; sourceTree = "<group>"; };
 		93A9896DB20B35683101EB72 /* PlaybackScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackScreen.swift; sourceTree = "<group>"; };
+		9425707276B766B8470A7A10 /* SearchModel+MyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchModel+MyList.swift"; sourceTree = "<group>"; };
 		9425AA872CA78C75AFF2A644 /* VodStageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodStageTests.swift; sourceTree = "<group>"; };
 		9446089EC0FFC424FF92CF71 /* ContentView+SearchDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+SearchDebug.swift"; sourceTree = "<group>"; };
 		9510318C2A70D4048480E633 /* MultiviewGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewGridView.swift; sourceTree = "<group>"; };
@@ -971,6 +974,7 @@
 		CB92D6A3324B43D49BDFC484 /* PanelRowInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelRowInfoTests.swift; sourceTree = "<group>"; };
 		CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideEpgStore.swift; sourceTree = "<group>"; };
 		CC607C4CF25A029E55595EEB /* XtreamUrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XtreamUrlTests.swift; sourceTree = "<group>"; };
+		CD97EF49505E66ED628DE4D1 /* SearchModelMyListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModelMyListTests.swift; sourceTree = "<group>"; };
 		CE336084203C5F153857C38D /* GuideRowsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideRowsBuilder.swift; sourceTree = "<group>"; };
 		CE85A65977364D5895537F30 /* ReconnectPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectPolicyTests.swift; sourceTree = "<group>"; };
 		CECFA7F9094CFAC498A1EEB7 /* ChannelListScreen+Targets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelListScreen+Targets.swift"; sourceTree = "<group>"; };
@@ -1395,6 +1399,7 @@
 				85F0E1D12CE90D49B42BC711 /* SearchDetailCardView.swift */,
 				D4BE796D4CD0D494B5FB9589 /* SearchHistory.swift */,
 				7B4314544D272F333B414C57 /* SearchModel.swift */,
+				9425707276B766B8470A7A10 /* SearchModel+MyList.swift */,
 				53ACF557B8E22372B4A43621 /* SearchQuery.swift */,
 				A499BF56D8BF590126D59A5B /* SearchRepository.swift */,
 				0AB6039E0A01C3584879C7E7 /* SearchResults.swift */,
@@ -1655,6 +1660,7 @@
 				22C4CA49516137B28B6B11A3 /* ResizeModeTests.swift */,
 				AE61123B480BF4A85BD6468D /* SearchAirTimeTests.swift */,
 				26FBF6E1A9CA2A01B38A26CE /* SearchHistoryTests.swift */,
+				CD97EF49505E66ED628DE4D1 /* SearchModelMyListTests.swift */,
 				BA4C36E796A72C62C4F72B4D /* SearchModelTests.swift */,
 				C61D73F18DA09FF32F9C6DE8 /* SearchQueryTests.swift */,
 				6D84D2B7451BA0A1A0B373A4 /* SearchRepositoryTests.swift */,
@@ -2264,6 +2270,7 @@
 				02E544D7F50185F80284103F /* SearchAirTime.swift in Sources */,
 				EA6596A9F9CEA94A5A62E365 /* SearchDetailCardView.swift in Sources */,
 				1C576452E9737050A05D148A /* SearchHistory.swift in Sources */,
+				FB5CDFC3969190C951C5326C /* SearchModel+MyList.swift in Sources */,
 				98C6DD3F41F0A9AE1F550B25 /* SearchModel.swift in Sources */,
 				F3D1AC8C01E9A762EC77A46B /* SearchQuery.swift in Sources */,
 				D7F21990A55F845D3635BCE7 /* SearchRepository.swift in Sources */,
@@ -2502,6 +2509,7 @@
 				AF0539C35A9BFAB68CBBD175 /* ResizeModeTests.swift in Sources */,
 				1B1621675338FEBC50D7D024 /* SearchAirTimeTests.swift in Sources */,
 				AB8562F4D90E4BECEC89F69C /* SearchHistoryTests.swift in Sources */,
+				F7CC3A4342025053029E3628 /* SearchModelMyListTests.swift in Sources */,
 				09070D02ABB1FB273D18CA71 /* SearchModelTests.swift in Sources */,
 				C63792C6A2BC17FE9241505D /* SearchQueryTests.swift in Sources */,
 				4DAD0F55B4B1FD5FD6EF289E /* SearchRepositoryTests.swift in Sources */,
