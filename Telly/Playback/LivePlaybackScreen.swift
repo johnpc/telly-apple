@@ -8,7 +8,6 @@ import SwiftUI
 /// rich touch layer arrives in S7).
 struct LivePlaybackScreen: View {
     @State private var model: LivePlaybackModel
-    @Environment(\.dismiss) private var dismiss
 
     init(model: LivePlaybackModel) { _model = State(initialValue: model) }
 
@@ -19,7 +18,7 @@ struct LivePlaybackScreen: View {
             zapOverlay
             stateOverlay
             #if !os(tvOS)
-            closeButton
+            PlaybackCloseButton()
             #endif
         }
         .task {
@@ -60,36 +59,7 @@ struct LivePlaybackScreen: View {
 
     @ViewBuilder private var stateOverlay: some View {
         if !model.holdsLastFrame {
-            switch model.engine.state {
-            case .buffering:
-                ProgressView().controlSize(.large).tint(.white)
-            case .reconnecting:
-                Text("Reconnecting…")
-                    .font(.headline).foregroundStyle(.white)
-                    .padding(.horizontal, 16).padding(.vertical, 8)
-                    .background(.ultraThinMaterial, in: Capsule())
-            case let .error(message):
-                Text(message).font(.headline).foregroundStyle(.white)
-                    .multilineTextAlignment(.center).padding()
-            default:
-                EmptyView()
-            }
+            PlaybackStateOverlay(state: model.engine.state)
         }
     }
-
-    #if !os(tvOS)
-    private var closeButton: some View {
-        VStack {
-            HStack {
-                Button { dismiss() } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.title).foregroundStyle(.white)
-                }
-                .padding()
-                Spacer()
-            }
-            Spacer()
-        }
-    }
-    #endif
 }

@@ -101,6 +101,7 @@
 		C853572B16CB7A97483A6E6A /* ChannelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3428C72EBEB454AD2CE0B5B6 /* ChannelStore.swift */; };
 		CEF05E53D629FE63C080634F /* PlayerStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCEDF66246565A56BBABD8B /* PlayerStateTests.swift */; };
 		D185D838DBA0AF34C0175868 /* HttpUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA761F0C2AC5B545A070F9 /* HttpUrl.swift */; };
+		D1A2A23F3518A4A6AD1B6363 /* PlaybackStateChromeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A2E6331B7FDDF758782CDD /* PlaybackStateChromeView.swift */; };
 		D4E28E752CE510D149344DA2 /* TrackPickerKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3AF6BB726F90FB3667BF32 /* TrackPickerKind.swift */; };
 		D53B3BE5A1B2F6604D8DD115 /* ChannelRecord+Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEF82B37AB908441A8656A /* ChannelRecord+Entity.swift */; };
 		D53F175E5064331E1E69DB0D /* ChannelRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6955066FC099926C6950564 /* ChannelRecord.swift */; };
@@ -243,6 +244,7 @@
 		CE85A65977364D5895537F30 /* ReconnectPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectPolicyTests.swift; sourceTree = "<group>"; };
 		CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		D084849083573B325F7FEE2F /* VideoSurfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSurfaceView.swift; sourceTree = "<group>"; };
+		D4A2E6331B7FDDF758782CDD /* PlaybackStateChromeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackStateChromeView.swift; sourceTree = "<group>"; };
 		D5E11046F624FCD118944FBE /* AddPlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistModel.swift; sourceTree = "<group>"; };
 		D74EFF331827B16223EC8123 /* PlaylistStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistStoreTests.swift; sourceTree = "<group>"; };
 		E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpPlaylistFetcher.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				217DA577D0F88D7385009AA2 /* PlaybackKeyPolicy.swift */,
 				9FDA78D041840813DC1624B6 /* PlaybackOverlay.swift */,
 				93A9896DB20B35683101EB72 /* PlaybackScreen.swift */,
+				D4A2E6331B7FDDF758782CDD /* PlaybackStateChromeView.swift */,
 				30DF4F44157AD31582B07D53 /* PlayerKeymap.swift */,
 				D084849083573B325F7FEE2F /* VideoSurfaceView.swift */,
 				7A9918F82FE3092A6EDB17AF /* ZapKeepFrame.swift */,
@@ -701,6 +704,7 @@
 				001780F869C79CD47194E527 /* PlaybackOverlay.swift in Sources */,
 				3C802142F2773180AA976ACF /* PlaybackReducer.swift in Sources */,
 				7A32CD46DD3EE6A758DCA6EC /* PlaybackScreen.swift in Sources */,
+				D1A2A23F3518A4A6AD1B6363 /* PlaybackStateChromeView.swift in Sources */,
 				10CCD9A096D40B5E0ED04928 /* PlayerEngine.swift in Sources */,
 				30F50318EAC4991322A638C7 /* PlayerKeymap.swift in Sources */,
 				D7BCFDE5CA75D89CC4B2F541 /* PlayerState.swift in Sources */,

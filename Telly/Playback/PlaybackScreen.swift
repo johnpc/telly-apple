@@ -18,9 +18,9 @@ struct PlaybackScreen: View {
         ZStack {
             Color.black.ignoresSafeArea()
             VideoSurfaceView(engine: engine).ignoresSafeArea()
-            overlay
+            PlaybackStateOverlay(state: engine.state)
             #if !os(tvOS)
-            closeButton
+            PlaybackCloseButton()
             #endif
         }
         .task { engine.load(streamUrl) }
@@ -32,37 +32,4 @@ struct PlaybackScreen: View {
         .onExitCommand { dismiss() }
         #endif
     }
-
-    @ViewBuilder private var overlay: some View {
-        switch engine.state {
-        case .buffering:
-            ProgressView().controlSize(.large).tint(.white)
-        case .reconnecting:
-            Text("Reconnecting…")
-                .font(.headline).foregroundStyle(.white)
-                .padding(.horizontal, 16).padding(.vertical, 8)
-                .background(.ultraThinMaterial, in: Capsule())
-        case let .error(message):
-            Text(message).font(.headline).foregroundStyle(.white)
-                .multilineTextAlignment(.center).padding()
-        default:
-            EmptyView()
-        }
-    }
-
-    #if !os(tvOS)
-    private var closeButton: some View {
-        VStack {
-            HStack {
-                Button { dismiss() } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.title).foregroundStyle(.white)
-                }
-                .padding()
-                Spacer()
-            }
-            Spacer()
-        }
-    }
-    #endif
 }
