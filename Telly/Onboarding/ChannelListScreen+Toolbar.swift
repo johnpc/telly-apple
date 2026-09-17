@@ -8,7 +8,8 @@ extension ChannelListScreen {
     @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             NavigationLink("Guide") {
-                GuideGridScreen(model: makeGuideGridModel(), makeEngine: makeEngine)
+                GuideGridScreen(model: makeGuideGridModel(), makeEngine: makeEngine,
+                                makeCatchupModel: makeCatchupModel)
             }
         }
         ToolbarItem(placement: .primaryAction) {

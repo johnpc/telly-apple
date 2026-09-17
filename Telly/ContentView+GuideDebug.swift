@@ -9,7 +9,8 @@ import SwiftUI
 extension ContentView {
     @ViewBuilder var guideDemo: some View {
         if let guideModel {
-            GuideGridScreen(model: guideModel, makeEngine: env.makeEngine)
+            GuideGridScreen(model: guideModel, makeEngine: env.makeEngine,
+                            makeCatchupModel: env.makeCatchupPlaybackModel)
         } else {
             Color.black.ignoresSafeArea().task { prepareGuideDemo() }
         }

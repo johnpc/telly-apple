@@ -6,15 +6,18 @@ import SwiftUI
 struct GuideGridScreen: View {
     @State var model: GuideGridModel
     let makeEngine: () -> VLCKitPlayerEngine
+    let makeCatchupModel: (CatchupRequest) -> CatchupPlaybackModel
     #if !os(tvOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var dragAnchor: CGFloat = 0
     #endif
     @State var target: GuidePlaybackTarget?
 
-    init(model: GuideGridModel, makeEngine: @escaping () -> VLCKitPlayerEngine) {
+    init(model: GuideGridModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
+         makeCatchupModel: @escaping (CatchupRequest) -> CatchupPlaybackModel) {
         _model = State(initialValue: model)
         self.makeEngine = makeEngine
+        self.makeCatchupModel = makeCatchupModel
     }
 
     var body: some View {
@@ -28,10 +31,7 @@ struct GuideGridScreen: View {
         .background(Color(white: 0.09).ignoresSafeArea())
         .environment(\.colorScheme, .dark)
         .task { model.load() }
-        .fullScreenCover(item: $target) {
-            PlaybackScreen(streamUrl: $0.url, engine: makeEngine(),
-                           catchup: $0.catchup, is24h: model.is24h, timeZone: model.timeZone)
-        }
+        .fullScreenCover(item: $target) { playbackCover($0) }
         #if os(tvOS)
         .focusable()
         .onMoveCommand { move($0) }

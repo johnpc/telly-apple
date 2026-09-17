@@ -37,7 +37,8 @@ extension ContentView {
         else { return }
         catchupTarget = GuidePlaybackTarget(
             id: channel.id, url: url,
-            catchup: CatchupBadge(title: "Aired Documentary", startMs: start, endMs: end))
+            catchup: CatchupBadge(title: "Aired Documentary", startMs: start, endMs: end),
+            request: nil)
     }
 }
 #endif

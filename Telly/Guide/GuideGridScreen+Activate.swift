@@ -13,12 +13,17 @@ extension GuideGridScreen {
                   let url = CatchupUrlBuilder.build(
                       streamUrl: channel.source.streamUrl, attributes: attributes,
                       startMs: cell.startMs, endMs: cell.endMs, nowMs: model.now()) else { return }
+            let request = CatchupRequest(channel: channel, url: url,
+                                         title: cell.program?.details.title,
+                                         startMs: cell.startMs, endMs: cell.endMs)
             target = GuidePlaybackTarget(
                 id: channel.id, url: url,
                 catchup: CatchupBadge(title: cell.program?.details.title,
-                                      startMs: cell.startMs, endMs: cell.endMs))
+                                      startMs: cell.startMs, endMs: cell.endMs),
+                request: request)
         case let .tune(channel):
-            target = GuidePlaybackTarget(id: channel.id, url: channel.source.streamUrl, catchup: nil)
+            target = GuidePlaybackTarget(id: channel.id, url: channel.source.streamUrl,
+                                         catchup: nil, request: nil)
         case .info, .none:
             break
         }
@@ -31,4 +36,7 @@ struct GuidePlaybackTarget: Identifiable {
     let id: Int
     let url: String
     let catchup: CatchupBadge?
+    /// The resolved archive request; non-nil only for a catch-up target, which
+    /// routes to ``CatchupPlaybackScreen`` (nil plays through ``PlaybackScreen``).
+    let request: CatchupRequest?
 }
