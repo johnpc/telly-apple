@@ -31,6 +31,13 @@ extension ChannelListScreen {
             }
         }
         ToolbarItem(placement: .primaryAction) {
+            NavigationLink {
+                MyListScreen(model: makeMyListModel(), makeEngine: makeEngine)
+            } label: {
+                Label("My List", systemImage: "bookmark")
+            }
+        }
+        ToolbarItem(placement: .primaryAction) {
             NavigationLink("Favorites") { ManageFavoritesScreen(model: makeChannelEditModel(nil)) }
         }
         ToolbarItem(placement: .primaryAction) {

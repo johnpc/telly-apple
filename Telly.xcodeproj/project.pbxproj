@@ -104,6 +104,7 @@
 		2D612FCFA191FBA5A841701D /* ProgramRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE7C444E05D9710962B3C0B /* ProgramRecord.swift */; };
 		2DAAF472ACABEA73D4B6E04A /* ContentView+KeymapDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DEB9AD942DAD153C2225E9 /* ContentView+KeymapDebug.swift */; };
 		2DB94E5C3639BBE59EA67920 /* XmltvTimestampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */; };
+		2DD028A4AE88B831442A55B2 /* AppEnvironment+MyListFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5158A16F52EE7269A4A4C /* AppEnvironment+MyListFactory.swift */; };
 		2EF2738677D8D0B434C4706B /* NoTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4B7FD661163037CE53FB6 /* NoTracks.swift */; };
 		2FB40E0C0F96E0A06F7AB5FA /* VodClassifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F543AC4C730E6282AEC1854 /* VodClassifierTests.swift */; };
 		3054E7B44EB84593A61FE17E /* GuideGridModel+Viewport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF35608EA8AEE6476488BA1D /* GuideGridModel+Viewport.swift */; };
@@ -150,6 +151,7 @@
 		4386760EC36136FEDE82C80A /* SettingsAppearanceSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001F4629466D93F5C2DF57B3 /* SettingsAppearanceSectionView.swift */; };
 		43B4481CD57C4F46AB7F9BB0 /* InfoOverlayText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848C08F0895FB5B7972E62C6 /* InfoOverlayText.swift */; };
 		43B58A0BCB57A2DCA68F4E88 /* InfoOverlayTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C91A9ED346D9F495A803F9C /* InfoOverlayTextTests.swift */; };
+		442C6230B0098A8E24ABD9BE /* MyListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA339923CFDB0A71EF6E6AE /* MyListRowView.swift */; };
 		44FF9773889E35FFD2647D93 /* MultiviewSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30262C5C5C44D2273ABC94EE /* MultiviewSessionTests.swift */; };
 		451E456E72C6DE0ABA1D6575 /* GuideEpgStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */; };
 		468AEAB4FE7257D65A79038E /* XmltvTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911911F5CB370C8AD142854F /* XmltvTypes.swift */; };
@@ -322,6 +324,7 @@
 		8F3DAD34F4C29F0C8B59CCB2 /* ProgramRecord+Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5576130AE8AFB06AFBB927F /* ProgramRecord+Entity.swift */; };
 		90C4A576858614396767B029 /* ContentView+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9105F63ED96290035385DB36 /* ContentView+Debug.swift */; };
 		91696F8504A26F575F12D26F /* SearchResultsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61D64A805690339EE1A92C6 /* SearchResultsBuilder.swift */; };
+		91A02F40FE9785238DBB836D /* MyListModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4B5EE8C7B4E5B26547F6C1 /* MyListModelTests.swift */; };
 		91D6D696567C7914A9F4C6B1 /* ContentView+SearchDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9446089EC0FFC424FF92CF71 /* ContentView+SearchDebug.swift */; };
 		9251B2F6D3C2D8FB3888B172 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0337394E70CCE58E261D5E /* SearchScreen.swift */; };
 		9254F09F7D2921419A7EF76B /* DebugVodEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B5B4B0263D22EA7842260 /* DebugVodEngine.swift */; };
@@ -447,6 +450,7 @@
 		D1C4A6C921D8AB96EA6DEA15 /* GuideActivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8202CB683496FD7847F8BA0 /* GuideActivation.swift */; };
 		D29B46864FD0DC0D1297731B /* EpgSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4C85A8FD60FEC0027FEFD /* EpgSource.swift */; };
 		D32A640461973351A35E1324 /* PlaylistGroupFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6B217FFBF93E89613ACC7 /* PlaylistGroupFilterTests.swift */; };
+		D3A54456DF450B8A1DCD3414 /* MyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B0D44CB50E8DC5C18411A0 /* MyListScreen.swift */; };
 		D3EEA8E47DAB8EBA1E87CEC3 /* GroupVisibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C597DC8382D9A3585D59D /* GroupVisibilityTests.swift */; };
 		D4E28E752CE510D149344DA2 /* TrackPickerKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3AF6BB726F90FB3667BF32 /* TrackPickerKind.swift */; };
 		D53B3BE5A1B2F6604D8DD115 /* ChannelRecord+Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEF82B37AB908441A8656A /* ChannelRecord+Entity.swift */; };
@@ -489,6 +493,7 @@
 		E397671EE3F1DE80051B06B5 /* BlockingEditModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB19029F14062879C3B8601 /* BlockingEditModelTests.swift */; };
 		E44ECA07601B44676CA6DD04 /* ParentalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED961F3772EB624FFBBCD70B /* ParentalStore.swift */; };
 		E46D819D45057FB53FA55C3C /* VodBrowseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB1D388B033E4FE83806E4 /* VodBrowseScreen.swift */; };
+		E589901C51B1A87AB7C09BB6 /* MyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A0B204188EA1F0FDB21C72 /* MyListModel.swift */; };
 		E6A78447C7F1F09295010E5F /* PlaybackKeyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217DA577D0F88D7385009AA2 /* PlaybackKeyPolicy.swift */; };
 		E70B0AAAB6C673FD65F8B6B2 /* GuideGridModel+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A0FFDDB0818EB4858B71DD /* GuideGridModel+View.swift */; };
 		E790AADE9F908A9314431F41 /* ManageBlockingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0260DBF6FF157853EF8F72 /* ManageBlockingScreen.swift */; };
@@ -581,6 +586,7 @@
 		0C660A31E271C20D5E8DE577 /* DebugLaunchCatchupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLaunchCatchupTests.swift; sourceTree = "<group>"; };
 		0C7AA888B99B0C554E7A1E93 /* PlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerState.swift; sourceTree = "<group>"; };
 		0CC1C9F64639BB2E93F81E08 /* ChannelListScreen+Parental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelListScreen+Parental.swift"; sourceTree = "<group>"; };
+		0DA5158A16F52EE7269A4A4C /* AppEnvironment+MyListFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppEnvironment+MyListFactory.swift"; sourceTree = "<group>"; };
 		0EB450B91B7A7BBC6E4F07FE /* AppEnvironment+PlaylistFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppEnvironment+PlaylistFactory.swift"; sourceTree = "<group>"; };
 		0ED44197B50FE3D28243878E /* LivePlaybackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePlaybackModel.swift; sourceTree = "<group>"; };
 		0F0CFC0DAA7FDB4C8CEAEE82 /* VodBrowseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodBrowseModel.swift; sourceTree = "<group>"; };
@@ -610,6 +616,7 @@
 		1C9B9A456FE757E51945DDFF /* DebugLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLaunchTests.swift; sourceTree = "<group>"; };
 		1E33824048D9B8A7E968723D /* PlaylistSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSummary.swift; sourceTree = "<group>"; };
 		1E3C9C0DC8C98883C8D1A4FF /* MyListRowsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListRowsTests.swift; sourceTree = "<group>"; };
+		1EA339923CFDB0A71EF6E6AE /* MyListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListRowView.swift; sourceTree = "<group>"; };
 		217DA577D0F88D7385009AA2 /* PlaybackKeyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackKeyPolicy.swift; sourceTree = "<group>"; };
 		21F1CA563F371B43B8FB3B66 /* MultiviewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewLayout.swift; sourceTree = "<group>"; };
 		223C2DEAE5C0DF5F7BB17856 /* MyListRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListRecord.swift; sourceTree = "<group>"; };
@@ -620,6 +627,7 @@
 		24C468ED28EDCEFE1E23C3BC /* CatchupNeighbours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupNeighbours.swift; sourceTree = "<group>"; };
 		2507ACE3BB87983FD53D58FE /* SettingsPlaybackSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPlaybackSectionView.swift; sourceTree = "<group>"; };
 		258FBD49BA35D22891C36617 /* CatchupNeighboursTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupNeighboursTests.swift; sourceTree = "<group>"; };
+		25A0B204188EA1F0FDB21C72 /* MyListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListModel.swift; sourceTree = "<group>"; };
 		25E885722D757C52CEBC6D3D /* EpgSourcesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgSourcesScreen.swift; sourceTree = "<group>"; };
 		26AE338F7089943087B2412B /* VodItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodItemStoreTests.swift; sourceTree = "<group>"; };
 		26FBF6E1A9CA2A01B38A26CE /* SearchHistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryTests.swift; sourceTree = "<group>"; };
@@ -827,6 +835,7 @@
 		861434D6F4BA0C57B7E13007 /* BackupCodecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodecTests.swift; sourceTree = "<group>"; };
 		87966A245CDF0CD3EA797FF5 /* ChannelGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelGroups.swift; sourceTree = "<group>"; };
 		87D32FC95E589778A718BD96 /* MultiviewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewCellView.swift; sourceTree = "<group>"; };
+		88B0D44CB50E8DC5C18411A0 /* MyListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListScreen.swift; sourceTree = "<group>"; };
 		8957794BBE325137D232EB25 /* FakePlayerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePlayerEngine.swift; sourceTree = "<group>"; };
 		8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowNextResolverTests.swift; sourceTree = "<group>"; };
 		8B59384BC6F541FA9CB8F7DC /* LivePlaybackScreen+PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LivePlaybackScreen+PanelView.swift"; sourceTree = "<group>"; };
@@ -1073,6 +1082,7 @@
 		FE6A31B855DA60358B0C20F5 /* DebugGuideSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugGuideSeed.swift; sourceTree = "<group>"; };
 		FEA71F38E7ADF72CEB475D5A /* XmltvEpisodeNum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvEpisodeNum.swift; sourceTree = "<group>"; };
 		FEFCF4055097168A8529BFC4 /* EpgOffsetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgOffsetsTests.swift; sourceTree = "<group>"; };
+		FF4B5EE8C7B4E5B26547F6C1 /* MyListModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListModelTests.swift; sourceTree = "<group>"; };
 		FF592E12D247CBE565B944BC /* ContentView+GroupsDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+GroupsDebug.swift"; sourceTree = "<group>"; };
 		FF96FBB8273C878AC527486A /* AboutInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfoTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1160,6 +1170,7 @@
 				CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */,
 				CED311BCC489DE3BE581EFE2 /* AppEnvironment+CatchupFactory.swift */,
 				2E7D83D78BE58CA10476BED1 /* AppEnvironment+Factories.swift */,
+				0DA5158A16F52EE7269A4A4C /* AppEnvironment+MyListFactory.swift */,
 				0EB450B91B7A7BBC6E4F07FE /* AppEnvironment+PlaylistFactory.swift */,
 				8609692487B825F8621F9A86 /* AppEnvironment+VodFactory.swift */,
 				FE6A31B855DA60358B0C20F5 /* DebugGuideSeed.swift */,
@@ -1596,6 +1607,7 @@
 				DAF963F04457923BF98EFE2A /* MultiviewGridTests.swift */,
 				2CBC54543BF987EBA8B46AAA /* MultiviewLayoutTests.swift */,
 				30262C5C5C44D2273ABC94EE /* MultiviewSessionTests.swift */,
+				FF4B5EE8C7B4E5B26547F6C1 /* MyListModelTests.swift */,
 				1E3C9C0DC8C98883C8D1A4FF /* MyListRowsTests.swift */,
 				22CCC03715B854390A56E801 /* MyListStoreTests.swift */,
 				16CDDA48883DFFC8A6A30780 /* MyListToggleTests.swift */,
@@ -1831,7 +1843,10 @@
 		FEA95512D74837E78BB60522 /* MyList */ = {
 			isa = PBXGroup;
 			children = (
+				25A0B204188EA1F0FDB21C72 /* MyListModel.swift */,
 				2AF8254034B15E419A32B392 /* MyListRows.swift */,
+				1EA339923CFDB0A71EF6E6AE /* MyListRowView.swift */,
+				88B0D44CB50E8DC5C18411A0 /* MyListScreen.swift */,
 				4A80E6DA1C279FE67FDDBA9B /* MyListToggle.swift */,
 			);
 			path = MyList;
@@ -1994,6 +2009,7 @@
 				20790450B4BB88B6CD3C617D /* AppDatabase.swift in Sources */,
 				05EBF5F393F0B4FA0AB1ED10 /* AppEnvironment+CatchupFactory.swift in Sources */,
 				5551B854AEEB5B981DCA9F5A /* AppEnvironment+Factories.swift in Sources */,
+				2DD028A4AE88B831442A55B2 /* AppEnvironment+MyListFactory.swift in Sources */,
 				DEB85D8DC27BD3D71E240CAE /* AppEnvironment+PlaylistFactory.swift in Sources */,
 				F499DA0B716AE12B9C2542F4 /* AppEnvironment+VodFactory.swift in Sources */,
 				1AB8F1F6D4FE45DEEDA69CF8 /* AppEnvironment.swift in Sources */,
@@ -2170,10 +2186,13 @@
 				552D230D75CA8060F53CBF36 /* MultiviewGridView.swift in Sources */,
 				338915BA4D296CEA21C13AD3 /* MultiviewLayout.swift in Sources */,
 				019CFC50A48EEE602C00309A /* MultiviewSession.swift in Sources */,
+				E589901C51B1A87AB7C09BB6 /* MyListModel.swift in Sources */,
 				C79272440DCAF356A9DB934C /* MyListRecord+Entity.swift in Sources */,
 				490A26895F98D6E6817D6D72 /* MyListRecord.swift in Sources */,
+				442C6230B0098A8E24ABD9BE /* MyListRowView.swift in Sources */,
 				690C578190F745BEFB1D1432 /* MyListRows.swift in Sources */,
 				8629725C996555E45B8F2E15 /* MyListSchema.swift in Sources */,
+				D3A54456DF450B8A1DCD3414 /* MyListScreen.swift in Sources */,
 				1A9C60F789C8BB8BE946BC14 /* MyListStore.swift in Sources */,
 				A572FA9D804985C3A2AE16D5 /* MyListToggle.swift in Sources */,
 				2EF2738677D8D0B434C4706B /* NoTracks.swift in Sources */,
@@ -2432,6 +2451,7 @@
 				354580FA7C6F2F8556E0805A /* MultiviewGridTests.swift in Sources */,
 				829EE95FDD1708759972223C /* MultiviewLayoutTests.swift in Sources */,
 				44FF9773889E35FFD2647D93 /* MultiviewSessionTests.swift in Sources */,
+				91A02F40FE9785238DBB836D /* MyListModelTests.swift in Sources */,
 				5F1E6D6721237950C0E3DEE7 /* MyListRowsTests.swift in Sources */,
 				D91611C0D6B85CD24CD8A0DE /* MyListStoreTests.swift in Sources */,
 				8C232C375E6FC7756049E8F9 /* MyListToggleTests.swift in Sources */,
