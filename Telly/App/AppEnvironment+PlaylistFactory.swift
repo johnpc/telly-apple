@@ -12,4 +12,22 @@ extension AppEnvironment {
                         store: playlistStore,
                         now: { Int64(Date().timeIntervalSince1970 * 1_000) })
     }
+
+    /// The auto-refresh scheduler over the stored playlists, their per-playlist
+    /// interval/on-start settings and the shared clock; each due playlist is
+    /// re-imported through a fresh manual updater (Slice-1 `update`).
+    func makePlaylistRefresher() -> PlaylistRefresher {
+        PlaylistRefresher(playlists: { [playlistStore] in try playlistStore.all() },
+                          update: makePlaylistUpdater().update,
+                          intervalHours: { [settings] in settings.updateInterval(url: $0) },
+                          updateOnStart: { [settings] in settings.updateOnStart(url: $0) },
+                          clock: clock)
+    }
+
+    /// Launch hook: refresh any playlist due by interval or flagged on-start,
+    /// then republish the playlist feed so re-imported channels surface.
+    func refreshPlaylistsOnStart() async {
+        _ = await makePlaylistRefresher().refreshOnStart()
+        reload()
+    }
 }

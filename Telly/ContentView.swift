@@ -47,7 +47,10 @@ struct ContentView: View {
                 env.reload()
             }
         }
-        .task { await env.refreshEpgIfDue() }
+        .task {
+            await env.refreshEpgIfDue()
+            await env.refreshPlaylistsOnStart()
+        }
     }
 }
 
