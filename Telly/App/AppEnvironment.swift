@@ -8,11 +8,17 @@ import Foundation
 final class AppEnvironment {
     let playlistStore: PlaylistStore
     let channelStore: ChannelStore
+    let programStore: ProgramStore
+    let guideEpgStore: GuideEpgStore
     private(set) var playlists: [PlaylistEntity] = []
 
     init(database: AppDatabase) {
         playlistStore = PlaylistStore(db: database)
         channelStore = ChannelStore(db: database)
+        programStore = ProgramStore(db: database)
+        guideEpgStore = GuideEpgStore(
+            channelStore: channelStore, repository: EpgRepository(store: programStore),
+            now: { Int(Date().timeIntervalSince1970 * 1_000) })
         reload()
     }
 
@@ -34,6 +40,19 @@ final class AppEnvironment {
     func makeAddPlaylistModel() -> AddPlaylistModel {
         AddPlaylistModel(fetch: HttpPlaylistFetcher.fetch, store: playlistStore,
                          now: { Int64(Date().timeIntervalSince1970 * 1000) })
+    }
+
+    /// The EPG refresh orchestrator over the real downloader and wall clock.
+    func makeEpgRefresher() -> EpgRefresher {
+        EpgRefresher(playlistStore: playlistStore, programStore: programStore,
+                     download: { try await EpgDownloader().download(epgUrl: $0) },
+                     now: { Int(Date().timeIntervalSince1970 * 1_000) })
+    }
+
+    /// Launch hook: refresh any stale guide data, then republish the feed.
+    func refreshEpgIfDue() async {
+        try? await makeEpgRefresher().refreshDue()
+        guideEpgStore.refresh()
     }
 
     /// A fresh VLC-backed playback engine per presented player.

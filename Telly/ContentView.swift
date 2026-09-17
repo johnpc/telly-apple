@@ -35,6 +35,7 @@ struct ContentView: View {
                 env.reload()
             }
         }
+        .task { await env.refreshEpgIfDue() }
     }
 
     #if DEBUG

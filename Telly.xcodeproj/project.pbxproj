@@ -47,6 +47,7 @@
 		3C802142F2773180AA976ACF /* PlaybackReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B3D46CDDA4BCBABD96FB4C /* PlaybackReducer.swift */; };
 		3D5F0D9E74DF8D73EB326A5E /* LivePlaybackModel+Tune.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384B9CA24AF15E1089815370 /* LivePlaybackModel+Tune.swift */; };
 		3DB1295E43736FFC953773B1 /* M3uParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73B7301D50C245AB98680F7 /* M3uParser.swift */; };
+		451E456E72C6DE0ABA1D6575 /* GuideEpgStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */; };
 		468AEAB4FE7257D65A79038E /* XmltvTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911911F5CB370C8AD142854F /* XmltvTypes.swift */; };
 		475F023CD60AFDA53AE465AA /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D529D436158D9F927352C874 /* GRDB */; };
 		4A18A1BA9D275A3C04D3CCDD /* PlaybackCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CC40D09A16B0AFA3330197 /* PlaybackCommand.swift */; };
@@ -108,6 +109,7 @@
 		BCFB11239754F01ED6A753DF /* ZapKeepFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9918F82FE3092A6EDB17AF /* ZapKeepFrame.swift */; };
 		BF5C71431CD235D6BB848073 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639ED70131FE49348CC589BA /* WelcomeView.swift */; };
 		C1126DCF45D74EF39D5799A0 /* ProgramStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D3885DA8806968E5876FF7 /* ProgramStore.swift */; };
+		C5B846D2AB5BC86E4AE6469A /* GuideEpgStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9F5FFF68774C764EFF990 /* GuideEpgStoreTests.swift */; };
 		C75EA0E1C2D0EDADD9AD16A7 /* EpgRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA958C21A27348FF819BA98 /* EpgRefresher.swift */; };
 		C7AF8C66A791EADF8F5A718C /* PlaybackBadgesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAD294DBE29F9D78C957A1A /* PlaybackBadgesTests.swift */; };
 		C853572B16CB7A97483A6E6A /* ChannelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3428C72EBEB454AD2CE0B5B6 /* ChannelStore.swift */; };
@@ -199,6 +201,7 @@
 		4612550684E594CA7F3A2F1E /* PendingZapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingZapTests.swift; sourceTree = "<group>"; };
 		47B2B57D88C5F456CF1EEE0C /* VideoDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetails.swift; sourceTree = "<group>"; };
 		47CED40EFF78E7A5EEBA6064 /* TrackPickerRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPickerRows.swift; sourceTree = "<group>"; };
+		48A9F5FFF68774C764EFF990 /* GuideEpgStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideEpgStoreTests.swift; sourceTree = "<group>"; };
 		4A3AF6BB726F90FB3667BF32 /* TrackPickerKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPickerKind.swift; sourceTree = "<group>"; };
 		4A5A8C96669009B439B3CCAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4AA958C21A27348FF819BA98 /* EpgRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgRefresher.swift; sourceTree = "<group>"; };
@@ -263,6 +266,7 @@
 		C3BE5846F0E695DA3565F177 /* EpgOffsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgOffsets.swift; sourceTree = "<group>"; };
 		C7D3885DA8806968E5876FF7 /* ProgramStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramStore.swift; sourceTree = "<group>"; };
 		CB6C59E528CFF9F4244CC01E /* ChannelImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelImporterTests.swift; sourceTree = "<group>"; };
+		CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideEpgStore.swift; sourceTree = "<group>"; };
 		CE85A65977364D5895537F30 /* ReconnectPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectPolicyTests.swift; sourceTree = "<group>"; };
 		CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		D084849083573B325F7FEE2F /* VideoSurfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSurfaceView.swift; sourceTree = "<group>"; };
@@ -341,6 +345,7 @@
 			children = (
 				CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */,
 				378960B36436AF8BCF69A520 /* DebugLaunch.swift */,
+				CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */,
 				E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */,
 			);
 			path = App;
@@ -468,6 +473,7 @@
 				3A722ACF8D5F5A0C9BB05E30 /* EpgRefresherTests.swift */,
 				80CDEC3595A9E4BF0A4E7B88 /* EpgRepositoryTests.swift */,
 				8957794BBE325137D232EB25 /* FakePlayerEngine.swift */,
+				48A9F5FFF68774C764EFF990 /* GuideEpgStoreTests.swift */,
 				7AC9AE905C341CD7DAD3582E /* LivePlaybackModelTests.swift */,
 				3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */,
 				8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */,
@@ -730,6 +736,7 @@
 				C75EA0E1C2D0EDADD9AD16A7 /* EpgRefresher.swift in Sources */,
 				02953CE8E6810FEC755C5071 /* EpgRepository.swift in Sources */,
 				D8D0C6B12DE3BB27D7284E57 /* EpgSchema.swift in Sources */,
+				451E456E72C6DE0ABA1D6575 /* GuideEpgStore.swift in Sources */,
 				FC1B9378CFDD73025A647ABA /* HttpPlaylistFetcher.swift in Sources */,
 				D185D838DBA0AF34C0175868 /* HttpUrl.swift in Sources */,
 				60563B5E6CD11DC45946FF28 /* LivePlaybackModel+Keys.swift in Sources */,
@@ -811,6 +818,7 @@
 				DAC26A6F75D9F8CA896AF342 /* EpgRefresherTests.swift in Sources */,
 				01C4782F7461B5382BAEB201 /* EpgRepositoryTests.swift in Sources */,
 				F64CD4122F3CDE918FBC24E8 /* FakePlayerEngine.swift in Sources */,
+				C5B846D2AB5BC86E4AE6469A /* GuideEpgStoreTests.swift in Sources */,
 				DD3A9F5CB04645EBB05E2A3E /* LivePlaybackModelTests.swift in Sources */,
 				0C4635D986E8377B2CAD2242 /* M3uParserTests.swift in Sources */,
 				39F5AD4531A880CD005EAE52 /* NowNextResolverTests.swift in Sources */,
