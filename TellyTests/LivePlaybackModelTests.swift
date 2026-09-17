@@ -258,6 +258,13 @@ struct LivePlaybackModelTests {
         #expect(model.holdsLastFrame == true)
     }
 
+    @Test func debugPresentQuickBarOverlayPinsOverlayAndHoldsFrame() {
+        let model = Harness().makeModel(channels)
+        model.debugPresentQuickBarOverlay()
+        #expect(model.overlay == .quickBar)
+        #expect(model.holdsLastFrame == true)
+    }
+
     // MARK: - EPG now/next seam
 
     @Test func currentInfoIsNilWithDefaultSeam() {

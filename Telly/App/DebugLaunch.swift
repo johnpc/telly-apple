@@ -41,6 +41,12 @@ enum DebugLaunch {
         value(for: "-tellyOverlay", in: args) == "info"
     }
 
+    /// Whether to pin the quick-bar open for the screenshot proof — set by
+    /// `-tellyOverlay quickBar`.
+    static func forcedQuickBarOverlay(in args: [String]) -> Bool {
+        value(for: "-tellyOverlay", in: args) == "quickBar"
+    }
+
     /// A synthetic now/next XMLTV fixture on ``demoEpgId``: a "now" programme
     /// centred on `nowMs` (so the progress bar sits mid-way) and the "next".
     static func infoFixtureDocument(nowMs: Int) -> XmltvDocument {

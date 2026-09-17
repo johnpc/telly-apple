@@ -32,6 +32,7 @@ extension ContentView {
         seedDebugFixtures()
         let model = env.makeLivePlaybackModel()
         if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
+        if DebugLaunch.forcedQuickBarOverlay(in: debugArgs) { model.debugPresentQuickBarOverlay() }
         seedInfoOverlayIfRequested(model)
         liveModel = model
     }

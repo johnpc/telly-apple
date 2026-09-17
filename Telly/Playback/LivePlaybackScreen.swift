@@ -17,6 +17,7 @@ struct LivePlaybackScreen: View {
             surface
             zapOverlay
             infoOverlay
+            quickBarOverlay
             stateOverlay
             #if !os(tvOS)
             PlaybackCloseButton()
@@ -68,6 +69,12 @@ struct LivePlaybackScreen: View {
                             nowMs: model.now(), expanded: true)
         default:
             EmptyView()
+        }
+    }
+
+    @ViewBuilder private var quickBarOverlay: some View {
+        if case .quickBar = model.overlay {
+            QuickBarView(video: model.engine.video)
         }
     }
 

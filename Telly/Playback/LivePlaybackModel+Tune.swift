@@ -50,5 +50,12 @@ extension LivePlaybackModel {
         debugHoldFrame = true
         visibility.set(.info)
     }
+
+    /// DEBUG screenshot hook: pin the quick-bar open (sticky, frame held) for the
+    /// `-tellyOverlay quickBar` proof.
+    func debugPresentQuickBarOverlay() {
+        debugHoldFrame = true
+        visibility.set(.quickBar)
+    }
 }
 #endif
