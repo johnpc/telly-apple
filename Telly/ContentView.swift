@@ -11,6 +11,7 @@ struct ContentView: View {
     @State var liveModel: LivePlaybackModel?
     @State var guideModel: GuideGridModel?
     @State var historyModel: HistoryListModel?
+    @State var searchModel: SearchModel?
     @State var multiviewSession: MultiviewSession?
     @State var catchupTarget: GuidePlaybackTarget?
     @State var catchupTransportModel: CatchupPlaybackModel?

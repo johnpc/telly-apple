@@ -19,6 +19,8 @@ extension ContentView {
             guideDemo
         } else if DebugLaunch.historyDemoRequested(in: debugArgs) {
             historyDemo
+        } else if DebugLaunch.searchDebugRequested(in: debugArgs) {
+            searchDebug
         } else if DebugLaunch.parentalChallengeRequested(in: debugArgs) {
             parentalChallengeDemo
         } else if DebugLaunch.catchupTransportRequested(in: debugArgs) {
