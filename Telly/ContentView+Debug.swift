@@ -2,9 +2,8 @@
 import SwiftUI
 
 /// DEBUG-only launch-argument routing for `ContentView`: seeds local fixtures and
-/// jumps straight to the live player, an autoplay stream, or the guide grid for
-/// deterministic screenshot capture — one prepared route per proof, never
-/// touching the real provider. Compiled out of release builds.
+/// jumps to a prepared route per proof (live player, autoplay, guide, locked-
+/// channel PIN challenge — see `+ParentalDebug`), never touching the real provider.
 extension ContentView {
     var debugArgs: [String] { ProcessInfo.processInfo.arguments }
 
@@ -15,6 +14,8 @@ extension ContentView {
             guideDemo
         } else if DebugLaunch.historyDemoRequested(in: debugArgs) {
             historyDemo
+        } else if DebugLaunch.parentalChallengeRequested(in: debugArgs) {
+            parentalChallengeDemo
         } else if debugArgs.contains("-tellyMultiviewDemo") {
             multiviewDemo
         } else if DebugLaunch.liveDemoRequested(in: debugArgs) {

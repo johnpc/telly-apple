@@ -2,12 +2,13 @@ import SwiftUI
 
 /// The post-onboarding channel list: a scrollable group-filter strip over the
 /// visible channels, each row showing a favourite star. A long-press context
-/// menu adds to / removes from Favorites or hides a channel; toolbar links reach
-/// the Guide and the Manage-Favorites / Manage-Visibility editors. Selecting a
-/// row opens the live player. Pure presentation — logic lives in
-/// ``ChannelListModel``.
+/// menu adds to / removes from Favorites, locks / unlocks (PIN) or hides a
+/// channel; toolbar links reach the Guide and the Manage-Favorites / Manage-
+/// Visibility editors. Selecting a row opens the live player — unless the channel
+/// is PIN-locked, when a challenge sheet gates the tune (see `+Parental`). Pure
+/// presentation — logic lives in ``ChannelListModel`` / ``ParentalStore``.
 struct ChannelListScreen: View {
-    @State private var model: ChannelListModel
+    @State var model: ChannelListModel
     let makeEngine: () -> VLCKitPlayerEngine
     let makeGuideGridModel: () -> GuideGridModel
     let makeHistoryModel: () -> HistoryListModel
@@ -16,8 +17,10 @@ struct ChannelListScreen: View {
     let settings: SettingsStore
     let parental: ParentalStore
     let onAdd: () -> Void
-    @State private var target: PlaybackTarget?
+    @State var target: PlaybackTarget?
     @State var showSettings = false
+    @State var challenge: ParentalChannelBox?
+    @State var lockTarget: ParentalChannelBox?
 
     init(model: ChannelListModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
          makeGuideGridModel: @escaping () -> GuideGridModel,
@@ -54,6 +57,8 @@ struct ChannelListScreen: View {
         .fullScreenCover(item: $target) { target in
             PlaybackScreen(streamUrl: target.url, engine: makeEngine())
         }
+        .sheet(item: $challenge) { challengeSheet($0.channel) }
+        .sheet(item: $lockTarget) { lockSheet($0.channel) }
         .sheet(isPresented: $showSettings) {
             SettingsScreen(settings: settings, parental: parental, onClose: { showSettings = false })
         }
@@ -65,25 +70,18 @@ struct ChannelListScreen: View {
             ContentUnavailableView.search(text: model.query)
         }
     }
-
-    @ViewBuilder private func row(_ channel: ChannelEntity) -> some View {
-        Button {
-            target = PlaybackTarget(id: channel.id, url: channel.source.streamUrl)
-        } label: {
-            ChannelListRowView(channel: channel)
-        }
-        .buttonStyle(.plain)
-        .contextMenu {
-            Button(channel.flags.favorite ? "Remove Favorite" : "Add to Favorites") {
-                model.toggleFavorite(channel)
-            }
-            Button("Hide channel", role: .destructive) { model.hide(channel) }
-        }
-    }
 }
 
 /// Identifies the channel currently being played (drives the fullscreen cover).
-private struct PlaybackTarget: Identifiable {
+struct PlaybackTarget: Identifiable {
     let id: Int
     let url: String
+}
+
+/// Boxes a channel awaiting a parental-PIN sheet (challenge-to-tune or lock/
+/// unlock confirmation), giving `.sheet(item:)` the `Identifiable` it needs
+/// without making ``ChannelEntity`` itself identifiable.
+struct ParentalChannelBox: Identifiable {
+    let channel: ChannelEntity
+    var id: Int { channel.id }
 }

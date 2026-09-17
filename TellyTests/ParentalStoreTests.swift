@@ -12,6 +12,18 @@ struct ParentalStoreTests {
 
     private func store() -> ParentalStore { ParentalStore(secret: secret, backing: backing) }
 
+    /// A store over its own fresh backings, so gate scenarios don't share the
+    /// enable flag / hash written by a sibling store in the same test.
+    private func freshStore() -> ParentalStore {
+        ParentalStore(secret: InMemorySecretStore(), backing: InMemoryKeyValueStore())
+    }
+
+    private func channel(blocked: Bool) -> ChannelEntity {
+        ChannelEntity(id: 1, playlistId: 1, number: 1, sortIndex: 1,
+                      source: ChannelSource(name: "Ch", groupTitle: "Live", streamUrl: "http://x/1"),
+                      flags: ChannelFlags(blocked: blocked))
+    }
+
     @Test func freshStoreHasNoPin() {
         #expect(store().isSet == false)
     }
@@ -73,5 +85,38 @@ struct ParentalStoreTests {
         s.isEnabled = true
         s.clear()
         #expect(s.isEnabled == false)
+    }
+
+    @Test func mustChallengeOnlyWhenBlockedWithPinAndEnabled() {
+        let s = freshStore()
+        s.set(pin: "1234")
+        s.isEnabled = true
+        #expect(s.mustChallenge(channel(blocked: true)) == true)
+        #expect(s.mustChallenge(channel(blocked: false)) == false)   // unblocked tunes freely
+    }
+
+    @Test func mustChallengeFalseWithoutPin() {
+        let s = freshStore()
+        s.isEnabled = true                                           // enabled but no PIN set
+        #expect(s.mustChallenge(channel(blocked: true)) == false)
+    }
+
+    @Test func mustChallengeFalseWhenEnforcementDisabled() {
+        let s = freshStore()
+        s.set(pin: "1234")                                           // PIN set but toggle off
+        #expect(s.mustChallenge(channel(blocked: true)) == false)
+    }
+
+    @Test func wrongPinNeverUnlocksABlockedChannel() {
+        // The invariant the row's challenge closure relies on: a blocked+enabled
+        // channel with a PIN demands a challenge, and only the correct PIN
+        // verifies — so a wrong/blank PIN returns false and never sets a target.
+        let s = freshStore()
+        s.set(pin: "1234")
+        s.isEnabled = true
+        let locked = channel(blocked: true)
+        #expect(s.mustChallenge(locked) == true)     // tap presents the challenge, not the player
+        #expect(s.verify(pin: "0000") == false)      // wrong PIN → closure returns false → no tune
+        #expect(s.verify(pin: "1234") == true)       // only the correct PIN unlocks it
     }
 }

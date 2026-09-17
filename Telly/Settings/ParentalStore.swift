@@ -55,6 +55,13 @@ final class ParentalStore {
         return PinHasher.matches(pin: pin, salt: salt, expected: expected)
     }
 
+    /// The pure tune-time gate (Android `BlockGate.intercept`): a channel must be
+    /// PIN-challenged before it tunes only when it is blocked AND a PIN is set AND
+    /// enforcement is enabled. Everything else tunes straight through.
+    func mustChallenge(_ channel: ChannelEntity) -> Bool {
+        channel.flags.blocked && isSet && isEnabled
+    }
+
     /// Removes the stored PIN (salt + hash) and disables enforcement.
     func clear() {
         secret.remove(Self.saltKey)

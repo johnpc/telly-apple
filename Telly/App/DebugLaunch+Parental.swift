@@ -19,5 +19,18 @@ extension DebugLaunch {
     static func seedParentalPin(in args: [String]) -> String? {
         value(for: "-tellyParentalPin", in: args)
     }
+
+    /// Marks the first visible fixture channel blocked and seeds + enables `pin`,
+    /// so the challenge proof has a locked channel with an active credential.
+    /// Idempotent (safe to relaunch); a no-op when there are no channels.
+    @MainActor
+    static func seedParentalBlock(into store: ChannelStore, parental: ParentalStore, pin: String) {
+        guard let first = (try? store.visibleChannels())?.first else { return }
+        var blocked = first
+        blocked.flags.blocked = true
+        try? store.update(blocked)
+        parental.set(pin: pin)
+        parental.isEnabled = true
+    }
 }
 #endif

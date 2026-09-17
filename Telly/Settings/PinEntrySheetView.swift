@@ -4,33 +4,15 @@ import SwiftUI
 /// one before disabling it. Format is validated via ``PinPolicy`` (Confirm stays
 /// disabled until four digits are entered); the raw PIN is handed to `onSubmit`,
 /// which returns whether it was accepted. A rejected PIN clears the field for a
-/// retry. The PIN is never logged. Slice 4's challenge sheet reuses
-/// ``PinDigitsFieldView`` so the masked-entry wiring lives in one place.
+/// retry. The PIN is never logged. The masked-entry scaffold is shared with
+/// ``PinChallengeSheetView`` via ``PinPromptView`` so nothing is duplicated.
 struct PinEntrySheetView: View {
     let mode: PinEntryMode
     let onSubmit: (String) -> Bool
-    @Environment(\.dismiss) private var dismiss
-    @State private var pin = ""
 
     var body: some View {
-        NavigationStack {
-            Form {
-                Section(mode.prompt) { PinDigitsFieldView(pin: $pin) }
-            }
-            .navigationTitle(mode.title)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Confirm", action: confirm).disabled(!PinPolicy.isValid(pin))
-                }
-            }
-        }
-    }
-
-    private func confirm() {
-        if onSubmit(pin) { dismiss() } else { pin = "" }
+        PinPromptView(title: mode.title, prompt: mode.prompt,
+                      confirmLabel: "Confirm", onSubmit: onSubmit)
     }
 }
 

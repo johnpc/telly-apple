@@ -15,4 +15,13 @@ extension ChannelListModel {
         try? store.update(updated)
         load()
     }
+
+    /// Sets a channel's blocked (PIN-locked) flag, persists it, then reloads so
+    /// the row's Lock/Unlock affordance and the tune gate reflect the change.
+    func setBlocked(_ channel: ChannelEntity, _ blocked: Bool) {
+        var updated = channel
+        updated.flags.blocked = blocked
+        try? store.update(updated)
+        load()
+    }
 }
