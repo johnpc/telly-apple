@@ -32,6 +32,12 @@ extension LivePlaybackModel {
         guard let next = ChannelZapper.neighbour(channels, current: current, delta: delta) else { return }
         tune(next)
     }
+
+    /// Tear the engine down when the screen goes away.
+    func close() {
+        engine.stop()
+        engine.release()
+    }
 }
 
 #if DEBUG

@@ -40,6 +40,7 @@ struct ContentView: View {
                                   makeGuideGridModel: env.makeGuideGridModel,
                                   makeCatchupModel: env.makeCatchupPlaybackModel,
                                   makeHistoryModel: env.makeHistoryModel,
+                                  makeSearchModel: env.makeSearchModel,
                                   makeChannelEditModel: env.makeChannelEditModel,
                                   makeVisibilityEditModel: env.makeVisibilityEditModel,
                                   makeBackupModel: env.makeSettingsBackupModel,

@@ -22,6 +22,10 @@ final class LivePlaybackModel {
     var current: ChannelEntity?
     /// The track picker `.pushed` over the quick-bar shows, nil when none is up.
     var activePicker: TrackPickerKind?
+    /// Set by the search quick-bar slot; the screen presents the search cover.
+    var searchRequested = false
+    /// Builds the search screen's model for that cover (nil in unit tests).
+    let makeSearchModel: (@MainActor () -> SearchModel)?
 
     var visibility = OverlayVisibility()
     var pendingZap = PendingZap()
@@ -56,8 +60,10 @@ final class LivePlaybackModel {
          persistLastChannel: @escaping (Int) -> Void,
          loadLastChannel: @escaping () -> Int?,
          onExitToGuide: @escaping () -> Void,
-         nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil }) {
+         nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil },
+         makeSearchModel: (@MainActor () -> SearchModel)? = nil) {
         self.engine = engine
+        self.makeSearchModel = makeSearchModel
         self.channels = channels
         self.makeEngine = makeEngine
         self.keymap = keymap
@@ -90,11 +96,5 @@ final class LivePlaybackModel {
         guard let channel = current else { return }
         engine.load(channel.source.streamUrl)
         persistLastChannel(channel.id)
-    }
-
-    /// Tear the engine down when the screen goes away.
-    func close() {
-        engine.stop()
-        engine.release()
     }
 }

@@ -39,6 +39,7 @@ extension LivePlaybackModel {
     /// display-only for live IPTV (single video ES), so it does nothing.
     func onQuickBarAction(_ action: QuickBarAction) {
         switch action {
+        case .search: searchRequested = true
         case .audio: openTrackPicker(.audio)
         case .subtitles: openTrackPicker(.subtitles)
         case .latency: openTrackPicker(.sync)

@@ -1,16 +1,21 @@
 import SwiftUI
 
-/// The "Other" settings group: a guarded "Reset All Settings" action that clears
-/// every stored scalar preference back to its factory default via
-/// ``SettingsStore/resetToDefaults()``. A confirmation dialog protects the
-/// destructive reset. Search-history/Reminders/Recording/VOD have no Apple
-/// implementation yet and are omitted rather than faked (plan §1.5).
+/// The "Other" settings group: the "Save search history" toggle and a "Clear
+/// search history" action (over the ``SearchHistory`` seam), plus a guarded
+/// "Reset All Settings" that clears every stored scalar preference back to its
+/// factory default via ``SettingsStore/resetToDefaults()``. A confirmation
+/// dialog protects the destructive reset.
 struct SettingsOtherSectionView: View {
-    let settings: SettingsStore
+    @Bindable var settings: SettingsStore
     @State private var confirming = false
 
     var body: some View {
         Section("Other") {
+            Toggle("Save Search History", isOn: $settings.saveSearchHistory)
+            Button("Clear Search History") {
+                SearchHistory(store: settings.backing,
+                              saveEnabled: { settings.saveSearchHistory }).clear()
+            }
             Button("Reset All Settings", role: .destructive) { confirming = true }
         }
         .confirmationDialog("Reset all settings to defaults?",

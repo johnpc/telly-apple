@@ -1,18 +1,16 @@
 import SwiftUI
 
-/// The post-onboarding channel list: a scrollable group-filter strip over the
-/// visible channels, each row showing a favourite star. A long-press context
-/// menu adds to / removes from Favorites, locks / unlocks (PIN) or hides a
-/// channel; toolbar links reach the Guide and the Manage-Favorites / Manage-
-/// Visibility editors. Selecting a row opens the live player — unless the channel
-/// is PIN-locked, when a challenge sheet gates the tune (see `+Parental`). Pure
-/// presentation — logic lives in ``ChannelListModel`` / ``ParentalStore``.
+/// The post-onboarding channel list: a group-filter strip over the visible
+/// channels, a long-press menu (favourite / lock / hide) and toolbar links to
+/// the Guide, Search, History and the editors. A row opens the live player
+/// unless a PIN-lock gates it (`+Parental`); logic lives in ``ChannelListModel``.
 struct ChannelListScreen: View {
     @State var model: ChannelListModel
     let makeEngine: () -> VLCKitPlayerEngine
     let makeGuideGridModel: () -> GuideGridModel
     let makeCatchupModel: (CatchupRequest) -> CatchupPlaybackModel
     let makeHistoryModel: () -> HistoryListModel
+    let makeSearchModel: () -> SearchModel
     let makeChannelEditModel: (String?) -> ChannelEditModel
     let makeVisibilityEditModel: () -> VisibilityEditModel
     let makeBackupModel: () -> SettingsBackupModel
@@ -29,6 +27,7 @@ struct ChannelListScreen: View {
          makeGuideGridModel: @escaping () -> GuideGridModel,
          makeCatchupModel: @escaping (CatchupRequest) -> CatchupPlaybackModel,
          makeHistoryModel: @escaping () -> HistoryListModel,
+         makeSearchModel: @escaping () -> SearchModel,
          makeChannelEditModel: @escaping (String?) -> ChannelEditModel,
          makeVisibilityEditModel: @escaping () -> VisibilityEditModel,
          makeBackupModel: @escaping () -> SettingsBackupModel,
@@ -41,6 +40,7 @@ struct ChannelListScreen: View {
         self.makeGuideGridModel = makeGuideGridModel
         self.makeCatchupModel = makeCatchupModel
         self.makeHistoryModel = makeHistoryModel
+        self.makeSearchModel = makeSearchModel
         self.makeChannelEditModel = makeChannelEditModel
         self.makeVisibilityEditModel = makeVisibilityEditModel
         self.makeBackupModel = makeBackupModel

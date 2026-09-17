@@ -33,6 +33,9 @@ struct LivePlaybackScreen: View {
             }
         }
         .onDisappear { model.close() }
+        .fullScreenCover(isPresented: $model.searchRequested) {
+            if let make = model.makeSearchModel { SearchScreen(model: make()) }
+        }
         .playbackKeyForwarder(model)
         #if !os(tvOS)
         .gesture(DragGesture(minimumDistance: 0).onEnded { v in

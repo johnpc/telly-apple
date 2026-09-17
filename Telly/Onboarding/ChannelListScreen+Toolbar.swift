@@ -18,6 +18,11 @@ extension ChannelListScreen {
             }
         }
         ToolbarItem(placement: .primaryAction) {
+            NavigationLink("Search") {
+                SearchScreen(model: makeSearchModel())
+            }
+        }
+        ToolbarItem(placement: .primaryAction) {
             NavigationLink("Favorites") { ManageFavoritesScreen(model: makeChannelEditModel(nil)) }
         }
         ToolbarItem(placement: .primaryAction) {

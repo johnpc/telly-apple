@@ -46,6 +46,17 @@ extension AppEnvironment {
         HistoryListModel(store: watchHistoryStore, channelStore: channelStore)
     }
 
+    /// The search screen's observable state over the channel/programme stores,
+    /// the guide EPG for now/next, and the persisted recent-query history.
+    func makeSearchModel() -> SearchModel {
+        SearchModel(
+            repository: SearchRepository(channelStore: channelStore, programStore: programStore,
+                                         epg: EpgRepository(store: programStore)),
+            history: SearchHistory(store: settings.backing,
+                                   saveEnabled: { [settings] in settings.saveSearchHistory }),
+            now: clock, timeZone: .current)
+    }
+
     /// The guide grid's observable state over the current channel + programme
     /// stores and wall clock; the clock format follows the 24-hour setting.
     func makeGuideGridModel() -> GuideGridModel {
@@ -79,6 +90,7 @@ extension AppEnvironment {
             },
             loadLastChannel: { defaults.object(forKey: key) as? Int },
             onExitToGuide: {},
-            nowNext: { [guideEpgStore] channel in guideEpgStore.nowNext(forEpgId: channel.epgId) })
+            nowNext: { [guideEpgStore] channel in guideEpgStore.nowNext(forEpgId: channel.epgId) },
+            makeSearchModel: makeSearchModel)
     }
 }
