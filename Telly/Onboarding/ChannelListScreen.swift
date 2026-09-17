@@ -15,6 +15,7 @@ struct ChannelListScreen: View {
     let makeVisibilityEditModel: () -> VisibilityEditModel
     let makeBackupModel: () -> SettingsBackupModel
     let makePlaylistsSettingsModel: () -> PlaylistsSettingsModel
+    let makeVodBrowseModel: () -> VodBrowseModel
     let settings: SettingsStore
     let parental: ParentalStore
     let onAdd: () -> Void
@@ -32,6 +33,7 @@ struct ChannelListScreen: View {
          makeVisibilityEditModel: @escaping () -> VisibilityEditModel,
          makeBackupModel: @escaping () -> SettingsBackupModel,
          makePlaylistsSettingsModel: @escaping () -> PlaylistsSettingsModel,
+         makeVodBrowseModel: @escaping () -> VodBrowseModel,
          settings: SettingsStore,
          parental: ParentalStore,
          onAdd: @escaping () -> Void) {
@@ -45,6 +47,7 @@ struct ChannelListScreen: View {
         self.makeVisibilityEditModel = makeVisibilityEditModel
         self.makeBackupModel = makeBackupModel
         self.makePlaylistsSettingsModel = makePlaylistsSettingsModel
+        self.makeVodBrowseModel = makeVodBrowseModel
         self.settings = settings
         self.parental = parental
         self.onAdd = onAdd
@@ -83,18 +86,4 @@ struct ChannelListScreen: View {
             ContentUnavailableView.search(text: model.query)
         }
     }
-}
-
-/// Identifies the channel currently being played (drives the fullscreen cover).
-struct PlaybackTarget: Identifiable {
-    let id: Int
-    let url: String
-}
-
-/// Boxes a channel awaiting a parental-PIN sheet (challenge-to-tune or lock/
-/// unlock confirmation), giving `.sheet(item:)` the `Identifiable` it needs
-/// without making ``ChannelEntity`` itself identifiable.
-struct ParentalChannelBox: Identifiable {
-    let channel: ChannelEntity
-    var id: Int { channel.id }
 }

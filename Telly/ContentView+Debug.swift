@@ -23,6 +23,8 @@ extension ContentView {
             searchDebug
         } else if DebugLaunch.groupsDebugRequested(in: debugArgs) {
             groupsDebug
+        } else if DebugLaunch.vodBrowseRequested(in: debugArgs) {
+            vodBrowseDemo
         } else if DebugLaunch.parentalChallengeRequested(in: debugArgs) {
             parentalChallengeDemo
         } else if DebugLaunch.catchupTransportRequested(in: debugArgs) {

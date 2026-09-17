@@ -17,6 +17,7 @@ struct ContentView: View {
     @State var catchupTransportModel: CatchupPlaybackModel?
     @State var playlistsModel: PlaylistsSettingsModel?
     @State var groupsSeeded = false
+    @State var vodModel: VodBrowseModel?
     #endif
 
     var body: some View {
@@ -47,6 +48,7 @@ struct ContentView: View {
                                   makeVisibilityEditModel: env.makeVisibilityEditModel,
                                   makeBackupModel: env.makeSettingsBackupModel,
                                   makePlaylistsSettingsModel: env.makePlaylistsSettingsModel,
+                                  makeVodBrowseModel: env.makeVodBrowseModel,
                                   settings: env.settings,
                                   parental: env.parentalStore,
                                   onAdd: { adding = true })

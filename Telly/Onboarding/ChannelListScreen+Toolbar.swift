@@ -23,6 +23,13 @@ extension ChannelListScreen {
             }
         }
         ToolbarItem(placement: .primaryAction) {
+            NavigationLink {
+                VodBrowseScreen(model: makeVodBrowseModel())
+            } label: {
+                Label("Movies", systemImage: "film")
+            }
+        }
+        ToolbarItem(placement: .primaryAction) {
             NavigationLink("Favorites") { ManageFavoritesScreen(model: makeChannelEditModel(nil)) }
         }
         ToolbarItem(placement: .primaryAction) {
