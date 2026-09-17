@@ -13,6 +13,8 @@ extension ContentView {
                            backup: env.makeSettingsBackupModel(),
                            playlists: env.makePlaylistsSettingsModel(),
                            makeVisibilityEditModel: env.makeVisibilityEditModel, onClose: {})
+        } else if DebugLaunch.playlistDebugRequested(in: debugArgs) {
+            playlistsDebug
         } else if DebugLaunch.forcedGuide(in: debugArgs) {
             guideDemo
         } else if DebugLaunch.historyDemoRequested(in: debugArgs) {

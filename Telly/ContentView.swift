@@ -14,6 +14,7 @@ struct ContentView: View {
     @State var multiviewSession: MultiviewSession?
     @State var catchupTarget: GuidePlaybackTarget?
     @State var catchupTransportModel: CatchupPlaybackModel?
+    @State var playlistsModel: PlaylistsSettingsModel?
     #endif
 
     var body: some View {
