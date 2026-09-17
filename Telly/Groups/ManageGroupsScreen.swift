@@ -9,8 +9,12 @@ struct ManageGroupsScreen: View {
     @State private var model: ManageGroupsModel
     @State private var draft = ""
     @State private var deleting: CustomGroup?
+    let makeCopyChannelsModel: () -> CopyChannelsModel
 
-    init(model: ManageGroupsModel) { _model = State(initialValue: model) }
+    init(model: ManageGroupsModel, makeCopyChannelsModel: @escaping () -> CopyChannelsModel) {
+        _model = State(initialValue: model)
+        self.makeCopyChannelsModel = makeCopyChannelsModel
+    }
 
     var body: some View {
         Form {
@@ -18,6 +22,11 @@ struct ManageGroupsScreen: View {
                 HStack {
                     TextField("Group name", text: $draft)
                     Button("Add") { add() }.disabled(draft.trimmed.isEmpty)
+                }
+            }
+            Section {
+                NavigationLink("Copy Channels") {
+                    CopyChannelsScreen(model: makeCopyChannelsModel())
                 }
             }
             Section("Custom Groups") {

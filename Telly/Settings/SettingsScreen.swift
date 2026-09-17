@@ -16,7 +16,8 @@ struct SettingsScreen: View {
         NavigationStack {
             Form {
                 SettingsPlaylistsSectionView(model: playlists)
-                SettingsGroupsSectionView(makeManageGroupsModel: playlists.makeManageGroupsModel)
+                SettingsGroupsSectionView(makeManageGroupsModel: playlists.makeManageGroupsModel,
+                                          makeCopyChannelsModel: playlists.makeCopyChannelsModel)
                 SettingsGeneralSectionView(settings: settings)
                 SettingsPlaybackSectionView(settings: settings)
                 SettingsGuideSectionView(settings: settings,

@@ -19,4 +19,11 @@ extension PlaylistsSettingsModel {
     func makeManageGroupsModel() -> ManageGroupsModel {
         ManageGroupsModel(store: CustomGroupStore(db: channelStore.db))
     }
+
+    /// The Copy-channels editor model (backing ``CopyChannelsScreen``); both the
+    /// ``CustomGroupStore`` and the channel feed come from the shared database the
+    /// carrier's ``ChannelStore`` already holds, so no capped file grows.
+    func makeCopyChannelsModel() -> CopyChannelsModel {
+        CopyChannelsModel(store: CustomGroupStore(db: channelStore.db), channelStore: channelStore)
+    }
 }

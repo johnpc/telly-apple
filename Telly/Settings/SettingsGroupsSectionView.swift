@@ -6,11 +6,13 @@ import SwiftUI
 /// capped file grows. Pure presentation.
 struct SettingsGroupsSectionView: View {
     let makeManageGroupsModel: () -> ManageGroupsModel
+    let makeCopyChannelsModel: () -> CopyChannelsModel
 
     var body: some View {
         Section("Groups") {
             NavigationLink("Manage Groups") {
-                ManageGroupsScreen(model: makeManageGroupsModel())
+                ManageGroupsScreen(model: makeManageGroupsModel(),
+                                   makeCopyChannelsModel: makeCopyChannelsModel)
             }
         }
     }
