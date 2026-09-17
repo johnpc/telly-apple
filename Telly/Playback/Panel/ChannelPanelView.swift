@@ -12,11 +12,15 @@ struct ChannelPanelView: View {
     let current: ChannelEntity?
     let nowNext: (ChannelEntity) -> NowNext?
     let nowMs: Int
+    /// User-created custom groups, appended after the playlist groups in the
+    /// group column (Android parity); empty by default so existing call sites
+    /// compile unchanged.
+    var customGroups: [CustomGroup] = []
     #if !os(tvOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
     #endif
 
-    private var groups: [String] { ChannelPanelGroups.groupNames(channels) }
+    private var groups: [String] { ChannelPanelGroups.groupNames(channels, customs: customGroups) }
 
     private var rows: [PanelRowInfo] {
         PanelRowBuilder.rows(channels, group: ChannelPanelGroups.allChannels,

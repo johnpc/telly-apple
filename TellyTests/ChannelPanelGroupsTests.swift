@@ -30,4 +30,17 @@ struct ChannelPanelGroupsTests {
         let all = [ch(1, group: "Live"), ch(2, group: "VOD"), ch(3, group: "Live")]
         #expect(ChannelPanelGroups.channels(all, in: "Live").map(\.id) == [1, 3])
     }
+
+    @Test func customGroupsAppendedLast() {
+        let names = ChannelPanelGroups.groupNames([ch(1, group: "Live"), ch(2, group: "VOD")],
+                                                  customs: [CustomGroup(id: 1, name: "Kids")])
+        #expect(names == ["All channels", "Live", "VOD", "Kids"])
+    }
+
+    @Test func channelsInCustomGroupResolveMembers() {
+        let all = [ch(1, group: "Live"), ch(2, group: "VOD"), ch(3, group: "Live")]
+        let members: Set<String> = [ChannelImporter.keyOf(all[1])]
+        let customs = [CustomGroup(id: 1, name: "Kids", members: members)]
+        #expect(ChannelPanelGroups.channels(all, in: "Kids", customs: customs).map(\.id) == [2])
+    }
 }

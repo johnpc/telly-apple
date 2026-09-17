@@ -9,15 +9,21 @@ import Foundation
 enum ChannelListGroups {
     static let favorites = "Favorites"
 
-    /// `[Favorites, All channels] + playlist groups`, matching the Android panel.
-    static func groupNames(_ channels: [ChannelEntity]) -> [String] {
-        [favorites] + ChannelPanelGroups.groupNames(channels)
+    /// `[Favorites, All channels] + playlist groups + custom groups`, matching
+    /// the Android panel (custom groups appended last).
+    static func groupNames(_ channels: [ChannelEntity], customs: [CustomGroup] = []) -> [String] {
+        [favorites] + ChannelPanelGroups.groupNames(channels) + CustomGroupChannels.names(customs)
     }
 
     /// The channels under `group`: favourites (in managed order) for the
-    /// `Favorites` pseudo-group, otherwise the playback panel's group filter.
-    static func channels(_ channels: [ChannelEntity], in group: String) -> [ChannelEntity] {
-        group == favorites ? ChannelReorder.favorites(channels)
-                           : ChannelPanelGroups.channels(channels, in: group)
+    /// `Favorites` pseudo-group, a custom group's members when `group` names one,
+    /// otherwise the playback panel's playlist-group filter.
+    static func channels(_ channels: [ChannelEntity], in group: String,
+                         customs: [CustomGroup] = []) -> [ChannelEntity] {
+        if group == favorites { return ChannelReorder.favorites(channels) }
+        if let keys = CustomGroupChannels.members(named: group, in: customs) {
+            return CustomGroupChannels.channels(channels, memberKeys: keys)
+        }
+        return ChannelPanelGroups.channels(channels, in: group)
     }
 }

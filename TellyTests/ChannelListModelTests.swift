@@ -114,4 +114,23 @@ struct ChannelListModelTests {
         model.query = "zzz"
         #expect(model.rows.isEmpty)
     }
+
+    @Test func customGroupListedAfterPlaylistGroups() throws {
+        let model = try seededModel()
+        let groups = CustomGroupStore(db: model.store.db)
+        let id = try groups.create(name: "Kids")
+        try groups.addMembers(id: id, keys: ["A", "C"])
+        model.load()  // reloads custom groups alongside channels
+        #expect(model.groups == ["Favorites", "All channels", "Live", "Sport", "Kids"])
+    }
+
+    @Test func selectingCustomGroupShowsItsMembers() throws {
+        let model = try seededModel()
+        let groups = CustomGroupStore(db: model.store.db)
+        let id = try groups.create(name: "Kids")
+        try groups.addMembers(id: id, keys: ["A", "C"])  // keyOf == tvg-id here
+        model.load()
+        model.select("Kids")
+        #expect(model.rows.map(\.source.name) == ["A", "C"])
+    }
 }

@@ -7,8 +7,14 @@ import SwiftUI
 /// `onKey`; iPhone/iPad map taps/swipes onto that same vocabulary (S7).
 struct LivePlaybackScreen: View {
     @State var model: LivePlaybackModel
+    /// Custom groups surfaced in the panel's group column, forwarded to
+    /// ``ChannelPanelView``; empty by default so existing call sites are unchanged.
+    let customGroups: [CustomGroup]
 
-    init(model: LivePlaybackModel) { _model = State(initialValue: model) }
+    init(model: LivePlaybackModel, customGroups: [CustomGroup] = []) {
+        _model = State(initialValue: model)
+        self.customGroups = customGroups
+    }
 
     var body: some View {
         ZStack {
@@ -80,13 +86,6 @@ struct LivePlaybackScreen: View {
         if case .quickBar = model.overlay {
             QuickBarView(video: model.engine.video, subtitles: model.quickBarSubtitles,
                          sync: model.quickBarSync, onAction: { model.onQuickBarAction($0) })
-        }
-    }
-
-    @ViewBuilder private var panelOverlay: some View {
-        if case .panel = model.overlay {
-            ChannelPanelView(channels: model.channels, current: model.current,
-                             nowNext: model.nowNext, nowMs: model.now())
         }
     }
 

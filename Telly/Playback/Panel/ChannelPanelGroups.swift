@@ -8,9 +8,9 @@ import Foundation
 enum ChannelPanelGroups {
     static let allChannels = "All channels"
 
-    /// The ordered group names: `allChannels` then the distinct non-nil group
-    /// titles, each kept at its first appearance.
-    static func groupNames(_ channels: [ChannelEntity]) -> [String] {
+    /// The ordered group names: `allChannels`, the distinct non-nil playlist
+    /// group titles (each at first appearance), then the custom groups last.
+    static func groupNames(_ channels: [ChannelEntity], customs: [CustomGroup] = []) -> [String] {
         var seen = Set<String>()
         var names = [allChannels]
         for channel in channels {
@@ -18,12 +18,18 @@ enum ChannelPanelGroups {
                   seen.insert(group).inserted else { continue }
             names.append(group)
         }
-        return names
+        return names + CustomGroupChannels.names(customs)
     }
 
-    /// The channels listed under `group`: every channel for `allChannels`, else
-    /// the group filter (first-appearance order preserved).
-    static func channels(_ channels: [ChannelEntity], in group: String) -> [ChannelEntity] {
-        group == allChannels ? channels : channels.filter { $0.source.groupTitle == group }
+    /// The channels listed under `group`: every channel for `allChannels`, a
+    /// custom group's members when `group` names one, else the playlist-group
+    /// filter (first-appearance order preserved).
+    static func channels(_ channels: [ChannelEntity], in group: String,
+                         customs: [CustomGroup] = []) -> [ChannelEntity] {
+        if group == allChannels { return channels }
+        if let keys = CustomGroupChannels.members(named: group, in: customs) {
+            return CustomGroupChannels.channels(channels, memberKeys: keys)
+        }
+        return channels.filter { $0.source.groupTitle == group }
     }
 }

@@ -28,4 +28,17 @@ struct ChannelListGroupsTests {
         let list = [ch(1, group: "Live"), ch(2, group: "VOD"), ch(3, group: "Live")]
         #expect(ChannelListGroups.channels(list, in: "Live").map(\.id) == [1, 3])
     }
+
+    @Test func customGroupsAppendedAfterPlaylistGroups() {
+        let names = ChannelListGroups.groupNames([ch(1, group: "Live")],
+                                                 customs: [CustomGroup(id: 1, name: "Kids")])
+        #expect(names == ["Favorites", "All channels", "Live", "Kids"])
+    }
+
+    @Test func selectingCustomGroupResolvesItsMembers() {
+        let list = [ch(1, group: "Live"), ch(2, group: "VOD"), ch(3, group: "Live")]
+        let members: Set<String> = [ChannelImporter.keyOf(list[0]), ChannelImporter.keyOf(list[2])]
+        let customs = [CustomGroup(id: 1, name: "Kids", members: members)]
+        #expect(ChannelListGroups.channels(list, in: "Kids", customs: customs).map(\.id) == [1, 3])
+    }
 }
