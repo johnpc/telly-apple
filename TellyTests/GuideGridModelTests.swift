@@ -110,6 +110,21 @@ struct GuideGridModelTests {
         #expect(model.nowLineOffset == nil)
     }
 
+    @Test func setViewportRematerializesAndClamps() throws {
+        let model = try makeModel(viewport: 960)
+        #expect(model.timelineTicks.count == 7)  // 960 / 160 = 6 columns → 7 marks
+        model.setViewport(320)  // 2 columns
+        #expect(model.viewport == 320)
+        #expect(model.timelineTicks.count == 3)
+        #expect(model.nowLineOffset == 0)  // now at origin stays on the narrower pane
+        model.setViewport(1600)  // 10 columns
+        #expect(model.timelineTicks.count == 11)
+        model.setViewport(0)  // non-positive is ignored
+        #expect(model.viewport == 1600)
+        model.setViewport(1600)  // unchanged is ignored
+        #expect(model.viewport == 1600)
+    }
+
     @Test func perChannelOffsetShiftsPickedProgramme() throws {
         let shifted = try makeModel(offsetB: -30)
         let plain = try makeModel(offsetB: 0)

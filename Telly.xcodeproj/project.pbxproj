@@ -40,6 +40,7 @@
 		2D612FCFA191FBA5A841701D /* ProgramRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE7C444E05D9710962B3C0B /* ProgramRecord.swift */; };
 		2DB94E5C3639BBE59EA67920 /* XmltvTimestampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */; };
 		2EF2738677D8D0B434C4706B /* NoTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4B7FD661163037CE53FB6 /* NoTracks.swift */; };
+		3054E7B44EB84593A61FE17E /* GuideGridModel+Viewport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF35608EA8AEE6476488BA1D /* GuideGridModel+Viewport.swift */; };
 		306683117C97BFF70CD8B3B8 /* PendingZap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AC8D5939183EFF23730549 /* PendingZap.swift */; };
 		30F50318EAC4991322A638C7 /* PlayerKeymap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DF4F44157AD31582B07D53 /* PlayerKeymap.swift */; };
 		30FF585B0F1C3F90D19B4ACA /* GuideGridModelFocusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6220890A72743706CAABA39 /* GuideGridModelFocusTests.swift */; };
@@ -368,6 +369,7 @@
 		EB1976ACB9C3233BD3A7E9AB /* TellyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellyApp.swift; sourceTree = "<group>"; };
 		EC3F7D41F43C92AD1CB0E648 /* GuideRowsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideRowsBuilderTests.swift; sourceTree = "<group>"; };
 		EC46962DA6213D6AE285ACAB /* EpgRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgRepository.swift; sourceTree = "<group>"; };
+		EF35608EA8AEE6476488BA1D /* GuideGridModel+Viewport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GuideGridModel+Viewport.swift"; sourceTree = "<group>"; };
 		F06A6C4B7C8423DF4D41E23F /* ChannelStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelStoreTests.swift; sourceTree = "<group>"; };
 		F1CC40D09A16B0AFA3330197 /* PlaybackCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCommand.swift; sourceTree = "<group>"; };
 		F3C6E232AB22C1BE5B465668 /* GuideFocus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideFocus.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				7B25194BFD082C9DD98A7935 /* GuideGridModel.swift */,
 				C6062AFD2B43FCB44C47F52E /* GuideGridModel+Focus.swift */,
 				72A0FFDDB0818EB4858B71DD /* GuideGridModel+View.swift */,
+				EF35608EA8AEE6476488BA1D /* GuideGridModel+Viewport.swift */,
 				E9B9837D1F3167120C446419 /* GuideSelection.swift */,
 				E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */,
 			);
@@ -883,6 +886,7 @@
 				4A4B1FFD4534FB07FA6FA5FC /* GuideGeometry.swift in Sources */,
 				494883ACCB66C20457A9BBB1 /* GuideGridModel+Focus.swift in Sources */,
 				E70B0AAAB6C673FD65F8B6B2 /* GuideGridModel+View.swift in Sources */,
+				3054E7B44EB84593A61FE17E /* GuideGridModel+Viewport.swift in Sources */,
 				5DD9E84C1CBDA7E90453F871 /* GuideGridModel.swift in Sources */,
 				1715DEAAD3F21A79C7E2E0FD /* GuideGridScreen.swift in Sources */,
 				4DDB3CEF2980877E6F787BFB /* GuideNowLineView.swift in Sources */,

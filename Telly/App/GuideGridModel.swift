@@ -18,8 +18,8 @@ final class GuideGridModel {
     let now: () -> Int
     let timeZone: TimeZone
     let is24h: Bool
-    /// Width in points of the scrolling programme pane (excludes the channel column).
-    let viewport: CGFloat
+    /// Width in points of the programme pane; only `setViewport` mutates it.
+    var viewport: CGFloat
 
     private(set) var originMs = 0
     private(set) var scrollX: CGFloat = 0
@@ -47,7 +47,7 @@ final class GuideGridModel {
 
     /// Rebuilds the rows for the current window (offsets via the shared
     /// `EpgOffsets.map(for:)` helper), then re-derives a stable focus.
-    private func materializeRows() {
+    func materializeRows() {
         let offsets = EpgOffsets.map(for: channels)
         let epgIds = channels.compactMap(\.epgId)
         let span = GuideWindowMath.materializeSpan(

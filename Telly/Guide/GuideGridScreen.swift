@@ -1,10 +1,8 @@
 import SwiftUI
 
-/// The TiviMate-style guide grid: a fixed left channel column beside a pane whose
-/// 30-min header, programme strips and now-line pan in lockstep off `scrollX`
-/// (all maths in the pure `Guide*` helpers). tvOS drives focus/scroll from the
-/// D-pad and tunes an airing cell to fullscreen playback (DECISION 3); iPhone/iPad
-/// scroll by drag, tap to activate, reduced layout when compact (DECISION 2).
+/// The TiviMate-style guide grid on a dark surface: a fixed left channel column
+/// beside a pane whose header/strips/now-line pan off `scrollX`, its viewport
+/// derived from available width (`setViewport`). tvOS D-pad; iPhone/iPad drag+tap.
 struct GuideGridScreen: View {
     @State private var model: GuideGridModel
     let makeEngine: () -> VLCKitPlayerEngine
@@ -20,10 +18,15 @@ struct GuideGridScreen: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            header
-            grid
+        GeometryReader { geo in
+            VStack(spacing: 0) {
+                header
+                grid
+            }
+            .task(id: geo.size.width) { model.setViewport(geo.size.width - columnWidth) }
         }
+        .background(Color(white: 0.09).ignoresSafeArea())
+        .environment(\.colorScheme, .dark)
         .task { model.load() }
         .fullScreenCover(item: $target) { PlaybackScreen(streamUrl: $0.url, engine: makeEngine()) }
         #if os(tvOS)
