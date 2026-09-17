@@ -91,7 +91,7 @@ enum DebugLaunch {
                    catchupSource: nil, catchupDays: nil)
     }
 
-    private static func value(for flag: String, in args: [String]) -> String? {
+    static func value(for flag: String, in args: [String]) -> String? {
         guard let i = args.firstIndex(of: flag), i + 1 < args.count else { return nil }
         return args[i + 1]
     }

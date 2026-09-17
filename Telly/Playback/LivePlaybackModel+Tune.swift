@@ -64,5 +64,14 @@ extension LivePlaybackModel {
         debugHoldFrame = true
         visibility.set(.panel)
     }
+
+    /// DEBUG screenshot hook: pin a track picker open over the quick-bar with the
+    /// canned fixture snapshot (`-tellyOverlay trackAudio|trackSubtitles`).
+    func debugPresentTrackPicker(_ kind: TrackPickerKind) {
+        debugHoldFrame = true
+        debugSnapshot = DebugLaunch.trackFixtureSnapshot()
+        activePicker = kind
+        visibility.set(.pushed(back: .quickBar))
+    }
 }
 #endif

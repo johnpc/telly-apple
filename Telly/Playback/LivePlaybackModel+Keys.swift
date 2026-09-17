@@ -32,8 +32,10 @@ extension LivePlaybackModel {
         case .openPanel, .backToPanel:
             visibility.set(.panel)
         case .dismiss:
+            activePicker = nil
             visibility.set(.none)
         case let .popTo(back):
+            activePicker = nil
             visibility.set(back)
         case .nothing:
             break

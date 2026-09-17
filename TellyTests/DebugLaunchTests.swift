@@ -86,6 +86,21 @@ struct DebugLaunchTests {
         #expect(pl.channels[2].tvgID == "sports.tv")
     }
 
+    @Test func forcedTrackPickerReadsFlag() {
+        #expect(DebugLaunch.forcedTrackPicker(in: ["Telly", "-tellyOverlay", "trackAudio"]) == .audio)
+        #expect(DebugLaunch.forcedTrackPicker(in: ["Telly", "-tellyOverlay", "trackSubtitles"]) == .subtitles)
+        #expect(DebugLaunch.forcedTrackPicker(in: ["Telly", "-tellyOverlay", "zap"]) == nil)
+        #expect(DebugLaunch.forcedTrackPicker(in: ["Telly"]) == nil)
+    }
+
+    @Test func trackFixtureSnapshotHasSelectedEnglishAudioAndCaptionsOff() {
+        let snapshot = DebugLaunch.trackFixtureSnapshot()
+        #expect(snapshot.audios.map(\.language) == ["en", "es"])
+        #expect(snapshot.selectedAudioId == "0")
+        #expect(snapshot.texts.map(\.language) == ["en"])
+        #expect(snapshot.selectedTextId == nil)
+    }
+
     @Test func forcedGuideReadsFlag() {
         #expect(DebugLaunch.forcedGuide(in: ["Telly", "-tellyGuide"]))
         #expect(!DebugLaunch.forcedGuide(in: ["Telly"]))

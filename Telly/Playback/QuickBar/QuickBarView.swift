@@ -9,6 +9,9 @@ import SwiftUI
 /// centred fixed row — a ScrollView on tvOS would break D-pad focus.
 struct QuickBarView: View {
     let video: VideoDetails?
+    var subtitles = "Off"
+    var sync = "0 ms"
+    var onAction: (QuickBarAction) -> Void = { _ in }
     #if !os(tvOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
     #endif
@@ -31,8 +34,11 @@ struct QuickBarView: View {
 
     private var row: some View {
         HStack(alignment: .top, spacing: 12) {
-            ForEach(QuickBarItems.items(video: video), id: \.action) { item in
-                QuickBarSlotView(symbol: icon(for: item.action), label: item.label)
+            ForEach(QuickBarItems.items(video: video, sync: sync, subtitles: subtitles), id: \.action) { item in
+                Button { onAction(item.action) } label: {
+                    QuickBarSlotView(symbol: icon(for: item.action), label: item.label)
+                }
+                .buttonStyle(.plain)
             }
         }
     }

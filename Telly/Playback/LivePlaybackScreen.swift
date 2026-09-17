@@ -1,14 +1,12 @@
 import SwiftUI
 
-/// The live playback stage driven by ``LivePlaybackModel``: the VLC surface over
-/// a black stage, the compact zap overlay, and the engine-state chrome (spinner /
-/// reconnecting pill / error), gated so a held frame shows no spinner. The only
-/// coroutine seam is the tick loop here; all decisions live in the model. tvOS
-/// forwards remote keys through `onKey`; iPhone/iPad map taps and swipes onto the
-/// same `PlaybackKey` vocabulary via ``TouchGesture``/``TouchKeyMap`` (S7), plus a
-/// Close button.
+/// The live playback stage driven by ``LivePlaybackModel``: the VLC surface, the
+/// zap/info/quick-bar/panel/track-picker overlays, and the engine-state chrome,
+/// gated so a held frame shows no spinner. The only coroutine seam is the tick
+/// loop here; all decisions live in the model. tvOS forwards remote keys via
+/// `onKey`; iPhone/iPad map taps/swipes onto that same vocabulary (S7).
 struct LivePlaybackScreen: View {
-    @State private var model: LivePlaybackModel
+    @State var model: LivePlaybackModel
 
     init(model: LivePlaybackModel) { _model = State(initialValue: model) }
 
@@ -20,6 +18,7 @@ struct LivePlaybackScreen: View {
             infoOverlay
             quickBarOverlay
             panelOverlay
+            trackPickerOverlay
             stateOverlay
             #if !os(tvOS)
             PlaybackCloseButton()
@@ -81,7 +80,8 @@ struct LivePlaybackScreen: View {
 
     @ViewBuilder private var quickBarOverlay: some View {
         if case .quickBar = model.overlay {
-            QuickBarView(video: model.engine.video)
+            QuickBarView(video: model.engine.video, subtitles: model.quickBarSubtitles,
+                         sync: model.quickBarSync, onAction: { model.onQuickBarAction($0) })
         }
     }
 

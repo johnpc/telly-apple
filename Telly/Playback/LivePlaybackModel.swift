@@ -16,6 +16,8 @@ final class LivePlaybackModel {
     // `internal` setter (not `private(set)`): `tune`/`start` live in sibling
     // extension files in this module and must assign it.
     var current: ChannelEntity?
+    /// The track picker `.pushed` over the quick-bar shows, nil when none is up.
+    var activePicker: TrackPickerKind?
 
     var visibility = OverlayVisibility()
     var pendingZap = PendingZap()
@@ -36,6 +38,9 @@ final class LivePlaybackModel {
     /// Screenshot-only override so the tvOS overlay proof holds the black stage
     /// (no buffering spinner) while the pinned zap overlay is captured.
     var debugHoldFrame = false
+    /// Screenshot-only canned track snapshot feeding the picker without a decoded
+    /// live stream (the live engine has no tracks under a fixture playlist).
+    var debugSnapshot: TrackSnapshot?
     #endif
 
     init(engine: any PlayerEngine,

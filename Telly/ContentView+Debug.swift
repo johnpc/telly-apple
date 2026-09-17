@@ -33,6 +33,7 @@ extension ContentView {
         let model = env.makeLivePlaybackModel()
         if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
         if DebugLaunch.forcedQuickBarOverlay(in: debugArgs) { model.debugPresentQuickBarOverlay() }
+        if let kind = DebugLaunch.forcedTrackPicker(in: debugArgs) { model.debugPresentTrackPicker(kind) }
         seedInfoOverlayIfRequested(model)
         seedPanelOverlayIfRequested(model)
         liveModel = model

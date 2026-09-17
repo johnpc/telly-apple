@@ -13,8 +13,9 @@ final class VLCKitPlayerEngine: PlayerEngine {
     private(set) var state: PlayerState = .idle
     private(set) var video: VideoDetails?
     private(set) var paused = false
-    let tracks: TrackFacade = NoTracks()
+    var tracks: TrackFacade { trackFacade }
 
+    private let trackFacade = VlcTrackFacade()
     private let player = VLCMediaPlayer()
     private let proxy = VlcDelegateProxy()
     private var reducer = PlaybackReducer()
@@ -23,6 +24,7 @@ final class VLCKitPlayerEngine: PlayerEngine {
     init() {
         proxy.onStateChange = { [weak self] in self?.onStateChange() }
         player.delegate = proxy
+        trackFacade.player = player
     }
 
     /// The UIView the surface hands us for VLC to render into.

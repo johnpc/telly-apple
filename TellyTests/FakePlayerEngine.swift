@@ -9,7 +9,7 @@ final class FakePlayerEngine: PlayerEngine {
     var state: PlayerState = .idle
     var video: VideoDetails?
     var paused = false
-    let tracks: TrackFacade = NoTracks()
+    var tracks: TrackFacade = NoTracks()
 
     private(set) var loaded: [String] = []
     private(set) var stopCount = 0
