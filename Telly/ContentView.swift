@@ -12,6 +12,7 @@ struct ContentView: View {
     @State var guideModel: GuideGridModel?
     @State var historyModel: HistoryListModel?
     @State var multiviewSession: MultiviewSession?
+    @State var catchupTarget: GuidePlaybackTarget?
     #endif
 
     var body: some View {

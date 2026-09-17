@@ -16,6 +16,8 @@ extension ContentView {
             historyDemo
         } else if DebugLaunch.parentalChallengeRequested(in: debugArgs) {
             parentalChallengeDemo
+        } else if DebugLaunch.catchupDemoRequested(in: debugArgs) {
+            catchupDemo
         } else if debugArgs.contains("-tellyMultiviewDemo") {
             multiviewDemo
         } else if DebugLaunch.liveDemoRequested(in: debugArgs) {
@@ -65,22 +67,6 @@ extension ContentView {
             document: DebugLaunch.infoFixtureDocument(nowMs: nowMs), keepDescriptions: false)
         env.guideEpgStore.refresh()
         model.debugPresentInfoOverlay()
-    }
-
-    @ViewBuilder var guideDemo: some View {
-        if let guideModel {
-            GuideGridScreen(model: guideModel, makeEngine: env.makeEngine)
-        } else {
-            Color.black.ignoresSafeArea().task { prepareGuideDemo() }
-        }
-    }
-
-    func prepareGuideDemo() {
-        seedDebugFixtures()
-        if let use24h = DebugLaunch.clock24hOverride(in: debugArgs) { env.settings.use24hClock = use24h }
-        DebugLaunch.seedGuideEpg(into: env.programStore, args: debugArgs,
-                                 now: { Int(Date().timeIntervalSince1970 * 1_000) })
-        guideModel = env.makeGuideGridModel()
     }
 
     func seedDebugFixtures() {
