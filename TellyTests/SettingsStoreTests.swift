@@ -82,4 +82,62 @@ struct SettingsStoreTests {
     @Test func standardStoreConstructsOverUserDefaults() {
         _ = SettingsStore.standard
     }
+
+    @Test func emptyStoreReturnsKeymapDefaults() {
+        let s = store()
+        #expect(s.playerKeyOkRaw == SettingsDefaults.playerKeyOk)
+        #expect(s.playerKeyUpDownRaw == SettingsDefaults.playerKeyUpDown)
+        #expect(s.playerKeyLeftRightRaw == SettingsDefaults.playerKeyLeftRight)
+        #expect(s.playerKeyLongOkRaw == SettingsDefaults.playerKeyLongOk)
+    }
+
+    @Test func keymapRawsRoundTrip() {
+        let s = store()
+        s.playerKeyOkRaw = PlayerOkAction.channelsList.rawValue
+        s.playerKeyUpDownRaw = PlayerUpDownAction.switchChannels.rawValue
+        s.playerKeyLeftRightRaw = PlayerLeftRightAction.switchChannels.rawValue
+        s.playerKeyLongOkRaw = PlayerLongOkAction.channelsList.rawValue
+        #expect(s.playerKeyOkRaw == PlayerOkAction.channelsList.rawValue)
+        #expect(s.playerKeyUpDownRaw == PlayerUpDownAction.switchChannels.rawValue)
+        #expect(s.playerKeyLeftRightRaw == PlayerLeftRightAction.switchChannels.rawValue)
+        #expect(s.playerKeyLongOkRaw == PlayerLongOkAction.channelsList.rawValue)
+    }
+
+    @Test func defaultKeymapMatchesActionDefaults() {
+        let s = store()
+        #expect(s.playerKeymap.ok == .showInfo)
+        #expect(s.playerKeymap.upDown == .showInfo)
+        #expect(s.playerKeymap.leftRight == .nothing)
+        #expect(s.playerKeymap.longOk == .quickMenu)
+        #expect(SettingsStore.from(settings: s).upDown == s.playerKeymap.upDown)
+    }
+
+    @Test func outOfRangeKeymapRawCoercesToDefaultViaDerivation() {
+        let s = store()
+        s.playerKeyUpDownRaw = Int.max          // corrupt / out-of-range
+        s.playerKeyLeftRightRaw = -1            // negative
+        #expect(s.playerKeymap.upDown == .showInfo)
+        #expect(s.playerKeymap.leftRight == .nothing)
+    }
+
+    @Test func resetToDefaultsRestoresKeymap() {
+        let s = store()
+        s.playerKeyOkRaw = PlayerOkAction.nothing.rawValue
+        s.playerKeyUpDownRaw = PlayerUpDownAction.switchChannels.rawValue
+        s.playerKeyLeftRightRaw = PlayerLeftRightAction.switchChannels.rawValue
+        s.playerKeyLongOkRaw = PlayerLongOkAction.channelsList.rawValue
+        s.resetToDefaults()
+        #expect(s.playerKeyOkRaw == SettingsDefaults.playerKeyOk)
+        #expect(s.playerKeyUpDownRaw == SettingsDefaults.playerKeyUpDown)
+        #expect(s.playerKeyLeftRightRaw == SettingsDefaults.playerKeyLeftRight)
+        #expect(s.playerKeyLongOkRaw == SettingsDefaults.playerKeyLongOk)
+    }
+
+    @Test func remappedUpDownChangesResolvedCommand() {
+        let s = store()
+        #expect(PlaybackKeyPolicy.command(overlay: .none, key: .up, keymap: s.playerKeymap) == .showInfo)
+        s.playerKeyUpDownRaw = PlayerUpDownAction.switchChannels.rawValue
+        #expect(PlaybackKeyPolicy.command(overlay: .none, key: .up, keymap: s.playerKeymap) == .zap(delta: 1))
+        #expect(PlaybackKeyPolicy.command(overlay: .none, key: .down, keymap: s.playerKeymap) == .zap(delta: -1))
+    }
 }

@@ -9,11 +9,15 @@ import Foundation
 @MainActor
 @Observable
 final class SettingsStore {
-    @ObservationIgnored private let backing: KeyValueStore
+    @ObservationIgnored let backing: KeyValueStore
     private var raw24h: Bool
     private var rawTimeout: Int
     private var rawRefresh: Int
     private var rawKeep: Int
+    var rawKeyOk: Int
+    var rawKeyUpDown: Int
+    var rawKeyLeftRight: Int
+    var rawKeyLongOk: Int
 
     init(backing: KeyValueStore) {
         self.backing = backing
@@ -21,6 +25,10 @@ final class SettingsStore {
         rawTimeout = backing.readInt(SettingsKey.panelTimeoutSeconds.rawValue) ?? SettingsDefaults.panelTimeoutSeconds
         rawRefresh = backing.readInt(SettingsKey.epgRefreshHours.rawValue) ?? SettingsDefaults.epgRefreshHours
         rawKeep = backing.readInt(SettingsKey.epgKeepPastDays.rawValue) ?? SettingsDefaults.epgKeepPastDays
+        rawKeyOk = backing.readInt(SettingsKey.playerKeyOk.rawValue) ?? SettingsDefaults.playerKeyOk
+        rawKeyUpDown = backing.readInt(SettingsKey.playerKeyUpDown.rawValue) ?? SettingsDefaults.playerKeyUpDown
+        rawKeyLeftRight = backing.readInt(SettingsKey.playerKeyLeftRight.rawValue) ?? SettingsDefaults.playerKeyLeftRight
+        rawKeyLongOk = backing.readInt(SettingsKey.playerKeyLongOk.rawValue) ?? SettingsDefaults.playerKeyLongOk
     }
 
     /// The on-device store backed by the standard user defaults.
@@ -57,6 +65,10 @@ final class SettingsStore {
         rawTimeout = SettingsDefaults.panelTimeoutSeconds
         rawRefresh = SettingsDefaults.epgRefreshHours
         rawKeep = SettingsDefaults.epgKeepPastDays
+        rawKeyOk = SettingsDefaults.playerKeyOk
+        rawKeyUpDown = SettingsDefaults.playerKeyUpDown
+        rawKeyLeftRight = SettingsDefaults.playerKeyLeftRight
+        rawKeyLongOk = SettingsDefaults.playerKeyLongOk
     }
 
     /// The choice nearest `value` (ties resolve to the lower choice).

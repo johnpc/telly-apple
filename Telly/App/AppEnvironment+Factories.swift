@@ -53,6 +53,7 @@ extension AppEnvironment {
             engine: engineFactory(),
             channels: channels,
             makeEngine: engineFactory,
+            keymap: settings.playerKeymap,
             timeouts: settings.panelTimeouts,
             now: clock,
             persistLastChannel: { [watchHistoryStore, clock] id in

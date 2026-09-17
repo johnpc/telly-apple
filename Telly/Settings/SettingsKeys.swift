@@ -8,6 +8,10 @@ enum SettingsKey: String, CaseIterable {
     case panelTimeoutSeconds
     case epgRefreshHours
     case epgKeepPastDays
+    case playerKeyOk
+    case playerKeyUpDown
+    case playerKeyLeftRight
+    case playerKeyLongOk
 }
 
 /// Factory-fresh values used until the user changes a setting, plus the choice
@@ -20,4 +24,8 @@ enum SettingsDefaults {
     static let panelTimeoutChoices = [3, 5, 10, 30]
     static let refreshHourChoices = [0, 6, 12, 24, 48]
     static let keepPastDayChoices = [1, 3, 7, 14, 30]
+    static let playerKeyOk = PlayerOkAction.showInfo.rawValue
+    static let playerKeyUpDown = PlayerUpDownAction.showInfo.rawValue
+    static let playerKeyLeftRight = PlayerLeftRightAction.nothing.rawValue
+    static let playerKeyLongOk = PlayerLongOkAction.quickMenu.rawValue
 }

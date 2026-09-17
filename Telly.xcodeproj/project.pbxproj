@@ -147,6 +147,7 @@
 		7349CC66A93701D5D0B0F98A /* PlaybackBadges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A49A7D5F0B7ED807A9C851 /* PlaybackBadges.swift */; };
 		7557143B1AED83A7F2CF413C /* LivePlaybackMultiviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B0BC95708F0CAB7D0393C /* LivePlaybackMultiviewTests.swift */; };
 		7714F8EC48DF7BB7A51D3BB5 /* ProgramProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80C029B86421C213027249E /* ProgramProgress.swift */; };
+		784C70DDFB71012E585C8521 /* SettingsStore+Keymap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9BDBAE8FA910E236FBA6AB /* SettingsStore+Keymap.swift */; };
 		789A545F1ABB75F2793A3565 /* ChannelUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA72C528BC282E97C463256B /* ChannelUserState.swift */; };
 		7A25751B5AEC40A697291B37 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 26FF1BEB0FDDB1559EB47C2A /* GRDB */; };
 		7A32CD46DD3EE6A758DCA6EC /* PlaybackScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A9896DB20B35683101EB72 /* PlaybackScreen.swift */; };
@@ -369,6 +370,7 @@
 		3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3uParserTests.swift; sourceTree = "<group>"; };
 		3BA4B7FD661163037CE53FB6 /* NoTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTracks.swift; sourceTree = "<group>"; };
 		3C355744E958CD9D4670C063 /* TellyUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TellyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C9BDBAE8FA910E236FBA6AB /* SettingsStore+Keymap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsStore+Keymap.swift"; sourceTree = "<group>"; };
 		3E3F7421042A667175183A92 /* PlaybackKeyForwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackKeyForwarder.swift; sourceTree = "<group>"; };
 		3F31789076E7F4E06D0340FF /* GherkinParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GherkinParser.swift; sourceTree = "<group>"; };
 		3F7D9E8107872853BF82EE56 /* TrackFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFacade.swift; sourceTree = "<group>"; };
@@ -997,6 +999,7 @@
 				8B761E6D11E665CDF4A97A5C /* SettingsScreen.swift */,
 				A480F430EF4DA3B833F03ECD /* SettingsStore.swift */,
 				AB0DF4EFD19D08E01C961C76 /* SettingsStore+Consumers.swift */,
+				3C9BDBAE8FA910E236FBA6AB /* SettingsStore+Keymap.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1327,6 +1330,7 @@
 				F2BE84F5D307F9C583447774 /* SettingsPlaybackSectionView.swift in Sources */,
 				95EE673F79B381EB2033128B /* SettingsScreen.swift in Sources */,
 				574183C1D3677FCAD09C9068 /* SettingsStore+Consumers.swift in Sources */,
+				784C70DDFB71012E585C8521 /* SettingsStore+Keymap.swift in Sources */,
 				EF841EA96643B65F0B24A9C7 /* SettingsStore.swift in Sources */,
 				1498439A74AC234AC8606410 /* SurroundAudio.swift in Sources */,
 				7CDE7636B43ED305BE1A500A /* TellyApp.swift in Sources */,
