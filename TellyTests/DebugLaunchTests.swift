@@ -49,5 +49,16 @@ struct DebugLaunchTests {
         DebugLaunch.seedIfRequested(into: store, args: ["Telly"], now: { 0 })
         #expect(try store.all().isEmpty)
     }
+
+    @Test func liveDemoRequestedReadsFlag() {
+        #expect(DebugLaunch.liveDemoRequested(in: ["Telly", "-tellyLiveDemo"]))
+        #expect(!DebugLaunch.liveDemoRequested(in: ["Telly"]))
+    }
+
+    @Test func forcedZapOverlayReadsFlag() {
+        #expect(DebugLaunch.forcedZapOverlay(in: ["Telly", "-tellyOverlay", "zap"]))
+        #expect(!DebugLaunch.forcedZapOverlay(in: ["Telly", "-tellyOverlay", "info"]))
+        #expect(!DebugLaunch.forcedZapOverlay(in: ["Telly"]))
+    }
 }
 #endif

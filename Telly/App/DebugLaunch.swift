@@ -15,6 +15,18 @@ enum DebugLaunch {
         value(for: "-tellyAutoplayUrl", in: args)
     }
 
+    /// Whether to present the live orchestrator (`LivePlaybackScreen`) on launch
+    /// instead of the channel list — set by `-tellyLiveDemo`.
+    static func liveDemoRequested(in args: [String]) -> Bool {
+        args.contains("-tellyLiveDemo")
+    }
+
+    /// Whether to pin the compact zap overlay open for the screenshot proof —
+    /// set by `-tellyOverlay zap`.
+    static func forcedZapOverlay(in args: [String]) -> Bool {
+        value(for: "-tellyOverlay", in: args) == "zap"
+    }
+
     /// Seeds the fixture playlist rooted at `-tellySeedBase <http://host:port/>`
     /// so the app lands on the channel list. Re-adds by source URL, so it is
     /// safe to relaunch. A no-op when the flag is absent.

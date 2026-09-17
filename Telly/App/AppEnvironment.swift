@@ -38,4 +38,18 @@ final class AppEnvironment {
 
     /// A fresh VLC-backed playback engine per presented player.
     func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine() }
+
+    /// A live-playback orchestrator over a fresh engine and the current visible
+    /// channel snapshot, wired to `UserDefaults` for last-channel persistence.
+    func makeLivePlaybackModel() -> LivePlaybackModel {
+        let key = "lastChannelId"
+        let defaults = UserDefaults.standard
+        return LivePlaybackModel(
+            engine: makeEngine(),
+            channels: (try? channelStore.visibleChannels()) ?? [],
+            now: { Int(Date().timeIntervalSince1970 * 1_000) },
+            persistLastChannel: { defaults.set($0, forKey: key) },
+            loadLastChannel: { defaults.object(forKey: key) as? Int },
+            onExitToGuide: {})
+    }
 }

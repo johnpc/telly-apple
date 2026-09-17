@@ -7,14 +7,13 @@ import SwiftUI
 struct ContentView: View {
     @State private var env = AppEnvironment.makeShared()
     @State private var adding = false
+    #if DEBUG
+    @State private var liveModel: LivePlaybackModel?
+    #endif
 
     var body: some View {
         #if DEBUG
-        if let url = DebugLaunch.autoplayUrl(in: ProcessInfo.processInfo.arguments) {
-            PlaybackScreen(streamUrl: url, engine: env.makeEngine())
-        } else {
-            mainContent.task { seedDebugFixtures() }
-        }
+        debugRoot
         #else
         mainContent
         #endif
@@ -39,9 +38,35 @@ struct ContentView: View {
     }
 
     #if DEBUG
+    private var debugArgs: [String] { ProcessInfo.processInfo.arguments }
+
+    @ViewBuilder private var debugRoot: some View {
+        if DebugLaunch.liveDemoRequested(in: debugArgs) {
+            liveDemo
+        } else if let url = DebugLaunch.autoplayUrl(in: debugArgs) {
+            PlaybackScreen(streamUrl: url, engine: env.makeEngine())
+        } else {
+            mainContent.task { seedDebugFixtures() }
+        }
+    }
+
+    @ViewBuilder private var liveDemo: some View {
+        if let liveModel {
+            LivePlaybackScreen(model: liveModel)
+        } else {
+            Color.black.ignoresSafeArea().task { prepareLiveDemo() }
+        }
+    }
+
+    private func prepareLiveDemo() {
+        seedDebugFixtures()
+        let model = env.makeLivePlaybackModel()
+        if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
+        liveModel = model
+    }
+
     private func seedDebugFixtures() {
-        DebugLaunch.seedIfRequested(into: env.playlistStore,
-                                    args: ProcessInfo.processInfo.arguments,
+        DebugLaunch.seedIfRequested(into: env.playlistStore, args: debugArgs,
                                     now: { Int64(Date().timeIntervalSince1970 * 1000) })
         env.reload()
     }
