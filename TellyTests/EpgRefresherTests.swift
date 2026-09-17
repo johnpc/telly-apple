@@ -123,6 +123,38 @@ struct EpgRefresherTests {
         #expect(try programs.channelIds() == ["c1"])
     }
 
+    @Test func customIntervalMakesARecentlyRefreshedPlaylistDue() async throws {
+        let (playlists, programs) = try makeStores()
+        let id = try addPlaylist(playlists, url: "p", epg: "e")
+        try playlists.markEpgUpdated(id: id, nowMs: Int64(now - 2 * hour))   // 2h ago
+        var refresher = EpgRefresher(
+            playlistStore: playlists, programStore: programs,
+            download: downloader(["e": doc("c1")]), now: { self.now })
+        refresher.intervalMs = hour   // due after 1h → the 2h-old playlist refreshes
+
+        try await refresher.refreshDue()
+
+        #expect(try programs.channelIds() == ["c1"])
+    }
+
+    @Test func customKeepPastTrimsWithinTheChosenHorizon() async throws {
+        let (playlists, programs) = try makeStores()
+        try programs.upsertReplacing(document: XmltvDocument(channels: [], programs: [
+            XmltvProgram(channelId: "old", startMs: now - 3 * RefreshScheduler.dayMs,
+                         endMs: now - 2 * RefreshScheduler.dayMs,
+                         details: ProgramDetails(title: "T", subTitle: nil, description: nil,
+                                                 category: nil, episode: nil))]),
+            keepDescriptions: true)
+        var refresher = EpgRefresher(
+            playlistStore: playlists, programStore: programs,
+            download: downloader([:]), now: { self.now })
+        refresher.keepPastMs = RefreshScheduler.dayMs   // keep 1 day → 2-day-old trimmed
+
+        try await refresher.refreshAllNow()
+
+        #expect(try programs.channelIds().isEmpty)
+    }
+
     @Test func onPlaylistsChangedRefreshesOnlyWhenEnabled() async throws {
         let (playlists, programs) = try makeStores()
         try addPlaylist(playlists, url: "p", epg: "e")

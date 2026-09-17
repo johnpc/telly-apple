@@ -11,7 +11,8 @@ extension AppEnvironment {
     func makeEpgRefresher() -> EpgRefresher {
         EpgRefresher(playlistStore: playlistStore, programStore: programStore,
                      download: { try await EpgDownloader().download(epgUrl: $0) },
-                     now: { Int(Date().timeIntervalSince1970 * 1_000) })
+                     now: { Int(Date().timeIntervalSince1970 * 1_000) },
+                     intervalMs: settings.epgRefreshIntervalMs, keepPastMs: settings.epgKeepPastMs)
     }
 
     /// Launch hook: refresh any stale guide data, then republish the feed.
@@ -41,6 +42,7 @@ extension AppEnvironment {
             engine: makeEngine(),
             channels: (try? channelStore.visibleChannels()) ?? [],
             makeEngine: { self.makeEngine() },
+            timeouts: settings.panelTimeouts,
             now: { Int(Date().timeIntervalSince1970 * 1_000) },
             persistLastChannel: { defaults.set($0, forKey: key) },
             loadLastChannel: { defaults.object(forKey: key) as? Int },

@@ -18,6 +18,11 @@ struct EpgRefresher {
     var customSources: (String) -> [String] = { _ in [] }
     /// Non-fatal diagnostics sink for a failed source (default: no-op).
     var warn: (String) -> Void = { _ in }
+    /// Millis between refreshes; 0 disables interval refresh. From the settings
+    /// store via `AppEnvironment`; the memberwise default keeps call sites intact.
+    var intervalMs = RefreshScheduler.defaultIntervalMs
+    /// Keep-past retention horizon in millis for the trim after each refresh.
+    var keepPastMs = RefreshScheduler.defaultKeepPastMs
 
     /// Refreshes only the playlists whose guide data is due, then trims.
     func refreshDue() async throws {
@@ -41,12 +46,13 @@ struct EpgRefresher {
         for playlist in try playlistStore.all() where !onlyDue || isDue(playlist, nowMs) {
             await refresh(playlist, nowMs: nowMs)
         }
-        try programStore.trimEndedBefore(cutoffMs: nowMs - RefreshScheduler.defaultKeepPastMs)
+        try programStore.trimEndedBefore(cutoffMs: nowMs - keepPastMs)
     }
 
-    /// True when `playlist` is due for a refresh under the default interval.
+    /// True when `playlist` is due for a refresh under the configured interval.
     private func isDue(_ playlist: PlaylistEntity, _ nowMs: Int) -> Bool {
-        RefreshScheduler.isDue(lastUpdatedMs: Int(playlist.epgLastUpdatedMs), nowMs: nowMs)
+        RefreshScheduler.isDue(lastUpdatedMs: Int(playlist.epgLastUpdatedMs),
+                               nowMs: nowMs, intervalMs: intervalMs)
     }
 
     /// Refreshes one playlist across its sources, swallowing per-source
