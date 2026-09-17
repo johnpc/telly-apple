@@ -35,6 +35,7 @@
 		17C929C86439421A898D151B /* QuickBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF73B13BE012B9E8E5BF9 /* QuickBarItems.swift */; };
 		1933A88113B4AD3CE234686F /* GuideFocusNavTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3C268BEFE47B9C4F5ACA5 /* GuideFocusNavTests.swift */; };
 		1A29BBF48A30C0330EE3147E /* AddPlaylistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E11046F624FCD118944FBE /* AddPlaylistModel.swift */; };
+		1A967DCB68BBC25067A0E986 /* SettingsRemoteSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D054A6C91A8DD95AD91B44F1 /* SettingsRemoteSectionView.swift */; };
 		1AB8F1F6D4FE45DEEDA69CF8 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */; };
 		1ACC9EDA2B90C492E838C5A7 /* GuideSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ECA5237112C7CADD5EFAE5 /* GuideSelectionTests.swift */; };
 		1B1DB27D733CF47E31CD33D4 /* StepRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF0343E127E1F17FBEE8E6 /* StepRegistry.swift */; };
@@ -513,6 +514,7 @@
 		CE336084203C5F153857C38D /* GuideRowsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideRowsBuilder.swift; sourceTree = "<group>"; };
 		CE85A65977364D5895537F30 /* ReconnectPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectPolicyTests.swift; sourceTree = "<group>"; };
 		CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		D054A6C91A8DD95AD91B44F1 /* SettingsRemoteSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRemoteSectionView.swift; sourceTree = "<group>"; };
 		D084849083573B325F7FEE2F /* VideoSurfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSurfaceView.swift; sourceTree = "<group>"; };
 		D0A5275436780E1D9C03F2E3 /* GuideRowsPaneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideRowsPaneView.swift; sourceTree = "<group>"; };
 		D0B3EE42F19E2DA4FBF3F3DB /* RefreshSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshSchedulerTests.swift; sourceTree = "<group>"; };
@@ -996,6 +998,7 @@
 				1954322E738F9AD01BC5507C /* SettingsGuideSectionView.swift */,
 				13052430DE44D78BE7130B44 /* SettingsKeys.swift */,
 				2507ACE3BB87983FD53D58FE /* SettingsPlaybackSectionView.swift */,
+				D054A6C91A8DD95AD91B44F1 /* SettingsRemoteSectionView.swift */,
 				8B761E6D11E665CDF4A97A5C /* SettingsScreen.swift */,
 				A480F430EF4DA3B833F03ECD /* SettingsStore.swift */,
 				AB0DF4EFD19D08E01C961C76 /* SettingsStore+Consumers.swift */,
@@ -1328,6 +1331,7 @@
 				32AB6106F923298C9414F474 /* SettingsGuideSectionView.swift in Sources */,
 				25D0B3F652AA56C57A93B1C6 /* SettingsKeys.swift in Sources */,
 				F2BE84F5D307F9C583447774 /* SettingsPlaybackSectionView.swift in Sources */,
+				1A967DCB68BBC25067A0E986 /* SettingsRemoteSectionView.swift in Sources */,
 				95EE673F79B381EB2033128B /* SettingsScreen.swift in Sources */,
 				574183C1D3677FCAD09C9068 /* SettingsStore+Consumers.swift in Sources */,
 				784C70DDFB71012E585C8521 /* SettingsStore+Keymap.swift in Sources */,
