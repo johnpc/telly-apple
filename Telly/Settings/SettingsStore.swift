@@ -18,6 +18,7 @@ final class SettingsStore {
     var rawKeyUpDown: Int
     var rawKeyLeftRight: Int
     var rawKeyLongOk: Int
+    var rawTheme: Int
 
     init(backing: KeyValueStore) {
         self.backing = backing
@@ -29,6 +30,7 @@ final class SettingsStore {
         rawKeyUpDown = backing.readInt(SettingsKey.playerKeyUpDown.rawValue) ?? SettingsDefaults.playerKeyUpDown
         rawKeyLeftRight = backing.readInt(SettingsKey.playerKeyLeftRight.rawValue) ?? SettingsDefaults.playerKeyLeftRight
         rawKeyLongOk = backing.readInt(SettingsKey.playerKeyLongOk.rawValue) ?? SettingsDefaults.playerKeyLongOk
+        rawTheme = backing.readInt(SettingsKey.colorScheme.rawValue) ?? SettingsDefaults.colorScheme
     }
 
     /// The on-device store backed by the standard user defaults.
@@ -69,6 +71,7 @@ final class SettingsStore {
         rawKeyUpDown = SettingsDefaults.playerKeyUpDown
         rawKeyLeftRight = SettingsDefaults.playerKeyLeftRight
         rawKeyLongOk = SettingsDefaults.playerKeyLongOk
+        rawTheme = SettingsDefaults.colorScheme
     }
 
     /// The choice nearest `value` (ties resolve to the lower choice).

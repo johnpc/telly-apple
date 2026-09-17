@@ -17,6 +17,11 @@ struct ContentView: View {
     #endif
 
     var body: some View {
+        rootContent
+            .preferredColorScheme(env.settings.appearanceTheme.colorScheme)
+    }
+
+    @ViewBuilder private var rootContent: some View {
         #if DEBUG
         debugRoot
         #else

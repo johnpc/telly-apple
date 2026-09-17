@@ -8,6 +8,7 @@ struct SettingsScreen: View {
     @Bindable var settings: SettingsStore
     let parental: ParentalStore
     let backup: SettingsBackupModel
+    let makeVisibilityEditModel: () -> VisibilityEditModel
     let onClose: () -> Void
 
     var body: some View {
@@ -19,6 +20,10 @@ struct SettingsScreen: View {
                 SettingsRemoteSectionView(settings: settings)
                 SettingsParentalSectionView(parental: parental)
                 SettingsBackupSectionView(model: backup)
+                SettingsAppearanceSectionView(settings: settings,
+                                              makeVisibilityEditModel: makeVisibilityEditModel)
+                SettingsAboutSectionView()
+                SettingsOtherSectionView(settings: settings)
             }
             .navigationTitle("Settings")
             .toolbar {

@@ -67,7 +67,9 @@ struct ChannelListScreen: View {
         .sheet(item: $lockTarget) { lockSheet($0.channel) }
         .sheet(isPresented: $showSettings) {
             SettingsScreen(settings: settings, parental: parental,
-                           backup: makeBackupModel(), onClose: { showSettings = false })
+                           backup: makeBackupModel(),
+                           makeVisibilityEditModel: makeVisibilityEditModel,
+                           onClose: { showSettings = false })
         }
     }
 

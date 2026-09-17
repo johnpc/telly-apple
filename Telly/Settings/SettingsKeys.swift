@@ -13,6 +13,7 @@ enum SettingsKey: String, CaseIterable {
     case playerKeyLeftRight
     case playerKeyLongOk
     case parentalEnabled
+    case colorScheme
 }
 
 /// Factory-fresh values used until the user changes a setting, plus the choice
@@ -30,4 +31,5 @@ enum SettingsDefaults {
     static let playerKeyLeftRight = PlayerLeftRightAction.nothing.rawValue
     static let playerKeyLongOk = PlayerLongOkAction.quickMenu.rawValue
     static let parentalEnabled = false
+    static let colorScheme = AppearanceTheme.system.rawValue
 }
