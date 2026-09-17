@@ -4,13 +4,13 @@ import SwiftUI
 /// beside a pane whose header/strips/now-line pan off `scrollX`, its viewport
 /// derived from available width (`setViewport`). tvOS D-pad; iPhone/iPad drag+tap.
 struct GuideGridScreen: View {
-    @State private var model: GuideGridModel
+    @State var model: GuideGridModel
     let makeEngine: () -> VLCKitPlayerEngine
     #if !os(tvOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var dragAnchor: CGFloat = 0
     #endif
-    @State private var target: GuidePlaybackTarget?
+    @State var target: GuidePlaybackTarget?
 
     init(model: GuideGridModel, makeEngine: @escaping () -> VLCKitPlayerEngine) {
         _model = State(initialValue: model)
@@ -28,7 +28,10 @@ struct GuideGridScreen: View {
         .background(Color(white: 0.09).ignoresSafeArea())
         .environment(\.colorScheme, .dark)
         .task { model.load() }
-        .fullScreenCover(item: $target) { PlaybackScreen(streamUrl: $0.url, engine: makeEngine()) }
+        .fullScreenCover(item: $target) {
+            PlaybackScreen(streamUrl: $0.url, engine: makeEngine(),
+                           catchup: $0.catchup, is24h: model.is24h, timeZone: model.timeZone)
+        }
         #if os(tvOS)
         .focusable()
         .onMoveCommand { move($0) }
@@ -55,12 +58,6 @@ struct GuideGridScreen: View {
         #if !os(tvOS)
         .highPriorityGesture(scrollDrag)
         #endif
-    }
-
-    private func activate(_ cell: GuideCell, row: GuideRow) {
-        if case .tune(let channel) = model.selectCell(cell, row: row) {
-            target = GuidePlaybackTarget(id: channel.id, url: channel.source.streamUrl)
-        }
     }
 
     private var columnWidth: CGFloat { compact ? 168 : GuideGeometry.channelColumnWidth }
@@ -91,10 +88,4 @@ struct GuideGridScreen: View {
             .onEnded { _ in dragAnchor = 0 }
     }
     #endif
-}
-
-/// Identifies the channel being tuned from the grid (drives the fullscreen cover).
-private struct GuidePlaybackTarget: Identifiable {
-    let id: Int
-    let url: String
 }
