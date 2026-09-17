@@ -15,6 +15,16 @@ struct SettingsStoreTests {
         #expect(s.epgRefreshHours == SettingsDefaults.epgRefreshHours)
         #expect(s.epgKeepPastDays == SettingsDefaults.epgKeepPastDays)
         #expect(s.updateOnPlaylistsChange == SettingsDefaults.updateOnPlaylistsChange)
+        #expect(s.saveSearchHistory == SettingsDefaults.saveSearchHistory)
+    }
+
+    @Test func saveSearchHistoryRoundTripsAndResets() {
+        let s = store()
+        s.saveSearchHistory = false
+        #expect(s.saveSearchHistory == false)
+        #expect(store2(s).saveSearchHistory == false)   // persisted through backing
+        s.resetToDefaults()
+        #expect(s.saveSearchHistory == SettingsDefaults.saveSearchHistory)
     }
 
     @Test func updateOnPlaylistsChangeRoundTrips() {

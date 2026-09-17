@@ -15,6 +15,7 @@ final class SettingsStore {
     private var rawRefresh: Int
     private var rawKeep: Int
     private var rawUpdateOnPlaylistsChange: Bool
+    var rawSaveSearchHistory: Bool
     var rawKeyOk: Int
     var rawKeyUpDown: Int
     var rawKeyLeftRight: Int
@@ -29,6 +30,8 @@ final class SettingsStore {
         rawKeep = backing.readInt(SettingsKey.epgKeepPastDays.rawValue) ?? SettingsDefaults.epgKeepPastDays
         rawUpdateOnPlaylistsChange = backing.readBool(SettingsKey.updateOnPlaylistsChange.rawValue)
             ?? SettingsDefaults.updateOnPlaylistsChange
+        rawSaveSearchHistory = backing.readBool(SettingsKey.saveSearchHistory.rawValue)
+            ?? SettingsDefaults.saveSearchHistory
         rawKeyOk = backing.readInt(SettingsKey.playerKeyOk.rawValue) ?? SettingsDefaults.playerKeyOk
         rawKeyUpDown = backing.readInt(SettingsKey.playerKeyUpDown.rawValue) ?? SettingsDefaults.playerKeyUpDown
         rawKeyLeftRight = backing.readInt(SettingsKey.playerKeyLeftRight.rawValue) ?? SettingsDefaults.playerKeyLeftRight
@@ -80,6 +83,7 @@ final class SettingsStore {
         rawRefresh = SettingsDefaults.epgRefreshHours
         rawKeep = SettingsDefaults.epgKeepPastDays
         rawUpdateOnPlaylistsChange = SettingsDefaults.updateOnPlaylistsChange
+        rawSaveSearchHistory = SettingsDefaults.saveSearchHistory
         rawKeyOk = SettingsDefaults.playerKeyOk
         rawKeyUpDown = SettingsDefaults.playerKeyUpDown
         rawKeyLeftRight = SettingsDefaults.playerKeyLeftRight

@@ -9,8 +9,10 @@ import Foundation
 protocol KeyValueStore {
     func readBool(_ key: String) -> Bool?
     func readInt(_ key: String) -> Int?
+    func readString(_ key: String) -> String?
     func writeBool(_ value: Bool, _ key: String)
     func writeInt(_ value: Int, _ key: String)
+    func writeString(_ value: String, _ key: String)
     func remove(_ key: String)
 }
 
@@ -25,7 +27,10 @@ extension UserDefaults: KeyValueStore {
         object(forKey: key) != nil ? integer(forKey: key) : nil
     }
 
+    func readString(_ key: String) -> String? { object(forKey: key) as? String }
+
     func writeBool(_ value: Bool, _ key: String) { set(value, forKey: key) }
     func writeInt(_ value: Int, _ key: String) { set(value, forKey: key) }
+    func writeString(_ value: String, _ key: String) { set(value, forKey: key) }
     func remove(_ key: String) { removeObject(forKey: key) }
 }

@@ -14,14 +14,17 @@ struct UserDefaultsKeyValueStoreTests {
         let store: KeyValueStore = transient()
         #expect(store.readBool("missing") == nil)
         #expect(store.readInt("missing") == nil)
+        #expect(store.readString("missing") == nil)
     }
 
     @Test func writtenValuesRoundTrip() {
         let store: KeyValueStore = transient()
         store.writeBool(false, "flag")   // distinct from the unset-nil case
         store.writeInt(42, "count")
+        store.writeString("hi", "label")
         #expect(store.readBool("flag") == false)
         #expect(store.readInt("count") == 42)
+        #expect(store.readString("label") == "hi")
     }
 
     @Test func removeClearsAValue() {

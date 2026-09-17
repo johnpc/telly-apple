@@ -15,6 +15,7 @@ enum SettingsKey: String, CaseIterable {
     case parentalEnabled
     case colorScheme
     case updateOnPlaylistsChange
+    case saveSearchHistory
 }
 
 /// Factory-fresh values used until the user changes a setting, plus the choice
@@ -34,4 +35,5 @@ enum SettingsDefaults {
     static let parentalEnabled = false
     static let colorScheme = AppearanceTheme.system.rawValue
     static let updateOnPlaylistsChange = false
+    static let saveSearchHistory = true
 }
