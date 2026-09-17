@@ -30,6 +30,9 @@ struct AppDatabase {
             try CoreSchema.createPlaylists(db)
             try CoreSchema.createChannels(db)
         }
+        migrator.registerMigration("v2-epg") { db in
+            try EpgSchema.createPrograms(db)
+        }
         return migrator
     }
 }
