@@ -34,7 +34,17 @@ extension ContentView {
         if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
         if DebugLaunch.forcedQuickBarOverlay(in: debugArgs) { model.debugPresentQuickBarOverlay() }
         seedInfoOverlayIfRequested(model)
+        seedPanelOverlayIfRequested(model)
         liveModel = model
+    }
+
+    func seedPanelOverlayIfRequested(_ model: LivePlaybackModel) {
+        guard DebugLaunch.forcedPanelOverlay(in: debugArgs) else { return }
+        let nowMs = Int(Date().timeIntervalSince1970 * 1_000)
+        try? env.programStore.upsertReplacing(
+            document: DebugLaunch.guideEpgDocument(nowMs: nowMs), keepDescriptions: false)
+        env.guideEpgStore.refresh()
+        model.debugPresentPanelOverlay()
     }
 
     func seedInfoOverlayIfRequested(_ model: LivePlaybackModel) {

@@ -41,10 +41,14 @@ enum DebugLaunch {
         value(for: "-tellyOverlay", in: args) == "info"
     }
 
-    /// Whether to pin the quick-bar open for the screenshot proof — set by
-    /// `-tellyOverlay quickBar`.
+    /// Whether to pin the quick-bar open — set by `-tellyOverlay quickBar`.
     static func forcedQuickBarOverlay(in args: [String]) -> Bool {
         value(for: "-tellyOverlay", in: args) == "quickBar"
+    }
+
+    /// Whether to pin the channel panel open — set by `-tellyOverlay panel`.
+    static func forcedPanelOverlay(in args: [String]) -> Bool {
+        value(for: "-tellyOverlay", in: args) == "panel"
     }
 
     /// A synthetic now/next XMLTV fixture on ``demoEpgId``: a "now" programme

@@ -265,6 +265,21 @@ struct LivePlaybackModelTests {
         #expect(model.holdsLastFrame == true)
     }
 
+    @Test func debugPresentPanelOverlayPinsOverlayAndHoldsFrame() {
+        let model = Harness().makeModel(channels)
+        model.debugPresentPanelOverlay()
+        #expect(model.overlay == .panel)
+        #expect(model.holdsLastFrame == true)
+    }
+
+    @Test func openPanelThenBackDismissesPanel() {
+        let model = Harness().makeModel(channels)
+        model.execute(.openPanel)
+        #expect(model.overlay == .panel)
+        #expect(model.onKey(.back) == true)     // within panel → dismiss
+        #expect(model.overlay == .none)
+    }
+
     // MARK: - EPG now/next seam
 
     @Test func currentInfoIsNilWithDefaultSeam() {

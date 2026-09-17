@@ -57,5 +57,12 @@ extension LivePlaybackModel {
         debugHoldFrame = true
         visibility.set(.quickBar)
     }
+
+    /// DEBUG screenshot hook: pin the channel panel open (sticky, frame held) for
+    /// the `-tellyOverlay panel` proof.
+    func debugPresentPanelOverlay() {
+        debugHoldFrame = true
+        visibility.set(.panel)
+    }
 }
 #endif

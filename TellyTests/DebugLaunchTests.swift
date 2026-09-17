@@ -73,6 +73,12 @@ struct DebugLaunchTests {
         #expect(!DebugLaunch.forcedQuickBarOverlay(in: ["Telly"]))
     }
 
+    @Test func forcedPanelOverlayReadsFlag() {
+        #expect(DebugLaunch.forcedPanelOverlay(in: ["Telly", "-tellyOverlay", "panel"]))
+        #expect(!DebugLaunch.forcedPanelOverlay(in: ["Telly", "-tellyOverlay", "quickBar"]))
+        #expect(!DebugLaunch.forcedPanelOverlay(in: ["Telly"]))
+    }
+
     @Test func fixtureChannelsCarryEpgIds() {
         let pl = DebugLaunch.fixturePlaylist(base: "http://127.0.0.1:8000/")
         #expect(pl.channels[0].tvgID == DebugLaunch.demoEpgId)

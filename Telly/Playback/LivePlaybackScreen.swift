@@ -18,6 +18,7 @@ struct LivePlaybackScreen: View {
             zapOverlay
             infoOverlay
             quickBarOverlay
+            panelOverlay
             stateOverlay
             #if !os(tvOS)
             PlaybackCloseButton()
@@ -75,6 +76,13 @@ struct LivePlaybackScreen: View {
     @ViewBuilder private var quickBarOverlay: some View {
         if case .quickBar = model.overlay {
             QuickBarView(video: model.engine.video)
+        }
+    }
+
+    @ViewBuilder private var panelOverlay: some View {
+        if case .panel = model.overlay {
+            ChannelPanelView(channels: model.channels, current: model.current,
+                             nowNext: model.nowNext, nowMs: model.now())
         }
     }
 
