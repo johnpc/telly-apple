@@ -29,6 +29,7 @@ struct ContentView: View {
                 ChannelListScreen(model: env.channelListModel,
                                   makeEngine: env.makeEngine,
                                   makeGuideGridModel: env.makeGuideGridModel,
+                                  makeHistoryModel: env.makeHistoryModel,
                                   makeChannelEditModel: env.makeChannelEditModel,
                                   makeVisibilityEditModel: env.makeVisibilityEditModel,
                                   settings: env.settings,

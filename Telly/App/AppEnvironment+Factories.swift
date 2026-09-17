@@ -24,6 +24,12 @@ extension AppEnvironment {
     /// A fresh VLC-backed playback engine per presented player.
     func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine() }
 
+    /// The recently-watched screen's observable state over the watch-history
+    /// and channel stores.
+    func makeHistoryModel() -> HistoryListModel {
+        HistoryListModel(store: watchHistoryStore, channelStore: channelStore)
+    }
+
     /// The guide grid's observable state over the current channel + programme
     /// stores and wall clock; the clock format follows the 24-hour setting.
     func makeGuideGridModel() -> GuideGridModel {

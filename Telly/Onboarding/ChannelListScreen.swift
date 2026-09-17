@@ -10,6 +10,7 @@ struct ChannelListScreen: View {
     @State private var model: ChannelListModel
     let makeEngine: () -> VLCKitPlayerEngine
     let makeGuideGridModel: () -> GuideGridModel
+    let makeHistoryModel: () -> HistoryListModel
     let makeChannelEditModel: (String?) -> ChannelEditModel
     let makeVisibilityEditModel: () -> VisibilityEditModel
     let settings: SettingsStore
@@ -19,6 +20,7 @@ struct ChannelListScreen: View {
 
     init(model: ChannelListModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
          makeGuideGridModel: @escaping () -> GuideGridModel,
+         makeHistoryModel: @escaping () -> HistoryListModel,
          makeChannelEditModel: @escaping (String?) -> ChannelEditModel,
          makeVisibilityEditModel: @escaping () -> VisibilityEditModel,
          settings: SettingsStore,
@@ -26,6 +28,7 @@ struct ChannelListScreen: View {
         _model = State(initialValue: model)
         self.makeEngine = makeEngine
         self.makeGuideGridModel = makeGuideGridModel
+        self.makeHistoryModel = makeHistoryModel
         self.makeChannelEditModel = makeChannelEditModel
         self.makeVisibilityEditModel = makeVisibilityEditModel
         self.settings = settings
