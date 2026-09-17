@@ -21,7 +21,7 @@ struct SettingsScreen: View {
                 SettingsGuideSectionView(settings: settings,
                                          updateEpgNow: { await playlists.refreshEpgNow() })
                 SettingsRemoteSectionView(settings: settings)
-                SettingsParentalSectionView(parental: parental)
+                SettingsParentalSectionView(parental: parental, playlists: playlists)
                 SettingsBackupSectionView(model: backup)
                 SettingsAppearanceSectionView(settings: settings,
                                               makeVisibilityEditModel: makeVisibilityEditModel)

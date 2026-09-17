@@ -53,7 +53,7 @@ extension AppEnvironment {
     func makePlaylistsSettingsModel() -> PlaylistsSettingsModel {
         PlaylistsSettingsModel(
             playlistStore: playlistStore, epgSourceStore: epgSourceStore,
-            channelStore: channelStore, settings: settings,
+            channelStore: channelStore, settings: settings, parental: parentalStore,
             updater: makePlaylistUpdater(), makeAddModel: makeAddPlaylistModel,
             refreshEpg: { [weak self] in await self?.refreshEpgNow() },
             reload: { [weak self] in self?.reload() })

@@ -17,13 +17,14 @@ final class PlaylistsSettingsModel {
     let epgSourceStore: EpgSourceStore
     let channelStore: ChannelStore
     let settings: SettingsStore
+    @ObservationIgnored let parental: ParentalStore
     let makeAddModel: () -> AddPlaylistModel
     private let updater: PlaylistUpdater
     let refreshEpg: () async -> Void
     private let reload: () -> Void
 
     init(playlistStore: PlaylistStore, epgSourceStore: EpgSourceStore,
-         channelStore: ChannelStore, settings: SettingsStore,
+         channelStore: ChannelStore, settings: SettingsStore, parental: ParentalStore,
          updater: PlaylistUpdater, makeAddModel: @escaping () -> AddPlaylistModel,
          refreshEpg: @escaping () async -> Void = {},
          reload: @escaping () -> Void) {
@@ -31,6 +32,7 @@ final class PlaylistsSettingsModel {
         self.epgSourceStore = epgSourceStore
         self.channelStore = channelStore
         self.settings = settings
+        self.parental = parental
         self.updater = updater
         self.makeAddModel = makeAddModel
         self.refreshEpg = refreshEpg
@@ -39,6 +41,12 @@ final class PlaylistsSettingsModel {
 
     /// Re-reads the stored playlists into the observed feed.
     func load() { playlists = (try? playlistStore.all()) ?? [] }
+
+    /// The bulk Manage-Blocking editor state, PIN-gated via the shared parental
+    /// store — vended here (not through `SettingsScreen`) so no capped file grows.
+    func makeBlockingEditModel() -> BlockingEditModel {
+        BlockingEditModel(store: channelStore, parental: parental)
+    }
 
     /// Re-fetches one playlist, republishes the feeds, then refreshes the EPG
     /// when the change succeeded and "Update on playlists change" is enabled.

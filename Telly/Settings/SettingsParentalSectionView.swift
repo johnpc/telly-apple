@@ -7,6 +7,7 @@ import SwiftUI
 /// Tune-time enforcement is a later slice — this is presentation + PIN plumbing.
 struct SettingsParentalSectionView: View {
     @Bindable var parental: ParentalStore
+    let playlists: PlaylistsSettingsModel
     @State private var entry: PinEntryMode?
 
     var body: some View {
@@ -15,6 +16,9 @@ struct SettingsParentalSectionView: View {
             Button(parental.isSet ? "Change PIN" : "Set PIN") { entry = .set }
             if parental.isSet {
                 Button("Disable PIN", role: .destructive) { entry = .disable }
+            }
+            NavigationLink("Manage Blocking") {
+                ManageBlockingScreen(model: playlists.makeBlockingEditModel())
             }
         }
         .sheet(item: $entry) { mode in
