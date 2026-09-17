@@ -163,6 +163,7 @@
 		7D24A2A2D02ED1A2B07E9C06 /* VlcPlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93E291DDF653770BE71DECE /* VlcPlaybackState.swift */; };
 		7E06CDE16B7F38DA7648EE31 /* MultiviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837E11BAD7B9A30A652BEE /* MultiviewCell.swift */; };
 		7EB3E4C17BB5F9EFB8E21ECF /* PlaylistSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E33824048D9B8A7E968723D /* PlaylistSummary.swift */; };
+		7ED0F379E0E95873E8FDFFA3 /* ParentalStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3611B857107C7312359A8B /* ParentalStoreTests.swift */; };
 		7ED35AADDBD181899F653F41 /* ChannelEditModel+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A4345278B0D07E7AD02BA6 /* ChannelEditModel+Move.swift */; };
 		80039A30576650B8EF181C0B /* ChannelSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E60F3CB2CB365AB9D98A83 /* ChannelSearchTests.swift */; };
 		80314401F98FDCA158A1FF7D /* NowNext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE592895ECE19026B765DD5 /* NowNext.swift */; };
@@ -207,6 +208,7 @@
 		AA784893C5F2258344B76AB2 /* GuideCellLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F4FD0068833D246DD8CBE5 /* GuideCellLayoutTests.swift */; };
 		ABDD265EB30F60C208880D2B /* ManageFavoritesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBA059CE6E47840C895A7C /* ManageFavoritesScreen.swift */; };
 		AF0539C35A9BFAB68CBBD175 /* ResizeModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C4CA49516137B28B6B11A3 /* ResizeModeTests.swift */; };
+		AFCCA1B7B41B03C5BFB7324C /* AppEnvironmentParentalWiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F460E3F00BCAA01913016012 /* AppEnvironmentParentalWiringTests.swift */; };
 		B108596165E58467B27FF21F /* GuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11345FDE4D29891DA5870A7 /* GuideCell.swift */; };
 		B119793DB53B1B40C5085B70 /* ChannelListGroupsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51ACF83DC0A8FDF7C85D34 /* ChannelListGroupsTests.swift */; };
 		B2C5AF7A257A7C9F7402C4FA /* ReconnectPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD5CB36B73671A605E222D /* ReconnectPolicy.swift */; };
@@ -265,6 +267,7 @@
 		E120C056EF6F18CBBD55DC0D /* EpgOffsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BE5846F0E695DA3565F177 /* EpgOffsets.swift */; };
 		E24F8AAC388C30AFF3707F90 /* WizardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C75E52CDEC9F7474FCCDB38 /* WizardState.swift */; };
 		E34F396EEDAF8E6ECC2BB632 /* PanelTimeouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF81DF98D2526C259FB0CCE /* PanelTimeouts.swift */; };
+		E44ECA07601B44676CA6DD04 /* ParentalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED961F3772EB624FFBBCD70B /* ParentalStore.swift */; };
 		E6A78447C7F1F09295010E5F /* PlaybackKeyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217DA577D0F88D7385009AA2 /* PlaybackKeyPolicy.swift */; };
 		E70B0AAAB6C673FD65F8B6B2 /* GuideGridModel+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A0FFDDB0818EB4858B71DD /* GuideGridModel+View.swift */; };
 		E7F2F5293F558F2047DDA701 /* TouchKeyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C80D848981CA7C52124E5D6 /* TouchKeyMap.swift */; };
@@ -352,6 +355,7 @@
 		2C73DE1BC748EB029A1DAAEE /* Telly.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Telly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBC54543BF987EBA8B46AAA /* MultiviewLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewLayoutTests.swift; sourceTree = "<group>"; };
 		2DF6D601F20885554B9537BA /* QuickBarAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBarAction.swift; sourceTree = "<group>"; };
+		2E3611B857107C7312359A8B /* ParentalStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalStoreTests.swift; sourceTree = "<group>"; };
 		2E7D83D78BE58CA10476BED1 /* AppEnvironment+Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppEnvironment+Factories.swift"; sourceTree = "<group>"; };
 		30262C5C5C44D2273ABC94EE /* MultiviewSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewSessionTests.swift; sourceTree = "<group>"; };
 		30A1BF4D21ECE4136B80416F /* PlaylistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistStore.swift; sourceTree = "<group>"; };
@@ -571,6 +575,7 @@
 		EC3F7D41F43C92AD1CB0E648 /* GuideRowsBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideRowsBuilderTests.swift; sourceTree = "<group>"; };
 		EC46962DA6213D6AE285ACAB /* EpgRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgRepository.swift; sourceTree = "<group>"; };
 		ECB5D7EF629F1D95CF81178B /* ChannelReorder+Move.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelReorder+Move.swift"; sourceTree = "<group>"; };
+		ED961F3772EB624FFBBCD70B /* ParentalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalStore.swift; sourceTree = "<group>"; };
 		EE5AD3FAD6A5507B51FB395C /* InMemoryKeyValueStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryKeyValueStore.swift; sourceTree = "<group>"; };
 		EF35608EA8AEE6476488BA1D /* GuideGridModel+Viewport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GuideGridModel+Viewport.swift"; sourceTree = "<group>"; };
 		F04C28109510A69E0AE9B6A8 /* HistoryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScreen.swift; sourceTree = "<group>"; };
@@ -578,6 +583,7 @@
 		F06A6C4B7C8423DF4D41E23F /* ChannelStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelStoreTests.swift; sourceTree = "<group>"; };
 		F1CC40D09A16B0AFA3330197 /* PlaybackCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCommand.swift; sourceTree = "<group>"; };
 		F3C6E232AB22C1BE5B465668 /* GuideFocus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideFocus.swift; sourceTree = "<group>"; };
+		F460E3F00BCAA01913016012 /* AppEnvironmentParentalWiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironmentParentalWiringTests.swift; sourceTree = "<group>"; };
 		F4DB18D880635ED0E366E84B /* VlcTrackReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VlcTrackReaderTests.swift; sourceTree = "<group>"; };
 		F4E13CD8EE33EB35BD3D46F0 /* ChannelListModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListModelTests.swift; sourceTree = "<group>"; };
 		F62A5C11F0C4AC40C0A76784 /* SurroundAudioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurroundAudioTests.swift; sourceTree = "<group>"; };
@@ -888,6 +894,7 @@
 				978E40923C0BD5A67EAD3E8D /* AddPlaylistModelTests.swift */,
 				AB23BF7F828B6C569D6B8A31 /* AppEnvironmentGuideWiringTests.swift */,
 				E9DAA6880DB214116C647E2F /* AppEnvironmentHistoryWiringTests.swift */,
+				F460E3F00BCAA01913016012 /* AppEnvironmentParentalWiringTests.swift */,
 				B26A802ABF81F23F61C02AE3 /* ChannelEditModelTests.swift */,
 				6459607D004B96A0D9D926AC /* ChannelEntityTests.swift */,
 				CB6C59E528CFF9F4244CC01E /* ChannelImporterTests.swift */,
@@ -936,6 +943,7 @@
 				CB92D6A3324B43D49BDFC484 /* PanelRowInfoTests.swift */,
 				F89929CDBE552BD8E2BE3BAD /* PanelSelectionTests.swift */,
 				81EB9E77FB158242EA54266A /* PanelTimeoutsTests.swift */,
+				2E3611B857107C7312359A8B /* ParentalStoreTests.swift */,
 				4612550684E594CA7F3A2F1E /* PendingZapTests.swift */,
 				120838C14EBD2CD5F0D67B66 /* PinHasherTests.swift */,
 				065315529CCE7156E0862392 /* PinPolicyTests.swift */,
@@ -1015,6 +1023,7 @@
 			isa = PBXGroup;
 			children = (
 				FDEA075A908EE3F8C650F0A3 /* KeyValueStore.swift */,
+				ED961F3772EB624FFBBCD70B /* ParentalStore.swift */,
 				BC377A47AFFFEE2929B4A985 /* PinHasher.swift */,
 				D09ADBF49B1060CD284A870A /* PinPolicy.swift */,
 				7AA91C2F566E8495B29203CA /* SecretStore.swift */,
@@ -1323,6 +1332,7 @@
 				123842CECC56E442D8CB335C /* PanelRowInfo.swift in Sources */,
 				372A85BCDBCE07D10DAD491F /* PanelSelection.swift in Sources */,
 				E34F396EEDAF8E6ECC2BB632 /* PanelTimeouts.swift in Sources */,
+				E44ECA07601B44676CA6DD04 /* ParentalStore.swift in Sources */,
 				306683117C97BFF70CD8B3B8 /* PendingZap.swift in Sources */,
 				87FDDFB53675F43165D79F32 /* PinHasher.swift in Sources */,
 				947E86D5424B3DB05BB2E0DE /* PinPolicy.swift in Sources */,
@@ -1415,6 +1425,7 @@
 				20E6F7695D49F55EA09F0BCB /* AddPlaylistModelTests.swift in Sources */,
 				8476EA0E3670DF9BCA8B7A69 /* AppEnvironmentGuideWiringTests.swift in Sources */,
 				00EBCCF3232B68501738EAC2 /* AppEnvironmentHistoryWiringTests.swift in Sources */,
+				AFCCA1B7B41B03C5BFB7324C /* AppEnvironmentParentalWiringTests.swift in Sources */,
 				FD6847F1FDF98B5C4E55274A /* ChannelEditModelTests.swift in Sources */,
 				24A5D5AB358021BA902FF427 /* ChannelEntityTests.swift in Sources */,
 				5CEA3890A0FD3BF92F752BC2 /* ChannelImporterTests.swift in Sources */,
@@ -1463,6 +1474,7 @@
 				B3BC024A541818A8D3783580 /* PanelRowInfoTests.swift in Sources */,
 				3EC8178007BC03703A970067 /* PanelSelectionTests.swift in Sources */,
 				969C40C4E7CEB9125AC1CD5C /* PanelTimeoutsTests.swift in Sources */,
+				7ED0F379E0E95873E8FDFFA3 /* ParentalStoreTests.swift in Sources */,
 				EADF8718D4ED90774A4E5131 /* PendingZapTests.swift in Sources */,
 				F2E6CCD5E24820985595FCC5 /* PinHasherTests.swift in Sources */,
 				1545DA974B02C66DE0C831CE /* PinPolicyTests.swift in Sources */,

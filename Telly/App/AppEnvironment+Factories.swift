@@ -24,6 +24,13 @@ extension AppEnvironment {
     /// A fresh VLC-backed playback engine per presented player.
     func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine() }
 
+    /// The parental-controls store: the salted-hash PIN lives in the Keychain
+    /// via ``KeychainSecretStore`` while the non-sensitive enable toggle shares
+    /// the settings ``KeyValueStore``.
+    func makeParentalStore() -> ParentalStore {
+        ParentalStore(secret: KeychainSecretStore(), backing: settings.backing)
+    }
+
     /// The recently-watched screen's observable state over the watch-history
     /// and channel stores.
     func makeHistoryModel() -> HistoryListModel {
