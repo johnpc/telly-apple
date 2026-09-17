@@ -36,6 +36,20 @@ struct ChannelStore {
         try db.queue.read { try Int.fetchOne($0, sql: "SELECT COUNT(*) FROM channels") ?? 0 }
     }
 
+    /// Persists a single channel's edited flags/overrides, matched by primary
+    /// key — the Apple mirror of the Android `ChannelOptionsDao.update`.
+    func update(_ channel: ChannelEntity) throws {
+        try db.queue.write { let record = ChannelRecord(channel); try record.update($0) }
+    }
+
+    /// Persists a batch of edited channels in ONE transaction, so a favourite
+    /// reorder writes only its changed rows atomically.
+    func update(_ channels: [ChannelEntity]) throws {
+        try db.queue.write { db in
+            for channel in channels { let record = ChannelRecord(channel); try record.update(db) }
+        }
+    }
+
     /// Visible-channel counts per group, ordered by first appearance.
     func groups(playlistId: Int) throws -> [ChannelGroupCount] {
         try db.queue.read { db in

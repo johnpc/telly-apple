@@ -76,6 +76,11 @@ extension ContentView {
         DebugLaunch.seedIfRequested(into: env.playlistStore, args: debugArgs,
                                     now: { Int64(Date().timeIntervalSince1970 * 1000) })
         env.reload()
+        DebugLaunch.seedFavoritesIfRequested(into: env.channelStore, args: debugArgs)
+        if let group = DebugLaunch.forcedChannelGroup(in: debugArgs) {
+            env.channelListModel.select(group)
+        }
+        env.channelListModel.load()
     }
 }
 #endif

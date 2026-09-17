@@ -25,9 +25,11 @@ struct ContentView: View {
             if env.playlists.isEmpty {
                 WelcomeView(onAdd: { adding = true })
             } else {
-                ChannelListScreen(channelStore: env.channelStore,
+                ChannelListScreen(model: env.channelListModel,
                                   makeEngine: env.makeEngine,
                                   makeGuideGridModel: env.makeGuideGridModel,
+                                  makeChannelEditModel: env.makeChannelEditModel,
+                                  makeVisibilityEditModel: env.makeVisibilityEditModel,
                                   onAdd: { adding = true })
             }
         }

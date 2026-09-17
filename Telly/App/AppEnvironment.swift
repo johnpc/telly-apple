@@ -10,6 +10,8 @@ final class AppEnvironment {
     let channelStore: ChannelStore
     let programStore: ProgramStore
     let guideEpgStore: GuideEpgStore
+    /// The single, stable channel-list state observed by `ChannelListScreen`.
+    let channelListModel: ChannelListModel
     private(set) var playlists: [PlaylistEntity] = []
 
     init(database: AppDatabase) {
@@ -19,6 +21,7 @@ final class AppEnvironment {
         guideEpgStore = GuideEpgStore(
             channelStore: channelStore, repository: EpgRepository(store: programStore),
             now: { Int(Date().timeIntervalSince1970 * 1_000) })
+        channelListModel = ChannelListModel(store: channelStore)
         reload()
     }
 
@@ -57,6 +60,14 @@ final class AppEnvironment {
 
     /// A fresh VLC-backed playback engine per presented player.
     func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine() }
+
+    /// The Manage-Favorites (group nil) / Reorder-in-group editor state.
+    func makeChannelEditModel(group: String? = nil) -> ChannelEditModel {
+        ChannelEditModel(store: channelStore, group: group)
+    }
+
+    /// The bulk Manage-Visibility editor state.
+    func makeVisibilityEditModel() -> VisibilityEditModel { VisibilityEditModel(store: channelStore) }
 
     /// The guide grid's observable state over the current channel + programme
     /// stores and wall clock (24-h labels in the device time-zone).

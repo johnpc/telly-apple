@@ -139,6 +139,33 @@ struct DebugLaunchTests {
         #expect(try store.channelIds().isEmpty)
     }
 
+    @Test func forcedChannelGroupReadsFlag() {
+        #expect(DebugLaunch.forcedChannelGroup(in: ["Telly", "-tellyChannelGroup", "Favorites"]) == "Favorites")
+        #expect(DebugLaunch.forcedChannelGroup(in: ["Telly"]) == nil)
+    }
+
+    @Test func seedFavoritesFlagsFirstTwoVisibleChannels() throws {
+        let db = try AppDatabase.makeInMemory()
+        let playlists = PlaylistStore(db: db)
+        _ = try playlists.add(sourceUrl: "u",
+                              playlist: DebugLaunch.fixturePlaylist(base: "http://127.0.0.1:8000/"),
+                              name: nil, nowMs: 0)
+        let store = ChannelStore(db: db)
+        DebugLaunch.seedFavoritesIfRequested(into: store, args: ["Telly", "-tellySeedFavorite"])
+        #expect(try store.visibleChannels().filter { $0.flags.favorite }.count == 2)
+    }
+
+    @Test func seedFavoritesIsANoOpWithoutTheFlag() throws {
+        let db = try AppDatabase.makeInMemory()
+        let playlists = PlaylistStore(db: db)
+        _ = try playlists.add(sourceUrl: "u",
+                              playlist: DebugLaunch.fixturePlaylist(base: "http://127.0.0.1:8000/"),
+                              name: nil, nowMs: 0)
+        let store = ChannelStore(db: db)
+        DebugLaunch.seedFavoritesIfRequested(into: store, args: ["Telly"])
+        #expect(try store.visibleChannels().allSatisfy { !$0.flags.favorite })
+    }
+
     @Test func infoFixtureDocumentSeedsNowAndNextOnDemoChannel() {
         let doc = DebugLaunch.infoFixtureDocument(nowMs: 10_000_000)
         #expect(doc.programs.count == 2)

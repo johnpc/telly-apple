@@ -7,7 +7,9 @@ struct ChannelEntity: Equatable {
     var id: Int = 0
     let playlistId: Int
     let number: Int
-    let sortIndex: Int
+    /// Zap/reorder position; mutable so the in-group reorder editor can swap
+    /// two neighbours' positions (favourites use `flags.favoriteOrder` instead).
+    var sortIndex: Int
     let source: ChannelSource
     var flags = ChannelFlags()
     var catchup = ChannelCatchup()
