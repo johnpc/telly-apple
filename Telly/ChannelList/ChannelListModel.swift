@@ -11,14 +11,22 @@ final class ChannelListModel {
     var channels: [ChannelEntity] = []
     var selectedGroup: String = ChannelPanelGroups.allChannels
     var visibility = GroupVisibility.standard
+    /// The name/number search query; a non-empty value searches globally,
+    /// overriding the selected group (see ``rows``).
+    var query = ""
 
     init(store: ChannelStore) { self.store = store }
 
     /// The group names offered by the picker, with hidden pseudo-groups dropped.
     var groups: [String] { visibility.filter(ChannelListGroups.groupNames(channels)) }
 
-    /// The rows shown for the selected group.
-    var rows: [ChannelEntity] { ChannelListGroups.channels(channels, in: selectedGroup) }
+    /// The rows shown: a non-empty trimmed query searches all channels globally
+    /// (overriding the group filter), otherwise the selected group's channels.
+    var rows: [ChannelEntity] {
+        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? ChannelListGroups.channels(channels, in: selectedGroup)
+                               : ChannelSearch.filter(channels, query: query)
+    }
 
     /// (Re)loads the visible channels from the store.
     func load() { channels = (try? store.visibleChannels()) ?? [] }

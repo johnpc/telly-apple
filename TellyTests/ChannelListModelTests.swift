@@ -73,4 +73,31 @@ struct ChannelListModelTests {
         #expect(!model.groups.contains("Favorites"))
         #expect(model.groups.contains("All channels"))
     }
+
+    @Test func queryFiltersRowsGlobally() throws {
+        let model = try seededModel()
+        model.query = "A"
+        #expect(model.rows.map(\.source.name) == ["A"])
+    }
+
+    @Test func queryOverridesSelectedGroup() throws {
+        let model = try seededModel()
+        model.select("Live")           // A, B
+        model.query = "C"              // C is in Sport — global search finds it anyway
+        #expect(model.rows.map(\.source.name) == ["C"])
+    }
+
+    @Test func emptyQueryRestoresGroupRows() throws {
+        let model = try seededModel()
+        model.select("Live")
+        model.query = "C"
+        model.query = "  "             // whitespace-only restores the group filter
+        #expect(model.rows.map(\.source.name) == ["A", "B"])
+    }
+
+    @Test func queryWithNoMatchEmptiesRows() throws {
+        let model = try seededModel()
+        model.query = "zzz"
+        #expect(model.rows.isEmpty)
+    }
 }
