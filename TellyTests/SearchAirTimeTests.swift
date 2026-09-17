@@ -30,4 +30,12 @@ struct SearchAirTimeTests {
         #expect(text.hasSuffix("00:30 — 01:30"))
         #expect(text.hasPrefix("Fri, Jan 2")) // 1970-01-02 is a Friday in en-US
     }
+
+    @Test func stampIsSingleInstantWithDatePrefix() {
+        // 1970-01-02 00:30 UTC → weekday + date + single time, no range dash.
+        let start = 86_400_000 + 1_800_000
+        let text = SearchAirTime.stamp(atMs: start, timeZone: utc)
+        #expect(text == "Fri, Jan 2, 00:30")
+        #expect(!text.contains(" — ")) // single instant, not a range
+    }
 }

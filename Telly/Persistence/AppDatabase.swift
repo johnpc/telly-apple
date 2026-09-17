@@ -47,6 +47,9 @@ struct AppDatabase {
             try VodSchema.createVodItems(db)
             try VodSchema.createVodPositions(db)
         }
+        migrator.registerMigration("v7-mylist") { db in
+            try MyListSchema.createMyList(db)
+        }
         return migrator
     }
 }

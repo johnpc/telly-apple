@@ -12,6 +12,13 @@ enum SearchAirTime {
         return "\(datePrefix(program.startMs, timeZone: timeZone)), \(range)"
     }
 
+    /// A single-instant air-time stamp (Android My List `ProgramTimes.clock`):
+    /// "EEE, MMM d, HH:mm" for `atMs` in `timeZone`, reusing the same date-prefix
+    /// and time-label helpers as `text(...)` so both share one formatter config.
+    static func stamp(atMs: Int, timeZone: TimeZone) -> String {
+        "\(datePrefix(atMs, timeZone: timeZone)), \(InfoOverlayText.timeLabel(atMs, timeZone: timeZone))"
+    }
+
     private static func sameDay(_ aMs: Int, _ bMs: Int, timeZone: TimeZone) -> Bool {
         var cal = Calendar(identifier: .gregorian)
         cal.timeZone = timeZone
