@@ -14,6 +14,17 @@ struct DebugLaunchTests {
         #expect(DebugLaunch.autoplayUrl(in: ["Telly"]) == nil)
     }
 
+    @Test func settingsRequestedReflectsTheFlag() {
+        #expect(DebugLaunch.settingsRequested(in: ["Telly", "-tellySettings"]))
+        #expect(!DebugLaunch.settingsRequested(in: ["Telly"]))
+    }
+
+    @Test func clock24hOverrideReadsTheFlagValue() {
+        #expect(DebugLaunch.clock24hOverride(in: ["Telly", "-tellyClock24h", "false"]) == false)
+        #expect(DebugLaunch.clock24hOverride(in: ["Telly", "-tellyClock24h", "true"]) == true)
+        #expect(DebugLaunch.clock24hOverride(in: ["Telly"]) == nil)
+    }
+
     @Test func autoplayUrlIsNilWhenFlagHasNoValue() {
         #expect(DebugLaunch.autoplayUrl(in: ["Telly", "-tellyAutoplayUrl"]) == nil)
     }

@@ -31,6 +31,7 @@ struct ContentView: View {
                                   makeGuideGridModel: env.makeGuideGridModel,
                                   makeChannelEditModel: env.makeChannelEditModel,
                                   makeVisibilityEditModel: env.makeVisibilityEditModel,
+                                  settings: env.settings,
                                   onAdd: { adding = true })
             }
         }

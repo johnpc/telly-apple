@@ -12,19 +12,23 @@ struct ChannelListScreen: View {
     let makeGuideGridModel: () -> GuideGridModel
     let makeChannelEditModel: (String?) -> ChannelEditModel
     let makeVisibilityEditModel: () -> VisibilityEditModel
+    let settings: SettingsStore
     let onAdd: () -> Void
     @State private var target: PlaybackTarget?
+    @State var showSettings = false
 
     init(model: ChannelListModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
          makeGuideGridModel: @escaping () -> GuideGridModel,
          makeChannelEditModel: @escaping (String?) -> ChannelEditModel,
          makeVisibilityEditModel: @escaping () -> VisibilityEditModel,
+         settings: SettingsStore,
          onAdd: @escaping () -> Void) {
         _model = State(initialValue: model)
         self.makeEngine = makeEngine
         self.makeGuideGridModel = makeGuideGridModel
         self.makeChannelEditModel = makeChannelEditModel
         self.makeVisibilityEditModel = makeVisibilityEditModel
+        self.settings = settings
         self.onAdd = onAdd
     }
 
@@ -43,6 +47,9 @@ struct ChannelListScreen: View {
         .task { model.load() }
         .fullScreenCover(item: $target) { target in
             PlaybackScreen(streamUrl: target.url, engine: makeEngine())
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsScreen(settings: settings, onClose: { showSettings = false })
         }
     }
 
@@ -66,21 +73,6 @@ struct ChannelListScreen: View {
             }
             Button("Hide channel", role: .destructive) { model.hide(channel) }
         }
-    }
-
-    @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink("Guide") {
-                GuideGridScreen(model: makeGuideGridModel(), makeEngine: makeEngine)
-            }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink("Favorites") { ManageFavoritesScreen(model: makeChannelEditModel(nil)) }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink("Visibility") { ManageVisibilityScreen(model: makeVisibilityEditModel()) }
-        }
-        ToolbarItem(placement: .primaryAction) { Button("Add", action: onAdd) }
     }
 }
 

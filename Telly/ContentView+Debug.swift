@@ -9,7 +9,9 @@ extension ContentView {
     var debugArgs: [String] { ProcessInfo.processInfo.arguments }
 
     @ViewBuilder var debugRoot: some View {
-        if DebugLaunch.forcedGuide(in: debugArgs) {
+        if DebugLaunch.settingsRequested(in: debugArgs) {
+            SettingsScreen(settings: env.settings, onClose: {})
+        } else if DebugLaunch.forcedGuide(in: debugArgs) {
             guideDemo
         } else if debugArgs.contains("-tellyMultiviewDemo") {
             multiviewDemo
@@ -70,6 +72,7 @@ extension ContentView {
 
     func prepareGuideDemo() {
         seedDebugFixtures()
+        if let use24h = DebugLaunch.clock24hOverride(in: debugArgs) { env.settings.use24hClock = use24h }
         DebugLaunch.seedGuideEpg(into: env.programStore, args: debugArgs,
                                  now: { Int(Date().timeIntervalSince1970 * 1_000) })
         guideModel = env.makeGuideGridModel()
