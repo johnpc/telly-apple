@@ -95,6 +95,21 @@ struct GuideGridModelTests {
         #expect(model.scrollX == 0)
     }
 
+    @Test func timelineTicksSpanTheViewportFromTheOrigin() throws {
+        let model = try makeModel()
+        let ticks = model.timelineTicks
+        #expect(!ticks.isEmpty)
+        #expect(ticks.first?.offset == 0)  // origin sits at scrollX 0
+        #expect(ticks.first?.label == "01:00")  // originMs 3_600_000 = 01:00 UTC, 24h
+    }
+
+    @Test func nowLineOffsetSitsAtTheOriginAndVanishesOffPane() throws {
+        let model = try makeModel()
+        #expect(model.nowLineOffset == 0)  // now == origin → left edge
+        model.scrollTime(byPoints: GuideGeometry.pointsPer30Min)  // pan now off the left edge
+        #expect(model.nowLineOffset == nil)
+    }
+
     @Test func perChannelOffsetShiftsPickedProgramme() throws {
         let shifted = try makeModel(offsetB: -30)
         let plain = try makeModel(offsetB: 0)

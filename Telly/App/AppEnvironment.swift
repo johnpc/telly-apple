@@ -58,6 +58,15 @@ final class AppEnvironment {
     /// A fresh VLC-backed playback engine per presented player.
     func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine() }
 
+    /// The guide grid's observable state over the current channel + programme
+    /// stores and wall clock (24-h labels in the device time-zone).
+    func makeGuideGridModel() -> GuideGridModel {
+        GuideGridModel(channelStore: channelStore,
+                       repository: EpgRepository(store: programStore),
+                       now: { Int(Date().timeIntervalSince1970 * 1_000) },
+                       timeZone: .current, is24h: true)
+    }
+
     /// A live-playback orchestrator over a fresh engine and the current visible
     /// channel snapshot, wired to `UserDefaults` for last-channel persistence.
     func makeLivePlaybackModel() -> LivePlaybackModel {

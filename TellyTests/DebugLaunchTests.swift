@@ -67,10 +67,49 @@ struct DebugLaunchTests {
         #expect(!DebugLaunch.forcedInfoOverlay(in: ["Telly"]))
     }
 
-    @Test func fixtureFirstChannelCarriesDemoEpgId() {
+    @Test func fixtureChannelsCarryEpgIds() {
         let pl = DebugLaunch.fixturePlaylist(base: "http://127.0.0.1:8000/")
         #expect(pl.channels[0].tvgID == DebugLaunch.demoEpgId)
-        #expect(pl.channels[1].tvgID == nil)
+        #expect(pl.channels[1].tvgID == DebugLaunch.moviesEpgId)
+        #expect(pl.channels[2].tvgID == "sports.tv")
+    }
+
+    @Test func forcedGuideReadsFlag() {
+        #expect(DebugLaunch.forcedGuide(in: ["Telly", "-tellyGuide"]))
+        #expect(!DebugLaunch.forcedGuide(in: ["Telly"]))
+        #expect(!DebugLaunch.forcedGuide(in: ["Telly", "-tellyOverlay"]))
+    }
+
+    // A realistic epoch (≈2023) so `halfHourFloor` in the device time-zone stays
+    // well-defined regardless of the machine's zone (small values can go negative).
+    private static let realisticNow = 1_700_000_000_000
+
+    @Test func guideEpgDocumentSeedsBackToBackTitledStrips() {
+        let doc = DebugLaunch.guideEpgDocument(nowMs: Self.realisticNow)
+        #expect(doc.programs.count == 8)
+        let news = doc.programs.filter { $0.channelId == DebugLaunch.demoEpgId }
+        #expect(news.map(\.details.title) == ["Morning News", "Midday Report", "Evening News", "Night Desk"])
+        // Contiguous: each programme starts where the previous ended.
+        #expect(zip(news, news.dropFirst()).allSatisfy { $0.endMs == $1.startMs })
+        // "now" falls inside the second (titled) cell of each strip.
+        let nowCell = news.first { $0.startMs <= Self.realisticNow && Self.realisticNow < $0.endMs }
+        #expect(nowCell?.details.title == "Midday Report")
+    }
+
+    @Test func seedGuideEpgWritesProgrammesWhenFlagPresent() throws {
+        let db = try AppDatabase.makeInMemory()
+        let store = ProgramStore(db: db)
+        DebugLaunch.seedGuideEpg(into: store, args: ["Telly", "-tellyGuide"],
+                                 now: { Self.realisticNow })
+        #expect(try store.window(tvgIds: [DebugLaunch.demoEpgId, DebugLaunch.moviesEpgId],
+                                 fromMs: 0, toMs: Self.realisticNow + 20_000_000).count == 8)
+    }
+
+    @Test func seedGuideEpgIsANoOpWithoutTheFlag() throws {
+        let db = try AppDatabase.makeInMemory()
+        let store = ProgramStore(db: db)
+        DebugLaunch.seedGuideEpg(into: store, args: ["Telly"], now: { Self.realisticNow })
+        #expect(try store.channelIds().isEmpty)
     }
 
     @Test func infoFixtureDocumentSeedsNowAndNextOnDemoChannel() {

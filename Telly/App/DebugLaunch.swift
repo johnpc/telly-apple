@@ -14,6 +14,10 @@ enum DebugLaunch {
     /// can seed matching now/next programmes for it.
     static let demoEpgId = "news.tv"
 
+    /// EPG id of the second fixture channel, so the guide seed can bind a second
+    /// titled row (the third fixture channel is left dataless → all-filler row).
+    static let moviesEpgId = "movies.tv"
+
     /// Stream URL to auto-open on launch, if `-tellyAutoplayUrl <url>` was set.
     static func autoplayUrl(in args: [String]) -> String? {
         value(for: "-tellyAutoplayUrl", in: args)
@@ -65,8 +69,8 @@ enum DebugLaunch {
     static func fixturePlaylist(base: String) -> M3uPlaylist {
         M3uPlaylist(epgURL: nil, channels: [
             channel(title: "News HD", group: "Live", file: "news.ts", base: base, tvgID: demoEpgId),
-            channel(title: "Movie Time", group: "VOD", file: "movie.mp4", base: base),
-            channel(title: "Dead Channel", group: "Live", file: "dead.ts", base: base),
+            channel(title: "Movie Time", group: "VOD", file: "movie.mp4", base: base, tvgID: moviesEpgId),
+            channel(title: "Dead Channel", group: "Live", file: "dead.ts", base: base, tvgID: "sports.tv"),
         ])
     }
 

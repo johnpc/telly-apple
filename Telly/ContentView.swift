@@ -3,12 +3,13 @@ import SwiftUI
 /// Root shell. Onboarding-empty until a playlist exists, then the channel list.
 /// Adding a playlist runs the wizard full-screen and reloads on completion.
 /// One codebase for iPhone/iPad/Apple TV; per-platform layout lives inside the
-/// leaf views, never here.
+/// leaf views. DEBUG launch-arg routing lives in `ContentView+Debug`.
 struct ContentView: View {
-    @State private var env = AppEnvironment.makeShared()
-    @State private var adding = false
+    @State var env = AppEnvironment.makeShared()
+    @State var adding = false
     #if DEBUG
-    @State private var liveModel: LivePlaybackModel?
+    @State var liveModel: LivePlaybackModel?
+    @State var guideModel: GuideGridModel?
     #endif
 
     var body: some View {
@@ -19,13 +20,14 @@ struct ContentView: View {
         #endif
     }
 
-    private var mainContent: some View {
+    var mainContent: some View {
         Group {
             if env.playlists.isEmpty {
                 WelcomeView(onAdd: { adding = true })
             } else {
                 ChannelListScreen(channelStore: env.channelStore,
                                   makeEngine: env.makeEngine,
+                                  makeGuideGridModel: env.makeGuideGridModel,
                                   onAdd: { adding = true })
             }
         }
@@ -37,51 +39,6 @@ struct ContentView: View {
         }
         .task { await env.refreshEpgIfDue() }
     }
-
-    #if DEBUG
-    private var debugArgs: [String] { ProcessInfo.processInfo.arguments }
-
-    @ViewBuilder private var debugRoot: some View {
-        if DebugLaunch.liveDemoRequested(in: debugArgs) {
-            liveDemo
-        } else if let url = DebugLaunch.autoplayUrl(in: debugArgs) {
-            PlaybackScreen(streamUrl: url, engine: env.makeEngine())
-        } else {
-            mainContent.task { seedDebugFixtures() }
-        }
-    }
-
-    @ViewBuilder private var liveDemo: some View {
-        if let liveModel {
-            LivePlaybackScreen(model: liveModel)
-        } else {
-            Color.black.ignoresSafeArea().task { prepareLiveDemo() }
-        }
-    }
-
-    private func prepareLiveDemo() {
-        seedDebugFixtures()
-        let model = env.makeLivePlaybackModel()
-        if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
-        seedInfoOverlayIfRequested(model)
-        liveModel = model
-    }
-
-    private func seedInfoOverlayIfRequested(_ model: LivePlaybackModel) {
-        guard DebugLaunch.forcedInfoOverlay(in: debugArgs) else { return }
-        let nowMs = Int(Date().timeIntervalSince1970 * 1_000)
-        try? env.programStore.upsertReplacing(
-            document: DebugLaunch.infoFixtureDocument(nowMs: nowMs), keepDescriptions: false)
-        env.guideEpgStore.refresh()
-        model.debugPresentInfoOverlay()
-    }
-
-    private func seedDebugFixtures() {
-        DebugLaunch.seedIfRequested(into: env.playlistStore, args: debugArgs,
-                                    now: { Int64(Date().timeIntervalSince1970 * 1000) })
-        env.reload()
-    }
-    #endif
 }
 
 #Preview {

@@ -15,9 +15,9 @@ final class GuideGridModel {
 
     private let channelStore: ChannelStore
     private let repository: EpgRepository
-    private let now: () -> Int
-    private let timeZone: TimeZone
-    private let is24h: Bool
+    let now: () -> Int
+    let timeZone: TimeZone
+    let is24h: Bool
     /// Width in points of the scrolling programme pane (excludes the channel column).
     let viewport: CGFloat
 

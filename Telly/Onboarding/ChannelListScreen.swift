@@ -7,6 +7,7 @@ import SwiftUI
 struct ChannelListScreen: View {
     let channelStore: ChannelStore
     let makeEngine: () -> VLCKitPlayerEngine
+    let makeGuideGridModel: () -> GuideGridModel
     let onAdd: () -> Void
     @State private var channels: [ChannelEntity] = []
     @State private var target: PlaybackTarget?
@@ -23,6 +24,11 @@ struct ChannelListScreen: View {
             }
             .navigationTitle("Channels")
             .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    NavigationLink("Guide") {
+                        GuideGridScreen(model: makeGuideGridModel(), makeEngine: makeEngine)
+                    }
+                }
                 ToolbarItem(placement: .primaryAction) {
                     Button("Add", action: onAdd)
                 }
