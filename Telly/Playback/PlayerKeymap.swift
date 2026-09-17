@@ -1,10 +1,10 @@
 import Foundation
 
 /// What OK does at bare fullscreen playback (Android `PlayerOkAction`).
-enum PlayerOkAction {
-    case showInfo
-    case channelsList
-    case nothing
+enum PlayerOkAction: Int, CaseIterable {
+    case showInfo = 0
+    case channelsList = 1
+    case nothing = 2
 
     /// The command OK emits, or `nil` when the key is unbound.
     var command: PlaybackCommand? {
@@ -17,10 +17,10 @@ enum PlayerOkAction {
 }
 
 /// What UP/DOWN do at bare fullscreen playback (Android `PlayerUpDownAction`).
-enum PlayerUpDownAction {
-    case showInfo
-    case switchChannels
-    case nothing
+enum PlayerUpDownAction: Int, CaseIterable {
+    case showInfo = 0
+    case switchChannels = 1
+    case nothing = 2
 
     /// UP zaps forward (+1), DOWN back (-1); `nil` = the key does nothing.
     func command(_ delta: Int) -> PlaybackCommand? {
@@ -33,9 +33,9 @@ enum PlayerUpDownAction {
 }
 
 /// What LEFT/RIGHT do at bare fullscreen playback (no-ops by default).
-enum PlayerLeftRightAction {
-    case nothing
-    case switchChannels
+enum PlayerLeftRightAction: Int, CaseIterable {
+    case nothing = 0
+    case switchChannels = 1
 
     /// RIGHT zaps forward (+1), LEFT back (-1); `nil` = the key does nothing.
     func command(_ delta: Int) -> PlaybackCommand? {
@@ -44,9 +44,9 @@ enum PlayerLeftRightAction {
 }
 
 /// What a held OK does (MENU stays the quick-menu key). Android `PlayerLongOkAction`.
-enum PlayerLongOkAction {
-    case quickMenu
-    case channelsList
+enum PlayerLongOkAction: Int, CaseIterable {
+    case quickMenu = 0
+    case channelsList = 1
 
     /// The command long-OK emits (always bound).
     var command: PlaybackCommand {
@@ -54,11 +54,13 @@ enum PlayerLongOkAction {
     }
 }
 
-/// The remappable fullscreen-playback keys (Android `PlayerKeymap`). Only the
-/// device-verified defaults are ported; Android's `from(settings:)` constructor
-/// and the `KeymapChoice` / `keymapChoice` label plumbing are omitted until the
-/// settings slice lands (they would be dead code here). No tvOS-specific variant
-/// yet — that arrives in a later slice.
+/// The remappable fullscreen-playback keys (Android `PlayerKeymap`). Each action
+/// enum is an `Int`-backed `CaseIterable` choice (see `PlayerKeymapChoices.swift`
+/// for the display titles) and derives from stored raw values via
+/// `PlayerKeymap.from(okRaw:upDownRaw:leftRightRaw:longOkRaw:)`
+/// (`PlayerKeymap+Derivation.swift`). The `from(settings:)` adapter that reads
+/// those raws out of `SettingsStore` lands with the settings slice. No
+/// tvOS-specific variant yet — that arrives in a later slice.
 struct PlayerKeymap {
     var ok: PlayerOkAction = .showInfo
     var upDown: PlayerUpDownAction = .showInfo
