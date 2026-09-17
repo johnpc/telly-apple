@@ -535,7 +535,7 @@
 		FB6FC45374EB5D59A85C1060 /* CompressedXmltvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCC66C6AF1F6B3B9B556A04 /* CompressedXmltvTests.swift */; };
 		FBF39CF56039195F722A0029 /* ContentView+HistoryDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59CFAB43CDEE56FCE7DA99 /* ContentView+HistoryDebug.swift */; };
 		FC1B9378CFDD73025A647ABA /* HttpPlaylistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */; };
-		FC8CE9AF5AE21A881EE82827 /* VLCKitSPM in Frameworks */ = {isa = PBXBuildFile; productRef = B890B0A2D056106897E395D0 /* VLCKitSPM */; };
+		FC8CE9AF5AE21A881EE82827 /* VLCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2D7EBC7AF70B1841D1C544CD /* VLCKit */; };
 		FCB422095E97FC6637C95B3C /* ChannelReorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0DAB58022ACAFBD92CFFD /* ChannelReorderTests.swift */; };
 		FCF5FE1B8E7D162E5E254010 /* TrackPickerRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CED40EFF78E7A5EEBA6064 /* TrackPickerRows.swift */; };
 		FD6847F1FDF98B5C4E55274A /* ChannelEditModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A802ABF81F23F61C02AE3 /* ChannelEditModelTests.swift */; };
@@ -1113,7 +1113,7 @@
 			files = (
 				1EE319E6C895BDA1CF4F21E6 /* SWCompression in Frameworks */,
 				7A25751B5AEC40A697291B37 /* GRDB in Frameworks */,
-				FC8CE9AF5AE21A881EE82827 /* VLCKitSPM in Frameworks */,
+				FC8CE9AF5AE21A881EE82827 /* VLCKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1905,7 +1905,7 @@
 			packageProductDependencies = (
 				A1372D91A16ECE3B5EA3AB16 /* SWCompression */,
 				26FF1BEB0FDDB1559EB47C2A /* GRDB */,
-				B890B0A2D056106897E395D0 /* VLCKitSPM */,
+				2D7EBC7AF70B1841D1C544CD /* VLCKit */,
 			);
 			productName = Telly;
 			productReference = 2C73DE1BC748EB029A1DAAEE /* Telly.app */;
@@ -1968,7 +1968,7 @@
 			packageReferences = (
 				80DDB9584C6BAA971A7747F7 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				704F026E7219B1C1FD1085B2 /* XCRemoteSwiftPackageReference "SWCompression" */,
-				3DA72090F591B272C9AFC142 /* XCRemoteSwiftPackageReference "vlckit-spm" */,
+				5E0D7625016B9090E8469C09 /* XCRemoteSwiftPackageReference "VLCKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0836AFCC054302597B44C075 /* Products */;
@@ -2872,12 +2872,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3DA72090F591B272C9AFC142 /* XCRemoteSwiftPackageReference "vlckit-spm" */ = {
+		5E0D7625016B9090E8469C09 /* XCRemoteSwiftPackageReference "VLCKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tylerjonesio/vlckit-spm";
+			repositoryURL = "https://code.videolan.org/videolan/VLCKit.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.6.0;
+				kind = exactVersion;
+				version = "4.0.0-a24";
 			};
 		};
 		704F026E7219B1C1FD1085B2 /* XCRemoteSwiftPackageReference "SWCompression" */ = {
@@ -2904,6 +2904,11 @@
 			package = 80DDB9584C6BAA971A7747F7 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
 		};
+		2D7EBC7AF70B1841D1C544CD /* VLCKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5E0D7625016B9090E8469C09 /* XCRemoteSwiftPackageReference "VLCKit" */;
+			productName = VLCKit;
+		};
 		6938A520720D3E3EB82CC0D8 /* SWCompression */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 704F026E7219B1C1FD1085B2 /* XCRemoteSwiftPackageReference "SWCompression" */;
@@ -2913,11 +2918,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 704F026E7219B1C1FD1085B2 /* XCRemoteSwiftPackageReference "SWCompression" */;
 			productName = SWCompression;
-		};
-		B890B0A2D056106897E395D0 /* VLCKitSPM */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3DA72090F591B272C9AFC142 /* XCRemoteSwiftPackageReference "vlckit-spm" */;
-			productName = VLCKitSPM;
 		};
 		D529D436158D9F927352C874 /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;

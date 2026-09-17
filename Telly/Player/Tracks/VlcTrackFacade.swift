@@ -1,23 +1,20 @@
 import Foundation
-import VLCKitSPM
+import VLCKit
 
 /// Device glue conforming ``TrackFacade`` to a live `VLCMediaPlayer`: reads the
-/// parallel track arrays into the pure ``VlcTrackReader`` and translates
-/// selections back onto VLCKit's readwrite index/delay properties. The player is
-/// weak — it is owned by ``VLCKitPlayerEngine``. Untestable ObjC bridging by
-/// nature; all decision logic lives in ``VlcTrackReader`` / ``TrackPickerRows``.
+/// VLCKit 4 object-track lists (`audioTracks`/`textTracks`) into plain
+/// ``VlcTrackInfo`` values for the pure ``VlcTrackReader`` and translates
+/// selections back via each track's `isSelectedExclusively`. Track identity is a
+/// string `trackId` (was an int index in 3.x). The player is weak — it is owned
+/// by ``VLCKitPlayerEngine``. Untestable ObjC bridging by nature; all decision
+/// logic lives in ``VlcTrackReader`` / ``TrackPickerRows``.
 final class VlcTrackFacade: TrackFacade {
     weak var player: VLCMediaPlayer?
 
     var snapshot: TrackSnapshot {
         guard let player else { return TrackSnapshot() }
-        return VlcTrackReader.snapshot(
-            audioNames: strings(player.audioTrackNames as? [NSString]),
-            audioIndexes: ints(player.audioTrackIndexes as? [NSNumber]),
-            currentAudio: Int(player.currentAudioTrackIndex),
-            subNames: strings(player.videoSubTitlesNames as? [NSString]),
-            subIndexes: ints(player.videoSubTitlesIndexes as? [NSNumber]),
-            currentSub: Int(player.currentVideoSubTitleIndex))
+        return VlcTrackReader.snapshot(audio: infos(player.audioTracks),
+                                       text: infos(player.textTracks))
     }
 
     /// VLCKit reports the delay in microseconds; the domain works in ms.
@@ -26,20 +23,23 @@ final class VlcTrackFacade: TrackFacade {
     func selectVideo(_ id: String?) {}
 
     func selectAudio(_ id: String) {
-        if let index = Int32(id) { player?.currentAudioTrackIndex = index }
+        track(id, in: player?.audioTracks)?.isSelectedExclusively = true
     }
 
     func selectText(_ id: String?) {
-        player?.currentVideoSubTitleIndex = id.flatMap(Int32.init) ?? -1
+        guard let id, let track = track(id, in: player?.textTracks) else {
+            player?.deselectAllTextTracks(); return
+        }
+        track.isSelectedExclusively = true
     }
 
     func setAudioOffsetMs(_ ms: Int) { player?.currentAudioPlaybackDelay = ms * 1_000 }
 
-    private func ints(_ array: [NSNumber]?) -> [Int] {
-        (array ?? []).map(\.intValue)
+    private func track(_ id: String, in tracks: [VLCMediaPlayer.Track]?) -> VLCMediaPlayer.Track? {
+        (tracks ?? []).first { $0.trackId == id }
     }
 
-    private func strings(_ array: [NSString]?) -> [String] {
-        (array ?? []).map { $0 as String }
+    private func infos(_ tracks: [VLCMediaPlayer.Track]) -> [VlcTrackInfo] {
+        tracks.map { VlcTrackInfo(id: $0.trackId, name: $0.trackName, isSelected: $0.isSelected) }
     }
 }

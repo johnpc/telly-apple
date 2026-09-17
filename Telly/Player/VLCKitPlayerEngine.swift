@@ -1,6 +1,6 @@
 import Foundation
 import UIKit
-import VLCKitSPM
+import VLCKit
 
 /// The real `PlayerEngine` — a thin adapter over `VLCMediaPlayer`. All decision
 /// logic lives in the tested ``PlaybackReducer``; this file only translates VLC
@@ -69,15 +69,15 @@ final class VLCKitPlayerEngine: PlayerEngine {
     /// ``VlcPlaybackState`` mirror — the only place that touches VLCKit types.
     /// All decision logic lives in the pure ``PlaybackReducer/onVlcState(_:)``.
     private static func mapped(_ state: VLCMediaPlayerState) -> VlcPlaybackState {
+        // VLCKit 4 collapsed the enum: `.buffering`/`.esAdded`/`.ended` are gone
+        // (our ``VlcPlaybackState`` mirror keeps them for the reducer regardless).
         switch state {
         case .opening: return .opening
-        case .buffering: return .buffering
-        case .esAdded: return .esAdded
         case .playing: return .playing
         case .paused: return .paused
-        case .stopped: return .stopped
-        case .ended: return .ended
+        case .stopped, .stopping: return .stopped
         case .error: return .error
+        case .nothingSpecial: return .buffering
         @unknown default: return .buffering
         }
     }
