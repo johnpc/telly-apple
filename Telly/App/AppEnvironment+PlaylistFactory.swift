@@ -31,6 +31,15 @@ extension AppEnvironment {
         reload()
     }
 
+    /// The settings/playlist/EPG-source backup manager over the environment's
+    /// real stores and the settings backing store; Slice 6's export/import UI
+    /// drives it. Parental-lock state is never included (see ``SettingsSnapshot``).
+    func makeSettingsBackupManager() -> SettingsBackupManager {
+        SettingsBackupManager(playlistStore: playlistStore, epgSourceStore: epgSourceStore,
+                              settings: settings.backing,
+                              now: { Int64(Date().timeIntervalSince1970 * 1_000) })
+    }
+
     /// The single group-filter wiring both the guide feed and the channel list
     /// route through (built once in `init` and shared) plus the live snapshot:
     /// resolves each channel's playlist URL, then drops channels in groups the
