@@ -8,6 +8,16 @@ import Foundation
 enum EpgOffsets {
     private static let minuteMs = 60_000
 
+    /// The `[tvgId: offsetMs]` map for a channel list: reads each channel's EPG
+    /// id and its "EPG time offset" (Channel options). The single idiom the guide
+    /// now/next feed and the grid model both build their offset map from — kept
+    /// here so it lives in exactly one place.
+    static func map(for channels: [ChannelEntity]) -> [String: Int] {
+        ofMinutes(channels.map {
+            TvgOffset(tvgId: $0.epgId, epgOffsetMinutes: $0.overrides.epgOffsetMinutes)
+        })
+    }
+
     /// tvgId -> offset millis; first channel wins a shared tvg-id.
     static func ofMinutes(_ offsets: [TvgOffset]) -> [String: Int] {
         var out: [String: Int] = [:]

@@ -27,9 +27,7 @@ final class GuideEpgStore {
     func refresh() {
         let channels = (try? channelStore.visibleChannels()) ?? []
         let epgIds = channels.compactMap(\.epgId)
-        let offsets = EpgOffsets.ofMinutes(channels.map {
-            TvgOffset(tvgId: $0.epgId, epgOffsetMinutes: $0.overrides.epgOffsetMinutes)
-        })
+        let offsets = EpgOffsets.map(for: channels)
         nowNextByChannel = (try? repository.nowNext(
             tvgIds: epgIds, atMs: now(), offsets: offsets)) ?? [:]
     }
