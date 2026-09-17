@@ -11,6 +11,16 @@ struct ChannelPanelGroupsColumnView: View {
     var horizontal = false
 
     var body: some View {
+        content
+        #if !os(tvOS)
+            // The top-leading groups sit under the shared circular ``PlaybackCloseButton``
+            // (only present off tvOS); inset the leading edge so the ✕ never overlaps the
+            // first group label, in both the compact strip and the regular side column.
+            .padding(.leading, 44)
+        #endif
+    }
+
+    @ViewBuilder private var content: some View {
         if horizontal {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
