@@ -35,6 +35,7 @@ extension ContentView {
     }
 
     func prepareLiveDemo() {
+        applyKeymapOverrideIfRequested()
         seedDebugFixtures()
         let model = env.makeLivePlaybackModel()
         if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
@@ -43,6 +44,7 @@ extension ContentView {
         if let kind = DebugLaunch.forcedTrackPicker(in: debugArgs) { model.debugPresentTrackPicker(kind) }
         seedInfoOverlayIfRequested(model)
         seedPanelOverlayIfRequested(model)
+        deliverKeymapProofKeyIfNeeded(model)
         liveModel = model
     }
 

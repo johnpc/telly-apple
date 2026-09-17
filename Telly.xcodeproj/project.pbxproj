@@ -58,6 +58,7 @@
 		2D0CF1B8BB79FE37480115CD /* XmltvTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC541AF5A8B8B8429031427 /* XmltvTimestamp.swift */; };
 		2D22CFAFC01105F5B12696A0 /* ChannelPanelRowsColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45A43BFF66B0A31B6F58C2D /* ChannelPanelRowsColumnView.swift */; };
 		2D612FCFA191FBA5A841701D /* ProgramRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE7C444E05D9710962B3C0B /* ProgramRecord.swift */; };
+		2DAAF472ACABEA73D4B6E04A /* ContentView+KeymapDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DEB9AD942DAD153C2225E9 /* ContentView+KeymapDebug.swift */; };
 		2DB94E5C3639BBE59EA67920 /* XmltvTimestampTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */; };
 		2EF2738677D8D0B434C4706B /* NoTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4B7FD661163037CE53FB6 /* NoTracks.swift */; };
 		3054E7B44EB84593A61FE17E /* GuideGridModel+Viewport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF35608EA8AEE6476488BA1D /* GuideGridModel+Viewport.swift */; };
@@ -485,6 +486,7 @@
 		B10DA07C44970DE4F8B58D77 /* MultiviewSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewSession.swift; sourceTree = "<group>"; };
 		B14F51AE186FF1796831BCA2 /* PlaybackKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackKey.swift; sourceTree = "<group>"; };
 		B16E837F882CD1A331F032FF /* TouchKeyMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchKeyMapTests.swift; sourceTree = "<group>"; };
+		B1DEB9AD942DAD153C2225E9 /* ContentView+KeymapDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+KeymapDebug.swift"; sourceTree = "<group>"; };
 		B26A802ABF81F23F61C02AE3 /* ChannelEditModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditModelTests.swift; sourceTree = "<group>"; };
 		B60695790FA29713F6F4EFD9 /* PlaybackReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackReducerTests.swift; sourceTree = "<group>"; };
 		B6220890A72743706CAABA39 /* GuideGridModelFocusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideGridModelFocusTests.swift; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 				A8B22847E90EAFA3E38A3D74 /* ContentView.swift */,
 				9105F63ED96290035385DB36 /* ContentView+Debug.swift */,
 				7E59CFAB43CDEE56FCE7DA99 /* ContentView+HistoryDebug.swift */,
+				B1DEB9AD942DAD153C2225E9 /* ContentView+KeymapDebug.swift */,
 				D2A7EE5F415CD9AFEC6F0A35 /* ContentView+MultiviewDebug.swift */,
 				EB1976ACB9C3233BD3A7E9AB /* TellyApp.swift */,
 			);
@@ -1227,6 +1230,7 @@
 				B9CABC6DF3C487006321F321 /* CompressedXmltv.swift in Sources */,
 				90C4A576858614396767B029 /* ContentView+Debug.swift in Sources */,
 				FBF39CF56039195F722A0029 /* ContentView+HistoryDebug.swift in Sources */,
+				2DAAF472ACABEA73D4B6E04A /* ContentView+KeymapDebug.swift in Sources */,
 				5336630F3162D54E5373F0E4 /* ContentView+MultiviewDebug.swift in Sources */,
 				FD886AE63B3A5190A4E5DF1A /* ContentView.swift in Sources */,
 				6ABECB2EEBB6BB49C98E31DD /* CoreSchema.swift in Sources */,

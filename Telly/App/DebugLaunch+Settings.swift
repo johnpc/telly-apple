@@ -14,5 +14,15 @@ extension DebugLaunch {
     static func clock24hOverride(in args: [String]) -> Bool? {
         value(for: "-tellyClock24h", in: args).map { $0 == "true" }
     }
+
+    /// Optional Up/Down keymap override for the remap proof: `-tellyKeymapUpDown
+    /// switch` remaps the slot to switch channels (its `PlayerUpDownAction` raw
+    /// value), so pressing UP zaps instead of showing info. Any other value or an
+    /// absent flag leaves the stored setting untouched (nil).
+    static func keymapUpDownOverride(in args: [String]) -> Int? {
+        value(for: "-tellyKeymapUpDown", in: args).flatMap {
+            $0 == "switch" ? PlayerUpDownAction.switchChannels.rawValue : nil
+        }
+    }
 }
 #endif

@@ -25,6 +25,14 @@ struct DebugLaunchTests {
         #expect(DebugLaunch.clock24hOverride(in: ["Telly"]) == nil)
     }
 
+    @Test func keymapUpDownOverrideMapsSwitchToSwitchChannels() {
+        #expect(DebugLaunch.keymapUpDownOverride(in: ["Telly", "-tellyKeymapUpDown", "switch"])
+                == PlayerUpDownAction.switchChannels.rawValue)
+        #expect(DebugLaunch.keymapUpDownOverride(in: ["Telly", "-tellyKeymapUpDown", "showInfo"]) == nil)
+        #expect(DebugLaunch.keymapUpDownOverride(in: ["Telly", "-tellyKeymapUpDown"]) == nil)
+        #expect(DebugLaunch.keymapUpDownOverride(in: ["Telly"]) == nil)
+    }
+
     @Test func autoplayUrlIsNilWhenFlagHasNoValue() {
         #expect(DebugLaunch.autoplayUrl(in: ["Telly", "-tellyAutoplayUrl"]) == nil)
     }

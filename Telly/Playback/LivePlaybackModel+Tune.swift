@@ -73,5 +73,15 @@ extension LivePlaybackModel {
         activePicker = kind
         visibility.set(.pushed(back: .quickBar))
     }
+
+    /// DEBUG screenshot hook: deliver a real remote `key` through ``onKey(_:)`` so
+    /// the resolved command honours the model's captured ``keymap``, then pin the
+    /// resulting overlay (frame held, no deadline) so the tick loop can't hide it
+    /// before capture — the keymap-remap proof (`-tellyKeymapUpDown switch`).
+    func debugApplyKey(_ key: PlaybackKey) {
+        debugHoldFrame = true
+        onKey(key)
+        visibility.set(visibility.overlay)
+    }
 }
 #endif
