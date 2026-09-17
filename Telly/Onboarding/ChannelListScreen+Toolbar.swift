@@ -24,7 +24,8 @@ extension ChannelListScreen {
         }
         ToolbarItem(placement: .primaryAction) {
             NavigationLink {
-                VodBrowseScreen(model: makeVodBrowseModel())
+                VodBrowseScreen(model: makeVodBrowseModel(),
+                                makePlaybackModel: makeVodPlaybackModel)
             } label: {
                 Label("Movies", systemImage: "film")
             }

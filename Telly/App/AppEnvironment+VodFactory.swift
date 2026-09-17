@@ -20,4 +20,14 @@ extension AppEnvironment {
         VodPositionStore(db: channelStore.db, remember: { true },
                          clock: { [clock] in Int64(clock()) })
     }
+
+    /// A VOD playback model over a fresh VLCKit engine and the shared-handle
+    /// stores; `onExit` dismisses the presenting cover and reloads the browser.
+    /// Does NOT auto-start — the screen calls `start` in `.task`.
+    func makeVodPlaybackModel(itemKey: String, onExit: @escaping () -> Void) -> VodPlaybackModel {
+        VodPlaybackModel(engine: VLCKitPlayerEngine(),
+                         itemStore: VodItemStore(db: channelStore.db),
+                         positionStore: makeVodPositionStore(),
+                         itemKey: itemKey, now: clock, onExit: onExit)
+    }
 }

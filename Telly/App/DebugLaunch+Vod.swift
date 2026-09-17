@@ -14,9 +14,29 @@ extension DebugLaunch {
     /// 5–95% resume band and its card shows a Continue-watching bar.
     static let vodResumeKey = "\(vodBase)heist.mp4|The Heist"
 
+    /// The transport-proof movie's key ("Night Chase"): no stored position, so
+    /// the playback demo starts playing straight into the transport overlay.
+    static var vodPlaybackKey: String { vodFixture()[1].itemKey }
+    /// Canned position/duration injected into ``DebugVodEngine`` so the transport
+    /// renders 42:00 of a 1:58:00 movie (≈36%) without decoding anything.
+    static var vodPlaybackProgress: VodProgress {
+        VodProgress(positionMs: 42 * 60_000, durationMs: 118 * 60_000)
+    }
+
     /// Whether to route straight to the Movies browser — set by `-tellyVodBrowse`.
     static func vodBrowseRequested(in args: [String]) -> Bool {
         args.contains("-tellyVodBrowse")
+    }
+
+    /// Whether to route straight to VOD playback (`-tellyVodPlayback`).
+    static func vodPlaybackRequested(in args: [String]) -> Bool {
+        args.contains("-tellyVodPlayback")
+    }
+
+    /// Whether the playback demo should open on the Resume/Start-over prompt
+    /// (`-tellyVodResume`) instead of the playing transport overlay.
+    static func vodResumePromptRequested(in args: [String]) -> Bool {
+        args.contains("-tellyVodResume")
     }
 
     /// Seeds the fixture movies + one resume position when the flag is present.

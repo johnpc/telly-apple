@@ -7,9 +7,9 @@ import Foundation
 /// mapper dispatches LEFT/RIGHT to ``seekStepMs`` and RW/FF to ``jumpStepMs``.
 extension VodPlaybackModel {
     /// LEFT/RIGHT seek step.
-    static var seekStepMs: Int { 10_000 }
+    nonisolated static var seekStepMs: Int { 10_000 }
     /// RW/FF jump step.
-    static var jumpStepMs: Int { 30_000 }
+    nonisolated static var jumpStepMs: Int { 30_000 }
 
     /// OK: toggle pause; a fresh pause persists the position immediately.
     func togglePause() {

@@ -18,6 +18,7 @@ struct ContentView: View {
     @State var playlistsModel: PlaylistsSettingsModel?
     @State var groupsSeeded = false
     @State var vodModel: VodBrowseModel?
+    @State var vodPlaybackModel: VodPlaybackModel?
     #endif
 
     var body: some View {
@@ -49,6 +50,7 @@ struct ContentView: View {
                                   makeBackupModel: env.makeSettingsBackupModel,
                                   makePlaylistsSettingsModel: env.makePlaylistsSettingsModel,
                                   makeVodBrowseModel: env.makeVodBrowseModel,
+                                  makeVodPlaybackModel: env.makeVodPlaybackModel,
                                   settings: env.settings,
                                   parental: env.parentalStore,
                                   onAdd: { adding = true })

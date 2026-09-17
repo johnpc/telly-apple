@@ -25,6 +25,7 @@ extension ContentView {
             groupsDebug
         } else if DebugLaunch.vodBrowseRequested(in: debugArgs) {
             vodBrowseDemo
+        } else if DebugLaunch.vodPlaybackRequested(in: debugArgs) { vodPlaybackDemo
         } else if DebugLaunch.parentalChallengeRequested(in: debugArgs) {
             parentalChallengeDemo
         } else if DebugLaunch.catchupTransportRequested(in: debugArgs) {
