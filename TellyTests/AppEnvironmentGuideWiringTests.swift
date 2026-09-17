@@ -23,4 +23,12 @@ struct AppEnvironmentGuideWiringTests {
         #expect(model.rows.count == 1)
         #expect(model.rows[0].channel.epgId == "a")
     }
+
+    @Test func makeGuideGridModelReflectsClockSetting() throws {
+        let db = try AppDatabase.makeInMemory()
+        let store = SettingsStore(backing: InMemoryKeyValueStore())
+        store.use24hClock = false
+        let env = AppEnvironment(database: db, settings: store)
+        #expect(env.makeGuideGridModel().is24h == false)
+    }
 }

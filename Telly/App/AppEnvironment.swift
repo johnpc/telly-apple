@@ -3,6 +3,7 @@ import Foundation
 /// Composition root — the single place logic meets the wall clock, the file
 /// system and the network (the Apple mirror of the Android `ServiceLocator`).
 /// Views observe it for the "do we have a playlist yet?" routing decision.
+/// The consumer factories live in `AppEnvironment+Factories`.
 @MainActor
 @Observable
 final class AppEnvironment {
@@ -12,9 +13,11 @@ final class AppEnvironment {
     let guideEpgStore: GuideEpgStore
     /// The single, stable channel-list state observed by `ChannelListScreen`.
     let channelListModel: ChannelListModel
+    /// Injected scalar preferences (24-h clock, panel timeout, EPG cadence).
+    let settings: SettingsStore
     private(set) var playlists: [PlaylistEntity] = []
 
-    init(database: AppDatabase) {
+    init(database: AppDatabase, settings: SettingsStore? = nil) {
         playlistStore = PlaylistStore(db: database)
         channelStore = ChannelStore(db: database)
         programStore = ProgramStore(db: database)
@@ -22,6 +25,7 @@ final class AppEnvironment {
             channelStore: channelStore, repository: EpgRepository(store: programStore),
             now: { Int(Date().timeIntervalSince1970 * 1_000) })
         channelListModel = ChannelListModel(store: channelStore)
+        self.settings = settings ?? .standard
         reload()
     }
 
@@ -45,22 +49,6 @@ final class AppEnvironment {
                          now: { Int64(Date().timeIntervalSince1970 * 1000) })
     }
 
-    /// The EPG refresh orchestrator over the real downloader and wall clock.
-    func makeEpgRefresher() -> EpgRefresher {
-        EpgRefresher(playlistStore: playlistStore, programStore: programStore,
-                     download: { try await EpgDownloader().download(epgUrl: $0) },
-                     now: { Int(Date().timeIntervalSince1970 * 1_000) })
-    }
-
-    /// Launch hook: refresh any stale guide data, then republish the feed.
-    func refreshEpgIfDue() async {
-        try? await makeEpgRefresher().refreshDue()
-        guideEpgStore.refresh()
-    }
-
-    /// A fresh VLC-backed playback engine per presented player.
-    func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine() }
-
     /// The Manage-Favorites (group nil) / Reorder-in-group editor state.
     func makeChannelEditModel(group: String? = nil) -> ChannelEditModel {
         ChannelEditModel(store: channelStore, group: group)
@@ -68,29 +56,4 @@ final class AppEnvironment {
 
     /// The bulk Manage-Visibility editor state.
     func makeVisibilityEditModel() -> VisibilityEditModel { VisibilityEditModel(store: channelStore) }
-
-    /// The guide grid's observable state over the current channel + programme
-    /// stores and wall clock (24-h labels in the device time-zone).
-    func makeGuideGridModel() -> GuideGridModel {
-        GuideGridModel(channelStore: channelStore,
-                       repository: EpgRepository(store: programStore),
-                       now: { Int(Date().timeIntervalSince1970 * 1_000) },
-                       timeZone: .current, is24h: true)
-    }
-
-    /// A live-playback orchestrator over a fresh engine and the current visible
-    /// channel snapshot, wired to `UserDefaults` for last-channel persistence.
-    func makeLivePlaybackModel() -> LivePlaybackModel {
-        let key = "lastChannelId"
-        let defaults = UserDefaults.standard
-        return LivePlaybackModel(
-            engine: makeEngine(),
-            channels: (try? channelStore.visibleChannels()) ?? [],
-            makeEngine: { self.makeEngine() },
-            now: { Int(Date().timeIntervalSince1970 * 1_000) },
-            persistLastChannel: { defaults.set($0, forKey: key) },
-            loadLastChannel: { defaults.object(forKey: key) as? Int },
-            onExitToGuide: {},
-            nowNext: { [guideEpgStore] channel in guideEpgStore.nowNext(forEpgId: channel.epgId) })
-    }
 }
