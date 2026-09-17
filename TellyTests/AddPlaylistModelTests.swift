@@ -79,7 +79,9 @@ struct AddPlaylistModelTests {
         #expect(stored[0].name == "host.tv")
         #expect(stored[0].epgUrl == "http://epg.example/guide.xml")
         #expect(stored[0].lastUpdatedMs == 42)
-        #expect(try channels.channels(playlistId: Int(stored[0].id ?? 0)).count == 2)
+        // b.mp4 is now classified as VOD (the import partition), so only the
+        // live a.ts lands in channels — VOD no longer pollutes the guide.
+        #expect(try channels.channels(playlistId: Int(stored[0].id ?? 0)).count == 1)
     }
 
     @Test func blankEpgUrlClearsIt() async throws {

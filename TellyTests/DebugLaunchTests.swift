@@ -240,9 +240,11 @@ struct DebugLaunchTests {
         let (store, channels) = try fixtureChannels()
         DebugLaunch.seedHistoryIfRequested(into: store, channels: channels,
                                            args: ["Telly", "-tellyHistorySeed"], now: 1_000_000)
+        // The fixture's movie.mp4 now partitions into vod_items, so only the two
+        // live channels (News HD, Dead Channel) are visible and recorded.
         let keys = channels.prefix(3).map(ChannelImporter.keyOf)
         #expect(try store.recent().map(\.channelKey) == keys)
-        #expect(try store.recent().map(\.watchedAtMs) == [1_000_000, 940_000, 880_000])
+        #expect(try store.recent().map(\.watchedAtMs) == [1_000_000, 940_000])
     }
 
     @Test func seedHistoryIsANoOpWithoutTheFlag() throws {
@@ -257,7 +259,8 @@ struct DebugLaunchTests {
         let args = ["Telly", "-tellyHistorySeed"]
         DebugLaunch.seedHistoryIfRequested(into: store, channels: channels, args: args, now: 1_000_000)
         DebugLaunch.seedHistoryIfRequested(into: store, channels: channels, args: args, now: 1_000_000)
-        #expect(try store.recent().count == 3)
+        // Two visible live channels after movie.mp4 partitions into vod_items.
+        #expect(try store.recent().count == 2)
     }
 
     @Test func infoFixtureDocumentSeedsNowAndNextOnDemoChannel() {

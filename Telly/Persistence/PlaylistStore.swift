@@ -16,7 +16,8 @@ struct PlaylistStore {
     /// channels while carrying user flags/overrides forward. Returns the id.
     @discardableResult
     func add(sourceUrl: String, playlist: M3uPlaylist, name: String?, nowMs: Int64) throws -> Int64 {
-        try db.queue.write { db in
+        let (vod, live) = VodImporter.split(playlist.channels)
+        return try db.queue.write { db in
             let existing = try PlaylistEntity.filter(Column("url") == sourceUrl).fetchOne(db)
             let previous = try existing.map {
                 try ChannelRecord.filter(Column("playlistId") == $0.id).fetchAll(db).map(\.entity)
@@ -29,12 +30,23 @@ struct PlaylistStore {
             let playlistId = row.id ?? 0
             try ChannelRecord.filter(Column("playlistId") == playlistId).deleteAll(db)
             let imported = ChannelImporter.importChannels(
-                playlistId: Int(playlistId), parsed: playlist.channels, previous: previous)
+                playlistId: Int(playlistId), parsed: live, previous: previous)
             for channel in imported {
                 var record = ChannelRecord(channel)
                 try record.insert(db)
             }
+            try Self.replaceVod(db, playlistId: playlistId, parsed: vod)
             return playlistId
+        }
+    }
+
+    /// Replaces `playlistId`'s VOD rows in the SAME transaction as the live
+    /// import, so movies never reach the guide (the pollution fix).
+    private static func replaceVod(_ db: Database, playlistId: Int64, parsed: [M3uChannel]) throws {
+        try VodItemRecord.filter(Column("playlistId") == playlistId).deleteAll(db)
+        for item in VodImporter.items(playlistId: Int(playlistId), parsed: parsed) {
+            var record = VodItemRecord(item)
+            try record.insert(db)
         }
     }
 

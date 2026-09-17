@@ -13,4 +13,11 @@ enum VodClassifier {
         let ext = beforeQuery[beforeQuery.index(after: dot)...].lowercased()
         return vodExtensions.contains(ext)
     }
+
+    /// Refresh-stable resume identity for a movie — deliberately `streamUrl|name`
+    /// (NOT `ChannelImporter.keyOf`): VOD entries rarely carry a meaningful
+    /// tvg-id, so a tvg-id-first key would collide and lose stored positions.
+    static func itemKey(streamUrl: String, name: String) -> String {
+        "\(streamUrl)|\(name)"
+    }
 }

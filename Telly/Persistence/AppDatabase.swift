@@ -43,6 +43,10 @@ struct AppDatabase {
             try CustomGroupSchema.createCustomGroups(db)
             try CustomGroupSchema.createCustomGroupMembers(db)
         }
+        migrator.registerMigration("v6-vod") { db in
+            try VodSchema.createVodItems(db)
+            try VodSchema.createVodPositions(db)
+        }
         return migrator
     }
 }
