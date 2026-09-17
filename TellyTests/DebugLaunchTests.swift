@@ -120,6 +120,18 @@ struct DebugLaunchTests {
         #expect(snapshot.selectedTextId == nil)
     }
 
+    @Test func parentalChallengeRequestedReadsFlag() {
+        #expect(DebugLaunch.parentalChallengeRequested(in: ["Telly", "-tellyParentalChallenge"]))
+        #expect(!DebugLaunch.parentalChallengeRequested(in: ["Telly"]))
+        #expect(!DebugLaunch.parentalChallengeRequested(in: ["Telly", "-tellyOverlay"]))
+    }
+
+    @Test func seedParentalPinReadsFlagValue() {
+        #expect(DebugLaunch.seedParentalPin(in: ["Telly", "-tellyParentalPin", "1234"]) == "1234")
+        #expect(DebugLaunch.seedParentalPin(in: ["Telly", "-tellyParentalPin"]) == nil)
+        #expect(DebugLaunch.seedParentalPin(in: ["Telly"]) == nil)
+    }
+
     @Test func forcedGuideReadsFlag() {
         #expect(DebugLaunch.forcedGuide(in: ["Telly", "-tellyGuide"]))
         #expect(!DebugLaunch.forcedGuide(in: ["Telly"]))

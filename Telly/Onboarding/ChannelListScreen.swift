@@ -14,6 +14,7 @@ struct ChannelListScreen: View {
     let makeChannelEditModel: (String?) -> ChannelEditModel
     let makeVisibilityEditModel: () -> VisibilityEditModel
     let settings: SettingsStore
+    let parental: ParentalStore
     let onAdd: () -> Void
     @State private var target: PlaybackTarget?
     @State var showSettings = false
@@ -24,6 +25,7 @@ struct ChannelListScreen: View {
          makeChannelEditModel: @escaping (String?) -> ChannelEditModel,
          makeVisibilityEditModel: @escaping () -> VisibilityEditModel,
          settings: SettingsStore,
+         parental: ParentalStore,
          onAdd: @escaping () -> Void) {
         _model = State(initialValue: model)
         self.makeEngine = makeEngine
@@ -32,6 +34,7 @@ struct ChannelListScreen: View {
         self.makeChannelEditModel = makeChannelEditModel
         self.makeVisibilityEditModel = makeVisibilityEditModel
         self.settings = settings
+        self.parental = parental
         self.onAdd = onAdd
     }
 
@@ -52,7 +55,7 @@ struct ChannelListScreen: View {
             PlaybackScreen(streamUrl: target.url, engine: makeEngine())
         }
         .sheet(isPresented: $showSettings) {
-            SettingsScreen(settings: settings, onClose: { showSettings = false })
+            SettingsScreen(settings: settings, parental: parental, onClose: { showSettings = false })
         }
     }
 

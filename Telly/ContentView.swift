@@ -34,6 +34,7 @@ struct ContentView: View {
                                   makeChannelEditModel: env.makeChannelEditModel,
                                   makeVisibilityEditModel: env.makeVisibilityEditModel,
                                   settings: env.settings,
+                                  parental: env.parentalStore,
                                   onAdd: { adding = true })
             }
         }

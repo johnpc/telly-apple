@@ -31,6 +31,7 @@
 		1409AEE54665C5FA868A3486 /* LivePlaybackModel+Tracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5954EFE7738D27A08D5B5 /* LivePlaybackModel+Tracks.swift */; };
 		1498439A74AC234AC8606410 /* SurroundAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D570B030BFCAEF8933160D /* SurroundAudio.swift */; };
 		1545DA974B02C66DE0C831CE /* PinPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065315529CCE7156E0862392 /* PinPolicyTests.swift */; };
+		1578A20B002B33D924D34533 /* PinDigitsFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C960D42D1646FDCE7C359E0 /* PinDigitsFieldView.swift */; };
 		1715DEAAD3F21A79C7E2E0FD /* GuideGridScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43444A8C83E8EBD55063B762 /* GuideGridScreen.swift */; };
 		172AA6EB6293FEA5FC8661EC /* SettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF518CE11F62EDAAF4389082 /* SettingsStoreTests.swift */; };
 		17C929C86439421A898D151B /* QuickBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDF73B13BE012B9E8E5BF9 /* QuickBarItems.swift */; };
@@ -52,6 +53,7 @@
 		2311624430C68B2A4E03C32C /* PlaylistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BF4D21ECE4136B80416F /* PlaylistStore.swift */; };
 		24A5D5AB358021BA902FF427 /* ChannelEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6459607D004B96A0D9D926AC /* ChannelEntityTests.swift */; };
 		25D0B3F652AA56C57A93B1C6 /* SettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13052430DE44D78BE7130B44 /* SettingsKeys.swift */; };
+		261432E96BFA10B2464F8B91 /* SettingsParentalSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982EA9DADE1D37E974E23B6D /* SettingsParentalSectionView.swift */; };
 		26597D957B6FB9D14691692A /* AcceptanceTests.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030A43B5DACCF03D16F744EA /* AcceptanceTests.generated.swift */; };
 		278B21B2A976AF12C310C77D /* GroupVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB115F7EA37262F3087C4A7 /* GroupVisibility.swift */; };
 		279D14A464CC3026158F7789 /* PlaybackKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14F51AE186FF1796831BCA2 /* PlaybackKey.swift */; };
@@ -235,6 +237,7 @@
 		C5B846D2AB5BC86E4AE6469A /* GuideEpgStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9F5FFF68774C764EFF990 /* GuideEpgStoreTests.swift */; };
 		C75EA0E1C2D0EDADD9AD16A7 /* EpgRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA958C21A27348FF819BA98 /* EpgRefresher.swift */; };
 		C7AF8C66A791EADF8F5A718C /* PlaybackBadgesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAD294DBE29F9D78C957A1A /* PlaybackBadgesTests.swift */; };
+		C80765FA9375905A639FFCE0 /* DebugLaunch+Parental.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F0BEDACCD430153C41CEE /* DebugLaunch+Parental.swift */; };
 		C853572B16CB7A97483A6E6A /* ChannelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3428C72EBEB454AD2CE0B5B6 /* ChannelStore.swift */; };
 		C96BA5D3717F5219550B28C9 /* TouchGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B64C3E29648CC2C96ABCDFD /* TouchGesture.swift */; };
 		CB643C2ABB4656B1F12B2F20 /* MultiviewFocusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555749CAD749DFF6FD0DCC66 /* MultiviewFocusTests.swift */; };
@@ -274,6 +277,7 @@
 		EADF8718D4ED90774A4E5131 /* PendingZapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4612550684E594CA7F3A2F1E /* PendingZapTests.swift */; };
 		EC8189125EE13CC509B8B737 /* TrackFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D9E8107872853BF82EE56 /* TrackFacade.swift */; };
 		EE3023ADC1C621A329A366A5 /* GuideFocusNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B1A73E4AB873351C024B83 /* GuideFocusNav.swift */; };
+		EEBBFADC0AD7E9DF850A8DF4 /* PinEntrySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B52B4A77E4248CD55E0D31D /* PinEntrySheetView.swift */; };
 		EF841EA96643B65F0B24A9C7 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A480F430EF4DA3B833F03ECD /* SettingsStore.swift */; };
 		F08D8971F59FCF2901AD6FCB /* HistoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04C28109510A69E0AE9B6A8 /* HistoryScreen.swift */; };
 		F0DD40297E96DE33816EB2AF /* XmltvParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A631A01CB4753E2E28B24F4 /* XmltvParserTests.swift */; };
@@ -315,6 +319,7 @@
 
 /* Begin PBXFileReference section */
 		030A43B5DACCF03D16F744EA /* AcceptanceTests.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTests.generated.swift; sourceTree = "<group>"; };
+		034F0BEDACCD430153C41CEE /* DebugLaunch+Parental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DebugLaunch+Parental.swift"; sourceTree = "<group>"; };
 		0376B2E232DEAE15C2DCEF69 /* XmltvParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvParser.swift; sourceTree = "<group>"; };
 		039CD7BDDB00E8434432729B /* VlcTrackReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VlcTrackReader.swift; sourceTree = "<group>"; };
 		03E895B1709D5BE4B99E67C4 /* LivePlaybackModel+Multiview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LivePlaybackModel+Multiview.swift"; sourceTree = "<group>"; };
@@ -338,6 +343,7 @@
 		19F4FD0068833D246DD8CBE5 /* GuideCellLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCellLayoutTests.swift; sourceTree = "<group>"; };
 		1A9674BB6F6F4077491E2A06 /* ChannelZapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelZapperTests.swift; sourceTree = "<group>"; };
 		1B41BEA510401C8A0D0BE9FC /* UrlFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlFieldView.swift; sourceTree = "<group>"; };
+		1B52B4A77E4248CD55E0D31D /* PinEntrySheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinEntrySheetView.swift; sourceTree = "<group>"; };
 		1C7B6124E5E18F6202137B85 /* ChannelPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPanelView.swift; sourceTree = "<group>"; };
 		1C9B9A456FE757E51945DDFF /* DebugLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLaunchTests.swift; sourceTree = "<group>"; };
 		1E33824048D9B8A7E968723D /* PlaylistSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSummary.swift; sourceTree = "<group>"; };
@@ -420,6 +426,7 @@
 		5B3D80BB7E4AA1D3685C35DF /* ChannelListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListScreen.swift; sourceTree = "<group>"; };
 		5BCC66C6AF1F6B3B9B556A04 /* CompressedXmltvTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressedXmltvTests.swift; sourceTree = "<group>"; };
 		5C468D58ED44093FBE184089 /* WatchHistoryRowsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHistoryRowsTests.swift; sourceTree = "<group>"; };
+		5C960D42D1646FDCE7C359E0 /* PinDigitsFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinDigitsFieldView.swift; sourceTree = "<group>"; };
 		5D81B17BD2189238567BEB9C /* LivePlaybackModelTracksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePlaybackModelTracksTests.swift; sourceTree = "<group>"; };
 		5FAD294DBE29F9D78C957A1A /* PlaybackBadgesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackBadgesTests.swift; sourceTree = "<group>"; };
 		63440A3C2F357D9DC500DFD4 /* GuideTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideTimeline.swift; sourceTree = "<group>"; };
@@ -470,6 +477,7 @@
 		93A9896DB20B35683101EB72 /* PlaybackScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackScreen.swift; sourceTree = "<group>"; };
 		9510318C2A70D4048480E633 /* MultiviewGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewGridView.swift; sourceTree = "<group>"; };
 		978E40923C0BD5A67EAD3E8D /* AddPlaylistModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistModelTests.swift; sourceTree = "<group>"; };
+		982EA9DADE1D37E974E23B6D /* SettingsParentalSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsParentalSectionView.swift; sourceTree = "<group>"; };
 		984EC2E8176F45E1711F5A76 /* CompressedXmltv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressedXmltv.swift; sourceTree = "<group>"; };
 		987AD818A024549B071BDBE1 /* VlcStateMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VlcStateMappingTests.swift; sourceTree = "<group>"; };
 		992C51D1E60038A37B6CE407 /* WizardProcessedStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardProcessedStepView.swift; sourceTree = "<group>"; };
@@ -669,6 +677,7 @@
 				378960B36436AF8BCF69A520 /* DebugLaunch.swift */,
 				471C286834EAD81CFB6B343F /* DebugLaunch+Channels.swift */,
 				48A615BF62891CC0EC011E72 /* DebugLaunch+History.swift */,
+				034F0BEDACCD430153C41CEE /* DebugLaunch+Parental.swift */,
 				286E11267BBAC06AE9D749FD /* DebugLaunch+Settings.swift */,
 				A5C4F85C67FC25A6C20A50C1 /* DebugLaunch+Tracks.swift */,
 				CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */,
@@ -1024,12 +1033,15 @@
 			children = (
 				FDEA075A908EE3F8C650F0A3 /* KeyValueStore.swift */,
 				ED961F3772EB624FFBBCD70B /* ParentalStore.swift */,
+				5C960D42D1646FDCE7C359E0 /* PinDigitsFieldView.swift */,
+				1B52B4A77E4248CD55E0D31D /* PinEntrySheetView.swift */,
 				BC377A47AFFFEE2929B4A985 /* PinHasher.swift */,
 				D09ADBF49B1060CD284A870A /* PinPolicy.swift */,
 				7AA91C2F566E8495B29203CA /* SecretStore.swift */,
 				9951AC46164C96B97D2C153A /* SettingsGeneralSectionView.swift */,
 				1954322E738F9AD01BC5507C /* SettingsGuideSectionView.swift */,
 				13052430DE44D78BE7130B44 /* SettingsKeys.swift */,
+				982EA9DADE1D37E974E23B6D /* SettingsParentalSectionView.swift */,
 				2507ACE3BB87983FD53D58FE /* SettingsPlaybackSectionView.swift */,
 				D054A6C91A8DD95AD91B44F1 /* SettingsRemoteSectionView.swift */,
 				8B761E6D11E665CDF4A97A5C /* SettingsScreen.swift */,
@@ -1267,6 +1279,7 @@
 				81E88E930E0ECDD0DA879E98 /* DebugGuideSeed.swift in Sources */,
 				B8334807A251499F66BF5651 /* DebugLaunch+Channels.swift in Sources */,
 				F4C677AA894C6396AE1BEE4C /* DebugLaunch+History.swift in Sources */,
+				C80765FA9375905A639FFCE0 /* DebugLaunch+Parental.swift in Sources */,
 				0419622CC25E181B6EC0F267 /* DebugLaunch+Settings.swift in Sources */,
 				BE8981AC7D8ADDE08A96BC5E /* DebugLaunch+Tracks.swift in Sources */,
 				A640D64B37238FCF71658322 /* DebugLaunch.swift in Sources */,
@@ -1334,6 +1347,8 @@
 				E34F396EEDAF8E6ECC2BB632 /* PanelTimeouts.swift in Sources */,
 				E44ECA07601B44676CA6DD04 /* ParentalStore.swift in Sources */,
 				306683117C97BFF70CD8B3B8 /* PendingZap.swift in Sources */,
+				1578A20B002B33D924D34533 /* PinDigitsFieldView.swift in Sources */,
+				EEBBFADC0AD7E9DF850A8DF4 /* PinEntrySheetView.swift in Sources */,
 				87FDDFB53675F43165D79F32 /* PinHasher.swift in Sources */,
 				947E86D5424B3DB05BB2E0DE /* PinPolicy.swift in Sources */,
 				7349CC66A93701D5D0B0F98A /* PlaybackBadges.swift in Sources */,
@@ -1368,6 +1383,7 @@
 				0CEFEA0337568B8A87C564AF /* SettingsGeneralSectionView.swift in Sources */,
 				32AB6106F923298C9414F474 /* SettingsGuideSectionView.swift in Sources */,
 				25D0B3F652AA56C57A93B1C6 /* SettingsKeys.swift in Sources */,
+				261432E96BFA10B2464F8B91 /* SettingsParentalSectionView.swift in Sources */,
 				F2BE84F5D307F9C583447774 /* SettingsPlaybackSectionView.swift in Sources */,
 				1A967DCB68BBC25067A0E986 /* SettingsRemoteSectionView.swift in Sources */,
 				95EE673F79B381EB2033128B /* SettingsScreen.swift in Sources */,

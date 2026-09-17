@@ -19,6 +19,11 @@ final class AppEnvironment {
     let channelListModel: ChannelListModel
     /// Injected scalar preferences (24-h clock, panel timeout, EPG cadence).
     let settings: SettingsStore
+    /// The single, stable parental-controls store observed by the settings UI;
+    /// built once here (mirroring `channelListModel`) so the enable toggle keeps
+    /// its in-memory state across renders. The salted-hash PIN lives in the
+    /// Keychain; the enable flag shares the settings ``KeyValueStore``.
+    let parentalStore: ParentalStore
     private(set) var playlists: [PlaylistEntity] = []
 
     init(database: AppDatabase, settings: SettingsStore? = nil,
@@ -31,7 +36,9 @@ final class AppEnvironment {
         guideEpgStore = GuideEpgStore(
             channelStore: channelStore, repository: EpgRepository(store: programStore), now: now)
         channelListModel = ChannelListModel(store: channelStore)
-        self.settings = settings ?? .standard
+        let resolvedSettings = settings ?? .standard
+        self.settings = resolvedSettings
+        parentalStore = ParentalStore(secret: KeychainSecretStore(), backing: resolvedSettings.backing)
         reload()
     }
 
