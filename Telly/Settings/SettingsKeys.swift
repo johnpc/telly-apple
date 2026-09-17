@@ -16,6 +16,7 @@ enum SettingsKey: String, CaseIterable {
     case colorScheme
     case updateOnPlaylistsChange
     case saveSearchHistory
+    case vodRememberPosition
 }
 
 /// Factory-fresh values used until the user changes a setting, plus the choice
@@ -36,4 +37,5 @@ enum SettingsDefaults {
     static let colorScheme = AppearanceTheme.system.rawValue
     static let updateOnPlaylistsChange = false
     static let saveSearchHistory = true
+    static let vodRememberPosition = true
 }

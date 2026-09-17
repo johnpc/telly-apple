@@ -16,6 +16,17 @@ struct SettingsStoreTests {
         #expect(s.epgKeepPastDays == SettingsDefaults.epgKeepPastDays)
         #expect(s.updateOnPlaylistsChange == SettingsDefaults.updateOnPlaylistsChange)
         #expect(s.saveSearchHistory == SettingsDefaults.saveSearchHistory)
+        #expect(s.vodRememberPosition == SettingsDefaults.vodRememberPosition)
+    }
+
+    @Test func vodRememberPositionDefaultsOnRoundTripsAndResets() {
+        let s = store()
+        #expect(s.vodRememberPosition == true)          // resume on by default
+        s.vodRememberPosition = false
+        #expect(s.vodRememberPosition == false)
+        #expect(store2(s).vodRememberPosition == false)  // persisted through backing
+        s.resetToDefaults()
+        #expect(s.vodRememberPosition == SettingsDefaults.vodRememberPosition)
     }
 
     @Test func saveSearchHistoryRoundTripsAndResets() {

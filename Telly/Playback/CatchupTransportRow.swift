@@ -16,11 +16,7 @@ struct CatchupTransportRow: View {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 12) {
                     if let title, !title.isEmpty { Text(title).font(.headline) }
-                    if isPaused {
-                        Text("Paused").font(.caption).bold()
-                            .padding(.horizontal, 10).padding(.vertical, 4)
-                            .background(.ultraThinMaterial, in: Capsule())
-                    }
+                    if isPaused { PausedBadgeView() }
                     Spacer()
                     Text("\(TransportReadout.span(positionMs)) / \(TransportReadout.span(durationMs))")
                         .font(.subheadline).monospacedDigit()

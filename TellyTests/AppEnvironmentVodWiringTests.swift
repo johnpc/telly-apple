@@ -8,8 +8,9 @@ import Foundation
 /// built by the factory (proving the DB-handle trick threads a single database).
 @MainActor
 struct AppEnvironmentVodWiringTests {
-    private func env() throws -> AppEnvironment {
-        AppEnvironment(database: try AppDatabase.makeInMemory(), now: { 1_700_000_000_000 })
+    private func env(settings: SettingsStore? = nil) throws -> AppEnvironment {
+        AppEnvironment(database: try AppDatabase.makeInMemory(), settings: settings,
+                       now: { 1_700_000_000_000 })
     }
 
     @Test func browseModelReadsMoviesWrittenOnTheSharedHandle() throws {
@@ -30,5 +31,24 @@ struct AppEnvironmentVodWiringTests {
         let store = env.makeVodPositionStore()
         try store.save(itemKey: "k|A", positionMs: 30_000, durationMs: 90_000)
         #expect(try store.read(itemKey: "k|A") != nil)
+    }
+
+    @Test func rememberOffSettingMakesPositionStoreANoOp() throws {
+        let settings = SettingsStore(backing: InMemoryKeyValueStore())
+        settings.vodRememberPosition = false
+        let env = try env(settings: settings)
+        let store = env.makeVodPositionStore()
+        try store.save(itemKey: "k|A", positionMs: 30_000, durationMs: 90_000)
+        #expect(try store.read(itemKey: "k|A") == nil)
+        #expect(try store.all().isEmpty)
+    }
+
+    @Test func clearVodPositionsEmptiesTheStore() throws {
+        let env = try env()
+        let store = env.makeVodPositionStore()
+        try store.save(itemKey: "k|A", positionMs: 30_000, durationMs: 90_000)
+        #expect(try !store.all().isEmpty)
+        env.clearVodPositions()
+        #expect(try store.all().isEmpty)
     }
 }

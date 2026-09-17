@@ -51,6 +51,7 @@ struct ContentView: View {
                                   makePlaylistsSettingsModel: env.makePlaylistsSettingsModel,
                                   makeVodBrowseModel: env.makeVodBrowseModel,
                                   makeVodPlaybackModel: env.makeVodPlaybackModel,
+                                  clearVodPositions: env.clearVodPositions,
                                   settings: env.settings,
                                   parental: env.parentalStore,
                                   onAdd: { adding = true })

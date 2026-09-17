@@ -16,6 +16,7 @@ final class SettingsStore {
     private var rawKeep: Int
     private var rawUpdateOnPlaylistsChange: Bool
     var rawSaveSearchHistory: Bool
+    var rawVodRememberPosition: Bool
     var rawKeyOk: Int
     var rawKeyUpDown: Int
     var rawKeyLeftRight: Int
@@ -28,10 +29,9 @@ final class SettingsStore {
         rawTimeout = backing.readInt(SettingsKey.panelTimeoutSeconds.rawValue) ?? SettingsDefaults.panelTimeoutSeconds
         rawRefresh = backing.readInt(SettingsKey.epgRefreshHours.rawValue) ?? SettingsDefaults.epgRefreshHours
         rawKeep = backing.readInt(SettingsKey.epgKeepPastDays.rawValue) ?? SettingsDefaults.epgKeepPastDays
-        rawUpdateOnPlaylistsChange = backing.readBool(SettingsKey.updateOnPlaylistsChange.rawValue)
-            ?? SettingsDefaults.updateOnPlaylistsChange
-        rawSaveSearchHistory = backing.readBool(SettingsKey.saveSearchHistory.rawValue)
-            ?? SettingsDefaults.saveSearchHistory
+        rawUpdateOnPlaylistsChange = backing.readBool(SettingsKey.updateOnPlaylistsChange.rawValue) ?? SettingsDefaults.updateOnPlaylistsChange
+        rawSaveSearchHistory = backing.readBool(SettingsKey.saveSearchHistory.rawValue) ?? SettingsDefaults.saveSearchHistory
+        rawVodRememberPosition = backing.readBool(SettingsKey.vodRememberPosition.rawValue) ?? SettingsDefaults.vodRememberPosition
         rawKeyOk = backing.readInt(SettingsKey.playerKeyOk.rawValue) ?? SettingsDefaults.playerKeyOk
         rawKeyUpDown = backing.readInt(SettingsKey.playerKeyUpDown.rawValue) ?? SettingsDefaults.playerKeyUpDown
         rawKeyLeftRight = backing.readInt(SettingsKey.playerKeyLeftRight.rawValue) ?? SettingsDefaults.playerKeyLeftRight
@@ -84,6 +84,7 @@ final class SettingsStore {
         rawKeep = SettingsDefaults.epgKeepPastDays
         rawUpdateOnPlaylistsChange = SettingsDefaults.updateOnPlaylistsChange
         rawSaveSearchHistory = SettingsDefaults.saveSearchHistory
+        rawVodRememberPosition = SettingsDefaults.vodRememberPosition
         rawKeyOk = SettingsDefaults.playerKeyOk
         rawKeyUpDown = SettingsDefaults.playerKeyUpDown
         rawKeyLeftRight = SettingsDefaults.playerKeyLeftRight

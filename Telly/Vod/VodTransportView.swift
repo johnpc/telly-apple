@@ -16,11 +16,7 @@ struct VodTransportView: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 12) {
                     if !title.isEmpty { Text(title).font(.headline) }
-                    if isPaused {
-                        Text("Paused").font(.caption).bold()
-                            .padding(.horizontal, 10).padding(.vertical, 4)
-                            .background(.ultraThinMaterial, in: Capsule())
-                    }
+                    if isPaused { PausedBadgeView() }
                     Spacer()
                     Text("\(VodTimes.format(ms: progress.positionMs)) / \(VodTimes.format(ms: progress.durationMs))")
                         .font(.subheadline).monospacedDigit()

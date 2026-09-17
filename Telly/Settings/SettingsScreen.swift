@@ -10,6 +10,7 @@ struct SettingsScreen: View {
     let backup: SettingsBackupModel
     let playlists: PlaylistsSettingsModel
     let makeVisibilityEditModel: () -> VisibilityEditModel
+    let clearVodPositions: () -> Void
     let onClose: () -> Void
 
     var body: some View {
@@ -20,6 +21,7 @@ struct SettingsScreen: View {
                                           makeCopyChannelsModel: playlists.makeCopyChannelsModel)
                 SettingsGeneralSectionView(settings: settings)
                 SettingsPlaybackSectionView(settings: settings)
+                SettingsVodSectionView(settings: settings, onClear: clearVodPositions)
                 SettingsGuideSectionView(settings: settings,
                                          updateEpgNow: { await playlists.refreshEpgNow() },
                                          makeEpgAssignmentModel: playlists.makeEpgAssignmentModel)

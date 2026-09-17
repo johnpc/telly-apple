@@ -3,9 +3,8 @@ import Foundation
 /// Composition-root wiring for the Movies browser, split out of ``AppEnvironment``
 /// to keep each factory file within budget (the `+CatchupFactory` precedent). The
 /// VOD stores share the channel store's DB handle (the Custom-Groups DB-handle
-/// pattern); the `remember` seam defaults to `true` until Slice 6 wires the real
-/// "Remember playback position" setting. The playback-model factory lands with
-/// the playback model itself in a later slice.
+/// pattern); the `remember` seam reads the "Remember playback position" setting,
+/// and `clearVodPositions` empties the store for the Settings clear action.
 extension AppEnvironment {
     /// The Movies browser's observable state over VOD item + position stores
     /// bound to the shared database handle.
@@ -14,11 +13,17 @@ extension AppEnvironment {
                        positionStore: makeVodPositionStore())
     }
 
-    /// The resume-position store on the shared handle, `remember` defaulted on
-    /// until settings wiring; also used by the debug fixture seeder.
+    /// The resume-position store on the shared handle, gated by the real
+    /// "Remember playback position" setting; also used by the debug seeder.
     func makeVodPositionStore() -> VodPositionStore {
-        VodPositionStore(db: channelStore.db, remember: { true },
+        VodPositionStore(db: channelStore.db,
+                         remember: { [settings] in settings.vodRememberPosition },
                          clock: { [clock] in Int64(clock()) })
+    }
+
+    /// Empties every stored VOD position (Settings → Clear playback positions).
+    func clearVodPositions() {
+        try? makeVodPositionStore().clear()
     }
 
     /// A VOD playback model over a fresh VLCKit engine and the shared-handle

@@ -17,6 +17,7 @@ struct ChannelListScreen: View {
     let makePlaylistsSettingsModel: () -> PlaylistsSettingsModel
     let makeVodBrowseModel: () -> VodBrowseModel
     let makeVodPlaybackModel: (String, @escaping () -> Void) -> VodPlaybackModel
+    let clearVodPositions: () -> Void
     let settings: SettingsStore
     let parental: ParentalStore
     let onAdd: () -> Void
@@ -36,6 +37,7 @@ struct ChannelListScreen: View {
          makePlaylistsSettingsModel: @escaping () -> PlaylistsSettingsModel,
          makeVodBrowseModel: @escaping () -> VodBrowseModel,
          makeVodPlaybackModel: @escaping (String, @escaping () -> Void) -> VodPlaybackModel,
+         clearVodPositions: @escaping () -> Void,
          settings: SettingsStore,
          parental: ParentalStore,
          onAdd: @escaping () -> Void) {
@@ -51,6 +53,7 @@ struct ChannelListScreen: View {
         self.makePlaylistsSettingsModel = makePlaylistsSettingsModel
         self.makeVodBrowseModel = makeVodBrowseModel
         self.makeVodPlaybackModel = makeVodPlaybackModel
+        self.clearVodPositions = clearVodPositions
         self.settings = settings
         self.parental = parental
         self.onAdd = onAdd
@@ -79,6 +82,7 @@ struct ChannelListScreen: View {
                            backup: makeBackupModel(),
                            playlists: makePlaylistsSettingsModel(),
                            makeVisibilityEditModel: makeVisibilityEditModel,
+                           clearVodPositions: clearVodPositions,
                            onClose: { showSettings = false })
         }
     }

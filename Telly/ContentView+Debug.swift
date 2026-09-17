@@ -12,7 +12,7 @@ extension ContentView {
             SettingsScreen(settings: env.settings, parental: env.parentalStore,
                            backup: env.makeSettingsBackupModel(),
                            playlists: env.makePlaylistsSettingsModel(),
-                           makeVisibilityEditModel: env.makeVisibilityEditModel, onClose: {})
+                           makeVisibilityEditModel: env.makeVisibilityEditModel, clearVodPositions: env.clearVodPositions, onClose: {})
         } else if DebugLaunch.playlistDebugRequested(in: debugArgs) {
             playlistsDebug
         } else if DebugLaunch.forcedGuide(in: debugArgs) {
