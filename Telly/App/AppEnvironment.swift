@@ -10,20 +10,26 @@ final class AppEnvironment {
     let playlistStore: PlaylistStore
     let channelStore: ChannelStore
     let programStore: ProgramStore
+    let watchHistoryStore: WatchHistoryStore
     let guideEpgStore: GuideEpgStore
+    /// The single wall-clock seam (ms since epoch) shared by the stores/factories
+    /// that need a timestamp; injectable so wiring tests advance time by hand.
+    let clock: () -> Int
     /// The single, stable channel-list state observed by `ChannelListScreen`.
     let channelListModel: ChannelListModel
     /// Injected scalar preferences (24-h clock, panel timeout, EPG cadence).
     let settings: SettingsStore
     private(set) var playlists: [PlaylistEntity] = []
 
-    init(database: AppDatabase, settings: SettingsStore? = nil) {
+    init(database: AppDatabase, settings: SettingsStore? = nil,
+         now: @escaping () -> Int = { Int(Date().timeIntervalSince1970 * 1_000) }) {
+        clock = now
         playlistStore = PlaylistStore(db: database)
         channelStore = ChannelStore(db: database)
         programStore = ProgramStore(db: database)
+        watchHistoryStore = WatchHistoryStore(db: database)
         guideEpgStore = GuideEpgStore(
-            channelStore: channelStore, repository: EpgRepository(store: programStore),
-            now: { Int(Date().timeIntervalSince1970 * 1_000) })
+            channelStore: channelStore, repository: EpgRepository(store: programStore), now: now)
         channelListModel = ChannelListModel(store: channelStore)
         self.settings = settings ?? .standard
         reload()

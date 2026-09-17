@@ -35,16 +35,25 @@ extension AppEnvironment {
 
     /// A live-playback orchestrator over a fresh engine and the current visible
     /// channel snapshot, wired to `UserDefaults` for last-channel persistence.
-    func makeLivePlaybackModel() -> LivePlaybackModel {
+    /// `engineFactory` defaults to the real VLCKit engine; wiring tests inject a
+    /// fake so the recording seam runs without the untestable device glue.
+    func makeLivePlaybackModel(
+        engineFactory: @escaping @MainActor () -> any PlayerEngine = { VLCKitPlayerEngine() }
+    ) -> LivePlaybackModel {
         let key = "lastChannelId"
         let defaults = UserDefaults.standard
+        let channels = (try? channelStore.visibleChannels()) ?? []
         return LivePlaybackModel(
-            engine: makeEngine(),
-            channels: (try? channelStore.visibleChannels()) ?? [],
-            makeEngine: { self.makeEngine() },
+            engine: engineFactory(),
+            channels: channels,
+            makeEngine: engineFactory,
             timeouts: settings.panelTimeouts,
-            now: { Int(Date().timeIntervalSince1970 * 1_000) },
-            persistLastChannel: { defaults.set($0, forKey: key) },
+            now: clock,
+            persistLastChannel: { [watchHistoryStore, clock] id in
+                defaults.set(id, forKey: key)
+                guard let channel = channels.first(where: { $0.id == id }) else { return }
+                try? watchHistoryStore.record(channelKey: ChannelImporter.keyOf(channel), atMs: clock())
+            },
             loadLastChannel: { defaults.object(forKey: key) as? Int },
             onExitToGuide: {},
             nowNext: { [guideEpgStore] channel in guideEpgStore.nowNext(forEpgId: channel.epgId) })

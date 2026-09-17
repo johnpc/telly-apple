@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		001780F869C79CD47194E527 /* PlaybackOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDA78D041840813DC1624B6 /* PlaybackOverlay.swift */; };
 		004F5830774A22871CB67423 /* ChannelReorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE53ED1531DA1E56AE051735 /* ChannelReorder.swift */; };
+		00EBCCF3232B68501738EAC2 /* AppEnvironmentHistoryWiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA6880DB214116C647E2F /* AppEnvironmentHistoryWiringTests.swift */; };
 		019CFC50A48EEE602C00309A /* MultiviewSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10DA07C44970DE4F8B58D77 /* MultiviewSession.swift */; };
 		01C4782F7461B5382BAEB201 /* EpgRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CDEC3595A9E4BF0A4E7B88 /* EpgRepositoryTests.swift */; };
 		02953CE8E6810FEC755C5071 /* EpgRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC46962DA6213D6AE285ACAB /* EpgRepository.swift */; };
@@ -530,6 +531,7 @@
 		E7A4345278B0D07E7AD02BA6 /* ChannelEditModel+Move.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelEditModel+Move.swift"; sourceTree = "<group>"; };
 		E84ED3DEE3D16442F212DB2C /* ChannelListScreen+Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelListScreen+Toolbar.swift"; sourceTree = "<group>"; };
 		E9B9837D1F3167120C446419 /* GuideSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelection.swift; sourceTree = "<group>"; };
+		E9DAA6880DB214116C647E2F /* AppEnvironmentHistoryWiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironmentHistoryWiringTests.swift; sourceTree = "<group>"; };
 		E9DEEC797F8FD8F217AF3A3F /* PlayerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEngine.swift; sourceTree = "<group>"; };
 		EA72C528BC282E97C463256B /* ChannelUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelUserState.swift; sourceTree = "<group>"; };
 		EB1976ACB9C3233BD3A7E9AB /* TellyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TellyApp.swift; sourceTree = "<group>"; };
@@ -842,6 +844,7 @@
 			children = (
 				978E40923C0BD5A67EAD3E8D /* AddPlaylistModelTests.swift */,
 				AB23BF7F828B6C569D6B8A31 /* AppEnvironmentGuideWiringTests.swift */,
+				E9DAA6880DB214116C647E2F /* AppEnvironmentHistoryWiringTests.swift */,
 				B26A802ABF81F23F61C02AE3 /* ChannelEditModelTests.swift */,
 				6459607D004B96A0D9D926AC /* ChannelEntityTests.swift */,
 				CB6C59E528CFF9F4244CC01E /* ChannelImporterTests.swift */,
@@ -1345,6 +1348,7 @@
 			files = (
 				20E6F7695D49F55EA09F0BCB /* AddPlaylistModelTests.swift in Sources */,
 				8476EA0E3670DF9BCA8B7A69 /* AppEnvironmentGuideWiringTests.swift in Sources */,
+				00EBCCF3232B68501738EAC2 /* AppEnvironmentHistoryWiringTests.swift in Sources */,
 				FD6847F1FDF98B5C4E55274A /* ChannelEditModelTests.swift in Sources */,
 				24A5D5AB358021BA902FF427 /* ChannelEntityTests.swift in Sources */,
 				5CEA3890A0FD3BF92F752BC2 /* ChannelImporterTests.swift in Sources */,
