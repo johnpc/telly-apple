@@ -12,6 +12,7 @@ extension AppEnvironment {
         EpgRefresher(playlistStore: playlistStore, programStore: programStore,
                      download: { try await EpgDownloader().download(epgUrl: $0) },
                      now: { Int(Date().timeIntervalSince1970 * 1_000) },
+                     customSources: { [epgSourceStore] in ((try? epgSourceStore.forPlaylist($0)) ?? []).map(\.url) },
                      intervalMs: settings.epgRefreshIntervalMs, keepPastMs: settings.epgKeepPastMs)
     }
 

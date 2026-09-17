@@ -8,6 +8,7 @@ import Foundation
 @Observable
 final class AppEnvironment {
     let playlistStore: PlaylistStore
+    let epgSourceStore: EpgSourceStore
     let channelStore: ChannelStore
     let programStore: ProgramStore
     let watchHistoryStore: WatchHistoryStore
@@ -30,6 +31,7 @@ final class AppEnvironment {
          now: @escaping () -> Int = { Int(Date().timeIntervalSince1970 * 1_000) }) {
         clock = now
         playlistStore = PlaylistStore(db: database)
+        epgSourceStore = EpgSourceStore(db: database)
         channelStore = ChannelStore(db: database)
         programStore = ProgramStore(db: database)
         watchHistoryStore = WatchHistoryStore(db: database)

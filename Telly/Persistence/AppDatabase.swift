@@ -36,6 +36,9 @@ struct AppDatabase {
         migrator.registerMigration("v3-history") { db in
             try HistorySchema.createWatchHistory(db)
         }
+        migrator.registerMigration("v4-epg-sources") { db in
+            try EpgSourceSchema.createEpgSources(db)
+        }
         return migrator
     }
 }

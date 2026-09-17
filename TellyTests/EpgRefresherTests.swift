@@ -14,6 +14,9 @@ struct EpgRefresherTests {
     /// Collects `warn` diagnostics so failure paths can be asserted.
     private final class Warnings { var messages: [String] = [] }
 
+    /// Records the download order so source precedence can be asserted.
+    private final class FetchOrder { var urls: [String] = [] }
+
     private func makeStores() throws -> (PlaylistStore, ProgramStore) {
         let db = try AppDatabase.makeInMemory()
         return (PlaylistStore(db: db), ProgramStore(db: db))
@@ -153,6 +156,20 @@ struct EpgRefresherTests {
         try await refresher.refreshAllNow()
 
         #expect(try programs.channelIds().isEmpty)
+    }
+
+    @Test func epgUrlIsFetchedBeforeCustomSources() async throws {
+        let (playlists, programs) = try makeStores()
+        try addPlaylist(playlists, url: "p", epg: "primary")
+        let order = FetchOrder()
+        let refresher = EpgRefresher(
+            playlistStore: playlists, programStore: programs,
+            download: { url in order.urls.append(url); return XmltvDocument() },
+            now: { self.now }, customSources: { _ in ["custom"] })
+
+        try await refresher.refreshAllNow()
+
+        #expect(order.urls == ["primary", "custom"])
     }
 
     @Test func onPlaylistsChangedRefreshesOnlyWhenEnabled() async throws {
