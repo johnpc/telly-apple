@@ -69,6 +69,7 @@ final class AppEnvironment {
             now: { Int(Date().timeIntervalSince1970 * 1_000) },
             persistLastChannel: { defaults.set($0, forKey: key) },
             loadLastChannel: { defaults.object(forKey: key) as? Int },
-            onExitToGuide: {})
+            onExitToGuide: {},
+            nowNext: { [guideEpgStore] channel in guideEpgStore.nowNext(forEpgId: channel.epgId) })
     }
 }

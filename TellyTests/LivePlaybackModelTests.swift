@@ -250,4 +250,37 @@ struct LivePlaybackModelTests {
         #expect(model.overlay == .zapInfo)
         #expect(model.holdsLastFrame == true)    // held regardless of engine state
     }
+
+    @Test func debugPresentInfoOverlayPinsOverlayAndHoldsFrame() {
+        let model = Harness().makeModel(channels)
+        model.debugPresentInfoOverlay()
+        #expect(model.overlay == .info)
+        #expect(model.holdsLastFrame == true)
+    }
+
+    // MARK: - EPG now/next seam
+
+    @Test func currentInfoIsNilWithDefaultSeam() {
+        let harness = Harness()
+        harness.stored = 10
+        let model = harness.makeModel(channels)
+        model.start()
+        #expect(model.currentInfo == nil)        // default seam yields no data
+    }
+
+    @Test func currentInfoReadsSeamForTunedChannel() {
+        let harness = Harness()
+        harness.stored = 10
+        let feed = NowNext(now: ProgramEntity(channelTvgId: "10", startMs: 0, endMs: 100,
+                                              details: ProgramDetails(title: "On Now")), next: nil)
+        let model = LivePlaybackModel(
+            engine: harness.engine, channels: channels,
+            now: { harness.clock },
+            persistLastChannel: { harness.persisted.append($0) },
+            loadLastChannel: { harness.stored },
+            onExitToGuide: {},
+            nowNext: { $0.id == 10 ? feed : nil })
+        model.start()
+        #expect(model.currentInfo?.now?.details.title == "On Now")
+    }
 }

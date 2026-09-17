@@ -43,5 +43,12 @@ extension LivePlaybackModel {
         debugHoldFrame = true
         visibility.set(.zapInfo)
     }
+
+    /// DEBUG screenshot hook: pin the info overlay open (sticky, no deadline,
+    /// frame held so no spinner) for the `-tellyOverlay info` proof.
+    func debugPresentInfoOverlay() {
+        debugHoldFrame = true
+        visibility.set(.info)
+    }
 }
 #endif

@@ -60,5 +60,29 @@ struct DebugLaunchTests {
         #expect(!DebugLaunch.forcedZapOverlay(in: ["Telly", "-tellyOverlay", "info"]))
         #expect(!DebugLaunch.forcedZapOverlay(in: ["Telly"]))
     }
+
+    @Test func forcedInfoOverlayReadsFlag() {
+        #expect(DebugLaunch.forcedInfoOverlay(in: ["Telly", "-tellyOverlay", "info"]))
+        #expect(!DebugLaunch.forcedInfoOverlay(in: ["Telly", "-tellyOverlay", "zap"]))
+        #expect(!DebugLaunch.forcedInfoOverlay(in: ["Telly"]))
+    }
+
+    @Test func fixtureFirstChannelCarriesDemoEpgId() {
+        let pl = DebugLaunch.fixturePlaylist(base: "http://127.0.0.1:8000/")
+        #expect(pl.channels[0].tvgID == DebugLaunch.demoEpgId)
+        #expect(pl.channels[1].tvgID == nil)
+    }
+
+    @Test func infoFixtureDocumentSeedsNowAndNextOnDemoChannel() {
+        let doc = DebugLaunch.infoFixtureDocument(nowMs: 10_000_000)
+        #expect(doc.programs.count == 2)
+        #expect(doc.programs.allSatisfy { $0.channelId == DebugLaunch.demoEpgId })
+        let now = NowNextResolver.resolve(doc.programs.map {
+            ProgramEntity(channelTvgId: $0.channelId, startMs: $0.startMs,
+                          endMs: $0.endMs, details: $0.details)
+        }, atMs: 10_000_000)[DebugLaunch.demoEpgId]
+        #expect(now?.now?.details.title == "Evening News")
+        #expect(now?.next?.details.title == "Late Documentary")
+    }
 }
 #endif

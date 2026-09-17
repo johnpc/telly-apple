@@ -63,7 +63,17 @@ struct ContentView: View {
         seedDebugFixtures()
         let model = env.makeLivePlaybackModel()
         if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
+        seedInfoOverlayIfRequested(model)
         liveModel = model
+    }
+
+    private func seedInfoOverlayIfRequested(_ model: LivePlaybackModel) {
+        guard DebugLaunch.forcedInfoOverlay(in: debugArgs) else { return }
+        let nowMs = Int(Date().timeIntervalSince1970 * 1_000)
+        try? env.programStore.upsertReplacing(
+            document: DebugLaunch.infoFixtureDocument(nowMs: nowMs), keepDescriptions: false)
+        env.guideEpgStore.refresh()
+        model.debugPresentInfoOverlay()
     }
 
     private func seedDebugFixtures() {

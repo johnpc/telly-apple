@@ -16,6 +16,7 @@ struct LivePlaybackScreen: View {
             Color.black.ignoresSafeArea()
             surface
             zapOverlay
+            infoOverlay
             stateOverlay
             #if !os(tvOS)
             PlaybackCloseButton()
@@ -54,6 +55,19 @@ struct LivePlaybackScreen: View {
     @ViewBuilder private var zapOverlay: some View {
         if case .zapInfo = model.overlay {
             ZapOverlayView(channel: model.current)
+        }
+    }
+
+    @ViewBuilder private var infoOverlay: some View {
+        switch model.overlay {
+        case .info:
+            InfoOverlayView(channel: model.current, nowNext: model.currentInfo,
+                            nowMs: model.now(), expanded: false)
+        case .infoTransport:
+            InfoOverlayView(channel: model.current, nowNext: model.currentInfo,
+                            nowMs: model.now(), expanded: true)
+        default:
+            EmptyView()
         }
     }
 

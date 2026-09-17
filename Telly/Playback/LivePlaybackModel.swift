@@ -27,6 +27,10 @@ final class LivePlaybackModel {
     let persistLastChannel: (Int) -> Void
     let loadLastChannel: () -> Int?
     let onExitToGuide: () -> Void
+    /// Now/next feed for the info overlay, keyed off the tuned channel. Defaults
+    /// to no data so existing call sites/tests compile; wired to `GuideEpgStore`
+    /// in `AppEnvironment`.
+    let nowNext: (ChannelEntity) -> NowNext?
 
     #if DEBUG
     /// Screenshot-only override so the tvOS overlay proof holds the black stage
@@ -41,7 +45,8 @@ final class LivePlaybackModel {
          now: @escaping () -> Int,
          persistLastChannel: @escaping (Int) -> Void,
          loadLastChannel: @escaping () -> Int?,
-         onExitToGuide: @escaping () -> Void) {
+         onExitToGuide: @escaping () -> Void,
+         nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil }) {
         self.engine = engine
         self.channels = channels
         self.keymap = keymap
@@ -50,7 +55,11 @@ final class LivePlaybackModel {
         self.persistLastChannel = persistLastChannel
         self.loadLastChannel = loadLastChannel
         self.onExitToGuide = onExitToGuide
+        self.nowNext = nowNext
     }
+
+    /// The now/next for the currently tuned channel, or nil when none.
+    var currentInfo: NowNext? { current.flatMap(nowNext) }
 
     /// The overlay layer the screen should render this frame.
     var overlay: PlaybackOverlay { visibility.overlay }

@@ -10,6 +10,10 @@ import Foundation
 /// (never reaches for `ProcessInfo` itself) so the seeding logic stays pure and
 /// unit-testable; the view layer passes `ProcessInfo.processInfo.arguments`.
 enum DebugLaunch {
+    /// The EPG id given to the first fixture channel so the info-overlay proof
+    /// can seed matching now/next programmes for it.
+    static let demoEpgId = "news.tv"
+
     /// Stream URL to auto-open on launch, if `-tellyAutoplayUrl <url>` was set.
     static func autoplayUrl(in args: [String]) -> String? {
         value(for: "-tellyAutoplayUrl", in: args)
@@ -27,6 +31,26 @@ enum DebugLaunch {
         value(for: "-tellyOverlay", in: args) == "zap"
     }
 
+    /// Whether to pin the info overlay open with seeded now/next for the proof —
+    /// set by `-tellyOverlay info`.
+    static func forcedInfoOverlay(in args: [String]) -> Bool {
+        value(for: "-tellyOverlay", in: args) == "info"
+    }
+
+    /// A synthetic now/next XMLTV fixture on ``demoEpgId``: a "now" programme
+    /// centred on `nowMs` (so the progress bar sits mid-way) and the "next".
+    static func infoFixtureDocument(nowMs: Int) -> XmltvDocument {
+        let halfHour = 30 * 60_000
+        return XmltvDocument(programs: [
+            XmltvProgram(channelId: demoEpgId, startMs: nowMs - halfHour,
+                         endMs: nowMs + halfHour,
+                         details: ProgramDetails(title: "Evening News")),
+            XmltvProgram(channelId: demoEpgId, startMs: nowMs + halfHour,
+                         endMs: nowMs + 3 * halfHour,
+                         details: ProgramDetails(title: "Late Documentary")),
+        ])
+    }
+
     /// Seeds the fixture playlist rooted at `-tellySeedBase <http://host:port/>`
     /// so the app lands on the channel list. Re-adds by source URL, so it is
     /// safe to relaunch. A no-op when the flag is absent.
@@ -40,15 +64,15 @@ enum DebugLaunch {
     /// The deterministic three-channel fixture playlist rooted at `base`.
     static func fixturePlaylist(base: String) -> M3uPlaylist {
         M3uPlaylist(epgURL: nil, channels: [
-            channel(title: "News HD", group: "Live", file: "news.ts", base: base),
+            channel(title: "News HD", group: "Live", file: "news.ts", base: base, tvgID: demoEpgId),
             channel(title: "Movie Time", group: "VOD", file: "movie.mp4", base: base),
             channel(title: "Dead Channel", group: "Live", file: "dead.ts", base: base),
         ])
     }
 
     private static func channel(title: String, group: String, file: String,
-                                base: String) -> M3uChannel {
-        M3uChannel(title: title, streamURL: base + file, tvgID: nil, tvgName: nil,
+                                base: String, tvgID: String? = nil) -> M3uChannel {
+        M3uChannel(title: title, streamURL: base + file, tvgID: tvgID, tvgName: nil,
                    tvgLogo: nil, groupTitle: group, catchup: nil,
                    catchupSource: nil, catchupDays: nil)
     }
