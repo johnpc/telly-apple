@@ -9,7 +9,8 @@ extension ContentView {
 
     @ViewBuilder var debugRoot: some View {
         if DebugLaunch.settingsRequested(in: debugArgs) {
-            SettingsScreen(settings: env.settings, parental: env.parentalStore, onClose: {})
+            SettingsScreen(settings: env.settings, parental: env.parentalStore,
+                           backup: env.makeSettingsBackupModel(), onClose: {})
         } else if DebugLaunch.forcedGuide(in: debugArgs) {
             guideDemo
         } else if DebugLaunch.historyDemoRequested(in: debugArgs) {

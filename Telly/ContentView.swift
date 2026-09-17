@@ -36,6 +36,7 @@ struct ContentView: View {
                                   makeHistoryModel: env.makeHistoryModel,
                                   makeChannelEditModel: env.makeChannelEditModel,
                                   makeVisibilityEditModel: env.makeVisibilityEditModel,
+                                  makeBackupModel: env.makeSettingsBackupModel,
                                   settings: env.settings,
                                   parental: env.parentalStore,
                                   onAdd: { adding = true })

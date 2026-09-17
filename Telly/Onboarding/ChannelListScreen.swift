@@ -15,6 +15,7 @@ struct ChannelListScreen: View {
     let makeHistoryModel: () -> HistoryListModel
     let makeChannelEditModel: (String?) -> ChannelEditModel
     let makeVisibilityEditModel: () -> VisibilityEditModel
+    let makeBackupModel: () -> SettingsBackupModel
     let settings: SettingsStore
     let parental: ParentalStore
     let onAdd: () -> Void
@@ -29,6 +30,7 @@ struct ChannelListScreen: View {
          makeHistoryModel: @escaping () -> HistoryListModel,
          makeChannelEditModel: @escaping (String?) -> ChannelEditModel,
          makeVisibilityEditModel: @escaping () -> VisibilityEditModel,
+         makeBackupModel: @escaping () -> SettingsBackupModel,
          settings: SettingsStore,
          parental: ParentalStore,
          onAdd: @escaping () -> Void) {
@@ -39,6 +41,7 @@ struct ChannelListScreen: View {
         self.makeHistoryModel = makeHistoryModel
         self.makeChannelEditModel = makeChannelEditModel
         self.makeVisibilityEditModel = makeVisibilityEditModel
+        self.makeBackupModel = makeBackupModel
         self.settings = settings
         self.parental = parental
         self.onAdd = onAdd
@@ -63,7 +66,8 @@ struct ChannelListScreen: View {
         .sheet(item: $challenge) { challengeSheet($0.channel) }
         .sheet(item: $lockTarget) { lockSheet($0.channel) }
         .sheet(isPresented: $showSettings) {
-            SettingsScreen(settings: settings, parental: parental, onClose: { showSettings = false })
+            SettingsScreen(settings: settings, parental: parental,
+                           backup: makeBackupModel(), onClose: { showSettings = false })
         }
     }
 

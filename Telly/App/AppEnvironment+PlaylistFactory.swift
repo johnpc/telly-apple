@@ -40,6 +40,13 @@ extension AppEnvironment {
                               now: { Int64(Date().timeIntervalSince1970 * 1_000) })
     }
 
+    /// The Backup/Restore section's state core over the manager above; a restore
+    /// reloads the playlist feed so re-created playlists surface immediately.
+    func makeSettingsBackupModel() -> SettingsBackupModel {
+        SettingsBackupModel(manager: makeSettingsBackupManager(),
+                            reload: { [weak self] in self?.reload() })
+    }
+
     /// The single group-filter wiring both the guide feed and the channel list
     /// route through (built once in `init` and shared) plus the live snapshot:
     /// resolves each channel's playlist URL, then drops channels in groups the

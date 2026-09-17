@@ -41,6 +41,9 @@ ENTRY_POINTS = {
     "mediaPlayerStateChanged",
     # GRDB persistence-record witness (called by GRDB on insert, not by us)
     "didInsert",
+    # FileDocument witness invoked by SwiftUI's fileExporter when serialising the
+    # exported file (BackupDocument) — no static call site exists.
+    "fileWrapper",
     # XCTest lifecycle
     "setUp", "tearDown", "runScenario",
 }

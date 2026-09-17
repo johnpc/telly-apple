@@ -7,6 +7,7 @@ import SwiftUI
 struct SettingsScreen: View {
     @Bindable var settings: SettingsStore
     let parental: ParentalStore
+    let backup: SettingsBackupModel
     let onClose: () -> Void
 
     var body: some View {
@@ -17,6 +18,7 @@ struct SettingsScreen: View {
                 SettingsGuideSectionView(settings: settings)
                 SettingsRemoteSectionView(settings: settings)
                 SettingsParentalSectionView(parental: parental)
+                SettingsBackupSectionView(model: backup)
             }
             .navigationTitle("Settings")
             .toolbar {
