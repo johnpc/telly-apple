@@ -11,6 +11,8 @@ extension ContentView {
     @ViewBuilder var debugRoot: some View {
         if DebugLaunch.forcedGuide(in: debugArgs) {
             guideDemo
+        } else if debugArgs.contains("-tellyMultiviewDemo") {
+            multiviewDemo
         } else if DebugLaunch.liveDemoRequested(in: debugArgs) {
             liveDemo
         } else if let url = DebugLaunch.autoplayUrl(in: debugArgs) {

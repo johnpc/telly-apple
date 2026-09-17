@@ -14,8 +14,10 @@ final class FakePlayerEngine: PlayerEngine {
     private(set) var loaded: [String] = []
     private(set) var stopCount = 0
     private(set) var releaseCount = 0
+    private(set) var muted = false
 
     func load(_ streamUrl: String) { loaded.append(streamUrl) }
     func stop() { stopCount += 1 }
     func release() { releaseCount += 1 }
+    func setMuted(_ m: Bool) { muted = m }
 }

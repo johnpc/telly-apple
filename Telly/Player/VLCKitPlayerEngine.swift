@@ -16,7 +16,7 @@ final class VLCKitPlayerEngine: PlayerEngine {
     var tracks: TrackFacade { trackFacade }
 
     private let trackFacade = VlcTrackFacade()
-    private let player = VLCMediaPlayer()
+    let player = VLCMediaPlayer()
     private let proxy = VlcDelegateProxy()
     private var reducer = PlaybackReducer()
     private var retry: Task<Void, Never>?

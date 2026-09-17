@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		001780F869C79CD47194E527 /* PlaybackOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDA78D041840813DC1624B6 /* PlaybackOverlay.swift */; };
 		004F5830774A22871CB67423 /* ChannelReorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE53ED1531DA1E56AE051735 /* ChannelReorder.swift */; };
+		019CFC50A48EEE602C00309A /* MultiviewSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10DA07C44970DE4F8B58D77 /* MultiviewSession.swift */; };
 		01C4782F7461B5382BAEB201 /* EpgRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CDEC3595A9E4BF0A4E7B88 /* EpgRepositoryTests.swift */; };
 		02953CE8E6810FEC755C5071 /* EpgRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC46962DA6213D6AE285ACAB /* EpgRepository.swift */; };
 		060E18C8255F4AA1F3107C53 /* WizardEpgStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9CE1DA66DB1CF9821E07F8 /* WizardEpgStepView.swift */; };
@@ -70,8 +71,10 @@
 		3EC8178007BC03703A970067 /* PanelSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89929CDBE552BD8E2BE3BAD /* PanelSelectionTests.swift */; };
 		3FA7FAF829BF7C3FED74FACF /* GuideGridModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB5F67F1FF6EB3425676 /* GuideGridModelTests.swift */; };
 		409720303CD6ED1F5DAFB92C /* GuideRowsBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F7D41F43C92AD1CB0E648 /* GuideRowsBuilderTests.swift */; };
+		423FB064F39B9914825E1E54 /* MultiviewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D32FC95E589778A718BD96 /* MultiviewCellView.swift */; };
 		43B4481CD57C4F46AB7F9BB0 /* InfoOverlayText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848C08F0895FB5B7972E62C6 /* InfoOverlayText.swift */; };
 		43B58A0BCB57A2DCA68F4E88 /* InfoOverlayTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C91A9ED346D9F495A803F9C /* InfoOverlayTextTests.swift */; };
+		44FF9773889E35FFD2647D93 /* MultiviewSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30262C5C5C44D2273ABC94EE /* MultiviewSessionTests.swift */; };
 		451E456E72C6DE0ABA1D6575 /* GuideEpgStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */; };
 		468AEAB4FE7257D65A79038E /* XmltvTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911911F5CB370C8AD142854F /* XmltvTypes.swift */; };
 		46D0BAE497703E5FB9FBDD2D /* ChannelReorder+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5D7EF629F1D95CF81178B /* ChannelReorder+Move.swift */; };
@@ -91,12 +94,15 @@
 		4F1BF8F530441CE2BA1291A0 /* XmltvEpisodeNum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA71F38E7ADF72CEB475D5A /* XmltvEpisodeNum.swift */; };
 		5140F1BB25B395BA8AF65494 /* MultiviewFocus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA665E04AE286473CCBB176 /* MultiviewFocus.swift */; };
 		52FE7BA5FD6E737C984C1B59 /* VisibilityEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B65F7134484496BE5BA0CD8 /* VisibilityEditModel.swift */; };
+		5336630F3162D54E5373F0E4 /* ContentView+MultiviewDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A7EE5F415CD9AFEC6F0A35 /* ContentView+MultiviewDebug.swift */; };
 		54070F54B8C9170E185D46A7 /* ChannelSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5483AF43B34E97A74EF02761 /* ChannelSource.swift */; };
 		54E66C55F838A6A6050394B6 /* ChannelStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06A6C4B7C8423DF4D41E23F /* ChannelStoreTests.swift */; };
 		54EC9A0DEAD0697234F47F2C /* ChannelEditRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3659A651093FC179F36F7B4F /* ChannelEditRowView.swift */; };
+		552D230D75CA8060F53CBF36 /* MultiviewGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9510318C2A70D4048480E633 /* MultiviewGridView.swift */; };
 		56034EA045F78BD9D1614C67 /* GuideSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9837D1F3167120C446419 /* GuideSelection.swift */; };
 		5610BDE9B96ED9FACAEFE128 /* ManageVisibilityScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488424BCE81D52C53795644E /* ManageVisibilityScreen.swift */; };
 		58507C243F59F508B1AAE5B8 /* TrackModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6ECB418641F5055DC306B1 /* TrackModels.swift */; };
+		58A9C3F9DB2BABEF041C88B2 /* VLCKitPlayerEngine+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD69B16A6204B62B0D09CFE /* VLCKitPlayerEngine+Audio.swift */; };
 		59C56541C781ABB2D6BD1D1B /* PlaybackReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60695790FA29713F6F4EFD9 /* PlaybackReducerTests.swift */; };
 		5BF3F6867DE020282B0B3795 /* GuideRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE0F1175610370DBEC8AABA /* GuideRow.swift */; };
 		5CEA3890A0FD3BF92F752BC2 /* ChannelImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6C59E528CFF9F4244CC01E /* ChannelImporterTests.swift */; };
@@ -292,6 +298,7 @@
 		2C73DE1BC748EB029A1DAAEE /* Telly.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Telly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CBC54543BF987EBA8B46AAA /* MultiviewLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewLayoutTests.swift; sourceTree = "<group>"; };
 		2DF6D601F20885554B9537BA /* QuickBarAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBarAction.swift; sourceTree = "<group>"; };
+		30262C5C5C44D2273ABC94EE /* MultiviewSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewSessionTests.swift; sourceTree = "<group>"; };
 		30A1BF4D21ECE4136B80416F /* PlaylistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistStore.swift; sourceTree = "<group>"; };
 		30DF4F44157AD31582B07D53 /* PlayerKeymap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerKeymap.swift; sourceTree = "<group>"; };
 		310AA80E44CF4A8E35058A85 /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEntity.swift; sourceTree = "<group>"; };
@@ -376,6 +383,7 @@
 		83D570B030BFCAEF8933160D /* SurroundAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurroundAudio.swift; sourceTree = "<group>"; };
 		8472E07DFDD846F30CE8624D /* PanelRowInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelRowInfo.swift; sourceTree = "<group>"; };
 		848C08F0895FB5B7972E62C6 /* InfoOverlayText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoOverlayText.swift; sourceTree = "<group>"; };
+		87D32FC95E589778A718BD96 /* MultiviewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewCellView.swift; sourceTree = "<group>"; };
 		8957794BBE325137D232EB25 /* FakePlayerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePlayerEngine.swift; sourceTree = "<group>"; };
 		8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowNextResolverTests.swift; sourceTree = "<group>"; };
 		8BA665E04AE286473CCBB176 /* MultiviewFocus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewFocus.swift; sourceTree = "<group>"; };
@@ -385,6 +393,7 @@
 		9105F63ED96290035385DB36 /* ContentView+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+Debug.swift"; sourceTree = "<group>"; };
 		911911F5CB370C8AD142854F /* XmltvTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTypes.swift; sourceTree = "<group>"; };
 		93A9896DB20B35683101EB72 /* PlaybackScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackScreen.swift; sourceTree = "<group>"; };
+		9510318C2A70D4048480E633 /* MultiviewGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewGridView.swift; sourceTree = "<group>"; };
 		978E40923C0BD5A67EAD3E8D /* AddPlaylistModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistModelTests.swift; sourceTree = "<group>"; };
 		984EC2E8176F45E1711F5A76 /* CompressedXmltv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressedXmltv.swift; sourceTree = "<group>"; };
 		987AD818A024549B071BDBE1 /* VlcStateMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VlcStateMappingTests.swift; sourceTree = "<group>"; };
@@ -410,6 +419,7 @@
 		AE2E4442DE30ED21130CC0C4 /* LivePlaybackModel+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LivePlaybackModel+Keys.swift"; sourceTree = "<group>"; };
 		AFBC7827F93B2379F3363D77 /* QuickBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBarView.swift; sourceTree = "<group>"; };
 		AFE592895ECE19026B765DD5 /* NowNext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowNext.swift; sourceTree = "<group>"; };
+		B10DA07C44970DE4F8B58D77 /* MultiviewSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewSession.swift; sourceTree = "<group>"; };
 		B14F51AE186FF1796831BCA2 /* PlaybackKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackKey.swift; sourceTree = "<group>"; };
 		B16E837F882CD1A331F032FF /* TouchKeyMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchKeyMapTests.swift; sourceTree = "<group>"; };
 		B26A802ABF81F23F61C02AE3 /* ChannelEditModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditModelTests.swift; sourceTree = "<group>"; };
@@ -445,6 +455,7 @@
 		D1A0DAB58022ACAFBD92CFFD /* ChannelReorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelReorderTests.swift; sourceTree = "<group>"; };
 		D27E24D27AF015DC74D3C8CC /* TrackPickerRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPickerRowView.swift; sourceTree = "<group>"; };
 		D28C597DC8382D9A3585D59D /* GroupVisibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupVisibilityTests.swift; sourceTree = "<group>"; };
+		D2A7EE5F415CD9AFEC6F0A35 /* ContentView+MultiviewDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+MultiviewDebug.swift"; sourceTree = "<group>"; };
 		D45A43BFF66B0A31B6F58C2D /* ChannelPanelRowsColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPanelRowsColumnView.swift; sourceTree = "<group>"; };
 		D4A2E6331B7FDDF758782CDD /* PlaybackStateChromeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackStateChromeView.swift; sourceTree = "<group>"; };
 		D5E11046F624FCD118944FBE /* AddPlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistModel.swift; sourceTree = "<group>"; };
@@ -455,6 +466,7 @@
 		DA837E11BAD7B9A30A652BEE /* MultiviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewCell.swift; sourceTree = "<group>"; };
 		DAF963F04457923BF98EFE2A /* MultiviewGridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewGridTests.swift; sourceTree = "<group>"; };
 		DC8565DC3A8580F8A5606B52 /* RefreshScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshScheduler.swift; sourceTree = "<group>"; };
+		DFD69B16A6204B62B0D09CFE /* VLCKitPlayerEngine+Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VLCKitPlayerEngine+Audio.swift"; sourceTree = "<group>"; };
 		DFE0F1175610370DBEC8AABA /* GuideRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideRow.swift; sourceTree = "<group>"; };
 		E11345FDE4D29891DA5870A7 /* GuideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCell.swift; sourceTree = "<group>"; };
 		E22365783B30FDCD895BCC09 /* EpgDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgDownloader.swift; sourceTree = "<group>"; };
@@ -615,6 +627,7 @@
 				4A5A8C96669009B439B3CCAD /* Assets.xcassets */,
 				A8B22847E90EAFA3E38A3D74 /* ContentView.swift */,
 				9105F63ED96290035385DB36 /* ContentView+Debug.swift */,
+				D2A7EE5F415CD9AFEC6F0A35 /* ContentView+MultiviewDebug.swift */,
 				EB1976ACB9C3233BD3A7E9AB /* TellyApp.swift */,
 			);
 			path = Telly;
@@ -624,9 +637,12 @@
 			isa = PBXGroup;
 			children = (
 				DA837E11BAD7B9A30A652BEE /* MultiviewCell.swift */,
+				87D32FC95E589778A718BD96 /* MultiviewCellView.swift */,
 				8BA665E04AE286473CCBB176 /* MultiviewFocus.swift */,
 				072F45397F56A29170B58639 /* MultiviewGrid.swift */,
+				9510318C2A70D4048480E633 /* MultiviewGridView.swift */,
 				21F1CA563F371B43B8FB3B66 /* MultiviewLayout.swift */,
+				B10DA07C44970DE4F8B58D77 /* MultiviewSession.swift */,
 			);
 			path = Multiview;
 			sourceTree = "<group>";
@@ -798,6 +814,7 @@
 				555749CAD749DFF6FD0DCC66 /* MultiviewFocusTests.swift */,
 				DAF963F04457923BF98EFE2A /* MultiviewGridTests.swift */,
 				2CBC54543BF987EBA8B46AAA /* MultiviewLayoutTests.swift */,
+				30262C5C5C44D2273ABC94EE /* MultiviewSessionTests.swift */,
 				8A09C246172AFD578849E1D3 /* NowNextResolverTests.swift */,
 				C1ADA1A3FB89C7BF310F5E00 /* OverlayVisibilityTests.swift */,
 				CB92D6A3324B43D49BDFC484 /* PanelRowInfoTests.swift */,
@@ -885,6 +902,7 @@
 				47B2B57D88C5F456CF1EEE0C /* VideoDetails.swift */,
 				E55C9FCE4B6E63A1AF16ABF8 /* VlcDelegateProxy.swift */,
 				52696F67557E1FAF73AAFBCC /* VLCKitPlayerEngine.swift */,
+				DFD69B16A6204B62B0D09CFE /* VLCKitPlayerEngine+Audio.swift */,
 				F93E291DDF653770BE71DECE /* VlcPlaybackState.swift */,
 			);
 			path = Player;
@@ -1086,6 +1104,7 @@
 				9759FFDB56E38CB24C86BFCA /* ChannelZapper.swift in Sources */,
 				B9CABC6DF3C487006321F321 /* CompressedXmltv.swift in Sources */,
 				90C4A576858614396767B029 /* ContentView+Debug.swift in Sources */,
+				5336630F3162D54E5373F0E4 /* ContentView+MultiviewDebug.swift in Sources */,
 				FD886AE63B3A5190A4E5DF1A /* ContentView.swift in Sources */,
 				6ABECB2EEBB6BB49C98E31DD /* CoreSchema.swift in Sources */,
 				81E88E930E0ECDD0DA879E98 /* DebugGuideSeed.swift in Sources */,
@@ -1137,9 +1156,12 @@
 				ABDD265EB30F60C208880D2B /* ManageFavoritesScreen.swift in Sources */,
 				5610BDE9B96ED9FACAEFE128 /* ManageVisibilityScreen.swift in Sources */,
 				7E06CDE16B7F38DA7648EE31 /* MultiviewCell.swift in Sources */,
+				423FB064F39B9914825E1E54 /* MultiviewCellView.swift in Sources */,
 				5140F1BB25B395BA8AF65494 /* MultiviewFocus.swift in Sources */,
 				B9A25B12127E5863FC704DA5 /* MultiviewGrid.swift in Sources */,
+				552D230D75CA8060F53CBF36 /* MultiviewGridView.swift in Sources */,
 				338915BA4D296CEA21C13AD3 /* MultiviewLayout.swift in Sources */,
+				019CFC50A48EEE602C00309A /* MultiviewSession.swift in Sources */,
 				2EF2738677D8D0B434C4706B /* NoTracks.swift in Sources */,
 				80314401F98FDCA158A1FF7D /* NowNext.swift in Sources */,
 				8DEC43B874210C6971442C08 /* OverlayVisibility.swift in Sources */,
@@ -1185,6 +1207,7 @@
 				D142132189EBD44F676DC26B /* TrackPickerView.swift in Sources */,
 				D831D7C36223E8AA438A33EB /* TvgOffset.swift in Sources */,
 				A48E2133741A5EF0983FE138 /* UrlFieldView.swift in Sources */,
+				58A9C3F9DB2BABEF041C88B2 /* VLCKitPlayerEngine+Audio.swift in Sources */,
 				5EB66893073CC3F9BD6C1240 /* VLCKitPlayerEngine.swift in Sources */,
 				BAF884550AC1C30D2C43688F /* VideoDetails.swift in Sources */,
 				862D36FCA962E74287D36D82 /* VideoSurfaceView.swift in Sources */,
@@ -1253,6 +1276,7 @@
 				CB643C2ABB4656B1F12B2F20 /* MultiviewFocusTests.swift in Sources */,
 				354580FA7C6F2F8556E0805A /* MultiviewGridTests.swift in Sources */,
 				829EE95FDD1708759972223C /* MultiviewLayoutTests.swift in Sources */,
+				44FF9773889E35FFD2647D93 /* MultiviewSessionTests.swift in Sources */,
 				39F5AD4531A880CD005EAE52 /* NowNextResolverTests.swift in Sources */,
 				6902EBD568C7BE847F2EC2F3 /* OverlayVisibilityTests.swift in Sources */,
 				B3BC024A541818A8D3783580 /* PanelRowInfoTests.swift in Sources */,
