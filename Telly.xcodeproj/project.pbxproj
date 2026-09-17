@@ -43,6 +43,7 @@
 		1AB8F1F6D4FE45DEEDA69CF8 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */; };
 		1ACC9EDA2B90C492E838C5A7 /* GuideSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ECA5237112C7CADD5EFAE5 /* GuideSelectionTests.swift */; };
 		1B1DB27D733CF47E31CD33D4 /* StepRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF0343E127E1F17FBEE8E6 /* StepRegistry.swift */; };
+		1B69E208548EFCB081F5438E /* GuideActivationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B51DC9F55F6AA65B1A9CDB1 /* GuideActivationTests.swift */; };
 		1C0706CEE13ADEB6B8C3BD3F /* QuickBarSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7A3CEBB9D93EA5C284FBA0 /* QuickBarSlotView.swift */; };
 		1E9DD8701A4EA1F4C149BC30 /* DebugLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B9A456FE757E51945DDFF /* DebugLaunchTests.swift */; };
 		1EB5E93BAFDEF8159D24E1E2 /* VlcTrackReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039CD7BDDB00E8434432729B /* VlcTrackReader.swift */; };
@@ -177,6 +178,7 @@
 		7EB3E4C17BB5F9EFB8E21ECF /* PlaylistSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E33824048D9B8A7E968723D /* PlaylistSummary.swift */; };
 		7ED0F379E0E95873E8FDFFA3 /* ParentalStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3611B857107C7312359A8B /* ParentalStoreTests.swift */; };
 		7ED35AADDBD181899F653F41 /* ChannelEditModel+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A4345278B0D07E7AD02BA6 /* ChannelEditModel+Move.swift */; };
+		7F620FEBA5D5D458ADFC469D /* CatchupPlayability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FCBF8A57A8D7E35FCB8D43 /* CatchupPlayability.swift */; };
 		80039A30576650B8EF181C0B /* ChannelSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E60F3CB2CB365AB9D98A83 /* ChannelSearchTests.swift */; };
 		80314401F98FDCA158A1FF7D /* NowNext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE592895ECE19026B765DD5 /* NowNext.swift */; };
 		816EE834A640E5386D7CEF19 /* ChannelListScreen+Parental.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC1C9F64639BB2E93F81E08 /* ChannelListScreen+Parental.swift */; };
@@ -258,11 +260,13 @@
 		C80765FA9375905A639FFCE0 /* DebugLaunch+Parental.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034F0BEDACCD430153C41CEE /* DebugLaunch+Parental.swift */; };
 		C853572B16CB7A97483A6E6A /* ChannelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3428C72EBEB454AD2CE0B5B6 /* ChannelStore.swift */; };
 		C96BA5D3717F5219550B28C9 /* TouchGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B64C3E29648CC2C96ABCDFD /* TouchGesture.swift */; };
+		CB5E0E5FA7469CEE83C3764B /* CatchupPlayabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF245F33FC8A9F5109D7FB5 /* CatchupPlayabilityTests.swift */; };
 		CB643C2ABB4656B1F12B2F20 /* MultiviewFocusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555749CAD749DFF6FD0DCC66 /* MultiviewFocusTests.swift */; };
 		CEF05E53D629FE63C080634F /* PlayerStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCEDF66246565A56BBABD8B /* PlayerStateTests.swift */; };
 		D142132189EBD44F676DC26B /* TrackPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08CF9695BE92B5CB6F800B1 /* TrackPickerView.swift */; };
 		D185D838DBA0AF34C0175868 /* HttpUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA761F0C2AC5B545A070F9 /* HttpUrl.swift */; };
 		D1A2A23F3518A4A6AD1B6363 /* PlaybackStateChromeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A2E6331B7FDDF758782CDD /* PlaybackStateChromeView.swift */; };
+		D1C4A6C921D8AB96EA6DEA15 /* GuideActivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8202CB683496FD7847F8BA0 /* GuideActivation.swift */; };
 		D3EEA8E47DAB8EBA1E87CEC3 /* GroupVisibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C597DC8382D9A3585D59D /* GroupVisibilityTests.swift */; };
 		D4E28E752CE510D149344DA2 /* TrackPickerKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3AF6BB726F90FB3667BF32 /* TrackPickerKind.swift */; };
 		D53B3BE5A1B2F6604D8DD115 /* ChannelRecord+Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEF82B37AB908441A8656A /* ChannelRecord+Entity.swift */; };
@@ -348,6 +352,7 @@
 		04536E210BBBB209EA776B77 /* ChannelListModel+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelListModel+Actions.swift"; sourceTree = "<group>"; };
 		0593376CBE2C7B8B27AD4AC8 /* ChannelListGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListGroups.swift; sourceTree = "<group>"; };
 		065315529CCE7156E0862392 /* PinPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinPolicyTests.swift; sourceTree = "<group>"; };
+		06FCBF8A57A8D7E35FCB8D43 /* CatchupPlayability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupPlayability.swift; sourceTree = "<group>"; };
 		072F45397F56A29170B58639 /* MultiviewGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewGrid.swift; sourceTree = "<group>"; };
 		081CE4F3F308A626C04A4C68 /* TellyTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TellyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		099B0BC95708F0CAB7D0393C /* LivePlaybackMultiviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePlaybackMultiviewTests.swift; sourceTree = "<group>"; };
@@ -381,6 +386,7 @@
 		290FAD1887FCB280E4FE50A9 /* GuideCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCellTests.swift; sourceTree = "<group>"; };
 		2AC541AF5A8B8B8429031427 /* XmltvTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTimestamp.swift; sourceTree = "<group>"; };
 		2AF81DF98D2526C259FB0CCE /* PanelTimeouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelTimeouts.swift; sourceTree = "<group>"; };
+		2B51DC9F55F6AA65B1A9CDB1 /* GuideActivationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideActivationTests.swift; sourceTree = "<group>"; };
 		2B8047C9F3571E0B5AABCBDC /* VisibilityEditModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityEditModelTests.swift; sourceTree = "<group>"; };
 		2BCD1DF70693B020F535847F /* ShiftUrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftUrlTests.swift; sourceTree = "<group>"; };
 		2C73DE1BC748EB029A1DAAEE /* Telly.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Telly.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -420,6 +426,7 @@
 		3BA4B7FD661163037CE53FB6 /* NoTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTracks.swift; sourceTree = "<group>"; };
 		3C355744E958CD9D4670C063 /* TellyUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TellyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C9BDBAE8FA910E236FBA6AB /* SettingsStore+Keymap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsStore+Keymap.swift"; sourceTree = "<group>"; };
+		3CF245F33FC8A9F5109D7FB5 /* CatchupPlayabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupPlayabilityTests.swift; sourceTree = "<group>"; };
 		3E3F7421042A667175183A92 /* PlaybackKeyForwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackKeyForwarder.swift; sourceTree = "<group>"; };
 		3F31789076E7F4E06D0340FF /* GherkinParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GherkinParser.swift; sourceTree = "<group>"; };
 		3F7D9E8107872853BF82EE56 /* TrackFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFacade.swift; sourceTree = "<group>"; };
@@ -591,6 +598,7 @@
 		D5E11046F624FCD118944FBE /* AddPlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistModel.swift; sourceTree = "<group>"; };
 		D61283EB5F726358F10B9F67 /* InfoChannelHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChannelHeaderView.swift; sourceTree = "<group>"; };
 		D74EFF331827B16223EC8123 /* PlaylistStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistStoreTests.swift; sourceTree = "<group>"; };
+		D8202CB683496FD7847F8BA0 /* GuideActivation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideActivation.swift; sourceTree = "<group>"; };
 		D9DB5CF85ED90CFFD665E5FD /* ProgramProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramProgressTests.swift; sourceTree = "<group>"; };
 		D9DFCA9D9833DED139B93293 /* CatchupTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupTypeTests.swift; sourceTree = "<group>"; };
 		D9ECA5237112C7CADD5EFAE5 /* GuideSelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectionTests.swift; sourceTree = "<group>"; };
@@ -712,6 +720,7 @@
 			isa = PBXGroup;
 			children = (
 				C32B58F282550217F2CBB21D /* CatchupAttributes.swift */,
+				06FCBF8A57A8D7E35FCB8D43 /* CatchupPlayability.swift */,
 				CAC47693C52444A5D796DE1A /* CatchupRequest.swift */,
 				F3863A80D738009EB4B6CC33 /* CatchupTemplate.swift */,
 				C3D193349260C9F1872D5AAD /* CatchupType.swift */,
@@ -875,6 +884,7 @@
 		8939F00A65C57E6CCFAB85C1 /* Guide */ = {
 			isa = PBXGroup;
 			children = (
+				D8202CB683496FD7847F8BA0 /* GuideActivation.swift */,
 				69A6EFE10C95FFCF2BA9EF9F /* GuideChannelColumnView.swift */,
 				43444A8C83E8EBD55063B762 /* GuideGridScreen.swift */,
 				A4F163EE27FE6DAF0699F8EF /* GuideNowLineView.swift */,
@@ -963,6 +973,7 @@
 				E9DAA6880DB214116C647E2F /* AppEnvironmentHistoryWiringTests.swift */,
 				F460E3F00BCAA01913016012 /* AppEnvironmentParentalWiringTests.swift */,
 				BF8126649F39E59357C90846 /* CatchupAttributesTests.swift */,
+				3CF245F33FC8A9F5109D7FB5 /* CatchupPlayabilityTests.swift */,
 				8E6A39747A834ECB677D423F /* CatchupRequestTests.swift */,
 				017B60C8E2A35FFCF6960148 /* CatchupTemplateTests.swift */,
 				D9DFCA9D9833DED139B93293 /* CatchupTypeTests.swift */,
@@ -986,6 +997,7 @@
 				8957794BBE325137D232EB25 /* FakePlayerEngine.swift */,
 				CFBAD74E9168342BE505B113 /* FlussonicUrlTests.swift */,
 				D28C597DC8382D9A3585D59D /* GroupVisibilityTests.swift */,
+				2B51DC9F55F6AA65B1A9CDB1 /* GuideActivationTests.swift */,
 				19F4FD0068833D246DD8CBE5 /* GuideCellLayoutTests.swift */,
 				2854E444282D186EC2DB6176 /* GuideCellsBuilderTests.swift */,
 				290FAD1887FCB280E4FE50A9 /* GuideCellTests.swift */,
@@ -1313,6 +1325,7 @@
 				1AB8F1F6D4FE45DEEDA69CF8 /* AppEnvironment.swift in Sources */,
 				D6C65C673266F9B870DD7A25 /* BottomOverlayBar.swift in Sources */,
 				DC467EF9D4E105F991FE2015 /* CatchupAttributes.swift in Sources */,
+				7F620FEBA5D5D458ADFC469D /* CatchupPlayability.swift in Sources */,
 				ABC93C1275CC486F307BF206 /* CatchupRequest.swift in Sources */,
 				4020C75FF802F489EADD92D2 /* CatchupTemplate.swift in Sources */,
 				7B6D1BCA6F4550BA7C1772B0 /* CatchupType.swift in Sources */,
@@ -1365,6 +1378,7 @@
 				D8D0C6B12DE3BB27D7284E57 /* EpgSchema.swift in Sources */,
 				03B56FF79DB1DCDC9C214F0A /* FlussonicUrl.swift in Sources */,
 				278B21B2A976AF12C310C77D /* GroupVisibility.swift in Sources */,
+				D1C4A6C921D8AB96EA6DEA15 /* GuideActivation.swift in Sources */,
 				B108596165E58467B27FF21F /* GuideCell.swift in Sources */,
 				0DB6E4476FFC31870802EA1C /* GuideCellLayout.swift in Sources */,
 				F875BC23E3E80ACA4A0D9EB1 /* GuideCellsBuilder.swift in Sources */,
@@ -1523,6 +1537,7 @@
 				00EBCCF3232B68501738EAC2 /* AppEnvironmentHistoryWiringTests.swift in Sources */,
 				AFCCA1B7B41B03C5BFB7324C /* AppEnvironmentParentalWiringTests.swift in Sources */,
 				AB24A14A7F8FAA27D62E79FC /* CatchupAttributesTests.swift in Sources */,
+				CB5E0E5FA7469CEE83C3764B /* CatchupPlayabilityTests.swift in Sources */,
 				58883784EC4C30EF47801E25 /* CatchupRequestTests.swift in Sources */,
 				E8276B0EA987B3BF4D0CA56A /* CatchupTemplateTests.swift in Sources */,
 				5F0806E3A12187FBE0D90673 /* CatchupTypeTests.swift in Sources */,
@@ -1546,6 +1561,7 @@
 				F64CD4122F3CDE918FBC24E8 /* FakePlayerEngine.swift in Sources */,
 				0AAEC439BAFC12EC2F4BDDEE /* FlussonicUrlTests.swift in Sources */,
 				D3EEA8E47DAB8EBA1E87CEC3 /* GroupVisibilityTests.swift in Sources */,
+				1B69E208548EFCB081F5438E /* GuideActivationTests.swift in Sources */,
 				AA784893C5F2258344B76AB2 /* GuideCellLayoutTests.swift in Sources */,
 				D77ABF40C9AEB8B1D47DA90B /* GuideCellTests.swift in Sources */,
 				5E39EEE03B90029C1F92EF7C /* GuideCellsBuilderTests.swift in Sources */,

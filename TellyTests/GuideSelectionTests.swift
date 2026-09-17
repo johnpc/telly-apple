@@ -17,11 +17,14 @@ struct GuideSelectionTests {
         #expect(GuideSelection.tune(channel("a")) != .info(cell))
         #expect(GuideSelection.info(cell) != GuideSelection.none)
         #expect(GuideSelection.none == GuideSelection.none)
+        #expect(GuideSelection.catchup(channel("a"), cell) != .tune(channel("a")))
     }
 
     @Test func sameCasePayloadsCompareEqual() {
         #expect(GuideSelection.tune(channel("a")) == .tune(channel("a")))
         #expect(GuideSelection.tune(channel("a")) != .tune(channel("b")))
         #expect(GuideSelection.info(cell) == .info(cell))
+        #expect(GuideSelection.catchup(channel("a"), cell) == .catchup(channel("a"), cell))
+        #expect(GuideSelection.catchup(channel("a"), cell) != .catchup(channel("b"), cell))
     }
 }

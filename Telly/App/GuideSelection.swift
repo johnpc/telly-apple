@@ -7,6 +7,8 @@ import Foundation
 /// are deferred. `ChannelEntity` and `GuideCell` are `Equatable`, so the
 /// conformance is synthesised — every case is asserted in the tests.
 enum GuideSelection: Equatable {
+    /// Play this channel's catch-up archive for the past programme in the cell.
+    case catchup(ChannelEntity, GuideCell)
     /// Tune to this channel's live stream (the cell is airing now).
     case tune(ChannelEntity)
     /// Show programme detail for a non-airing cell that carries info.

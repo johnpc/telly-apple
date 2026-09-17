@@ -70,11 +70,9 @@ final class GuideGridModel {
         materializeRows()
     }
 
-    /// Activation: airing now → tune; else info-carrying cell → detail; filler → nothing.
+    /// Activation delegates to the pure `GuideActivation` (catch-up-first).
     func selectCell(_ cell: GuideCell, row: GuideRow) -> GuideSelection {
-        if cell.contains(now()) { return .tune(row.channel) }
-        if cell.hasInfo { return .info(cell) }
-        return .none
+        GuideActivation.activate(row: row, cell: cell, nowMs: now())
     }
 
     /// Sets focus to `cell` on `rowIndex`, pans it into view, then re-materialises.
