@@ -38,6 +38,14 @@ struct PlaylistStore {
         }
     }
 
+    /// Stamps a playlist's EPG as refreshed at `nowMs` (the refresh scheduler
+    /// reads `epgLastUpdatedMs` to decide staleness).
+    func markEpgUpdated(id: Int64, nowMs: Int64) throws {
+        try db.queue.write {
+            try $0.execute(sql: "UPDATE playlists SET epgLastUpdatedMs = ? WHERE id = ?", arguments: [nowMs, id])
+        }
+    }
+
     /// Renames the playlist stored under `sourceUrl`.
     func rename(sourceUrl: String, name: String) throws {
         try db.queue.write {
