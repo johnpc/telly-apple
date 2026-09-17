@@ -39,6 +39,10 @@ struct AppDatabase {
         migrator.registerMigration("v4-epg-sources") { db in
             try EpgSourceSchema.createEpgSources(db)
         }
+        migrator.registerMigration("v5-custom-groups") { db in
+            try CustomGroupSchema.createCustomGroups(db)
+            try CustomGroupSchema.createCustomGroupMembers(db)
+        }
         return migrator
     }
 }
