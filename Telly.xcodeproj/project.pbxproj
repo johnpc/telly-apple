@@ -55,6 +55,7 @@
 		468AEAB4FE7257D65A79038E /* XmltvTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911911F5CB370C8AD142854F /* XmltvTypes.swift */; };
 		475F023CD60AFDA53AE465AA /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D529D436158D9F927352C874 /* GRDB */; };
 		4A18A1BA9D275A3C04D3CCDD /* PlaybackCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CC40D09A16B0AFA3330197 /* PlaybackCommand.swift */; };
+		4A4B1FFD4534FB07FA6FA5FC /* GuideGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F34F44A1997C1444F50B521 /* GuideGeometry.swift */; };
 		4AD876CA4543793471FC4142 /* AcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2DC4D6F058AC249787519D /* AcceptanceTests.swift */; };
 		4C3CFD1F21D770BC278E83CB /* ZapKeepFrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319C27B00D6056E129E91BB3 /* ZapKeepFrameTests.swift */; };
 		4ED8B513B949122527CEBDD6 /* InfoChannelHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61283EB5F726358F10B9F67 /* InfoChannelHeaderView.swift */; };
@@ -71,6 +72,7 @@
 		625AF02BB79E7FE3D13F180A /* XmltvParserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E3A740AA59FE5E94A9CF /* XmltvParserDelegate.swift */; };
 		62A08D697E6A866CE211DC32 /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310AA80E44CF4A8E35058A85 /* ChannelEntity.swift */; };
 		6523C916A072F05DD3B4F555 /* PlayerKeymapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB782F0993A74E3AC3A0815 /* PlayerKeymapTests.swift */; };
+		657B8CAF92D1C6B41CB45225 /* GuideGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313E3F562A89B95A002594FD /* GuideGeometryTests.swift */; };
 		66CFF187D80F0DF9242A8EBF /* GherkinParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F31789076E7F4E06D0340FF /* GherkinParser.swift */; };
 		6902EBD568C7BE847F2EC2F3 /* OverlayVisibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1ADA1A3FB89C7BF310F5E00 /* OverlayVisibilityTests.swift */; };
 		6A2F402410E34CFA2EFF487C /* XmltvElementReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64D1227BBE1557C1D3C5311 /* XmltvElementReader.swift */; };
@@ -192,6 +194,7 @@
 		30A1BF4D21ECE4136B80416F /* PlaylistStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistStore.swift; sourceTree = "<group>"; };
 		30DF4F44157AD31582B07D53 /* PlayerKeymap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerKeymap.swift; sourceTree = "<group>"; };
 		310AA80E44CF4A8E35058A85 /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEntity.swift; sourceTree = "<group>"; };
+		313E3F562A89B95A002594FD /* GuideGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideGeometryTests.swift; sourceTree = "<group>"; };
 		319C27B00D6056E129E91BB3 /* ZapKeepFrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZapKeepFrameTests.swift; sourceTree = "<group>"; };
 		324A27A909C7DE378295D713 /* LivePlaybackScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePlaybackScreen.swift; sourceTree = "<group>"; };
 		32E239E7041C5DE4F3401807 /* InfoProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoProgramView.swift; sourceTree = "<group>"; };
@@ -238,6 +241,7 @@
 		6C91A9ED346D9F495A803F9C /* InfoOverlayTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoOverlayTextTests.swift; sourceTree = "<group>"; };
 		6C9CE1DA66DB1CF9821E07F8 /* WizardEpgStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardEpgStepView.swift; sourceTree = "<group>"; };
 		6D6ECB418641F5055DC306B1 /* TrackModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackModels.swift; sourceTree = "<group>"; };
+		6F34F44A1997C1444F50B521 /* GuideGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideGeometry.swift; sourceTree = "<group>"; };
 		74F9824DE072E26C3727BECA /* TrackLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackLabels.swift; sourceTree = "<group>"; };
 		79A49A7D5F0B7ED807A9C851 /* PlaybackBadges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackBadges.swift; sourceTree = "<group>"; };
 		7A631A01CB4753E2E28B24F4 /* XmltvParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvParserTests.swift; sourceTree = "<group>"; };
@@ -496,6 +500,7 @@
 				80CDEC3595A9E4BF0A4E7B88 /* EpgRepositoryTests.swift */,
 				8957794BBE325137D232EB25 /* FakePlayerEngine.swift */,
 				48A9F5FFF68774C764EFF990 /* GuideEpgStoreTests.swift */,
+				313E3F562A89B95A002594FD /* GuideGeometryTests.swift */,
 				6C91A9ED346D9F495A803F9C /* InfoOverlayTextTests.swift */,
 				7AC9AE905C341CD7DAD3582E /* LivePlaybackModelTests.swift */,
 				3AC312A869B806A4BDF2B25A /* M3uParserTests.swift */,
@@ -535,6 +540,7 @@
 				C3BE5846F0E695DA3565F177 /* EpgOffsets.swift */,
 				4AA958C21A27348FF819BA98 /* EpgRefresher.swift */,
 				EC46962DA6213D6AE285ACAB /* EpgRepository.swift */,
+				6F34F44A1997C1444F50B521 /* GuideGeometry.swift */,
 				AFE592895ECE19026B765DD5 /* NowNext.swift */,
 				DC8565DC3A8580F8A5606B52 /* RefreshScheduler.swift */,
 				B64D1227BBE1557C1D3C5311 /* XmltvElementReader.swift */,
@@ -762,6 +768,7 @@
 				02953CE8E6810FEC755C5071 /* EpgRepository.swift in Sources */,
 				D8D0C6B12DE3BB27D7284E57 /* EpgSchema.swift in Sources */,
 				451E456E72C6DE0ABA1D6575 /* GuideEpgStore.swift in Sources */,
+				4A4B1FFD4534FB07FA6FA5FC /* GuideGeometry.swift in Sources */,
 				FC1B9378CFDD73025A647ABA /* HttpPlaylistFetcher.swift in Sources */,
 				D185D838DBA0AF34C0175868 /* HttpUrl.swift in Sources */,
 				4ED8B513B949122527CEBDD6 /* InfoChannelHeaderView.swift in Sources */,
@@ -849,6 +856,7 @@
 				01C4782F7461B5382BAEB201 /* EpgRepositoryTests.swift in Sources */,
 				F64CD4122F3CDE918FBC24E8 /* FakePlayerEngine.swift in Sources */,
 				C5B846D2AB5BC86E4AE6469A /* GuideEpgStoreTests.swift in Sources */,
+				657B8CAF92D1C6B41CB45225 /* GuideGeometryTests.swift in Sources */,
 				43B58A0BCB57A2DCA68F4E88 /* InfoOverlayTextTests.swift in Sources */,
 				DD3A9F5CB04645EBB05E2A3E /* LivePlaybackModelTests.swift in Sources */,
 				0C4635D986E8377B2CAD2242 /* M3uParserTests.swift in Sources */,
