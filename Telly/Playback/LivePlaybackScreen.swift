@@ -4,8 +4,9 @@ import SwiftUI
 /// a black stage, the compact zap overlay, and the engine-state chrome (spinner /
 /// reconnecting pill / error), gated so a held frame shows no spinner. The only
 /// coroutine seam is the tick loop here; all decisions live in the model. tvOS
-/// forwards remote keys through `onKey`; iPhone/iPad keep a Close button (the
-/// rich touch layer arrives in S7).
+/// forwards remote keys through `onKey`; iPhone/iPad map taps and swipes onto the
+/// same `PlaybackKey` vocabulary via ``TouchGesture``/``TouchKeyMap`` (S7), plus a
+/// Close button.
 struct LivePlaybackScreen: View {
     @State private var model: LivePlaybackModel
 
@@ -45,6 +46,11 @@ struct LivePlaybackScreen: View {
         }
         .onTapGesture { _ = model.onKey(.ok) }
         .onExitCommand { _ = model.onKey(.back) }
+        #else
+        .gesture(DragGesture(minimumDistance: 0).onEnded { v in
+            let g = TouchGesture.swipe(dx: v.translation.width, dy: v.translation.height)
+            _ = model.onKey(TouchKeyMap.key(for: g, overlay: model.overlay))
+        })
         #endif
     }
 

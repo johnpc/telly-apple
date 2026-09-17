@@ -280,6 +280,42 @@ struct LivePlaybackModelTests {
         #expect(model.overlay == .none)
     }
 
+    // MARK: - Touch layer (S7)
+
+    @Test func tapAtBarePlaybackShowsInfo() {
+        let model = Harness().makeModel(channels)
+        _ = model.onKey(TouchKeyMap.key(for: .tap, overlay: model.overlay))
+        #expect(model.overlay == .info)
+    }
+
+    @Test func tapWhileInfoDismisses() {
+        let model = Harness().makeModel(channels)
+        _ = model.onKey(.ok)                     // bare → info
+        #expect(model.overlay == .info)
+        _ = model.onKey(TouchKeyMap.key(for: .tap, overlay: model.overlay))
+        #expect(model.overlay == .none)          // tap over chrome → back → dismiss
+    }
+
+    @Test func swipeUpZaps() {
+        let harness = Harness()
+        harness.stored = 10
+        let model = harness.makeModel(channels)
+        model.start()                            // current = ch10
+        _ = model.onKey(TouchKeyMap.key(for: .swipeUp, overlay: model.overlay))
+        harness.clock = 300
+        model.tick()                             // settled → tune neighbour
+        #expect(model.current?.id == 20)
+    }
+
+    @Test func tapNeverExitsToGuide() {
+        let harness = Harness()
+        let model = harness.makeModel(channels)
+        _ = model.onKey(TouchKeyMap.key(for: .tap, overlay: model.overlay))  // → info
+        _ = model.onKey(TouchKeyMap.key(for: .tap, overlay: model.overlay))  // → dismiss
+        _ = model.onKey(TouchKeyMap.key(for: .tap, overlay: model.overlay))  // → info
+        #expect(harness.exitCount == 0)          // a tap is never `.back` at bare
+    }
+
     // MARK: - EPG now/next seam
 
     @Test func currentInfoIsNilWithDefaultSeam() {
