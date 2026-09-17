@@ -135,6 +135,7 @@
 		4120AC99A6B012157DBE897D /* DebugLaunchSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308A11641EDF6FD88F8F435D /* DebugLaunchSearchTests.swift */; };
 		423FB064F39B9914825E1E54 /* MultiviewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D32FC95E589778A718BD96 /* MultiviewCellView.swift */; };
 		42E974D18FACFF1836597D12 /* CatchupPlaybackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F2B0737783ED581DFC128A /* CatchupPlaybackModel.swift */; };
+		4303495BCA4B105CAC6E6C44 /* VodBrowseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6954A70080BD78FE6A742406 /* VodBrowseTests.swift */; };
 		4386760EC36136FEDE82C80A /* SettingsAppearanceSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001F4629466D93F5C2DF57B3 /* SettingsAppearanceSectionView.swift */; };
 		43B4481CD57C4F46AB7F9BB0 /* InfoOverlayText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848C08F0895FB5B7972E62C6 /* InfoOverlayText.swift */; };
 		43B58A0BCB57A2DCA68F4E88 /* InfoOverlayTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C91A9ED346D9F495A803F9C /* InfoOverlayTextTests.swift */; };
@@ -288,6 +289,7 @@
 		898638B8E4BC74BECCB78DC5 /* PinPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34331D9F6B1E0690ED0FDE9D /* PinPromptView.swift */; };
 		8A3CE390DAA505A3518D2DA0 /* TrackLabelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91979A356D42B8B2FF89810 /* TrackLabelsTests.swift */; };
 		8A63A2A714B0DE41C3EE7F97 /* ChannelListModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E13CD8EE33EB35BD3D46F0 /* ChannelListModelTests.swift */; };
+		8BC3CFC7A9DB95551B5C68B8 /* VodBrowseModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65320AB54CEDD9414E58021F /* VodBrowseModelTests.swift */; };
 		8BCF5EA81B621FD2DBA440F7 /* CatchupPlaybackModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C101D002FCD21DD8D13B031 /* CatchupPlaybackModelTests.swift */; };
 		8DEC43B874210C6971442C08 /* OverlayVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562D2D52D5C5533F8AB70D94 /* OverlayVisibility.swift */; };
 		8E23914E1CBCCFC31D856ADE /* TouchKeyMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E837F882CD1A331F032FF /* TouchKeyMapTests.swift */; };
@@ -298,6 +300,7 @@
 		91696F8504A26F575F12D26F /* SearchResultsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61D64A805690339EE1A92C6 /* SearchResultsBuilder.swift */; };
 		91D6D696567C7914A9F4C6B1 /* ContentView+SearchDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9446089EC0FFC424FF92CF71 /* ContentView+SearchDebug.swift */; };
 		9251B2F6D3C2D8FB3888B172 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0337394E70CCE58E261D5E /* SearchScreen.swift */; };
+		934561BECCACC0BD8CB9ACCC /* VodBrowse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DAED8D3B3DEF858DADF0B8 /* VodBrowse.swift */; };
 		93EEF21D80859196E3C1E961 /* SWCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 6938A520720D3E3EB82CC0D8 /* SWCompression */; };
 		947E86D5424B3DB05BB2E0DE /* PinPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09ADBF49B1060CD284A870A /* PinPolicy.swift */; };
 		95EE673F79B381EB2033128B /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B761E6D11E665CDF4A97A5C /* SettingsScreen.swift */; };
@@ -418,6 +421,7 @@
 		D53F175E5064331E1E69DB0D /* ChannelRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6955066FC099926C6950564 /* ChannelRecord.swift */; };
 		D57F7EEE3473CADE5F8B8233 /* WizardUrlStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E64A3BF540099347299DA30 /* WizardUrlStepView.swift */; };
 		D594DFC966107C5659D9F84F /* GuideRowStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3E24FC39140ECDC0F4307B /* GuideRowStripView.swift */; };
+		D5ECDBA96489C0D9637D6F68 /* VodCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB85A5C7554E4203822378CF /* VodCard.swift */; };
 		D672FC8FBF810B1FEBED7BD5 /* ChannelListGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0593376CBE2C7B8B27AD4AC8 /* ChannelListGroups.swift */; };
 		D6C65C673266F9B870DD7A25 /* BottomOverlayBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9EE2683B6BB1E018BECF81 /* BottomOverlayBar.swift */; };
 		D71C9230D2880789ABE244FD /* ProgramProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DB5CF85ED90CFFD665E5FD /* ProgramProgressTests.swift */; };
@@ -461,6 +465,7 @@
 		EC8189125EE13CC509B8B737 /* TrackFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D9E8107872853BF82EE56 /* TrackFacade.swift */; };
 		ED581DCA8D1E4015517F1070 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA24B3994FFEEEF23F52D80 /* SearchResultsView.swift */; };
 		ED8B081474905F1987DB3410 /* DebugLaunch+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53802FEACB61D5516871DB9D /* DebugLaunch+Search.swift */; };
+		EE0A5C9F6DC7DEF78225F61B /* VodBrowseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFC0DAA7FDB4C8CEAEE82 /* VodBrowseModel.swift */; };
 		EE3023ADC1C621A329A366A5 /* GuideFocusNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B1A73E4AB873351C024B83 /* GuideFocusNav.swift */; };
 		EEBBFADC0AD7E9DF850A8DF4 /* PinEntrySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B52B4A77E4248CD55E0D31D /* PinEntrySheetView.swift */; };
 		EED3654F715CA14B6BC541B9 /* EpgSourceSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D224E942FB23A5AF57864DF /* EpgSourceSchema.swift */; };
@@ -538,6 +543,7 @@
 		0CC1C9F64639BB2E93F81E08 /* ChannelListScreen+Parental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelListScreen+Parental.swift"; sourceTree = "<group>"; };
 		0EB450B91B7A7BBC6E4F07FE /* AppEnvironment+PlaylistFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppEnvironment+PlaylistFactory.swift"; sourceTree = "<group>"; };
 		0ED44197B50FE3D28243878E /* LivePlaybackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePlaybackModel.swift; sourceTree = "<group>"; };
+		0F0CFC0DAA7FDB4C8CEAEE82 /* VodBrowseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodBrowseModel.swift; sourceTree = "<group>"; };
 		0F9EE2683B6BB1E018BECF81 /* BottomOverlayBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomOverlayBar.swift; sourceTree = "<group>"; };
 		10B628E77EC05061EC1D6166 /* AssignEpgModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignEpgModelTests.swift; sourceTree = "<group>"; };
 		11189EA374DEF56C0C3B2067 /* XmltvTimestampTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTimestampTests.swift; sourceTree = "<group>"; };
@@ -670,6 +676,7 @@
 		52696F67557E1FAF73AAFBCC /* VLCKitPlayerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLCKitPlayerEngine.swift; sourceTree = "<group>"; };
 		53802FEACB61D5516871DB9D /* DebugLaunch+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DebugLaunch+Search.swift"; sourceTree = "<group>"; };
 		53ACF557B8E22372B4A43621 /* SearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
+		53DAED8D3B3DEF858DADF0B8 /* VodBrowse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodBrowse.swift; sourceTree = "<group>"; };
 		5483AF43B34E97A74EF02761 /* ChannelSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSource.swift; sourceTree = "<group>"; };
 		54CCDB0FA761D0C8DFE87057 /* TransportReadout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportReadout.swift; sourceTree = "<group>"; };
 		555749CAD749DFF6FD0DCC66 /* MultiviewFocusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewFocusTests.swift; sourceTree = "<group>"; };
@@ -701,8 +708,10 @@
 		64019BA7CA9CBCB76BC0A19B /* ChannelEditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditModel.swift; sourceTree = "<group>"; };
 		64443555FC9C27974D518F54 /* PlaybackKeyPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackKeyPolicyTests.swift; sourceTree = "<group>"; };
 		6459607D004B96A0D9D926AC /* ChannelEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEntityTests.swift; sourceTree = "<group>"; };
+		65320AB54CEDD9414E58021F /* VodBrowseModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodBrowseModelTests.swift; sourceTree = "<group>"; };
 		66B617FC4941B43EDF685A7A /* TvgOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvgOffset.swift; sourceTree = "<group>"; };
 		66CF0343E127E1F17FBEE8E6 /* StepRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepRegistry.swift; sourceTree = "<group>"; };
+		6954A70080BD78FE6A742406 /* VodBrowseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodBrowseTests.swift; sourceTree = "<group>"; };
 		698A1C77E185DA5AF0ACA58B /* ContentView+PlaylistsDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+PlaylistsDebug.swift"; sourceTree = "<group>"; };
 		69A6EFE10C95FFCF2BA9EF9F /* GuideChannelColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideChannelColumnView.swift; sourceTree = "<group>"; };
 		6A4DD10F7CCEDA448B8DE3A6 /* EpgAssignmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgAssignmentModel.swift; sourceTree = "<group>"; };
@@ -915,6 +924,7 @@
 		DA837E11BAD7B9A30A652BEE /* MultiviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewCell.swift; sourceTree = "<group>"; };
 		DAB19029F14062879C3B8601 /* BlockingEditModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockingEditModelTests.swift; sourceTree = "<group>"; };
 		DAF963F04457923BF98EFE2A /* MultiviewGridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewGridTests.swift; sourceTree = "<group>"; };
+		DB85A5C7554E4203822378CF /* VodCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodCard.swift; sourceTree = "<group>"; };
 		DBE9EC2039649FDCFFF793B7 /* PlaylistUrlIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistUrlIndex.swift; sourceTree = "<group>"; };
 		DC6BEF1BF7AD2CFB03CE20A1 /* VodPositionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodPositionStoreTests.swift; sourceTree = "<group>"; };
 		DC8565DC3A8580F8A5606B52 /* RefreshScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshScheduler.swift; sourceTree = "<group>"; };
@@ -1388,6 +1398,9 @@
 		A68CD5DCEC58A79322F1E2F1 /* Vod */ = {
 			isa = PBXGroup;
 			children = (
+				53DAED8D3B3DEF858DADF0B8 /* VodBrowse.swift */,
+				0F0CFC0DAA7FDB4C8CEAEE82 /* VodBrowseModel.swift */,
+				DB85A5C7554E4203822378CF /* VodCard.swift */,
 				5920BF3B0A2A040993A11E5E /* VodResumePolicy.swift */,
 			);
 			path = Vod;
@@ -1538,6 +1551,8 @@
 				2B8047C9F3571E0B5AABCBDC /* VisibilityEditModelTests.swift */,
 				987AD818A024549B071BDBE1 /* VlcStateMappingTests.swift */,
 				F4DB18D880635ED0E366E84B /* VlcTrackReaderTests.swift */,
+				65320AB54CEDD9414E58021F /* VodBrowseModelTests.swift */,
+				6954A70080BD78FE6A742406 /* VodBrowseTests.swift */,
 				3F543AC4C730E6282AEC1854 /* VodClassifierTests.swift */,
 				E6533425F5654D9B81F5818F /* VodImporterTests.swift */,
 				26AE338F7089943087B2412B /* VodItemStoreTests.swift */,
@@ -2143,6 +2158,9 @@
 				7D24A2A2D02ED1A2B07E9C06 /* VlcPlaybackState.swift in Sources */,
 				9E9E518FA7C3DF0912E0D004 /* VlcTrackFacade.swift in Sources */,
 				1EB5E93BAFDEF8159D24E1E2 /* VlcTrackReader.swift in Sources */,
+				934561BECCACC0BD8CB9ACCC /* VodBrowse.swift in Sources */,
+				EE0A5C9F6DC7DEF78225F61B /* VodBrowseModel.swift in Sources */,
+				D5ECDBA96489C0D9637D6F68 /* VodCard.swift in Sources */,
 				0A75F51F7F599229F03CD0D9 /* VodClassifier.swift in Sources */,
 				D77519B6925DE4AA9A5F83C4 /* VodImporter.swift in Sources */,
 				640E97D9875BA0E2FEF8836D /* VodItemRecord+Entity.swift in Sources */,
@@ -2321,6 +2339,8 @@
 				9C4728A39F4E8BCAD1687021 /* VisibilityEditModelTests.swift in Sources */,
 				B826F580BB07CFE4540034AB /* VlcStateMappingTests.swift in Sources */,
 				29D0A9AEB405D44D30FD399A /* VlcTrackReaderTests.swift in Sources */,
+				8BC3CFC7A9DB95551B5C68B8 /* VodBrowseModelTests.swift in Sources */,
+				4303495BCA4B105CAC6E6C44 /* VodBrowseTests.swift in Sources */,
 				2FB40E0C0F96E0A06F7AB5FA /* VodClassifierTests.swift in Sources */,
 				6DC1D40D31AA5BCBB525E623 /* VodImporterTests.swift in Sources */,
 				9DE4A4C341E7E47F742B9FD1 /* VodItemStoreTests.swift in Sources */,
