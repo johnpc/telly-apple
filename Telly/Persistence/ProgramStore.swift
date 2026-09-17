@@ -20,6 +20,19 @@ struct ProgramStore {
         try inQuery(tvgIds, "AND endMs > ? ORDER BY channelTvgId, startMs", [Int64(atMs)])
     }
 
+    /// Programmes whose title word-prefix matches `titleLike` (a `SearchQuery`
+    /// LIKE pattern compared against `' ' || title`, ESCAPE '\') and are still
+    /// airing or upcoming at `atMs`, soonest first — the search feed. `limit`
+    /// bounds the leading-wildcard scan (Android `SearchDao.programs`).
+    func searchTitles(titleLike: String, atMs: Int, limit: Int) throws -> [ProgramEntity] {
+        let sql = "SELECT * FROM programs WHERE endMs > ? AND (' ' || title) LIKE ? ESCAPE '\\' "
+            + "ORDER BY startMs, channelTvgId LIMIT ?"
+        return try db.queue.read {
+            let args: [DatabaseValueConvertible] = [atMs, titleLike, limit]
+            return try ProgramRecord.fetchAll($0, sql: sql, arguments: StatementArguments(args)).map(\.entity)
+        }
+    }
+
     /// Distinct channel tvg-ids that currently hold programmes, sorted.
     func channelIds() throws -> [String] {
         try db.queue.read {
