@@ -264,11 +264,13 @@
 		F0DD40297E96DE33816EB2AF /* XmltvParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A631A01CB4753E2E28B24F4 /* XmltvParserTests.swift */; };
 		F22BE673E206BF2835ABB51B /* InMemoryKeyValueStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5AD3FAD6A5507B51FB395C /* InMemoryKeyValueStore.swift */; };
 		F2BE84F5D307F9C583447774 /* SettingsPlaybackSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2507ACE3BB87983FD53D58FE /* SettingsPlaybackSectionView.swift */; };
+		F4C677AA894C6396AE1BEE4C /* DebugLaunch+History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A615BF62891CC0EC011E72 /* DebugLaunch+History.swift */; };
 		F64CD4122F3CDE918FBC24E8 /* FakePlayerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8957794BBE325137D232EB25 /* FakePlayerEngine.swift */; };
 		F68583C2DAE121F4B0CE8D65 /* PlaylistStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74EFF331827B16223EC8123 /* PlaylistStoreTests.swift */; };
 		F875BC23E3E80ACA4A0D9EB1 /* GuideCellsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BA7D47EFD28A33508C5B /* GuideCellsBuilder.swift */; };
 		FA40A140201985A060E7EAED /* ChannelPanelGroupsColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6939E107E0ABB98E7CFCF5D /* ChannelPanelGroupsColumnView.swift */; };
 		FB6FC45374EB5D59A85C1060 /* CompressedXmltvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCC66C6AF1F6B3B9B556A04 /* CompressedXmltvTests.swift */; };
+		FBF39CF56039195F722A0029 /* ContentView+HistoryDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E59CFAB43CDEE56FCE7DA99 /* ContentView+HistoryDebug.swift */; };
 		FC1B9378CFDD73025A647ABA /* HttpPlaylistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C2B1009DD10C6EF09FC610 /* HttpPlaylistFetcher.swift */; };
 		FC8CE9AF5AE21A881EE82827 /* VLCKitSPM in Frameworks */ = {isa = PBXBuildFile; productRef = B890B0A2D056106897E395D0 /* VLCKitSPM */; };
 		FCB422095E97FC6637C95B3C /* ChannelReorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0DAB58022ACAFBD92CFFD /* ChannelReorderTests.swift */; };
@@ -375,6 +377,7 @@
 		47B2B57D88C5F456CF1EEE0C /* VideoDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetails.swift; sourceTree = "<group>"; };
 		47CED40EFF78E7A5EEBA6064 /* TrackPickerRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPickerRows.swift; sourceTree = "<group>"; };
 		488424BCE81D52C53795644E /* ManageVisibilityScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageVisibilityScreen.swift; sourceTree = "<group>"; };
+		48A615BF62891CC0EC011E72 /* DebugLaunch+History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DebugLaunch+History.swift"; sourceTree = "<group>"; };
 		48A9F5FFF68774C764EFF990 /* GuideEpgStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideEpgStoreTests.swift; sourceTree = "<group>"; };
 		4A3AF6BB726F90FB3667BF32 /* TrackPickerKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPickerKind.swift; sourceTree = "<group>"; };
 		4A5A8C96669009B439B3CCAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -424,6 +427,7 @@
 		7A9918F82FE3092A6EDB17AF /* ZapKeepFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZapKeepFrame.swift; sourceTree = "<group>"; };
 		7AC9AE905C341CD7DAD3582E /* LivePlaybackModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePlaybackModelTests.swift; sourceTree = "<group>"; };
 		7B25194BFD082C9DD98A7935 /* GuideGridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideGridModel.swift; sourceTree = "<group>"; };
+		7E59CFAB43CDEE56FCE7DA99 /* ContentView+HistoryDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+HistoryDebug.swift"; sourceTree = "<group>"; };
 		80CDEC3595A9E4BF0A4E7B88 /* EpgRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgRepositoryTests.swift; sourceTree = "<group>"; };
 		81EB9E77FB158242EA54266A /* PanelTimeoutsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelTimeoutsTests.swift; sourceTree = "<group>"; };
 		83D570B030BFCAEF8933160D /* SurroundAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurroundAudio.swift; sourceTree = "<group>"; };
@@ -632,6 +636,7 @@
 				FE6A31B855DA60358B0C20F5 /* DebugGuideSeed.swift */,
 				378960B36436AF8BCF69A520 /* DebugLaunch.swift */,
 				471C286834EAD81CFB6B343F /* DebugLaunch+Channels.swift */,
+				48A615BF62891CC0EC011E72 /* DebugLaunch+History.swift */,
 				286E11267BBAC06AE9D749FD /* DebugLaunch+Settings.swift */,
 				A5C4F85C67FC25A6C20A50C1 /* DebugLaunch+Tracks.swift */,
 				CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */,
@@ -695,6 +700,7 @@
 				4A5A8C96669009B439B3CCAD /* Assets.xcassets */,
 				A8B22847E90EAFA3E38A3D74 /* ContentView.swift */,
 				9105F63ED96290035385DB36 /* ContentView+Debug.swift */,
+				7E59CFAB43CDEE56FCE7DA99 /* ContentView+HistoryDebug.swift */,
 				D2A7EE5F415CD9AFEC6F0A35 /* ContentView+MultiviewDebug.swift */,
 				EB1976ACB9C3233BD3A7E9AB /* TellyApp.swift */,
 			);
@@ -1205,11 +1211,13 @@
 				9759FFDB56E38CB24C86BFCA /* ChannelZapper.swift in Sources */,
 				B9CABC6DF3C487006321F321 /* CompressedXmltv.swift in Sources */,
 				90C4A576858614396767B029 /* ContentView+Debug.swift in Sources */,
+				FBF39CF56039195F722A0029 /* ContentView+HistoryDebug.swift in Sources */,
 				5336630F3162D54E5373F0E4 /* ContentView+MultiviewDebug.swift in Sources */,
 				FD886AE63B3A5190A4E5DF1A /* ContentView.swift in Sources */,
 				6ABECB2EEBB6BB49C98E31DD /* CoreSchema.swift in Sources */,
 				81E88E930E0ECDD0DA879E98 /* DebugGuideSeed.swift in Sources */,
 				B8334807A251499F66BF5651 /* DebugLaunch+Channels.swift in Sources */,
+				F4C677AA894C6396AE1BEE4C /* DebugLaunch+History.swift in Sources */,
 				0419622CC25E181B6EC0F267 /* DebugLaunch+Settings.swift in Sources */,
 				BE8981AC7D8ADDE08A96BC5E /* DebugLaunch+Tracks.swift in Sources */,
 				A640D64B37238FCF71658322 /* DebugLaunch.swift in Sources */,

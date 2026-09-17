@@ -10,6 +10,7 @@ struct ContentView: View {
     #if DEBUG
     @State var liveModel: LivePlaybackModel?
     @State var guideModel: GuideGridModel?
+    @State var historyModel: HistoryListModel?
     @State var multiviewSession: MultiviewSession?
     #endif
 

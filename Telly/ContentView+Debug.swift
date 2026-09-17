@@ -13,6 +13,8 @@ extension ContentView {
             SettingsScreen(settings: env.settings, onClose: {})
         } else if DebugLaunch.forcedGuide(in: debugArgs) {
             guideDemo
+        } else if DebugLaunch.historyDemoRequested(in: debugArgs) {
+            historyDemo
         } else if debugArgs.contains("-tellyMultiviewDemo") {
             multiviewDemo
         } else if DebugLaunch.liveDemoRequested(in: debugArgs) {

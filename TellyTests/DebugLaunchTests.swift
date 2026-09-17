@@ -182,6 +182,46 @@ struct DebugLaunchTests {
         #expect(try store.visibleChannels().allSatisfy { !$0.flags.favorite })
     }
 
+    @Test func historyDemoRequestedReadsFlag() {
+        #expect(DebugLaunch.historyDemoRequested(in: ["Telly", "-tellyHistorySeed"]))
+        #expect(!DebugLaunch.historyDemoRequested(in: ["Telly"]))
+        #expect(!DebugLaunch.historyDemoRequested(in: ["Telly", "-tellyOverlay"]))
+    }
+
+    // Builds the visible fixture channels the seed records against.
+    private func fixtureChannels() throws -> (WatchHistoryStore, [ChannelEntity]) {
+        let db = try AppDatabase.makeInMemory()
+        let playlists = PlaylistStore(db: db)
+        _ = try playlists.add(sourceUrl: "u",
+                              playlist: DebugLaunch.fixturePlaylist(base: "http://127.0.0.1:8000/"),
+                              name: nil, nowMs: 0)
+        return (WatchHistoryStore(db: db), try ChannelStore(db: db).visibleChannels())
+    }
+
+    @Test func seedHistoryRecordsFirstThreeChannelsNewestFirst() throws {
+        let (store, channels) = try fixtureChannels()
+        DebugLaunch.seedHistoryIfRequested(into: store, channels: channels,
+                                           args: ["Telly", "-tellyHistorySeed"], now: 1_000_000)
+        let keys = channels.prefix(3).map(ChannelImporter.keyOf)
+        #expect(try store.recent().map(\.channelKey) == keys)
+        #expect(try store.recent().map(\.watchedAtMs) == [1_000_000, 940_000, 880_000])
+    }
+
+    @Test func seedHistoryIsANoOpWithoutTheFlag() throws {
+        let (store, channels) = try fixtureChannels()
+        DebugLaunch.seedHistoryIfRequested(into: store, channels: channels,
+                                           args: ["Telly"], now: 1_000_000)
+        #expect(try store.recent().isEmpty)
+    }
+
+    @Test func seedHistoryIsIdempotent() throws {
+        let (store, channels) = try fixtureChannels()
+        let args = ["Telly", "-tellyHistorySeed"]
+        DebugLaunch.seedHistoryIfRequested(into: store, channels: channels, args: args, now: 1_000_000)
+        DebugLaunch.seedHistoryIfRequested(into: store, channels: channels, args: args, now: 1_000_000)
+        #expect(try store.recent().count == 3)
+    }
+
     @Test func infoFixtureDocumentSeedsNowAndNextOnDemoChannel() {
         let doc = DebugLaunch.infoFixtureDocument(nowMs: 10_000_000)
         #expect(doc.programs.count == 2)
