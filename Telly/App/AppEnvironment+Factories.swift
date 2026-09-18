@@ -91,6 +91,7 @@ extension AppEnvironment {
             loadLastChannel: { defaults.object(forKey: key) as? Int },
             onExitToGuide: {},
             nowNext: { [guideEpgStore] channel in guideEpgStore.nowNext(forEpgId: channel.epgId) },
-            makeSearchModel: makeSearchModel)
+            makeSearchModel: makeSearchModel,
+            blockGate: PlaybackBlockGate(parental: parentalStore))
     }
 }
