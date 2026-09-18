@@ -53,6 +53,10 @@ targets:
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.entertainment"
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: "YES"
         INFOPLIST_KEY_UILaunchScreen_Generation: "YES"
+        # Playback must continue when the app is backgrounded into the PiP window
+        # (PiP slice P2). Harmless on tvOS (no system PiP; tvOS honours background
+        # audio too), so it stays in the shared target settings.
+        INFOPLIST_KEY_UIBackgroundModes: audio
         # iPhone(1) + iPad(2) + Apple TV(3). A single value must list every
         # family the app ships to, or xcodebuild filters out that platform's
         # destinations; each SDK ignores the families it doesn't recognise.

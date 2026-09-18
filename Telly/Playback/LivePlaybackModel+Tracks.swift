@@ -43,6 +43,9 @@ extension LivePlaybackModel {
         case .audio: openTrackPicker(.audio)
         case .subtitles: openTrackPicker(.subtitles)
         case .latency: openTrackPicker(.sync)
+        #if os(iOS)
+        case .pictureInPicture: requestPip()
+        #endif
         default: break
         }
     }
@@ -53,3 +56,21 @@ extension LivePlaybackModel {
     /// The audio-sync quick-bar slot label from the live offset ("0 ms", "+50 ms").
     var quickBarSync: String { TrackLabels.sync(engine.tracks.audioOffsetMs) }
 }
+
+#if os(iOS)
+extension LivePlaybackModel {
+    /// Whether the PiP quick-bar slot should accept a tap right now: the device
+    /// supports PiP and live video is actually playing (a later slice hands the
+    /// frames to the system PiP window).
+    var pipActionable: Bool {
+        PipEligibility.isActionable(isSupported: isPipSupported, state: engine.state)
+    }
+
+    /// Entry point for the `.pictureInPicture` quick-bar slot: record the PiP
+    /// intent when actionable. The later AVKit slice consumes ``pipRequested``.
+    func requestPip() {
+        guard pipActionable else { return }
+        pipRequested = true
+    }
+}
+#endif

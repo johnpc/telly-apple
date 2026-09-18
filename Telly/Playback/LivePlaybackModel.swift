@@ -51,6 +51,15 @@ final class LivePlaybackModel {
     var debugSnapshot: TrackSnapshot?
     #endif
 
+    #if os(iOS)
+    /// Set once the live screen learns the device supports PiP
+    /// (`AVPictureInPictureController.isPictureInPictureSupported()`, injected —
+    /// kept off this Foundation-only model). Read by ``pipActionable``.
+    var isPipSupported = false
+    /// PiP intent flag flipped by ``requestPip()``; the later AVKit slice reads it.
+    var pipRequested = false
+    #endif
+
     init(engine: any PlayerEngine,
          channels: [ChannelEntity],
          makeEngine: @escaping @MainActor () -> any PlayerEngine = { VLCKitPlayerEngine() },
@@ -73,20 +82,6 @@ final class LivePlaybackModel {
         self.loadLastChannel = loadLastChannel
         self.onExitToGuide = onExitToGuide
         self.nowNext = nowNext
-    }
-
-    /// The now/next for the currently tuned channel, or nil when none.
-    var currentInfo: NowNext? { current.flatMap(nowNext) }
-
-    /// The overlay layer the screen should render this frame.
-    var overlay: PlaybackOverlay { visibility.overlay }
-
-    /// Whether to hold the last video frame instead of a buffering spinner now.
-    var holdsLastFrame: Bool {
-        #if DEBUG
-        if debugHoldFrame { return true }
-        #endif
-        return keepFrame.holdsLastFrame(state: engine.state, at: now())
     }
 
     /// Cold start: restore the last-watched channel (else the first) and tune it

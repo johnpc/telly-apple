@@ -115,6 +115,33 @@ struct LivePlaybackModelTracksTests {
         #expect(model.activePicker == nil)
     }
 
+    #if os(iOS)
+    @Test func pictureInPictureActionSetsIntentWhenActionable() {
+        let engine = FakePlayerEngine()
+        engine.state = .playing
+        let model = LivePlaybackModel(
+            engine: engine, channels: [],
+            now: { 0 }, persistLastChannel: { _ in },
+            loadLastChannel: { nil }, onExitToGuide: {})
+        model.isPipSupported = true
+        #expect(model.pipActionable)
+        model.onQuickBarAction(.pictureInPicture)
+        #expect(model.pipRequested)
+    }
+
+    @Test func requestPipNoOpsWhenNotActionable() {
+        let engine = FakePlayerEngine()
+        engine.state = .playing            // playing, but device support absent
+        let model = LivePlaybackModel(
+            engine: engine, channels: [],
+            now: { 0 }, persistLastChannel: { _ in },
+            loadLastChannel: { nil }, onExitToGuide: {})
+        #expect(!model.pipActionable)
+        model.requestPip()
+        #expect(!model.pipRequested)
+    }
+    #endif
+
     @Test func backFromPickerPopsToQuickBarAndClears() {
         let model = makeModel(FakeTrackFacade())
         model.openTrackPicker(.audio)
