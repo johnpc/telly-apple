@@ -22,6 +22,8 @@ struct ChannelListScreen: View {
     let settings: SettingsStore
     let parental: ParentalStore
     let onAdd: () -> Void
+    /// Drives the initial `model.start()`; DEBUG screenshots pass false to pin a phase.
+    let autoStart: Bool
     @State var target: PlaybackTarget?
     @State var showSettings = false
     @State var challenge: ParentalChannelBox?
@@ -42,8 +44,10 @@ struct ChannelListScreen: View {
          clearVodPositions: @escaping () -> Void,
          settings: SettingsStore,
          parental: ParentalStore,
+         autoStart: Bool = true,
          onAdd: @escaping () -> Void) {
         _model = State(initialValue: model)
+        self.autoStart = autoStart
         self.makeEngine = makeEngine
         self.makeGuideGridModel = makeGuideGridModel
         self.makeCatchupModel = makeCatchupModel
@@ -64,11 +68,7 @@ struct ChannelListScreen: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                ChannelGroupPickerView(groups: model.groups, selected: model.selectedGroup,
-                                       onSelect: model.select)
-                List(model.rows, id: \.id) { channel in row(channel) }
-            }
+            loadStateContent
             .navigationTitle("Channels")
             .toolbar { toolbarContent }
             #if !os(tvOS)
@@ -82,7 +82,7 @@ struct ChannelListScreen: View {
             }
             #endif
         }
-        .task { model.load() }
+        .task { if autoStart { await model.start() } }
         .fullScreenCover(item: $target) { target in
             PlaybackScreen(streamUrl: target.url, engine: makeEngine())
         }

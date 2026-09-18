@@ -41,24 +41,7 @@ struct ContentView: View {
             if env.playlists.isEmpty {
                 WelcomeView(onAdd: { adding = true }).routeTransition()
             } else {
-                ChannelListScreen(model: env.channelListModel,
-                                  makeEngine: env.makeEngine,
-                                  makeGuideGridModel: env.makeGuideGridModel,
-                                  makeCatchupModel: env.makeCatchupPlaybackModel,
-                                  makeHistoryModel: env.makeHistoryModel,
-                                  makeSearchModel: env.makeSearchModel,
-                                  makeChannelEditModel: env.makeChannelEditModel,
-                                  makeVisibilityEditModel: env.makeVisibilityEditModel,
-                                  makeBackupModel: env.makeSettingsBackupModel,
-                                  makePlaylistsSettingsModel: env.makePlaylistsSettingsModel,
-                                  makeVodBrowseModel: env.makeVodBrowseModel,
-                                  makeVodPlaybackModel: env.makeVodPlaybackModel,
-                                  makeMyListModel: env.makeMyListModel,
-                                  clearVodPositions: env.clearVodPositions,
-                                  settings: env.settings,
-                                  parental: env.parentalStore,
-                                  onAdd: { adding = true })
-                .routeTransition()
+                makeChannelListScreen().routeTransition()
             }
         }
         .animation(Motion.gated(Motion.route, reduceMotion: reduceMotion),
@@ -69,10 +52,9 @@ struct ContentView: View {
                 env.reload()
             }
         }
-        .task {
-            await env.refreshEpgIfDue()
-            await env.refreshPlaylistsOnStart()
-        }
+        // Playlist refresh-on-start is now owned by the channel list's load seam
+        // (`ChannelListModel.start` → `reloadChannels`); only the EPG stays here.
+        .task { await env.refreshEpgIfDue() }
     }
 }
 

@@ -48,6 +48,10 @@ final class AppEnvironment {
         channelListModel = ChannelListModel(store: channelStore, filter: groupFilter)
         parentalStore = ParentalStore(secret: KeychainSecretStore(), backing: resolvedSettings.backing)
         reload()
+        // The channel list drives its own load lifecycle off this seam: cached
+        // channels render at once while it refreshes silently, an empty store
+        // shows the skeleton until it resolves. Weak to avoid a retain cycle.
+        channelListModel.refresh = { [weak self] in await self?.reloadChannels() }
     }
 
     /// The on-device environment; falls back to in-memory if the file store

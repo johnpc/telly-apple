@@ -58,6 +58,19 @@ struct AddPlaylistModelTests {
         #expect(model.state.error == .loadFailed)
     }
 
+    @Test func stalledFetchTimesOutToLoadFailed() async throws {
+        // A fetch that never returns, with the sleep seam firing immediately, so
+        // the deadline wins and `submitUrl` surfaces `.loadFailed` (URL-step Retry).
+        let db = try AppDatabase.makeInMemory()
+        let model = AddPlaylistModel(
+            fetch: { _ in try await Task.sleep(nanoseconds: 5_000_000_000); return "" },
+            store: PlaylistStore(db: db), now: { 42 }, sleep: { _ in })
+        model.setUrl("http://host.tv/list.m3u")
+        await model.submitUrl()
+        #expect(model.state.step == .urlEntry)
+        #expect(model.state.error == .loadFailed)
+    }
+
     @Test func confirmPrefillsTheEpgUrlFromUrlTvg() async throws {
         let (model, _, _) = try make { _ in Self.m3u }
         model.setUrl("http://host.tv/list.m3u")

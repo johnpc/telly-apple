@@ -31,6 +31,14 @@ extension AppEnvironment {
         reload()
     }
 
+    /// The channel list's refresh seam (wired in `init`): run the on-start
+    /// playlist refresh, republish the feed, then re-read the visible channels so
+    /// freshly-imported rows surface. Reuses the same path as the launch hook.
+    func reloadChannels() async {
+        await refreshPlaylistsOnStart()
+        channelListModel.load()
+    }
+
     /// The settings/playlist/EPG-source backup manager over the environment's
     /// real stores and the settings backing store; Slice 6's export/import UI
     /// drives it. Parental-lock state is never included (see ``SettingsSnapshot``).

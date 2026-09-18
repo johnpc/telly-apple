@@ -57,15 +57,6 @@ extension AppEnvironment {
             now: clock, timeZone: .current, myListStore: myListStore())
     }
 
-    /// The guide grid's observable state over the current channel + programme
-    /// stores and wall clock; the clock format follows the 24-hour setting.
-    func makeGuideGridModel() -> GuideGridModel {
-        GuideGridModel(channelStore: channelStore,
-                       repository: EpgRepository(store: programStore),
-                       now: { Int(Date().timeIntervalSince1970 * 1_000) },
-                       timeZone: .current, is24h: settings.use24hClock)
-    }
-
     /// A live-playback orchestrator over a fresh engine and the current visible
     /// channel snapshot, wired to `UserDefaults` for last-channel persistence.
     /// `engineFactory` defaults to the real VLCKit engine; wiring tests inject a

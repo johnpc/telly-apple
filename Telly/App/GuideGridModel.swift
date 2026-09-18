@@ -22,11 +22,19 @@ final class GuideGridModel {
     var viewport: CGFloat
 
     private(set) var originMs = 0
-    private(set) var scrollX: CGFloat = 0
+    /// Pan offset + focus cursor: mutated by the pan/focus actions in the sibling
+    /// `+Scroll`/`+Focus` files, so their setters are module-internal (not file-private).
+    var scrollX: CGFloat = 0
     private(set) var rows: [GuideRow] = []
     private(set) var channels: [ChannelEntity] = []
-    private(set) var focus: GuideFocus?
+    var focus: GuideFocus?
     var nowMs = 0  // clock the now-line tracks; `tick()` (in `+View`) refreshes it
+    /// The grid's load lifecycle: `loading` until the first materialise resolves
+    /// to `loaded`/`empty`, or `failed` when an empty grid's EPG refresh threw.
+    var phase: LoadPhase = .loading
+    /// EPG refresh seam awaited on first appear (when empty) and on Retry; the
+    /// composition root wires the real forced refresh (`+Load`).
+    var refresh: () async throws -> Void = {}
 
     init(channelStore: ChannelStore, repository: EpgRepository, now: @escaping () -> Int,
          timeZone: TimeZone, is24h: Bool, viewport: CGFloat = 960) {
@@ -60,41 +68,8 @@ final class GuideGridModel {
         focus = GuideFocusNav.resolve(rows: rows, nowMs: now(), current: focus)
     }
 
-    /// Pans the timeline by `delta` points, clamped to the horizon, then re-materialises.
-    func scrollTime(byPoints delta: CGFloat) {
-        scrollX = clampScroll(scrollX + delta)
-        materializeRows()
-    }
-
-    /// Re-anchors the scroll to the now column (the origin sits at `scrollX == 0`).
-    func jumpToNow() {
-        scrollX = 0
-        materializeRows()
-    }
-
     /// Activation delegates to the pure `GuideActivation` (catch-up-first).
     func selectCell(_ cell: GuideCell, row: GuideRow) -> GuideSelection {
         GuideActivation.activate(row: row, cell: cell, nowMs: now())
-    }
-
-    /// Sets focus to `cell` on `rowIndex`, pans it into view, then re-materialises.
-    func applyFocus(rowIndex: Int, cell: GuideCell, anchorMs: Int) {
-        focus = GuideFocus(rowIndex: rowIndex, cell: cell, anchorMs: anchorMs)
-        scrollX = clampScroll(pannedScroll(toShow: cell))
-        materializeRows()
-    }
-
-    /// The scroll offset bringing `cell` on-screen, panning only at a viewport edge.
-    private func pannedScroll(toShow cell: GuideCell) -> CGFloat {
-        let left = GuideGeometry.xOf(cell.startMs, originMs: originMs)
-        let right = GuideGeometry.xOf(cell.endMs, originMs: originMs)
-        if left < scrollX { return left }
-        if right > scrollX + viewport { return right - viewport }
-        return scrollX
-    }
-
-    private func clampScroll(_ x: CGFloat) -> CGFloat {
-        min(max(x, GuideWindowMath.scrollFloor(pastDays: Self.pastDays)),
-            GuideWindowMath.scrollCeil())
     }
 }

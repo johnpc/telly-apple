@@ -23,14 +23,11 @@ struct GuideGridScreen: View {
 
     var body: some View {
         GeometryReader { geo in
-            VStack(spacing: 0) {
-                header
-                grid
-            }
-            .task(id: geo.size.width) { model.setViewport(geo.size.width - columnWidth) }
+            gridScaffold
+                .task(id: geo.size.width) { model.setViewport(geo.size.width - columnWidth) }
         }
         .guideSurface()
-        .task { model.load() }
+        .task { await model.start() }
         .guideMinuteTick { model.tick() }
         .fullScreenCover(item: $target) { playbackCover($0) }
         #if os(tvOS)
@@ -38,6 +35,16 @@ struct GuideGridScreen: View {
         .onMoveCommand { move($0) }
         .onTapGesture { activateFocused() }
         #endif
+    }
+
+    /// Loaded content is the header + panning grid; loading/empty/error defer to
+    /// the shared skeleton / empty / error+retry treatment (Retry re-runs the EPG refresh).
+    private var gridScaffold: some View {
+        LoadStateScaffold(phase: model.phase, emptyTitle: "No channels",
+                          emptySystemImage: "tv.slash", emptyMessage: "Nothing to show in the guide yet.",
+                          retry: { Task { await model.retry() } }) {
+            VStack(spacing: 0) { header; grid }
+        }
     }
 
     private var header: some View {
@@ -67,20 +74,6 @@ struct GuideGridScreen: View {
     private var compact: Bool { false }
     /// The focused row whose channel name marquees (D-pad focus is the cursor).
     private var activeRow: Int? { model.focus?.rowIndex }
-    private func move(_ direction: MoveCommandDirection) {
-        switch direction {
-        case .left: model.focusLeft()
-        case .right: model.focusRight()
-        case .up: model.focusUp()
-        case .down: model.focusDown()
-        @unknown default: break
-        }
-    }
-
-    private func activateFocused() {
-        guard let focus = model.focus, model.rows.indices.contains(focus.rowIndex) else { return }
-        activate(focus.cell, row: model.rows[focus.rowIndex])
-    }
     #else
     private var compact: Bool { sizeClass == .compact }
     /// No D-pad cursor off tvOS — the pointer hover drives the marquee per tile.

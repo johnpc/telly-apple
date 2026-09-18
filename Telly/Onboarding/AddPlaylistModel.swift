@@ -8,32 +8,31 @@ import Foundation
 @MainActor
 @Observable
 final class AddPlaylistModel {
-    private(set) var state = WizardUiState()
+    /// Internal setter (not file-private) so the step mutators in `+Steps` can
+    /// advance it; the view still only reads it.
+    var state = WizardUiState()
+
+    /// The playlist fetch may not outrun this bound — a stalled provider fails
+    /// into `.loadFailed` (with the URL step's Retry) instead of spinning forever.
+    static let fetchTimeoutMs = 25_000
 
     private let fetch: (String) async throws -> String
     private let store: PlaylistStore
     private let now: () -> Int64
-    private var parsed: M3uPlaylist?
+    /// Injected so the timeout branch is deterministic in tests (no real waiting).
+    private let sleep: @Sendable (UInt64) async throws -> Void
+    /// Internal (not file-private) so the BACK step machine in `+Back` can clear it.
+    var parsed: M3uPlaylist?
 
     init(fetch: @escaping (String) async throws -> String,
          store: PlaylistStore,
-         now: @escaping () -> Int64) {
+         now: @escaping () -> Int64,
+         sleep: @escaping @Sendable (UInt64) async throws -> Void = { try await Task.sleep(nanoseconds: $0) }) {
         self.fetch = fetch
         self.store = store
         self.now = now
+        self.sleep = sleep
     }
-
-    /// Only the M3U path exists in this slice; other types are inert.
-    func chooseType(_ type: PlaylistType) {
-        if type == .m3u { state.step = .urlEntry }
-    }
-
-    func setUrl(_ url: String) { state.url = url; state.error = nil }
-    func setName(_ name: String) { state.name = name }
-    func setEpgUrl(_ url: String) { state.epgUrl = url; state.error = nil }
-
-    /// "Paste playlist URL" on the EPG step: copies the playlist URL to edit.
-    func pastePlaylistUrl() { setEpgUrl(state.url.trimmed) }
 
     /// Validates the URL (http/https only), then fetches + parses it.
     func submitUrl() async {
@@ -42,12 +41,21 @@ final class AddPlaylistModel {
         state.step = .processing
         state.error = nil
         do {
-            let playlist = M3uParser.parse(try await fetch(url))
+            let playlist = M3uParser.parse(try await load(url))
             guard state.step == .processing else { return }  // a BACK abandoned it
             showProcessed(url, playlist)
         } catch {
             state.step = .urlEntry
             state.error = .loadFailed
+        }
+    }
+
+    /// Fetches `url`, bounded by ``fetchTimeoutMs`` so a stalled request throws a
+    /// `TimeoutError` (caught by `submitUrl` as `.loadFailed`) rather than hanging.
+    private func load(_ url: String) async throws -> String {
+        let fetch = self.fetch
+        return try await withTimeout(milliseconds: Self.fetchTimeoutMs, sleep: sleep) {
+            try await fetch(url)
         }
     }
 
@@ -82,18 +90,5 @@ final class AddPlaylistModel {
         _ = try? store.add(sourceUrl: state.url.trimmed, playlist: committed,
                            name: name.isEmpty ? nil : name, nowMs: now())
         state.step = .done
-    }
-
-    /// BACK semantics: one step backwards; false means "leave the wizard".
-    @discardableResult
-    func back() -> Bool {
-        switch state.step {
-        case .urlEntry: state.step = .typeChooser; state.error = nil
-        case .processing: state.step = .urlEntry
-        case .processed: parsed = nil; state.step = .urlEntry
-        case .epgUrl: state.step = .processed; state.error = nil
-        default: return false
-        }
-        return true
     }
 }

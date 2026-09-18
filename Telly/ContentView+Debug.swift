@@ -8,7 +8,9 @@ extension ContentView {
     var debugArgs: [String] { ProcessInfo.processInfo.arguments }
 
     @ViewBuilder var debugRoot: some View {
-        if DebugLaunch.settingsRequested(in: debugArgs) {
+        if let loadState = DebugLaunch.loadStateDemo(in: debugArgs) {
+            loadStateDemo(loadState)
+        } else if DebugLaunch.settingsRequested(in: debugArgs) {
             SettingsScreen(settings: env.settings, parental: env.parentalStore,
                            backup: env.makeSettingsBackupModel(),
                            playlists: env.makePlaylistsSettingsModel(),

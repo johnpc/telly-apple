@@ -20,6 +20,14 @@ final class ChannelListModel {
     /// Hides channels in disabled playlist groups; identity unless the composition
     /// root wires the shared ``PlaylistGroupFilter`` in (default keeps every channel).
     private let filter: ([ChannelEntity]) -> [ChannelEntity]
+    /// The screen's load lifecycle: `loading` until the first read resolves into
+    /// `loaded`/`empty`, or `failed` if a refresh of an empty store threw. Drives
+    /// the skeleton / empty / error+retry treatment (`+Load`).
+    var phase: LoadPhase = .loading
+    /// Network refresh seam awaited on first appear (when the store is empty) and
+    /// on Retry; the composition root wires the real playlist refresh, tests and
+    /// the DEBUG screenshot harness inject a fake that succeeds/fails/stalls.
+    var refresh: () async throws -> Void = {}
 
     init(store: ChannelStore, filter: @escaping ([ChannelEntity]) -> [ChannelEntity] = { $0 }) {
         self.store = store
