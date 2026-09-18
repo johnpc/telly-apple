@@ -52,6 +52,11 @@ targets:
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.entertainment"
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: "YES"
         INFOPLIST_KEY_UILaunchScreen_Generation: "YES"
+        # App Store validation (90474) rejects iPad builds that don't declare all
+        # four orientations for multitasking. iPhone stays portrait + landscape;
+        # iPad ships all four. tvOS ignores these keys.
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
         # iPhone(1) + iPad(2) + Apple TV(3). A single value must list every
         # family the app ships to, or xcodebuild filters out that platform's
         # destinations; each SDK ignores the families it doesn't recognise.
