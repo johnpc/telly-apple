@@ -56,7 +56,11 @@ targets:
         # family the app ships to, or xcodebuild filters out that platform's
         # destinations; each SDK ignores the families it doesn't recognise.
         TARGETED_DEVICE_FAMILY: "1,2,3"
+        # iOS uses AppIcon.appiconset; tvOS requires a layered .brandassets, so
+        # each SDK points at its own app-icon set (same asset catalog).
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        "ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvos*]": TVAppIcon
+        "ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvsimulator*]": TVAppIcon
 
   TellyTests:
     type: bundle.unit-test
