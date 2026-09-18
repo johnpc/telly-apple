@@ -71,8 +71,16 @@ struct ChannelListScreen: View {
             }
             .navigationTitle("Channels")
             .toolbar { toolbarContent }
+            #if !os(tvOS)
+            // iPhone/iPad only: on tvOS an inline `.searchable` forces a full-screen
+            // keyboard onto the home screen, so search is a dedicated toolbar item.
             .searchable(text: $model.query, prompt: "Search channels")
-            .overlay { searchEmptyState }
+            .overlay {
+                if !model.query.isEmpty && model.rows.isEmpty {
+                    ContentUnavailableView.search(text: model.query)
+                }
+            }
+            #endif
         }
         .task { model.load() }
         .fullScreenCover(item: $target) { target in
@@ -87,13 +95,6 @@ struct ChannelListScreen: View {
                            makeVisibilityEditModel: makeVisibilityEditModel,
                            clearVodPositions: clearVodPositions,
                            onClose: { showSettings = false })
-        }
-    }
-
-    /// Shown when a search yields nothing so the empty List isn't just blank.
-    @ViewBuilder private var searchEmptyState: some View {
-        if !model.query.isEmpty && model.rows.isEmpty {
-            ContentUnavailableView.search(text: model.query)
         }
     }
 }
