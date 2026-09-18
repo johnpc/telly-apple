@@ -43,7 +43,11 @@ extension ContentView {
         } else if let url = DebugLaunch.autoplayUrl(in: debugArgs) {
             PlaybackScreen(streamUrl: url, engine: env.makeEngine())
         } else {
-            mainContent.task { seedDebugFixtures() }
+            mainContent.task {
+                seedDebugFixtures()
+                await env.seedRealPlaylistIfRequested(
+                    environment: ProcessInfo.processInfo.environment)
+            }
         }
     }
 

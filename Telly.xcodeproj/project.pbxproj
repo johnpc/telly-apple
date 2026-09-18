@@ -289,6 +289,7 @@
 		7CF8AF962F8504758E4A8303 /* EpgSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFFB19D5F393DDD193B564B /* EpgSourceTests.swift */; };
 		7D24A2A2D02ED1A2B07E9C06 /* VlcPlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93E291DDF653770BE71DECE /* VlcPlaybackState.swift */; };
 		7E06CDE16B7F38DA7648EE31 /* MultiviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837E11BAD7B9A30A652BEE /* MultiviewCell.swift */; };
+		7E0E9FD3AE5F11F1B11172C9 /* DebugSeedPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E07CE5E63319B9E088FDB9D /* DebugSeedPlaylist.swift */; };
 		7EB3E4C17BB5F9EFB8E21ECF /* PlaylistSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E33824048D9B8A7E968723D /* PlaylistSummary.swift */; };
 		7ED0F379E0E95873E8FDFFA3 /* ParentalStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3611B857107C7312359A8B /* ParentalStoreTests.swift */; };
 		7ED35AADDBD181899F653F41 /* ChannelEditModel+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A4345278B0D07E7AD02BA6 /* ChannelEditModel+Move.swift */; };
@@ -419,6 +420,7 @@
 		B9A25B12127E5863FC704DA5 /* MultiviewGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 072F45397F56A29170B58639 /* MultiviewGrid.swift */; };
 		B9CABC6DF3C487006321F321 /* CompressedXmltv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984EC2E8176F45E1711F5A76 /* CompressedXmltv.swift */; };
 		B9D1BDF1986BF44F61E66C10 /* SearchResultsBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA478FFAEC6FA38CB92A1A5 /* SearchResultsBuilderTests.swift */; };
+		BA1FB602D857652C052C73AE /* AppEnvironment+DebugSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B52E4A711E8F95643057F0 /* AppEnvironment+DebugSeed.swift */; };
 		BAA671FF411F2A3F6A389E83 /* LivePlaybackScreen+Overlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E510B24E26B4C44A0F4F80C /* LivePlaybackScreen+Overlays.swift */; };
 		BAF884550AC1C30D2C43688F /* VideoDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B2B57D88C5F456CF1EEE0C /* VideoDetails.swift */; };
 		BB734763BEE36A66F2FDA743 /* LivePlaybackModel+Multiview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E895B1709D5BE4B99E67C4 /* LivePlaybackModel+Multiview.swift */; };
@@ -435,6 +437,7 @@
 		C06C29897780AC7CA63B37C5 /* EpgSourcesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E885722D757C52CEBC6D3D /* EpgSourcesScreen.swift */; };
 		C0914683878E30A9C2AEE227 /* ChannelGroupPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BD1EE41EFCCBF37605343E /* ChannelGroupPickerView.swift */; };
 		C1126DCF45D74EF39D5799A0 /* ProgramStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D3885DA8806968E5876FF7 /* ProgramStore.swift */; };
+		C13C49353CA23F0D30E60589 /* DebugSeedPlaylistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1BE13F78D7212DF546781 /* DebugSeedPlaylistTests.swift */; };
 		C1A541AD5B51F137AB0531AB /* PlaylistUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D417ECB0B2F0B362977A838A /* PlaylistUpdater.swift */; };
 		C1AF9299F78EC482EFDDBAEC /* GuideWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3023578C5A5280AC85EB12 /* GuideWindow.swift */; };
 		C23C804DE47359576C34AD89 /* OverlayMotionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EA9CD29DD99E44B4BD589A /* OverlayMotionView.swift */; };
@@ -640,6 +643,7 @@
 		1C5FA37F4114F147F7953A18 /* MarqueeMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeMetrics.swift; sourceTree = "<group>"; };
 		1C7B6124E5E18F6202137B85 /* ChannelPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPanelView.swift; sourceTree = "<group>"; };
 		1C9B9A456FE757E51945DDFF /* DebugLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLaunchTests.swift; sourceTree = "<group>"; };
+		1E07CE5E63319B9E088FDB9D /* DebugSeedPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSeedPlaylist.swift; sourceTree = "<group>"; };
 		1E33824048D9B8A7E968723D /* PlaylistSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSummary.swift; sourceTree = "<group>"; };
 		1E3C9C0DC8C98883C8D1A4FF /* MyListRowsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListRowsTests.swift; sourceTree = "<group>"; };
 		1E510B24E26B4C44A0F4F80C /* LivePlaybackScreen+Overlays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LivePlaybackScreen+Overlays.swift"; sourceTree = "<group>"; };
@@ -664,6 +668,7 @@
 		286E11267BBAC06AE9D749FD /* DebugLaunch+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DebugLaunch+Settings.swift"; sourceTree = "<group>"; };
 		290FAD1887FCB280E4FE50A9 /* GuideCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCellTests.swift; sourceTree = "<group>"; };
 		2A9F3406332B0A54141327CD /* AppEnvironmentBackupWiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironmentBackupWiringTests.swift; sourceTree = "<group>"; };
+		2AB1BE13F78D7212DF546781 /* DebugSeedPlaylistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSeedPlaylistTests.swift; sourceTree = "<group>"; };
 		2AC541AF5A8B8B8429031427 /* XmltvTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmltvTimestamp.swift; sourceTree = "<group>"; };
 		2AF81DF98D2526C259FB0CCE /* PanelTimeouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelTimeouts.swift; sourceTree = "<group>"; };
 		2AF8254034B15E419A32B392 /* MyListRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListRows.swift; sourceTree = "<group>"; };
@@ -741,6 +746,7 @@
 		43BCABA7A94FC80307A741D2 /* SettingsBackupManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBackupManagerTests.swift; sourceTree = "<group>"; };
 		44DE5D5EF1C0A602D2AA0FA5 /* ManageGroupsModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageGroupsModelTests.swift; sourceTree = "<group>"; };
 		44F3CEDD0932237B56B5B873 /* ChannelSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSearch.swift; sourceTree = "<group>"; };
+		45B52E4A711E8F95643057F0 /* AppEnvironment+DebugSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppEnvironment+DebugSeed.swift"; sourceTree = "<group>"; };
 		45EA9CD29DD99E44B4BD589A /* OverlayMotionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayMotionView.swift; sourceTree = "<group>"; };
 		4612550684E594CA7F3A2F1E /* PendingZapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingZapTests.swift; sourceTree = "<group>"; };
 		46ACBD5D7804169009B86AF5 /* CatchupBadgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupBadgeTests.swift; sourceTree = "<group>"; };
@@ -1215,6 +1221,7 @@
 			children = (
 				CF9471C2B646C2FEBEF65BD2 /* AppEnvironment.swift */,
 				CED311BCC489DE3BE581EFE2 /* AppEnvironment+CatchupFactory.swift */,
+				45B52E4A711E8F95643057F0 /* AppEnvironment+DebugSeed.swift */,
 				2E7D83D78BE58CA10476BED1 /* AppEnvironment+Factories.swift */,
 				0DA5158A16F52EE7269A4A4C /* AppEnvironment+MyListFactory.swift */,
 				0EB450B91B7A7BBC6E4F07FE /* AppEnvironment+PlaylistFactory.swift */,
@@ -1232,6 +1239,7 @@
 				286E11267BBAC06AE9D749FD /* DebugLaunch+Settings.swift */,
 				A5C4F85C67FC25A6C20A50C1 /* DebugLaunch+Tracks.swift */,
 				2DAD1D9697CAC44DCDB2CE9B /* DebugLaunch+Vod.swift */,
+				1E07CE5E63319B9E088FDB9D /* DebugSeedPlaylist.swift */,
 				B89B5B4B0263D22EA7842260 /* DebugVodEngine.swift */,
 				CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */,
 				7B25194BFD082C9DD98A7935 /* GuideGridModel.swift */,
@@ -1640,6 +1648,7 @@
 				308A11641EDF6FD88F8F435D /* DebugLaunchSearchTests.swift */,
 				1C9B9A456FE757E51945DDFF /* DebugLaunchTests.swift */,
 				65BDBE5840D55195C75CB41F /* DebugLaunchVodTests.swift */,
+				2AB1BE13F78D7212DF546781 /* DebugSeedPlaylistTests.swift */,
 				23427A4417240AC10B0B2C7E /* EpgDownloaderTests.swift */,
 				FEFCF4055097168A8529BFC4 /* EpgOffsetsTests.swift */,
 				3A722ACF8D5F5A0C9BB05E30 /* EpgRefresherTests.swift */,
@@ -2085,6 +2094,7 @@
 				DA1B1BED2B9ADAD4B2BE84FF /* AddPlaylistScreen.swift in Sources */,
 				20790450B4BB88B6CD3C617D /* AppDatabase.swift in Sources */,
 				05EBF5F393F0B4FA0AB1ED10 /* AppEnvironment+CatchupFactory.swift in Sources */,
+				BA1FB602D857652C052C73AE /* AppEnvironment+DebugSeed.swift in Sources */,
 				5551B854AEEB5B981DCA9F5A /* AppEnvironment+Factories.swift in Sources */,
 				2DD028A4AE88B831442A55B2 /* AppEnvironment+MyListFactory.swift in Sources */,
 				DEB85D8DC27BD3D71E240CAE /* AppEnvironment+PlaylistFactory.swift in Sources */,
@@ -2191,6 +2201,7 @@
 				BE8981AC7D8ADDE08A96BC5E /* DebugLaunch+Tracks.swift in Sources */,
 				4170A5AE1CF7072A0B222195 /* DebugLaunch+Vod.swift in Sources */,
 				A640D64B37238FCF71658322 /* DebugLaunch.swift in Sources */,
+				7E0E9FD3AE5F11F1B11172C9 /* DebugSeedPlaylist.swift in Sources */,
 				9254F09F7D2921419A7EF76B /* DebugVodEngine.swift in Sources */,
 				6E3E7F9B098FFDBCB938FBE6 /* EpgAssignmentModel.swift in Sources */,
 				55EB42DB585CAC8C74BE99A1 /* EpgAssignmentScreen.swift in Sources */,
@@ -2507,6 +2518,7 @@
 				4120AC99A6B012157DBE897D /* DebugLaunchSearchTests.swift in Sources */,
 				1E9DD8701A4EA1F4C149BC30 /* DebugLaunchTests.swift in Sources */,
 				7966ECFCD50D1314CEA10A14 /* DebugLaunchVodTests.swift in Sources */,
+				C13C49353CA23F0D30E60589 /* DebugSeedPlaylistTests.swift in Sources */,
 				A4FB7E8AC7A794738332B2B8 /* EpgDownloaderTests.swift in Sources */,
 				5CF520DDBFDBAF6682FE4D5F /* EpgOffsetsTests.swift in Sources */,
 				15845C1CD74E615EAC7DBB0E /* EpgRefreshPolicyTests.swift in Sources */,
