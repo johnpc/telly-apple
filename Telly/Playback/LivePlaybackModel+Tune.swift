@@ -7,6 +7,7 @@ extension LivePlaybackModel {
     /// `TuneController` minus the gate / history / catch-up seams (resolveUrl is
     /// the identity here — no UDP proxy in this slice).
     func tune(_ channel: ChannelEntity) {
+        if blockGate?.intercept(channel) == true { return }
         current = channel
         keepFrame.onZapTune(at: now())
         engine.load(channel.source.streamUrl)
