@@ -9,6 +9,7 @@ extension LivePlaybackScreen {
         if case .pushed = model.overlay, model.activePicker != nil {
             TrackPickerView(title: model.pickerTitle, rows: model.pickerRows,
                             onSelect: { model.selectPickerRow($0) })
+                .overlayTransition(reduceMotion: reduceMotion)
         }
     }
 }

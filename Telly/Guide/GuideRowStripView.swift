@@ -32,16 +32,14 @@ struct GuideRowStripView: View {
             .frame(width: placement.width, height: GuideGeometry.rowHeight, alignment: .leading)
             .background(cell.hasInfo ? Color.gray.opacity(0.25) : Color.clear)
             .overlay(RoundedRectangle(cornerRadius: 4).stroke(.white.opacity(0.15)))
-            .overlay(focusRing(cell))
+            .tellyFocus(isFocused(cell), cornerRadius: 4)
             .offset(x: placement.offset)
             .onTapGesture { onTap(cell) }
     }
 
-    @ViewBuilder private func focusRing(_ cell: GuideCell) -> some View {
-        #if os(tvOS)
-        if model.focus?.rowIndex == rowIndex, model.focus?.cell == cell {
-            RoundedRectangle(cornerRadius: 4).stroke(.white, lineWidth: 3)
-        }
-        #endif
+    /// The app's model-driven focus for this cell (tvOS D-pad); nil elsewhere, so
+    /// the shared treatment stays dormant on platforms without guide focus.
+    private func isFocused(_ cell: GuideCell) -> Bool {
+        model.focus?.rowIndex == rowIndex && model.focus?.cell == cell
     }
 }

@@ -10,6 +10,7 @@ struct LivePlaybackScreen: View {
     /// Custom groups surfaced in the panel's group column, forwarded to
     /// ``ChannelPanelView``; empty by default so existing call sites are unchanged.
     let customGroups: [CustomGroup]
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     init(model: LivePlaybackModel, customGroups: [CustomGroup] = []) {
         _model = State(initialValue: model)
@@ -31,6 +32,7 @@ struct LivePlaybackScreen: View {
             PlaybackCloseButton()
             #endif
         }
+        .animation(Motion.gated(Motion.overlayIn, reduceMotion: reduceMotion), value: model.overlay)
         .task {
             model.start()
             while !Task.isCancelled {
@@ -52,21 +54,9 @@ struct LivePlaybackScreen: View {
         #endif
     }
 
-    @ViewBuilder private var multiviewOverlay: some View {
-        if case .multiview = model.overlay, let session = model.multiview {
-            MultiviewGridView(session: session)
-        }
-    }
-
     @ViewBuilder private var surface: some View {
         if let vlc = model.engine as? VLCKitPlayerEngine {
             VideoSurfaceView(engine: vlc).ignoresSafeArea()
-        }
-    }
-
-    @ViewBuilder private var zapOverlay: some View {
-        if case .zapInfo = model.overlay {
-            ZapOverlayView(channel: model.current)
         }
     }
 
@@ -75,24 +65,13 @@ struct LivePlaybackScreen: View {
         case .info:
             InfoOverlayView(channel: model.current, nowNext: model.currentInfo,
                             nowMs: model.now(), expanded: false)
+                .overlayTransition(reduceMotion: reduceMotion)
         case .infoTransport:
             InfoOverlayView(channel: model.current, nowNext: model.currentInfo,
                             nowMs: model.now(), expanded: true)
+                .overlayTransition(reduceMotion: reduceMotion)
         default:
             EmptyView()
-        }
-    }
-
-    @ViewBuilder private var quickBarOverlay: some View {
-        if case .quickBar = model.overlay {
-            QuickBarView(video: model.engine.video, subtitles: model.quickBarSubtitles,
-                         sync: model.quickBarSync, onAction: { model.onQuickBarAction($0) })
-        }
-    }
-
-    @ViewBuilder private var stateOverlay: some View {
-        if !model.holdsLastFrame {
-            PlaybackStateOverlay(state: model.engine.state)
         }
     }
 }

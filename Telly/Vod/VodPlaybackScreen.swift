@@ -10,6 +10,7 @@ import SwiftUI
 /// button and a tap/swipe mapped onto the same vocabulary. BACK persists+exits.
 struct VodPlaybackScreen: View {
     @State var model: VodPlaybackModel
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     init(model: VodPlaybackModel) { _model = State(initialValue: model) }
 
@@ -27,6 +28,8 @@ struct VodPlaybackScreen: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             #endif
         }
+        .animation(Motion.gated(Motion.overlayIn, reduceMotion: reduceMotion),
+                   value: model.visibility.visible)
         .task {
             model.start()
             while !Task.isCancelled {

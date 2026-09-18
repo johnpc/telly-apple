@@ -47,12 +47,6 @@ struct ChannelPanelGroupsColumnView: View {
             .foregroundStyle(selected ? .white : .white.opacity(0.55))
             .padding(.vertical, 10)
             .padding(.horizontal, 16)
-            .background(highlight(selected))
-    }
-
-    @ViewBuilder private func highlight(_ selected: Bool) -> some View {
-        if selected {
-            RoundedRectangle(cornerRadius: 8).fill(.white.opacity(0.18))
-        }
+            .tellyFocus(selected)
     }
 }

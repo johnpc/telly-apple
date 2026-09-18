@@ -33,6 +33,9 @@ ENTRY_POINTS = {
     "body", "main", "placeholder", "getSnapshot", "getTimeline",
     "makeUIView", "updateUIView", "makeUIViewController",
     "updateUIViewController", "makeCoordinator",
+    # SwiftUI ButtonStyle/ViewModifier witness invoked by the framework when it
+    # styles a control (no static call site exists, like `body`).
+    "makeBody",
     # UIKit / delegate witnesses
     "application", "sceneDidBecomeActive", "textFieldDidChangeSelection",
     "textField", "textInputMode",

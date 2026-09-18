@@ -33,7 +33,7 @@ struct ChannelPanelRowsColumnView: View {
         .foregroundStyle(.white)
         .padding(.vertical, 10)
         .padding(.horizontal, 16)
-        .background(focused ? Color.white.opacity(0.18) : .clear)
+        .tellyFocus(focused)
     }
 
     @ViewBuilder private func programme(_ row: PanelRowInfo) -> some View {

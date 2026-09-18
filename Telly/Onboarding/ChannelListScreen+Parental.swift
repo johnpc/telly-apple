@@ -9,7 +9,11 @@ import SwiftUI
 extension ChannelListScreen {
     @ViewBuilder func row(_ channel: ChannelEntity) -> some View {
         Button { tapped(channel) } label: { ChannelListRowView(channel: channel) }
+            #if os(tvOS)
             .buttonStyle(.plain)
+            #else
+            .buttonStyle(TellyPressButtonStyle())
+            #endif
             .contextMenu {
                 Button(channel.flags.favorite ? "Remove Favorite" : "Add to Favorites") {
                     model.toggleFavorite(channel)
@@ -27,6 +31,7 @@ extension ChannelListScreen {
         if parental.mustChallenge(channel) {
             challenge = ParentalChannelBox(channel: channel)
         } else {
+            TellyHaptics.selection()
             target = PlaybackTarget(id: channel.id, url: channel.source.streamUrl)
         }
     }

@@ -32,6 +32,7 @@ struct GuideChannelTileView: View {
         .padding(.horizontal, 10)
         .frame(width: width, height: GuideGeometry.rowHeight, alignment: .leading)
         .overlay(Divider(), alignment: .bottom)
+        .tellyFocus(active, cornerRadius: 4)
         #if !os(tvOS)
         .onHover { hovering = $0 }
         #endif

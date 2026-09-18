@@ -12,7 +12,7 @@ struct ChannelGroupPickerView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(groups, id: \.self) { group in
-                    Button(group) { onSelect(group) }
+                    Button(group) { TellyHaptics.selection(); onSelect(group) }
                         .buttonStyle(.bordered)
                         .tint(group == selected ? .accentColor : .secondary)
                 }

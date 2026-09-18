@@ -7,6 +7,7 @@ import SwiftUI
 struct ContentView: View {
     @State var env = AppEnvironment.makeShared()
     @State var adding = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     #if DEBUG
     @State var liveModel: LivePlaybackModel?
     @State var guideModel: GuideGridModel?
@@ -38,7 +39,7 @@ struct ContentView: View {
     var mainContent: some View {
         Group {
             if env.playlists.isEmpty {
-                WelcomeView(onAdd: { adding = true })
+                WelcomeView(onAdd: { adding = true }).routeTransition()
             } else {
                 ChannelListScreen(model: env.channelListModel,
                                   makeEngine: env.makeEngine,
@@ -57,8 +58,11 @@ struct ContentView: View {
                                   settings: env.settings,
                                   parental: env.parentalStore,
                                   onAdd: { adding = true })
+                .routeTransition()
             }
         }
+        .animation(Motion.gated(Motion.route, reduceMotion: reduceMotion),
+                   value: env.playlists.isEmpty)
         .fullScreenCover(isPresented: $adding) {
             AddPlaylistScreen(model: env.makeAddPlaylistModel()) {
                 adding = false

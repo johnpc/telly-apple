@@ -11,6 +11,7 @@ extension LivePlaybackScreen {
             ChannelPanelView(channels: model.channels, current: model.current,
                              nowNext: model.nowNext, nowMs: model.now(),
                              customGroups: customGroups)
+                .overlayTransition(reduceMotion: reduceMotion)
         }
     }
 }

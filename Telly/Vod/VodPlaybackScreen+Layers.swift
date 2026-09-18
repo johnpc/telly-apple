@@ -16,6 +16,7 @@ extension VodPlaybackScreen {
             if model.visibility.visible {
                 VodTransportView(title: model.item?.name ?? "",
                                  progress: model.progress, isPaused: model.isPaused)
+                    .overlayTransition(reduceMotion: reduceMotion)
             }
         case .loading:
             EmptyView()
