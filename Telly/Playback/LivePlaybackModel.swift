@@ -31,6 +31,8 @@ final class LivePlaybackModel {
     let blockGate: PlaybackBlockGate?
 
     var visibility = OverlayVisibility()
+    /// Which live-transport control the expanded `.infoTransport` row has focused.
+    var transportFocus: LiveTransportButton = .playPause
     var pendingZap = PendingZap()
     var keepFrame = ZapKeepFrame()
     let keymap: PlayerKeymap

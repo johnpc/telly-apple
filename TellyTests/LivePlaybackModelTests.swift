@@ -341,4 +341,80 @@ struct LivePlaybackModelTests {
         model.start()
         #expect(model.currentInfo?.now?.details.title == "On Now")
     }
+
+    // MARK: - Live transport row (infoTransport)
+
+    /// Drive a fresh model to the expanded transport overlay (bare → info →
+    /// infoTransport), tuned to ch10, ready for transport-key assertions.
+    private func expandedTransport(_ harness: Harness) -> LivePlaybackModel {
+        harness.stored = 10
+        let model = harness.makeModel(channels)
+        model.start()
+        _ = model.onKey(.up)                     // → info
+        _ = model.onKey(.up)                     // → infoTransport
+        return model
+    }
+
+    @Test func okTogglesFocusedPlayPause() {
+        let harness = Harness()
+        let model = expandedTransport(harness)
+        #expect(model.overlay == .infoTransport)
+        #expect(model.transportFocus == .playPause)   // default focus
+        #expect(model.onKey(.ok) == true)             // activate → togglePlayPause
+        #expect(harness.engine.paused == true)
+        _ = model.onKey(.ok)
+        #expect(harness.engine.paused == false)       // toggles back
+    }
+
+    @Test func leftRightWalkTransportFocusClamped() {
+        let model = expandedTransport(Harness())
+        _ = model.onKey(.right)
+        #expect(model.transportFocus == .channelUp)
+        _ = model.onKey(.right)
+        #expect(model.transportFocus == .channelUp)   // clamped at the right end
+        _ = model.onKey(.left)
+        #expect(model.transportFocus == .playPause)
+        _ = model.onKey(.left)
+        #expect(model.transportFocus == .channelDown)
+        _ = model.onKey(.left)
+        #expect(model.transportFocus == .channelDown) // clamped at the left end
+    }
+
+    @Test func activatingChannelDownZapsWithWrap() {
+        let harness = Harness()
+        let model = expandedTransport(harness)
+        _ = model.onKey(.left)                        // focus channelDown
+        _ = model.onKey(.ok)                          // activate → zap(-1)
+        #expect(model.overlay == .zapInfo)
+        harness.clock = 300
+        model.tick()                                  // settle → wrap ch10 → ch30
+        #expect(model.current?.id == 30)
+    }
+
+    @Test func tapTransportFocusesAndActivates() {
+        let harness = Harness()
+        let model = expandedTransport(harness)
+        model.tapTransport(.playPause)
+        #expect(model.transportFocus == .playPause)
+        #expect(harness.engine.paused == true)
+        model.tapTransport(.channelUp)
+        #expect(model.transportFocus == .channelUp)
+        #expect(model.overlay == .zapInfo)            // channel tap arms a zap
+    }
+
+    @Test func liveTransportNeverSeeksTheEngine() {
+        let harness = Harness()
+        let model = expandedTransport(harness)
+        _ = model.onKey(.ok)                          // play/pause
+        _ = model.onKey(.right); _ = model.onKey(.ok) // channel up → zap
+        harness.clock = 300; model.tick()
+        #expect(harness.engine.seeks.isEmpty)         // live is not arbitrarily seekable
+    }
+
+    @Test func debugPresentTransportOverlayPinsOverlayAndHoldsFrame() {
+        let model = Harness().makeModel(channels)
+        model.debugPresentTransportOverlay()
+        #expect(model.overlay == .infoTransport)
+        #expect(model.holdsLastFrame == true)
+    }
 }

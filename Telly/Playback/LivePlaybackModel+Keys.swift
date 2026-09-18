@@ -45,6 +45,12 @@ extension LivePlaybackModel {
             promoteMultiviewActive()
         case .exitMultiview:
             exitMultiview()
+        case .togglePlayPause:
+            togglePlayPause()
+        case let .moveTransportFocus(delta):
+            transportFocus = transportFocus.moved(by: delta)
+        case .activateTransport:
+            execute(transportFocus.command)
         case .nothing:
             break
         }

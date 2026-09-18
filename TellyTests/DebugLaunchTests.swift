@@ -91,6 +91,12 @@ struct DebugLaunchTests {
         #expect(!DebugLaunch.forcedInfoOverlay(in: ["Telly"]))
     }
 
+    @Test func forcedTransportOverlayReadsFlag() {
+        #expect(DebugLaunch.forcedTransportOverlay(in: ["Telly", "-tellyOverlay", "transport"]))
+        #expect(!DebugLaunch.forcedTransportOverlay(in: ["Telly", "-tellyOverlay", "info"]))
+        #expect(!DebugLaunch.forcedTransportOverlay(in: ["Telly"]))
+    }
+
     @Test func forcedQuickBarOverlayReadsFlag() {
         #expect(DebugLaunch.forcedQuickBarOverlay(in: ["Telly", "-tellyOverlay", "quickBar"]))
         #expect(!DebugLaunch.forcedQuickBarOverlay(in: ["Telly", "-tellyOverlay", "zap"]))

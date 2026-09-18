@@ -40,12 +40,13 @@ extension ContentView {
     }
 
     func seedInfoOverlayIfRequested(_ model: LivePlaybackModel) {
-        guard DebugLaunch.forcedInfoOverlay(in: debugArgs) else { return }
+        let transport = DebugLaunch.forcedTransportOverlay(in: debugArgs)
+        guard transport || DebugLaunch.forcedInfoOverlay(in: debugArgs) else { return }
         let nowMs = Int(Date().timeIntervalSince1970 * 1_000)
         try? env.programStore.upsertReplacing(
             document: DebugLaunch.infoFixtureDocument(nowMs: nowMs), keepDescriptions: false)
         env.guideEpgStore.refresh()
-        model.debugPresentInfoOverlay()
+        if transport { model.debugPresentTransportOverlay() } else { model.debugPresentInfoOverlay() }
     }
 }
 #endif

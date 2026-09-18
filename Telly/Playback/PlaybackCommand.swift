@@ -34,6 +34,12 @@ enum PlaybackCommand: Equatable, Sendable {
     case promoteMultiviewActive
     /// Leave multiview, returning to single-stream playback.
     case exitMultiview
+    /// Toggle live play/pause (freeze / resume the stream).
+    case togglePlayPause
+    /// Move the focused live-transport control one step (-1 left, +1 right).
+    case moveTransportFocus(Int)
+    /// Activate the focused live-transport control (its own command runs).
+    case activateTransport
     /// The key is unbound in this context: do nothing.
     case nothing
 }

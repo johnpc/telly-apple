@@ -25,7 +25,7 @@ enum PlaybackKeyPolicy {
         switch overlay {
         case .none: return atBarePlayback(key, keymap)
         case .info: return withinInfo(key, onUp: .showTransport)
-        case .infoTransport: return withinInfo(key, onUp: nil)
+        case .infoTransport: return withinTransport(key)
         case .zapInfo: return withinZap(key, keymap)
         case .channelMenu: return dismissalOnly(key, .backToPanel)
         case .pushed(let back): return dismissalOnly(key, .popTo(back))
@@ -34,18 +34,6 @@ enum PlaybackKeyPolicy {
         case .quickBar: return key == .ok ? .openMultiview : dismissalOnly(key, .dismiss)
         case .panel: return dismissalOnly(key, .dismiss)
         case .multiview: return withinMultiview(key)
-        }
-    }
-
-    private static func withinMultiview(_ key: PlaybackKey) -> PlaybackCommand? {
-        switch key {
-        case .up: return .moveMultiviewActive(.up)
-        case .down: return .moveMultiviewActive(.down)
-        case .left: return .moveMultiviewActive(.left)
-        case .right: return .moveMultiviewActive(.right)
-        case .ok: return .promoteMultiviewActive
-        case .back, .menu: return .exitMultiview
-        default: return nil
         }
     }
 
@@ -62,6 +50,18 @@ enum PlaybackKeyPolicy {
         case .menu: return .openQuickBar
         case .back: return .exitToGuide
         case .rewind, .fastForward: return nil
+        }
+    }
+
+    /// The expanded transport row: OK activates the focused control, LEFT/RIGHT
+    /// walk the focus across it; every other key keeps its info-overlay meaning
+    /// (DOWN opens the panel, MENU the quick-bar, CH± zap, BACK dismisses).
+    private static func withinTransport(_ key: PlaybackKey) -> PlaybackCommand? {
+        switch key {
+        case .ok: return .activateTransport
+        case .left: return .moveTransportFocus(-1)
+        case .right: return .moveTransportFocus(1)
+        default: return withinInfo(key, onUp: nil)
         }
     }
 

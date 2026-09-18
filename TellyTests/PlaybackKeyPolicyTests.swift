@@ -51,6 +51,14 @@ struct PlaybackKeyPolicyTests {
         Row(overlay: .infoTransport, key: .up, expected: .nothing),
         Row(overlay: .infoTransport, key: .back, expected: .dismiss),
         Row(overlay: .infoTransport, key: .down, expected: .openPanel),
+        // The expanded row's own controls: OK activates the focused button,
+        // LEFT/RIGHT walk the focus, CH± still zap and MENU still opens the bar.
+        Row(overlay: .infoTransport, key: .ok, expected: .activateTransport),
+        Row(overlay: .infoTransport, key: .left, expected: .moveTransportFocus(-1)),
+        Row(overlay: .infoTransport, key: .right, expected: .moveTransportFocus(1)),
+        Row(overlay: .infoTransport, key: .menu, expected: .openQuickBar),
+        Row(overlay: .infoTransport, key: .channelUp, expected: .zap(delta: 1)),
+        Row(overlay: .infoTransport, key: .channelDown, expected: .zap(delta: -1)),
     ]
 
     static let zap: [Row] = [

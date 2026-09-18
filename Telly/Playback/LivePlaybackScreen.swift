@@ -68,7 +68,10 @@ struct LivePlaybackScreen: View {
                 .overlayTransition(reduceMotion: reduceMotion)
         case .infoTransport:
             InfoOverlayView(channel: model.current, nowNext: model.currentInfo,
-                            nowMs: model.now(), expanded: true)
+                            nowMs: model.now(), expanded: true,
+                            transportFocus: model.transportFocus,
+                            isPaused: model.engine.paused,
+                            onTransport: { model.tapTransport($0) })
                 .overlayTransition(reduceMotion: reduceMotion)
         default:
             EmptyView()
