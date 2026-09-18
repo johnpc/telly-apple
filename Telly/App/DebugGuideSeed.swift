@@ -40,6 +40,19 @@ extension DebugLaunch {
                          titles: ["Feature Film", "Short Reel", "Cinema Classics", "Late Movie"]))
     }
 
+    /// Adds one channel whose name overflows the guide's fixed column, so the
+    /// name-marquee (scroll-on-focus/hover) can be recorded. Its own source URL
+    /// keeps re-add safe; a no-op unless `-tellyGuideLongName` is set.
+    static func seedLongNameChannel(into store: PlaylistStore, base: String,
+                                    args: [String], now: () -> Int64) {
+        guard args.contains("-tellyGuideLongName") else { return }
+        _ = try? store.add(sourceUrl: base + "longname.m3u",
+                           playlist: M3uPlaylist(epgURL: nil, channels: [
+                               channel(title: "Ultra HD Premium Sports Network International 4K",
+                                       group: "Live", file: "long.ts", base: base)]),
+                           name: "LongName", nowMs: now())
+    }
+
     private static func guideStrip(channelId: String, from start: Int,
                                    titles: [String]) -> [XmltvProgram] {
         let half = GuideGeometry.halfHourMs

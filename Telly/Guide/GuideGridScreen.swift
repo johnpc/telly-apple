@@ -51,7 +51,8 @@ struct GuideGridScreen: View {
     private var grid: some View {
         ScrollView(.vertical, showsIndicators: false) {
             HStack(alignment: .top, spacing: 0) {
-                GuideChannelColumnView(rows: model.rows, width: columnWidth, compact: compact)
+                GuideChannelColumnView(rows: model.rows, width: columnWidth,
+                                       compact: compact, activeRowIndex: activeRow)
                 GuideRowsPaneView(model: model, compact: compact, onActivate: activate)
             }
         }
@@ -63,6 +64,8 @@ struct GuideGridScreen: View {
     private var columnWidth: CGFloat { compact ? 168 : GuideGeometry.channelColumnWidth }
     #if os(tvOS)
     private var compact: Bool { false }
+    /// The focused row whose channel name marquees (D-pad focus is the cursor).
+    private var activeRow: Int? { model.focus?.rowIndex }
     private func move(_ direction: MoveCommandDirection) {
         switch direction {
         case .left: model.focusLeft()
@@ -79,6 +82,8 @@ struct GuideGridScreen: View {
     }
     #else
     private var compact: Bool { sizeClass == .compact }
+    /// No D-pad cursor off tvOS — the pointer hover drives the marquee per tile.
+    private var activeRow: Int? { nil }
     private var scrollDrag: some Gesture {
         DragGesture()
             .onChanged {

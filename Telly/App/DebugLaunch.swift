@@ -66,10 +66,11 @@ enum DebugLaunch {
     }
 
     /// Seeds the fixture playlist rooted at `-tellySeedBase <http://host:port/>`
-    /// so the app lands on the channel list. Re-adds by source URL, so it is
-    /// safe to relaunch. A no-op when the flag is absent.
+    /// so the app lands on the channel list; re-adds by source URL (relaunch-safe).
     static func seedIfRequested(into store: PlaylistStore, args: [String], now: () -> Int64) {
         guard let base = value(for: "-tellySeedBase", in: args) else { return }
+        // First (lower `sortIndex`) so the long name lands on row 0 (initial focus).
+        seedLongNameChannel(into: store, base: base, args: args, now: now)
         _ = try? store.add(sourceUrl: base + "playlist.m3u",
                            playlist: fixturePlaylist(base: base),
                            name: "Fixtures", nowMs: now())
@@ -84,8 +85,8 @@ enum DebugLaunch {
         ])
     }
 
-    private static func channel(title: String, group: String, file: String,
-                                base: String, tvgID: String? = nil) -> M3uChannel {
+    static func channel(title: String, group: String, file: String,
+                        base: String, tvgID: String? = nil) -> M3uChannel {
         M3uChannel(title: title, streamURL: base + file, tvgID: tvgID, tvgName: nil,
                    tvgLogo: nil, groupTitle: group, catchup: nil,
                    catchupSource: nil, catchupDays: nil)
