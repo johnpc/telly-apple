@@ -13,8 +13,13 @@ extension GuideGridModel {
     }
 
     /// The now-line's on-screen x, or nil when the current instant is off-pane.
+    /// Reads `nowMs` (not `now()`) so it re-renders only when `tick()` advances it.
     var nowLineOffset: CGFloat? {
-        GuideTimeline.nowLineOffset(nowMs: now(), originMs: originMs,
+        GuideTimeline.nowLineOffset(nowMs: nowMs, originMs: originMs,
                                     scrollX: scrollX, viewport: viewport)
     }
+
+    /// Re-reads the injected clock so the now-line advances to the current
+    /// instant on the next render; the view fires this once a minute.
+    func tick() { nowMs = now() }
 }

@@ -25,7 +25,8 @@ struct GuideGridModelTests {
     /// Seeds channels a/b/c: a carries Prev/Now/Next back-to-back around the
     /// origin, b carries a single future OnlyB (shifted by `offsetB` minutes), c
     /// is dataless. Returns a loaded model at a fixed UTC clock on the origin.
-    func makeModel(offsetB: Int = 0, viewport: CGFloat = 960) throws -> GuideGridModel {
+    func makeModel(offsetB: Int = 0, viewport: CGFloat = 960,
+                   now: @escaping () -> Int = { GuideGridModelTests.originMs }) throws -> GuideGridModel {
         let o = Self.originMs
         let db = try AppDatabase.makeInMemory()
         _ = try PlaylistStore(db: db).add(
@@ -43,7 +44,7 @@ struct GuideGridModelTests {
             prog("b", o + 1_800_000, o + 3_600_000, "OnlyB")]), keepDescriptions: true)
         let model = GuideGridModel(
             channelStore: ChannelStore(db: db),
-            repository: EpgRepository(store: ProgramStore(db: db)), now: { o },
+            repository: EpgRepository(store: ProgramStore(db: db)), now: now,
             timeZone: TimeZone(identifier: "UTC")!, is24h: true, viewport: viewport)
         model.load()
         return model
@@ -108,6 +109,16 @@ struct GuideGridModelTests {
         #expect(model.nowLineOffset == 0)  // now == origin → left edge
         model.scrollTime(byPoints: GuideGeometry.pointsPer30Min)  // pan now off the left edge
         #expect(model.nowLineOffset == nil)
+    }
+
+    @Test func tickAdvancesTheNowLineToTheCurrentInstant() throws {
+        var clockMs = Self.originMs
+        let model = try makeModel(now: { clockMs })
+        #expect(model.nowLineOffset == 0)                 // now == origin at load
+        clockMs += GuideGeometry.halfHourMs               // 30 min elapse
+        #expect(model.nowLineOffset == 0)                 // stale until a tick fires
+        model.tick()
+        #expect(model.nowLineOffset == GuideGeometry.pointsPer30Min)
     }
 
     @Test func setViewportRematerializesAndClamps() throws {

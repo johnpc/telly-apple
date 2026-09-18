@@ -264,6 +264,7 @@
 		71DA9E9C3C65C20EF361A49F /* VodTransportVisibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C44A6D91E4211A6DC2158E /* VodTransportVisibilityTests.swift */; };
 		733C6A8243CC0BD54E9176D5 /* GuideTimeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EF55F10AC0B083FBFCA674 /* GuideTimeHeaderView.swift */; };
 		7349CC66A93701D5D0B0F98A /* PlaybackBadges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A49A7D5F0B7ED807A9C851 /* PlaybackBadges.swift */; };
+		740E3A1BF6D4017DAEE5E8A9 /* GuideSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E646C4BCE1A182037E35DE /* GuideSurface.swift */; };
 		7557143B1AED83A7F2CF413C /* LivePlaybackMultiviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B0BC95708F0CAB7D0393C /* LivePlaybackMultiviewTests.swift */; };
 		755C01D6E86956DFA5DACFFE /* PlaylistKeyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80065BE343C89835E0022337 /* PlaylistKeyPlan.swift */; };
 		7714F8EC48DF7BB7A51D3BB5 /* ProgramProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80C029B86421C213027249E /* ProgramProgress.swift */; };
@@ -704,6 +705,7 @@
 		3272B88032BFC94FFBD5ACCC /* ChannelListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListRowView.swift; sourceTree = "<group>"; };
 		32DCBF47A29B0EC78A3E47D8 /* QuickBarItemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBarItemsTests.swift; sourceTree = "<group>"; };
 		32E239E7041C5DE4F3401807 /* InfoProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoProgramView.swift; sourceTree = "<group>"; };
+		32E646C4BCE1A182037E35DE /* GuideSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSurface.swift; sourceTree = "<group>"; };
 		33AA761F0C2AC5B545A070F9 /* HttpUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpUrl.swift; sourceTree = "<group>"; };
 		33BDCF967A7D0A75E987266A /* GuideTimelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideTimelineTests.swift; sourceTree = "<group>"; };
 		33ECD2B26CBDCC3BDB1B3E70 /* UserDefaultsKeyValueStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeyValueStoreTests.swift; sourceTree = "<group>"; };
@@ -1479,6 +1481,7 @@
 				A4F163EE27FE6DAF0699F8EF /* GuideNowLineView.swift */,
 				D0A5275436780E1D9C03F2E3 /* GuideRowsPaneView.swift */,
 				AA3E24FC39140ECDC0F4307B /* GuideRowStripView.swift */,
+				32E646C4BCE1A182037E35DE /* GuideSurface.swift */,
 				E4EF55F10AC0B083FBFCA674 /* GuideTimeHeaderView.swift */,
 				1C5FA37F4114F147F7953A18 /* MarqueeMetrics.swift */,
 				0DCA26DB07AD73797203CF8C /* MarqueeTextView.swift */,
@@ -2244,6 +2247,7 @@
 				488B9AD594D144F484F648AF /* GuideRowsBuilder.swift in Sources */,
 				6EDE2079FDB84E79B7150E56 /* GuideRowsPaneView.swift in Sources */,
 				56034EA045F78BD9D1614C67 /* GuideSelection.swift in Sources */,
+				740E3A1BF6D4017DAEE5E8A9 /* GuideSurface.swift in Sources */,
 				733C6A8243CC0BD54E9176D5 /* GuideTimeHeaderView.swift in Sources */,
 				4C62F1A6C8E975C47A08748D /* GuideTimeline.swift in Sources */,
 				C1AF9299F78EC482EFDDBAEC /* GuideWindow.swift in Sources */,

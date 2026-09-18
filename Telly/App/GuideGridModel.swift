@@ -4,8 +4,8 @@ import Foundation
 /// The guide grid's observable state + actions: snapshots the visible channels,
 /// floors "now" to the window origin, materialises the rows for the current
 /// scroll window (via the pure `GuideWindowMath`/`GuideRowsBuilder`/`GuideFocusNav`
-/// maths), and drives scroll/select/focus. `now` is injected and read only at
-/// `load`/scroll (no live tick, DECISION 4). Focus actions: `GuideGridModel+Focus`.
+/// maths), and drives scroll/select/focus. `now` is injected; `nowMs` snapshots
+/// it so the view's per-minute `tick()` advances the now-line. `+Focus` for focus.
 @MainActor
 @Observable
 final class GuideGridModel {
@@ -26,6 +26,7 @@ final class GuideGridModel {
     private(set) var rows: [GuideRow] = []
     private(set) var channels: [ChannelEntity] = []
     private(set) var focus: GuideFocus?
+    var nowMs = 0  // clock the now-line tracks; `tick()` (in `+View`) refreshes it
 
     init(channelStore: ChannelStore, repository: EpgRepository, now: @escaping () -> Int,
          timeZone: TimeZone, is24h: Bool, viewport: CGFloat = 960) {
@@ -42,6 +43,7 @@ final class GuideGridModel {
     func load() {
         channels = (try? channelStore.visibleChannels()) ?? []
         originMs = GuideGeometry.halfHourFloor(now(), timeZone: timeZone)
+        nowMs = now()
         materializeRows()
     }
 
