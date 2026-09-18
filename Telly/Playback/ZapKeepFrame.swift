@@ -14,8 +14,14 @@ struct ZapKeepFrame: Equatable {
 
     init(graceMs: Int = 5_500) { self.graceMs = graceMs }
 
-    mutating func onZapTune(at nowMs: Int) { holdUntilMs = nowMs + graceMs }
+    mutating func onZapTune(at nowMs: Int) { arm(at: nowMs) }
+    /// A reconnect (live drop) arms the same frozen-frame hold as a zap, so the
+    /// re-buffering that follows shows the last frame under the "Reconnecting…"
+    /// pill instead of flashing a buffering spinner.
+    mutating func onReconnect(at nowMs: Int) { arm(at: nowMs) }
     mutating func onPlaying() { holdUntilMs = nil }
+
+    private mutating func arm(at nowMs: Int) { holdUntilMs = nowMs + graceMs }
 
     /// True while a fresh zap is settling and the engine is not yet playing.
     func holdsLastFrame(state: PlayerState, at nowMs: Int) -> Bool {

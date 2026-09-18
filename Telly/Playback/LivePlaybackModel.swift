@@ -86,7 +86,7 @@ final class LivePlaybackModel {
         current = ChannelZapper.restore(channels, lastChannelId: loadLastChannel())
         guard let channel = current else { return }
         if blockGate?.intercept(channel) == true { current = nil; return }
-        engine.load(channel.source.streamUrl)
+        engine.load(channel.source.streamUrl, isLive: true)
         persistLastChannel(channel.id)
     }
 }

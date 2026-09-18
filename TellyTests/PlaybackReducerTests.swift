@@ -33,6 +33,33 @@ struct PlaybackReducerTests {
         #expect(reducer.state == .ended)
     }
 
+    @Test func finiteEndedFinishes() {
+        var reducer = PlaybackReducer()
+        reducer.onLoad()
+        let effect = reducer.onVlcState(.ended)
+        #expect(effect == nil)
+        #expect(reducer.state == .ended)
+    }
+
+    @Test func liveEndedReconnects() {
+        var reducer = PlaybackReducer()
+        reducer.isLive = true
+        reducer.onLoad()
+        let effect = reducer.onVlcState(.ended)
+        #expect(effect == .reconnect(delayMs: 1_000))
+        #expect(reducer.state == .reconnecting)
+    }
+
+    @Test func liveEndedFailsWhenBudgetSpent() {
+        var reducer = PlaybackReducer()
+        reducer.isLive = true
+        reducer.onLoad()
+        for _ in 0..<6 { _ = reducer.onVlcState(.ended) }
+        let effect = reducer.onVlcState(.ended)
+        #expect(effect == .fail)
+        #expect(reducer.state == .error(PlaybackReducer.connectionLostMessage))
+    }
+
     @Test func stoppedReturnsToIdle() {
         var reducer = PlaybackReducer()
         reducer.onPlaying()

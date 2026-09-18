@@ -41,7 +41,7 @@ extension CatchupPlaybackModel {
     func toLive() {
         guard let channel = state?.request.channel else { return }
         state = nil
-        engine.load(channel.source.streamUrl)
+        engine.load(channel.source.streamUrl, isLive: true)
     }
 
     /// BACK at bare catch-up: to live when entered from live, else exit to guide.

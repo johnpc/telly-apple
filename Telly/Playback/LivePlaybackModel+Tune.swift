@@ -10,7 +10,7 @@ extension LivePlaybackModel {
         if blockGate?.intercept(channel) == true { return }
         current = channel
         keepFrame.onZapTune(at: now())
-        engine.load(channel.source.streamUrl)
+        engine.load(channel.source.streamUrl, isLive: true)
         persistLastChannel(channel.id)
     }
 
@@ -19,6 +19,7 @@ extension LivePlaybackModel {
     func tick() {
         visibility.resolve(at: now())
         if let delta = pendingZap.resolve(at: now()) { performZap(delta) }
+        if engine.state == .reconnecting { keepFrame.onReconnect(at: now()) }
         if engine.state == .playing { keepFrame.onPlaying() }
     }
 

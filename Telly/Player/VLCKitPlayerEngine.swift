@@ -33,8 +33,9 @@ final class VLCKitPlayerEngine: PlayerEngine {
         set { player.drawable = newValue }
     }
 
-    func load(_ streamUrl: String) {
+    func load(_ streamUrl: String, isLive: Bool) {
         retry?.cancel()
+        reducer.isLive = isLive
         reducer.onLoad(); state = reducer.state
         guard let url = URL(string: streamUrl) else { return }
         player.media = VLCMedia(url: url)

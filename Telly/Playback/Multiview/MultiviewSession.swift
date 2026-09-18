@@ -37,7 +37,7 @@ final class MultiviewSession {
     /// Tunes each tile's stream (index-aligned) and applies the mute policy.
     func start() {
         for (index, engine) in engines.enumerated() where grid.cells.indices.contains(index) {
-            engine.load(grid.cells[index].streamUrl)
+            engine.load(grid.cells[index].streamUrl, isLive: true)
         }
         applyAudio()
     }

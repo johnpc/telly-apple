@@ -16,12 +16,15 @@ final class FakePlayerEngine: PlayerEngine {
     var tracks: TrackFacade = NoTracks()
 
     private(set) var loaded: [String] = []
+    private(set) var loadedLive: [Bool] = []
     private(set) var stopCount = 0
     private(set) var releaseCount = 0
     private(set) var muted = false
     private(set) var seeks: [Int] = []
 
-    func load(_ streamUrl: String) { loaded.append(streamUrl) }
+    func load(_ streamUrl: String, isLive: Bool) {
+        loaded.append(streamUrl); loadedLive.append(isLive)
+    }
     func stop() { stopCount += 1 }
     func release() { releaseCount += 1 }
     func pause() { paused = true }

@@ -38,4 +38,23 @@ struct ZapKeepFrameTests {
         keep.onZapTune(at: 0)
         #expect(keep.holdsLastFrame(state: .error("x"), at: 100) == false)
     }
+
+    @Test func holdsFrameWhileBufferingDuringReconnect() {
+        var keep = ZapKeepFrame(graceMs: 5_500)
+        keep.onReconnect(at: 0)
+        #expect(keep.holdsLastFrame(state: .buffering, at: 100) == true)
+    }
+
+    @Test func stopsHoldingAfterReconnectGrace() {
+        var keep = ZapKeepFrame(graceMs: 5_500)
+        keep.onReconnect(at: 0)
+        #expect(keep.holdsLastFrame(state: .buffering, at: 5_500) == false)
+    }
+
+    @Test func onPlayingClearsReconnectHold() {
+        var keep = ZapKeepFrame(graceMs: 5_500)
+        keep.onReconnect(at: 0)
+        keep.onPlaying()
+        #expect(keep.holdsLastFrame(state: .buffering, at: 100) == false)
+    }
 }

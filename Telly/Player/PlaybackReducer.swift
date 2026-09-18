@@ -14,8 +14,20 @@ struct PlaybackReducer {
         case fail
     }
 
+    /// Surfaced once the live reconnect budget is spent — kept distinct from a
+    /// hard decode error's "Playback failed" so the user knows the stream
+    /// dropped rather than failed to decode.
+    static let connectionLostMessage = "Connection lost"
+
     private(set) var state: PlayerState = .idle
     private var policy: ReconnectPolicy
+
+    /// Whether the current stream is live (infinite). A live stream that reports
+    /// EOF (`.ended`) has actually dropped — TiviMate/Media3 treat this as an
+    /// error and reconnect — so a live `.ended` is routed through the reconnect
+    /// budget. A finite stream (VOD / catch-up archive) that ends has genuinely
+    /// finished, so its `.ended` stays terminal. Set by the adapter at load time.
+    var isLive = false
 
     init(policy: ReconnectPolicy = ReconnectPolicy()) {
         self.policy = policy
@@ -60,11 +72,18 @@ struct PlaybackReducer {
         switch vlc {
         case .opening, .buffering: onBuffering()
         case .esAdded, .playing: onPlaying()
-        case .ended: onEnded()
+        case .ended: return onEndedOrDrop()
         case .stopped: onStopped()
         case .paused: break
         case .error: return onError("Playback failed")
         }
         return nil
+    }
+
+    /// EOF handling that respects liveness: a finite stream finishes (`.ended`),
+    /// a live stream's EOF is a drop routed through the reconnect budget.
+    private mutating func onEndedOrDrop() -> ErrorEffect? {
+        guard isLive else { onEnded(); return nil }
+        return onError(Self.connectionLostMessage)
     }
 }

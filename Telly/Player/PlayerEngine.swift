@@ -20,7 +20,9 @@ protocol PlayerEngine {
     var durationMs: Int { get }
 
     /// Tunes the given stream URL and begins playback (fresh reconnect budget).
-    func load(_ streamUrl: String)
+    /// `isLive` marks an infinite stream: a live stream reporting EOF has really
+    /// dropped and is retried, a finite one (VOD / catch-up archive) has finished.
+    func load(_ streamUrl: String, isLive: Bool)
     func stop()
     func release()
 
@@ -39,4 +41,8 @@ protocol PlayerEngine {
 /// implement it; the VLCKit adapter and finite-stream tests override it.
 extension PlayerEngine {
     var durationMs: Int { 0 }
+
+    /// Finite-stream convenience: VOD and catch-up archives load non-live, so
+    /// their `.ended` stays terminal. Live call sites pass `isLive: true`.
+    func load(_ streamUrl: String) { load(streamUrl, isLive: false) }
 }

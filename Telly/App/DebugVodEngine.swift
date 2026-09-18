@@ -21,7 +21,7 @@ final class DebugVodEngine: PlayerEngine {
         self.durationMs = durationMs
     }
 
-    func load(_ streamUrl: String) {}
+    func load(_ streamUrl: String, isLive: Bool) {}
     func stop() {}
     func release() {}
     func pause() { paused = true }
