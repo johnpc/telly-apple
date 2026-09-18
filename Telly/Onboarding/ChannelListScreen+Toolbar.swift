@@ -7,45 +7,57 @@ import SwiftUI
 extension ChannelListScreen {
     @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
-            NavigationLink("Guide") {
+            NavigationLink {
                 GuideGridScreen(model: makeGuideGridModel(), makeEngine: makeEngine,
                                 makeCatchupModel: makeCatchupModel)
-            }
+            } label: { barLabel("Guide", "tv") }
         }
         ToolbarItem(placement: .primaryAction) {
-            NavigationLink("History") {
+            NavigationLink {
                 HistoryScreen(model: makeHistoryModel(), makeEngine: makeEngine)
-            }
+            } label: { barLabel("History", "clock.arrow.circlepath") }
         }
         ToolbarItem(placement: .primaryAction) {
-            NavigationLink("Search") {
-                SearchScreen(model: makeSearchModel())
-            }
+            NavigationLink { SearchScreen(model: makeSearchModel()) }
+                label: { barLabel("Search", "magnifyingglass") }
         }
         ToolbarItem(placement: .primaryAction) {
             NavigationLink {
                 VodBrowseScreen(model: makeVodBrowseModel(),
                                 makePlaybackModel: makeVodPlaybackModel)
-            } label: {
-                Label("Movies", systemImage: "film")
-            }
+            } label: { Label("Movies", systemImage: "film") }
         }
         ToolbarItem(placement: .primaryAction) {
             NavigationLink {
                 MyListScreen(model: makeMyListModel(), makeEngine: makeEngine)
-            } label: {
-                Label("My List", systemImage: "bookmark")
-            }
+            } label: { Label("My List", systemImage: "bookmark") }
         }
         ToolbarItem(placement: .primaryAction) {
-            NavigationLink("Favorites") { ManageFavoritesScreen(model: makeChannelEditModel(nil)) }
+            NavigationLink { ManageFavoritesScreen(model: makeChannelEditModel(nil)) }
+                label: { barLabel("Favorites", "star") }
         }
         ToolbarItem(placement: .primaryAction) {
-            NavigationLink("Visibility") { ManageVisibilityScreen(model: makeVisibilityEditModel()) }
+            NavigationLink { ManageVisibilityScreen(model: makeVisibilityEditModel()) }
+                label: { barLabel("Visibility", "eye") }
         }
-        ToolbarItem(placement: .primaryAction) { Button("Add", action: onAdd) }
         ToolbarItem(placement: .primaryAction) {
-            Button("Settings") { showSettings = true }
+            Button(action: onAdd) { barLabel("Add", "plus") }
         }
+        ToolbarItem(placement: .primaryAction) {
+            Button { showSettings = true } label: { barLabel("Settings", "gearshape") }
+        }
+    }
+
+    /// A toolbar item's label. tvOS renders an icon-only pill: plain-text buttons
+    /// in the tvOS navigation bar wash out to an illegible bright-white capsule
+    /// (light label on a light fill), whereas the icon pill reads crisply — the
+    /// same treatment the Movies / My List items already use. iPhone / iPad keep
+    /// the legible text title, so their bar is unchanged.
+    @ViewBuilder func barLabel(_ title: String, _ symbol: String) -> some View {
+        #if os(tvOS)
+        Label(title, systemImage: symbol).labelStyle(.iconOnly)
+        #else
+        Text(title)
+        #endif
     }
 }
