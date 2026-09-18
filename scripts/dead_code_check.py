@@ -39,6 +39,11 @@ ENTRY_POINTS = {
     # ObjC VLCMediaPlayerDelegate callback invoked by VLCKit via the runtime
     # (VlcDelegateProxy is set as player.delegate) — no static call site exists.
     "mediaPlayerStateChanged",
+    # VLCKit-4 public Picture-in-Picture protocol witnesses (VLCPictureInPicture
+    # Drawable / …MediaControlling) invoked by VLCKit via the runtime once the
+    # PipDrawableView is set as the player's drawable — no static call site exists.
+    "mediaController", "pictureInPictureReady",
+    "seekBy", "mediaLength", "mediaTime", "isMediaSeekable", "isMediaPlaying",
     # GRDB persistence-record witness (called by GRDB on insert, not by us)
     "didInsert",
     # FileDocument witness invoked by SwiftUI's fileExporter when serialising the

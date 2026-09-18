@@ -9,8 +9,11 @@ import VLCKit
 /// `player.state`, so the value is ignored here.
 final class VlcDelegateProxy: NSObject, VLCMediaPlayerDelegate {
     var onStateChange: @MainActor () -> Void = {}
+    /// Fired alongside every state change so the PiP window (iOS) can refresh its
+    /// transport UI via `invalidatePlaybackState`; a no-op default on tvOS.
+    var onInvalidate: @MainActor () -> Void = {}
 
     func mediaPlayerStateChanged(_ newState: VLCMediaPlayerState) {
-        MainActor.assumeIsolated { onStateChange() }
+        MainActor.assumeIsolated { onStateChange(); onInvalidate() }
     }
 }

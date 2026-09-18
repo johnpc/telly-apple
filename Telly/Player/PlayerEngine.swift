@@ -19,6 +19,10 @@ protocol PlayerEngine {
     /// Total length of a finite (VOD / catch-up) stream, ms; 0 while unknown.
     var durationMs: Int { get }
 
+    /// Whether the current stream honours seeking (a live edge is not seekable).
+    /// The VLCKit-4 PiP window queries this to enable/disable its scrubber.
+    var isSeekable: Bool { get }
+
     /// Tunes the given stream URL and begins playback (fresh reconnect budget).
     func load(_ streamUrl: String)
     func stop()
@@ -39,4 +43,5 @@ protocol PlayerEngine {
 /// implement it; the VLCKit adapter and finite-stream tests override it.
 extension PlayerEngine {
     var durationMs: Int { 0 }
+    var isSeekable: Bool { false }
 }

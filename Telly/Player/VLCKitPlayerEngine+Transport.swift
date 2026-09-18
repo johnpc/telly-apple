@@ -12,6 +12,8 @@ extension VLCKitPlayerEngine {
 
     var durationMs: Int { player.media?.length.value?.intValue ?? 0 }
 
+    var isSeekable: Bool { player.isSeekable }
+
     func pause() { player.pause() }
 
     func resume() { player.play() }

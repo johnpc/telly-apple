@@ -27,6 +27,9 @@ struct LivePlaybackScreen: View {
             multiviewOverlay
             trackPickerOverlay
             stateOverlay
+            #if os(iOS)
+            pipLifecycle
+            #endif
             #if !os(tvOS)
             PlaybackCloseButton()
             #endif
