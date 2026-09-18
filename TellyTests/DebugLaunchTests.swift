@@ -19,6 +19,11 @@ struct DebugLaunchTests {
         #expect(!DebugLaunch.settingsRequested(in: ["Telly"]))
     }
 
+    @Test func playbackBlockRequestedReflectsTheFlag() {
+        #expect(DebugLaunch.playbackBlockRequested(in: ["Telly", "-tellyPlaybackBlock"]))
+        #expect(!DebugLaunch.playbackBlockRequested(in: ["Telly"]))
+    }
+
     @Test func clock24hOverrideReadsTheFlagValue() {
         #expect(DebugLaunch.clock24hOverride(in: ["Telly", "-tellyClock24h", "false"]) == false)
         #expect(DebugLaunch.clock24hOverride(in: ["Telly", "-tellyClock24h", "true"]) == true)

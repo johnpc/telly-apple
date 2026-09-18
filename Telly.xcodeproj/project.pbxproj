@@ -260,6 +260,7 @@
 		6F9A5CDFCFF4E2F3C85E3DDF /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6039E0A01C3584879C7E7 /* SearchResults.swift */; };
 		701FBB951BEAF1A5BB1EACB2 /* CustomGroupStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C709D1ADF1B373B5C6523FE8 /* CustomGroupStoreTests.swift */; };
 		714582778B8D6FFF17AC8656 /* PlaylistUrlIndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D5B6CF88B1FD67A17ADCAA /* PlaylistUrlIndexTests.swift */; };
+		71C1146A281AC6001C97AE7A /* ContentView+PlaybackBlockDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FBA7970A9BF18B478669DD /* ContentView+PlaybackBlockDebug.swift */; };
 		71DA9E9C3C65C20EF361A49F /* VodTransportVisibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C44A6D91E4211A6DC2158E /* VodTransportVisibilityTests.swift */; };
 		733C6A8243CC0BD54E9176D5 /* GuideTimeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EF55F10AC0B083FBFCA674 /* GuideTimeHeaderView.swift */; };
 		7349CC66A93701D5D0B0F98A /* PlaybackBadges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A49A7D5F0B7ED807A9C851 /* PlaybackBadges.swift */; };
@@ -975,6 +976,7 @@
 		C7D1F2D502A53C22A32E9FC1 /* SettingsStore+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsStore+Appearance.swift"; sourceTree = "<group>"; };
 		C7D3885DA8806968E5876FF7 /* ProgramStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramStore.swift; sourceTree = "<group>"; };
 		C847BA7D47EFD28A33508C5B /* GuideCellsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCellsBuilder.swift; sourceTree = "<group>"; };
+		C8FBA7970A9BF18B478669DD /* ContentView+PlaybackBlockDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+PlaybackBlockDebug.swift"; sourceTree = "<group>"; };
 		C95DC16353B99B7E279F3466 /* GuideGridScreen+Activate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GuideGridScreen+Activate.swift"; sourceTree = "<group>"; };
 		C9A475E84523E9FB4D32E535 /* VodItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodItemStore.swift; sourceTree = "<group>"; };
 		CA1939BCCE2DFCABBD20A0DF /* EpgAssignmentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgAssignmentScreen.swift; sourceTree = "<group>"; };
@@ -1312,6 +1314,7 @@
 				D2A7EE5F415CD9AFEC6F0A35 /* ContentView+MultiviewDebug.swift */,
 				D4EE878620315870BEA2F3FA /* ContentView+MyListDebug.swift */,
 				6379C681C97A6542E8301402 /* ContentView+ParentalDebug.swift */,
+				C8FBA7970A9BF18B478669DD /* ContentView+PlaybackBlockDebug.swift */,
 				698A1C77E185DA5AF0ACA58B /* ContentView+PlaylistsDebug.swift */,
 				9446089EC0FFC424FF92CF71 /* ContentView+SearchDebug.swift */,
 				AAAFA95DFAE1938873F6A474 /* ContentView+VodDebug.swift */,
@@ -2123,6 +2126,7 @@
 				5336630F3162D54E5373F0E4 /* ContentView+MultiviewDebug.swift in Sources */,
 				5600BD81626C23064BBE11B6 /* ContentView+MyListDebug.swift in Sources */,
 				86B5CB047A719E13579BB306 /* ContentView+ParentalDebug.swift in Sources */,
+				71C1146A281AC6001C97AE7A /* ContentView+PlaybackBlockDebug.swift in Sources */,
 				E1700CB74F167371690DC14A /* ContentView+PlaylistsDebug.swift in Sources */,
 				91D6D696567C7914A9F4C6B1 /* ContentView+SearchDebug.swift in Sources */,
 				68949D712D4E799619B45466 /* ContentView+VodDebug.swift in Sources */,

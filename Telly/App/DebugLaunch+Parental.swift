@@ -20,6 +20,13 @@ extension DebugLaunch {
         value(for: "-tellyParentalPin", in: args)
     }
 
+    /// Whether to launch the fullscreen player with its first channel blocked and
+    /// an enabled seeded PIN — set by `-tellyPlaybackBlock` — so the block-PIN
+    /// overlay is forced over the black stage for the playback-gate proof.
+    static func playbackBlockRequested(in args: [String]) -> Bool {
+        args.contains("-tellyPlaybackBlock")
+    }
+
     /// Marks the first visible fixture channel blocked and seeds + enables `pin`,
     /// so the challenge proof has a locked channel with an active credential.
     /// Idempotent (safe to relaunch); a no-op when there are no channels.
