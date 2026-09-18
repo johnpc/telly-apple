@@ -1,0 +1,129 @@
+name: iOS Deploy
+
+# OPTIONAL / lower-confidence. Mirrors Android telly's android-deploy.yml
+# (workflow_run after CI succeeds on main) + /new-ionic-app's ios-deploy.yml,
+# adapted to archive the universal SwiftUI app and upload to TestFlight via the
+# App Store Connect API.
+#
+# PREREQUISITES (one-time, per /new-ionic-app §13 — mostly already done since the
+# app is already on TestFlight):
+#   * Repo secrets: ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_CONTENT (.p8 contents),
+#     TEAM_ID (JW5SC3NYUV).
+#   * App record + bundle id com.johncorser.telly already exist in App Store Connect.
+#   * DEVELOPMENT_TEAM is set in project.yml (JW5SC3NYUV) and
+#     ITSAppUsesNonExemptEncryption = NO is declared (both already true).
+#
+# NOTE: GitHub Actions credits may be exhausted (as on Android telly). Ship this
+# only if automated TestFlight uploads are wanted; otherwise keep just ci.yml.
+#
+# TRIGGER: manual (workflow_dispatch) ONLY — this is intentionally NOT wired to
+# push / workflow_run so it can never fail spuriously when the ASC secrets are
+# absent. Run it by hand from the Actions tab once the secrets below are set.
+#
+# REQUIRED repo secrets (Settings → Secrets and variables → Actions):
+#   * ASC_KEY_ID      — App Store Connect API key id
+#   * ASC_ISSUER_ID   — App Store Connect API issuer id
+#   * ASC_KEY_CONTENT — the .p8 private-key file contents
+#   * TEAM_ID         — Apple Developer team id (JW5SC3NYUV)
+
+on:
+  workflow_dispatch:
+
+env:
+  SCHEME: Telly
+
+jobs:
+  testflight:
+    name: Upload to TestFlight
+    runs-on: macos-26
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 26
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "26.0"
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Resolve Swift packages
+        run: xcodebuild -resolvePackageDependencies -scheme "$SCHEME"
+
+      - name: Write App Store Connect API key
+        env:
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+        run: |
+          mkdir -p private_keys
+          echo "$ASC_KEY_CONTENT" > "private_keys/AuthKey_${ASC_KEY_ID}.p8"
+
+      # Archive + upload once per platform (single universal target, two SDKs).
+      - name: Archive & upload (iOS)
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
+        run: |
+          xcodebuild -scheme "$SCHEME" \
+            -sdk iphoneos \
+            -destination "generic/platform=iOS" \
+            -archivePath build/Telly-iOS.xcarchive \
+            DEVELOPMENT_TEAM="$TEAM_ID" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$PWD/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            archive
+          xcodebuild -exportArchive \
+            -archivePath build/Telly-iOS.xcarchive \
+            -exportOptionsPlist .github/exportOptions.plist \
+            -exportPath build/export-iOS \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$PWD/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID"
+          xcrun altool --upload-app -f build/export-iOS/*.ipa -t ios \
+            --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
+
+      - name: Archive & upload (tvOS)
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
+        run: |
+          xcodebuild -scheme "$SCHEME" \
+            -sdk appletvos \
+            -destination "generic/platform=tvOS" \
+            -archivePath build/Telly-tvOS.xcarchive \
+            DEVELOPMENT_TEAM="$TEAM_ID" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$PWD/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            archive
+          xcodebuild -exportArchive \
+            -archivePath build/Telly-tvOS.xcarchive \
+            -exportOptionsPlist .github/exportOptions.plist \
+            -exportPath build/export-tvOS \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$PWD/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID"
+          xcrun altool --upload-app -f build/export-tvOS/*.ipa -t tvos \
+            --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
+
+      - name: Clean up API key
+        if: always()
+        run: rm -rf private_keys
+
+# You also need .github/exportOptions.plist committed, e.g.:
+#   <plist version="1.0"><dict>
+#     <key>method</key><string>app-store-connect</string>
+#     <key>teamID</key><string>JW5SC3NYUV</string>
+#     <key>uploadSymbols</key><true/>
+#   </dict></plist>

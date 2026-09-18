@@ -1,0 +1,122 @@
+name: CI
+
+# Mirrors the Android telly CI (build + test + static analysis) adapted for a
+# native SwiftUI, xcodegen-managed project on a macOS runner. Runs the SAME gates
+# as scripts/quality.sh so the Python quality gates run in CI too.
+#
+# NOTES / CAVEATS:
+#  * Runner: macos-26 with Xcode 26.x (deploymentTarget iOS 18 / tvOS 18; the
+#    quality gate targets iOS 26 / tvOS 26.5 simulators).
+#  * SPM/VLCKit: main uses VLCKitSPM 3.6.0 (prebuilt XCFramework, resolves cleanly
+#    from GitHub) — CI is fine. The VLCKit-4 alpha big-download caveat applies ONLY
+#    to the experimental spike branch, not main.
+#  * Simulator names below may need to match whatever ships on the macos-26 image;
+#    the "List simulators" step prints what's available. Override via the env vars.
+#  * GitHub Actions credits may be exhausted (as on Android telly) — this workflow
+#    exists for repo-completeness parity; the authoritative gate is local
+#    ./scripts/quality.sh.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  SCHEME: Telly
+  TELLY_DESTINATION: "platform=iOS Simulator,name=iPhone 16 Pro"
+  TELLY_TVOS_DESTINATION: "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)"
+
+jobs:
+  quality:
+    name: Quality gates
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 26
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "26.0"
+
+      - name: Show tool versions
+        run: |
+          xcodebuild -version
+          swift --version
+          python3 --version
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: List simulators (debug aid for destination names)
+        run: xcrun simctl list devicetypes runtimes devices available
+
+      - name: Resolve Swift packages
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -scheme "$SCHEME" \
+            -derivedDataPath DerivedData
+
+      # ---- Static gates (same as quality.sh phases 1-3) ----
+      - name: Source file line limit (<=100)
+        run: bash scripts/check_source_lines.sh
+
+      - name: Acceptance tests in sync with .feature files
+        run: python3 scripts/generate_acceptance_tests.py --check
+
+      - name: Dead code
+        run: python3 scripts/dead_code_check.py
+
+      - name: Duplication
+        run: python3 scripts/duplication_check.py
+
+      - name: Banned types
+        run: python3 scripts/banned_types_check.py
+
+      - name: Halstead (D <= 20)
+        run: python3 scripts/halstead_check.py
+
+      # ---- Tests + coverage (quality.sh phases 4-5) ----
+      - name: Unit tests + coverage (iOS)
+        run: |
+          rm -rf TestResults.xcresult
+          xcodebuild test \
+            -scheme "$SCHEME" \
+            -destination "$TELLY_DESTINATION" \
+            -only-testing:TellyTests \
+            -derivedDataPath DerivedData \
+            -enableCodeCoverage YES \
+            -resultBundlePath TestResults.xcresult
+          xcrun xccov view --report --json TestResults.xcresult > coverage.json
+
+      - name: Coverage floor (>=80%) + CRAP (<=30)
+        run: |
+          python3 scripts/coverage_check.py coverage.json
+          python3 scripts/crap_check.py coverage.json
+
+      # ---- Builds (quality.sh phases 6-7) ----
+      - name: Build app (iOS)
+        run: |
+          xcodebuild build \
+            -scheme "$SCHEME" \
+            -destination "$TELLY_DESTINATION" \
+            -derivedDataPath DerivedData
+
+      - name: Build app (tvOS)
+        run: |
+          xcodebuild build \
+            -scheme "$SCHEME" \
+            -destination "$TELLY_TVOS_DESTINATION" \
+            -derivedDataPath DerivedData
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-json
+          path: coverage.json
+          if-no-files-found: ignore
