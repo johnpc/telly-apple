@@ -19,6 +19,7 @@ extension ContentView {
                           makeVodBrowseModel: env.makeVodBrowseModel,
                           makeVodPlaybackModel: env.makeVodPlaybackModel,
                           makeMyListModel: env.makeMyListModel,
+                          makeAssignEpgModel: env.makeAssignEpgModel(for:),
                           clearVodPositions: env.clearVodPositions,
                           settings: env.settings,
                           nowNext: { env.guideEpgStore.nowNext(forEpgId: $0.epgId) },

@@ -34,12 +34,12 @@ extension ChannelListScreen {
     }
 
     /// A sidebar row: plain content so the `List(selection:)` tap drives the
-    /// detail (rather than a Button swallowing it), with the same long-press
-    /// favourite / hide menu the stack row carries.
+    /// detail (rather than a Button swallowing it), with the same consolidated
+    /// long-press channel menu the stack row carries.
     @ViewBuilder private func sidebarRow(_ channel: ChannelEntity) -> some View {
         ChannelListRowView(channel: channel)
             .contentShape(Rectangle())
-            .contextMenu { rowContextMenu(channel) }
+            .channelMenu(channel, model: model, assignTarget: $assignEpgTarget)
     }
 
     private var detailChannel: ChannelEntity? {

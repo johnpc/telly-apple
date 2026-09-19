@@ -18,6 +18,9 @@ struct ChannelListScreen: View {
     let makeVodBrowseModel: () -> VodBrowseModel
     let makeVodPlaybackModel: (String, @escaping () -> Void) -> VodPlaybackModel
     let makeMyListModel: () -> MyListModel
+    /// The per-channel Assign-EPG picker factory the row menu's "Assign EPG"
+    /// action presents (same picker the Settings EPG-assignment list vends).
+    let makeAssignEpgModel: (ChannelEntity) -> AssignEpgModel
     let clearVodPositions: () -> Void
     /// The selected channel's now/next for the iPad detail pane; identity ({ nil })
     /// off the split path, so compact iPhone / tvOS / tests need not wire the EPG.
@@ -35,7 +38,13 @@ struct ChannelListScreen: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     #endif
     @State var target: PlaybackTarget?
+    /// The channel whose Assign-EPG picker sheet is open (raised by the row menu).
+    @State var assignEpgTarget: AssignEpgTarget?
     @State var showSettings = false
+    #if DEBUG
+    /// The channel whose consolidated menu the screenshot proof pins open.
+    @State var channelMenuProofTarget: ChannelEntity?
+    #endif
     /// The sidebar's selected row, resolved into the detail pane's channel.
     @State var selectedChannelId: Int?
     #if os(tvOS)
@@ -56,6 +65,7 @@ struct ChannelListScreen: View {
          makeVodBrowseModel: @escaping () -> VodBrowseModel,
          makeVodPlaybackModel: @escaping (String, @escaping () -> Void) -> VodPlaybackModel,
          makeMyListModel: @escaping () -> MyListModel,
+         makeAssignEpgModel: @escaping (ChannelEntity) -> AssignEpgModel,
          clearVodPositions: @escaping () -> Void,
          settings: SettingsStore,
          nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil },
@@ -76,6 +86,7 @@ struct ChannelListScreen: View {
         self.makeVodBrowseModel = makeVodBrowseModel
         self.makeVodPlaybackModel = makeVodPlaybackModel
         self.makeMyListModel = makeMyListModel
+        self.makeAssignEpgModel = makeAssignEpgModel
         self.clearVodPositions = clearVodPositions
         self.settings = settings
         self.nowNext = nowNext

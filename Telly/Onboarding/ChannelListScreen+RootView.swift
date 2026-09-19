@@ -13,6 +13,11 @@ extension ChannelListScreen {
                 PlaybackScreen(streamUrl: target.url, engine: makeEngine())
             }
             .sheet(isPresented: $showSettings) { settingsSheet }
+            .assignEpgSheet($assignEpgTarget, make: makeAssignEpgModel, onReload: model.load)
+            #if DEBUG
+            .channelMenuProof($channelMenuProofTarget, model: model, assignTarget: $assignEpgTarget)
+            .task { await ChannelMenuScreenshotSeed.present($channelMenuProofTarget, model: model) }
+            #endif
     }
 
     @ViewBuilder private var layoutRoot: some View {

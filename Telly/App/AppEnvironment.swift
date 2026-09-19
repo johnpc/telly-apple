@@ -81,4 +81,10 @@ final class AppEnvironment {
 
     /// The bulk Manage-Visibility editor state.
     func makeVisibilityEditModel() -> VisibilityEditModel { VisibilityEditModel(store: channelStore) }
+
+    /// The per-channel Assign-EPG picker for the channel-list row menu's "Assign
+    /// EPG" action — the same picker the Settings EPG-assignment list drills into.
+    func makeAssignEpgModel(for channel: ChannelEntity) -> AssignEpgModel {
+        AssignEpgModel(store: channelStore, programStore: programStore, channel: channel)
+    }
 }
