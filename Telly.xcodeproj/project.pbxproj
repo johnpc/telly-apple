@@ -91,6 +91,7 @@
 		24B65C605D062A461B5D9E2B /* LivePlaybackModel+Derived.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD0CFB232C80CB4F4AF3340 /* LivePlaybackModel+Derived.swift */; };
 		257AAFE35119CF353C14F4E9 /* CatchupBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC081538161B69396AAD039 /* CatchupBadgeView.swift */; };
 		25D0B3F652AA56C57A93B1C6 /* SettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13052430DE44D78BE7130B44 /* SettingsKeys.swift */; };
+		26029EC6C617B3ED7B200828 /* GuideCellMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCE70C5FEB3140FECABA50 /* GuideCellMenuView.swift */; };
 		26597D957B6FB9D14691692A /* AcceptanceTests.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030A43B5DACCF03D16F744EA /* AcceptanceTests.generated.swift */; };
 		266DB94F7E0440D9FAF30201 /* CatchupUrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F9A699BD88B0BF3871EC10 /* CatchupUrlBuilder.swift */; };
 		26820D4C26AD1005CAC2A0E1 /* VodResumePromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F19BDC1F06AD2280A265E3A /* VodResumePromptView.swift */; };
@@ -151,6 +152,7 @@
 		4120AC99A6B012157DBE897D /* DebugLaunchSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308A11641EDF6FD88F8F435D /* DebugLaunchSearchTests.swift */; };
 		4170A5AE1CF7072A0B222195 /* DebugLaunch+Vod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAD1D9697CAC44DCDB2CE9B /* DebugLaunch+Vod.swift */; };
 		423FB064F39B9914825E1E54 /* MultiviewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D32FC95E589778A718BD96 /* MultiviewCellView.swift */; };
+		42523D16111B3970A6047053 /* GuideGridModelMyListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37468FB07E72C8E05F88DB4C /* GuideGridModelMyListTests.swift */; };
 		42A982583256E8E5C9B830DC /* SyncedConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF0B0C3F8E4251CE5468CE /* SyncedConfigStore.swift */; };
 		42E974D18FACFF1836597D12 /* CatchupPlaybackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F2B0737783ED581DFC128A /* CatchupPlaybackModel.swift */; };
 		4303495BCA4B105CAC6E6C44 /* VodBrowseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6954A70080BD78FE6A742406 /* VodBrowseTests.swift */; };
@@ -177,6 +179,7 @@
 		4AD876CA4543793471FC4142 /* AcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2DC4D6F058AC249787519D /* AcceptanceTests.swift */; };
 		4B302D7BF35D8A04A183DC69 /* GuideChannelColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A6EFE10C95FFCF2BA9EF9F /* GuideChannelColumnView.swift */; };
 		4B735035A71D1C480C126584 /* AboutInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D89B5689B8B746E2409C7 /* AboutInfo.swift */; };
+		4B820E6F44AB3F60A7486AB1 /* GuideGridModel+MyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3873865E31F1FBD1C28235F6 /* GuideGridModel+MyList.swift */; };
 		4C0783274B852E857720EC7D /* ChannelListScreen+ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21DAC443485C814AF0244EF /* ChannelListScreen+ContentView.swift */; };
 		4C15A97A9F2843D4BB708026 /* PlaylistSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21248E6394A0B53168A10A9 /* PlaylistSettingsKeys.swift */; };
 		4C3CFD1F21D770BC278E83CB /* ZapKeepFrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319C27B00D6056E129E91BB3 /* ZapKeepFrameTests.swift */; };
@@ -302,6 +305,7 @@
 		7E0E9FD3AE5F11F1B11172C9 /* DebugSeedPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E07CE5E63319B9E088FDB9D /* DebugSeedPlaylist.swift */; };
 		7E665CDF4BFE580F9D6B8209 /* ChannelListScreen+RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB1056F15469211B3D5C803 /* ChannelListScreen+RootView.swift */; };
 		7EB3E4C17BB5F9EFB8E21ECF /* PlaylistSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E33824048D9B8A7E968723D /* PlaylistSummary.swift */; };
+		7EC8BC9931BD0F24FD65B25C /* GuideCellActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AF2D6D5FB5935F018BD5B6 /* GuideCellActions.swift */; };
 		7ED35AADDBD181899F653F41 /* ChannelEditModel+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A4345278B0D07E7AD02BA6 /* ChannelEditModel+Move.swift */; };
 		7F620FEBA5D5D458ADFC469D /* CatchupPlayability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FCBF8A57A8D7E35FCB8D43 /* CatchupPlayability.swift */; };
 		7F6FC28EF7DC1FF5C3B8329F /* CopyChannelsPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C98FF5108E308C29B643E3 /* CopyChannelsPlanTests.swift */; };
@@ -417,6 +421,7 @@
 		B38B6E60D070C63828869A96 /* GuideGridModel+Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A30D4F7147BB16124E7C65F /* GuideGridModel+Load.swift */; };
 		B3BC024A541818A8D3783580 /* PanelRowInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92D6A3324B43D49BDFC484 /* PanelRowInfoTests.swift */; };
 		B49E3A53D62A3FFD48A13E40 /* LivePlaybackModelTracksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D81B17BD2189238567BEB9C /* LivePlaybackModelTracksTests.swift */; };
+		B4CB06CAA3866ADBC519BC56 /* GuideMenuScreenshotSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41A90D4AE1688AB6C631E17 /* GuideMenuScreenshotSeed.swift */; };
 		B526AFFA1E84AF1430D400FD /* WatchHistoryRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DC1A7E98A008F3B7422D84 /* WatchHistoryRows.swift */; };
 		B5E20E00B757D36276B5BB30 /* PlaylistsSettingsModel+Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C4FCE00E8E9D613977377F /* PlaylistsSettingsModel+Groups.swift */; };
 		B65F3516D43EF800162DDBDD /* CustomGroupChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FD89BFF832D8CDA18B6966 /* CustomGroupChannels.swift */; };
@@ -505,6 +510,7 @@
 		D7BCFDE5CA75D89CC4B2F541 /* PlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7AA888B99B0C554E7A1E93 /* PlayerState.swift */; };
 		D7F21990A55F845D3635BCE7 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A499BF56D8BF590126D59A5B /* SearchRepository.swift */; };
 		D831D7C36223E8AA438A33EB /* TvgOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B617FC4941B43EDF685A7A /* TvgOffset.swift */; };
+		D894AF58197603A2E51C4E00 /* MyListToggling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A8E3C49E4C1586746FC549 /* MyListToggling.swift */; };
 		D8AA298CBE73FA8251C67537 /* ProgramStoreSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9093E35B464699B81C815F74 /* ProgramStoreSearchTests.swift */; };
 		D8D0C6B12DE3BB27D7284E57 /* EpgSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA66C1D5E7DA6CEA7B4038A5 /* EpgSchema.swift */; };
 		D91611C0D6B85CD24CD8A0DE /* MyListStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CCC03715B854390A56E801 /* MyListStoreTests.swift */; };
@@ -743,10 +749,12 @@
 		35FF153426F7E4476A1BF21B /* ZapOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZapOverlayView.swift; sourceTree = "<group>"; };
 		3659A651093FC179F36F7B4F /* ChannelEditRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditRowView.swift; sourceTree = "<group>"; };
 		365DEB77511C4B31A9455365 /* ChannelListModel+Load.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelListModel+Load.swift"; sourceTree = "<group>"; };
+		37468FB07E72C8E05F88DB4C /* GuideGridModelMyListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideGridModelMyListTests.swift; sourceTree = "<group>"; };
 		378960B36436AF8BCF69A520 /* DebugLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLaunch.swift; sourceTree = "<group>"; };
 		3790D465B52208F3EBBB91BC /* WizardTypeStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardTypeStepView.swift; sourceTree = "<group>"; };
 		37BD1EE41EFCCBF37605343E /* ChannelGroupPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelGroupPickerView.swift; sourceTree = "<group>"; };
 		384B9CA24AF15E1089815370 /* LivePlaybackModel+Tune.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LivePlaybackModel+Tune.swift"; sourceTree = "<group>"; };
+		3873865E31F1FBD1C28235F6 /* GuideGridModel+MyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GuideGridModel+MyList.swift"; sourceTree = "<group>"; };
 		38A73F70445666AF15908186 /* InfoOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoOverlayView.swift; sourceTree = "<group>"; };
 		3908C14168373EEEFEE606BA /* LoadStateScaffoldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStateScaffoldView.swift; sourceTree = "<group>"; };
 		390C12FAD822EC01E92DD3A0 /* TouchGestureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchGestureTests.swift; sourceTree = "<group>"; };
@@ -787,6 +795,7 @@
 		488424BCE81D52C53795644E /* ManageVisibilityScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageVisibilityScreen.swift; sourceTree = "<group>"; };
 		48A615BF62891CC0EC011E72 /* DebugLaunch+History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DebugLaunch+History.swift"; sourceTree = "<group>"; };
 		48A9F5FFF68774C764EFF990 /* GuideEpgStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideEpgStoreTests.swift; sourceTree = "<group>"; };
+		48AF2D6D5FB5935F018BD5B6 /* GuideCellActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCellActions.swift; sourceTree = "<group>"; };
 		4A3AF6BB726F90FB3667BF32 /* TrackPickerKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPickerKind.swift; sourceTree = "<group>"; };
 		4A5A8C96669009B439B3CCAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A80E6DA1C279FE67FDDBA9B /* MyListToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListToggle.swift; sourceTree = "<group>"; };
@@ -942,6 +951,7 @@
 		96BE5CCAE0C036AAEA967E74 /* ChannelGroupsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelGroupsTests.swift; sourceTree = "<group>"; };
 		96F2B923B5C92E3FB03263DB /* ChannelDetailPaneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDetailPaneView.swift; sourceTree = "<group>"; };
 		978E40923C0BD5A67EAD3E8D /* AddPlaylistModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaylistModelTests.swift; sourceTree = "<group>"; };
+		97A8E3C49E4C1586746FC549 /* MyListToggling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListToggling.swift; sourceTree = "<group>"; };
 		984EC2E8176F45E1711F5A76 /* CompressedXmltv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressedXmltv.swift; sourceTree = "<group>"; };
 		987AD818A024549B071BDBE1 /* VlcStateMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VlcStateMappingTests.swift; sourceTree = "<group>"; };
 		98BE28F85D0BD470F8304DFB /* DebugLaunch+Playlists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DebugLaunch+Playlists.swift"; sourceTree = "<group>"; };
@@ -1029,6 +1039,7 @@
 		C35699C8E6514FBACF09012E /* CatchupPlaybackScreen+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CatchupPlaybackScreen+Keys.swift"; sourceTree = "<group>"; };
 		C396DB0EEFBC7180C13222EE /* AssignEpgScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignEpgScreen.swift; sourceTree = "<group>"; };
 		C3B1A73E4AB873351C024B83 /* GuideFocusNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideFocusNav.swift; sourceTree = "<group>"; };
+		C3BCE70C5FEB3140FECABA50 /* GuideCellMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCellMenuView.swift; sourceTree = "<group>"; };
 		C3BE5846F0E695DA3565F177 /* EpgOffsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgOffsets.swift; sourceTree = "<group>"; };
 		C3D193349260C9F1872D5AAD /* CatchupType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupType.swift; sourceTree = "<group>"; };
 		C6062AFD2B43FCB44C47F52E /* GuideGridModel+Focus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GuideGridModel+Focus.swift"; sourceTree = "<group>"; };
@@ -1070,6 +1081,7 @@
 		D28C597DC8382D9A3585D59D /* GroupVisibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupVisibilityTests.swift; sourceTree = "<group>"; };
 		D2A7EE5F415CD9AFEC6F0A35 /* ContentView+MultiviewDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+MultiviewDebug.swift"; sourceTree = "<group>"; };
 		D417ECB0B2F0B362977A838A /* PlaylistUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistUpdater.swift; sourceTree = "<group>"; };
+		D41A90D4AE1688AB6C631E17 /* GuideMenuScreenshotSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMenuScreenshotSeed.swift; sourceTree = "<group>"; };
 		D45A43BFF66B0A31B6F58C2D /* ChannelPanelRowsColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPanelRowsColumnView.swift; sourceTree = "<group>"; };
 		D4A2E6331B7FDDF758782CDD /* PlaybackStateChromeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackStateChromeView.swift; sourceTree = "<group>"; };
 		D4BE796D4CD0D494B5FB9589 /* SearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistory.swift; sourceTree = "<group>"; };
@@ -1296,6 +1308,7 @@
 				7B25194BFD082C9DD98A7935 /* GuideGridModel.swift */,
 				C6062AFD2B43FCB44C47F52E /* GuideGridModel+Focus.swift */,
 				3A30D4F7147BB16124E7C65F /* GuideGridModel+Load.swift */,
+				3873865E31F1FBD1C28235F6 /* GuideGridModel+MyList.swift */,
 				FC1C0121E0BD6AA854B9726A /* GuideGridModel+Scroll.swift */,
 				72A0FFDDB0818EB4858B71DD /* GuideGridModel+View.swift */,
 				EF35608EA8AEE6476488BA1D /* GuideGridModel+Viewport.swift */,
@@ -1534,12 +1547,15 @@
 			isa = PBXGroup;
 			children = (
 				D8202CB683496FD7847F8BA0 /* GuideActivation.swift */,
+				48AF2D6D5FB5935F018BD5B6 /* GuideCellActions.swift */,
+				C3BCE70C5FEB3140FECABA50 /* GuideCellMenuView.swift */,
 				69A6EFE10C95FFCF2BA9EF9F /* GuideChannelColumnView.swift */,
 				0186D96005DE7C1311D6CB06 /* GuideChannelTileView.swift */,
 				43444A8C83E8EBD55063B762 /* GuideGridScreen.swift */,
 				C95DC16353B99B7E279F3466 /* GuideGridScreen+Activate.swift */,
 				EA145DDA5A4D74F919831DF6 /* GuideGridScreen+Cover.swift */,
 				D7E90C475BC7E25C390C31A4 /* GuideGridScreen+Input.swift */,
+				D41A90D4AE1688AB6C631E17 /* GuideMenuScreenshotSeed.swift */,
 				A4F163EE27FE6DAF0699F8EF /* GuideNowLineView.swift */,
 				D0A5275436780E1D9C03F2E3 /* GuideRowsPaneView.swift */,
 				AA3E24FC39140ECDC0F4307B /* GuideRowStripView.swift */,
@@ -1740,6 +1756,7 @@
 				313E3F562A89B95A002594FD /* GuideGeometryTests.swift */,
 				B6220890A72743706CAABA39 /* GuideGridModelFocusTests.swift */,
 				14588FC10B2B0E30FBAB0B0C /* GuideGridModelLoadTests.swift */,
+				37468FB07E72C8E05F88DB4C /* GuideGridModelMyListTests.swift */,
 				BBFBBB5F67F1FF6EB3425676 /* GuideGridModelTests.swift */,
 				EC3F7D41F43C92AD1CB0E648 /* GuideRowsBuilderTests.swift */,
 				D9ECA5237112C7CADD5EFAE5 /* GuideSelectionTests.swift */,
@@ -1997,6 +2014,7 @@
 				1EA339923CFDB0A71EF6E6AE /* MyListRowView.swift */,
 				88B0D44CB50E8DC5C18411A0 /* MyListScreen.swift */,
 				4A80E6DA1C279FE67FDDBA9B /* MyListToggle.swift */,
+				97A8E3C49E4C1586746FC549 /* MyListToggling.swift */,
 			);
 			path = MyList;
 			sourceTree = "<group>";
@@ -2299,7 +2317,9 @@
 				278B21B2A976AF12C310C77D /* GroupVisibility.swift in Sources */,
 				D1C4A6C921D8AB96EA6DEA15 /* GuideActivation.swift in Sources */,
 				B108596165E58467B27FF21F /* GuideCell.swift in Sources */,
+				7EC8BC9931BD0F24FD65B25C /* GuideCellActions.swift in Sources */,
 				0DB6E4476FFC31870802EA1C /* GuideCellLayout.swift in Sources */,
+				26029EC6C617B3ED7B200828 /* GuideCellMenuView.swift in Sources */,
 				F875BC23E3E80ACA4A0D9EB1 /* GuideCellsBuilder.swift in Sources */,
 				4B302D7BF35D8A04A183DC69 /* GuideChannelColumnView.swift in Sources */,
 				E615BDD5B0941C4E852E3726 /* GuideChannelTileView.swift in Sources */,
@@ -2309,6 +2329,7 @@
 				4A4B1FFD4534FB07FA6FA5FC /* GuideGeometry.swift in Sources */,
 				494883ACCB66C20457A9BBB1 /* GuideGridModel+Focus.swift in Sources */,
 				B38B6E60D070C63828869A96 /* GuideGridModel+Load.swift in Sources */,
+				4B820E6F44AB3F60A7486AB1 /* GuideGridModel+MyList.swift in Sources */,
 				7C859D96FE075BAB42561227 /* GuideGridModel+Scroll.swift in Sources */,
 				E70B0AAAB6C673FD65F8B6B2 /* GuideGridModel+View.swift in Sources */,
 				3054E7B44EB84593A61FE17E /* GuideGridModel+Viewport.swift in Sources */,
@@ -2317,6 +2338,7 @@
 				AA24EBFAE4CF42BC5E863793 /* GuideGridScreen+Cover.swift in Sources */,
 				A8BE93AAA31CF0D523C5AF37 /* GuideGridScreen+Input.swift in Sources */,
 				1715DEAAD3F21A79C7E2E0FD /* GuideGridScreen.swift in Sources */,
+				B4CB06CAA3866ADBC519BC56 /* GuideMenuScreenshotSeed.swift in Sources */,
 				4DDB3CEF2980877E6F787BFB /* GuideNowLineView.swift in Sources */,
 				5BF3F6867DE020282B0B3795 /* GuideRow.swift in Sources */,
 				D594DFC966107C5659D9F84F /* GuideRowStripView.swift in Sources */,
@@ -2381,6 +2403,7 @@
 				D3A54456DF450B8A1DCD3414 /* MyListScreen.swift in Sources */,
 				1A9C60F789C8BB8BE946BC14 /* MyListStore.swift in Sources */,
 				A572FA9D804985C3A2AE16D5 /* MyListToggle.swift in Sources */,
+				D894AF58197603A2E51C4E00 /* MyListToggling.swift in Sources */,
 				2EF2738677D8D0B434C4706B /* NoTracks.swift in Sources */,
 				80314401F98FDCA158A1FF7D /* NowNext.swift in Sources */,
 				C23C804DE47359576C34AD89 /* OverlayMotionView.swift in Sources */,
@@ -2623,6 +2646,7 @@
 				657B8CAF92D1C6B41CB45225 /* GuideGeometryTests.swift in Sources */,
 				30FF585B0F1C3F90D19B4ACA /* GuideGridModelFocusTests.swift in Sources */,
 				E3F9816854532D7CD961B96B /* GuideGridModelLoadTests.swift in Sources */,
+				42523D16111B3970A6047053 /* GuideGridModelMyListTests.swift in Sources */,
 				3FA7FAF829BF7C3FED74FACF /* GuideGridModelTests.swift in Sources */,
 				409720303CD6ED1F5DAFB92C /* GuideRowsBuilderTests.swift in Sources */,
 				1ACC9EDA2B90C492E838C5A7 /* GuideSelectionTests.swift in Sources */,

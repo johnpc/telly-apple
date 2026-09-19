@@ -35,6 +35,11 @@ final class GuideGridModel {
     /// EPG refresh seam awaited on first appear (when empty) and on Retry; the
     /// composition root wires the real forced refresh (`+Load`).
     var refresh: () async throws -> Void = {}
+    /// The My List store, bound post-init by the factory (like `refresh`), so the
+    /// init signature stays put; nil in tests/previews makes the cell menu a no-op.
+    var myListStore: MyListStore?
+    /// Saved-airing identity keys backing the cell menu's flipped label (My List state).
+    var myListKeys: Set<String> = []
 
     init(channelStore: ChannelStore, repository: EpgRepository, now: @escaping () -> Int,
          timeZone: TimeZone, is24h: Bool, viewport: CGFloat = 960) {
@@ -53,6 +58,7 @@ final class GuideGridModel {
         originMs = GuideGeometry.halfHourFloor(now(), timeZone: timeZone)
         nowMs = now()
         materializeRows()
+        refreshMyListKeys()
     }
 
     /// Rebuilds the rows for the current window (offsets via the shared

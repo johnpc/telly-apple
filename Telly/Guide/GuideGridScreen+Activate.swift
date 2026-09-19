@@ -4,9 +4,12 @@ import SwiftUI
 /// the at-cap screen file stays lean. Maps the pure ``GuideActivation`` outcome
 /// to the shared `.fullScreenCover` target: a catch-up cell resolves an archive
 /// URL (mirroring Android `TuneController.tune(catchupUrl:)`) and carries a
-/// ``CatchupBadge``; an airing cell tunes live; info/filler cells stay inert.
+/// ``CatchupBadge``; an airing cell tunes live. An info cell instead opens its
+/// My List menu (``GuideGridModel/cellMenuTarget(for:row:)`` sets `menuTarget`);
+/// a filler cell stays inert.
 extension GuideGridScreen {
     func activate(_ cell: GuideCell, row: GuideRow) {
+        menuTarget = model.cellMenuTarget(for: cell, row: row)
         switch model.selectCell(cell, row: row) {
         case let .catchup(channel, cell):
             guard let attributes = channel.catchupAttributes(),

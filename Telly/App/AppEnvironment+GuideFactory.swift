@@ -16,6 +16,7 @@ extension AppEnvironment {
             await self?.refreshEpgNow()
             model?.load()
         }
+        model.myListStore = myListStore()
         return model
     }
 }

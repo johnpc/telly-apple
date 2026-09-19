@@ -31,4 +31,16 @@ struct AppEnvironmentGuideWiringTests {
         let env = AppEnvironment(database: db, settings: store)
         #expect(env.makeGuideGridModel().is24h == false)
     }
+
+    /// The guide-cell My List entry point shares the channel-store DB handle
+    /// (the Search/My List factory pattern), so a save through the wired store is
+    /// visible to a fresh store over the same database.
+    @Test func makeGuideGridModelWiresSharedMyListStore() throws {
+        let db = try AppDatabase.makeInMemory()
+        let env = AppEnvironment(database: db)
+        let store = try #require(env.makeGuideGridModel().myListStore)
+        try store.save(MyListToggle.entry(channelKey: "a", title: "T", description: nil,
+                                          startMs: 1, endMs: 2, addedAtMs: 3))
+        #expect(try MyListStore(db: env.channelStore.db).all().map(\.title) == ["T"])
+    }
 }

@@ -16,23 +16,13 @@ extension SearchModel {
     /// Saves the airing, or removes it when already saved, then reloads the keys.
     func toggleMyList(_ hit: SearchProgramHit) {
         guard let store = myListStore else { return }
-        let channelKey = ChannelImporter.keyOf(hit.channel)
-        if isSaved(hit) {
-            try? store.remove(channelKey: channelKey, startMs: hit.program.startMs)
-        } else {
-            try? store.save(MyListToggle.entry(
-                channelKey: channelKey, title: hit.title,
-                description: hit.program.details.description,
-                startMs: hit.program.startMs, endMs: hit.program.endMs, addedAtMs: now()))
-        }
+        MyListToggling.apply(store: store, saved: isSaved(hit),
+            channelKey: ChannelImporter.keyOf(hit.channel), title: hit.title,
+            description: hit.program.details.description, startMs: hit.program.startMs,
+            endMs: hit.program.endMs, addedAtMs: now())
         refreshMyListKeys()
     }
 
     /// Reloads `myListKeys` from the store (the live saved-state the glyph reads).
-    func refreshMyListKeys() {
-        guard let store = myListStore else { return }
-        myListKeys = Set(((try? store.all()) ?? []).map {
-            MyListToggle.key(channelKey: $0.channelKey, startMs: $0.startMs)
-        })
-    }
+    func refreshMyListKeys() { myListKeys = MyListToggling.keys(from: myListStore) }
 }
