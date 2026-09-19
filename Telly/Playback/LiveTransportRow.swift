@@ -34,6 +34,7 @@ struct LiveTransportRow: View {
                 .frame(width: 60, height: 60)
                 .background(Circle().fill(.white.opacity(0.15)))
             Text(label(button)).font(.caption)
+                .lineLimit(1).fixedSize()
         }
         .tellyFocus(button == focus, cornerRadius: 30)
     }

@@ -22,6 +22,7 @@ struct MultiviewCellView: View {
                 VideoSurfaceView(engine: vlc)
             }
         }
+        .aspectRatio(16.0 / 9.0, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .overlay {
             RoundedRectangle(cornerRadius: 10)

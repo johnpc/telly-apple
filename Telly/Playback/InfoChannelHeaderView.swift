@@ -17,16 +17,19 @@ struct InfoChannelHeaderView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(channel.displayName)
                     .font(.title).fontWeight(.bold)
+                    .lineLimit(1).truncationMode(.tail)
                 if let group = channel.source.groupTitle, !group.isEmpty {
                     Text(group.uppercased())
                         .font(.subheadline).fontWeight(.medium)
                         .foregroundStyle(.white.opacity(0.65))
+                        .lineLimit(1).truncationMode(.tail)
                 }
             }
-            Spacer()
+            Spacer(minLength: 12)
             Text(InfoOverlayText.clock(nowMs: nowMs))
                 .font(.title2).fontWeight(.semibold).monospacedDigit()
                 .foregroundStyle(.white.opacity(0.85))
+                .lineLimit(1).fixedSize().layoutPriority(1)
         }
     }
 

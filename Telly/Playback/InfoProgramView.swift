@@ -16,8 +16,10 @@ struct InfoProgramView: View {
                     Text("\(InfoOverlayText.timeLabel(now.startMs))–\(InfoOverlayText.timeLabel(now.endMs))")
                         .font(.subheadline).monospacedDigit()
                         .foregroundStyle(.white.opacity(0.7))
+                        .lineLimit(1).fixedSize().layoutPriority(1)
                     Text(now.details.title)
                         .font(.title3).fontWeight(.semibold)
+                        .lineLimit(1).truncationMode(.tail)
                 }
                 if let fraction = ProgramProgress.fraction(
                     nowMs: nowMs, startMs: now.startMs, endMs: now.endMs) {
