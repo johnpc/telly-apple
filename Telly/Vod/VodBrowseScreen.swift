@@ -10,7 +10,10 @@ struct VodBrowseScreen: View {
     @State private var model: VodBrowseModel
     @State private var target: VodPlayTarget?
     let makePlaybackModel: (String, @escaping () -> Void) -> VodPlaybackModel
-    private let columns = [GridItem(.adaptive(minimum: 120), spacing: 16)]
+    // A poster-sized adaptive minimum: 120 packed a 13" iPad / tvOS row with many
+    // tiny columns and stranded wide trailing whitespace; ~168 fills the canvas
+    // with fewer, poster-scale columns while iPhone still lands on a sensible 1–2.
+    private let columns = [GridItem(.adaptive(minimum: 168), spacing: 16)]
 
     init(model: VodBrowseModel,
          makePlaybackModel: @escaping (String, @escaping () -> Void) -> VodPlaybackModel) {

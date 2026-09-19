@@ -8,6 +8,7 @@ import SwiftUI
 /// detail card. Pure presentation over ``SearchModel``.
 struct SearchResultsView: View {
     let model: SearchModel
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
         List {
@@ -76,6 +77,8 @@ struct SearchResultsView: View {
     }
 
     @ViewBuilder private var detailCard: some View {
-        if let program = model.focusedProgram { SearchDetailCardView(program: program) }
+        if CompactLayout.showsPreselectedCard(sizeClass), let program = model.focusedProgram {
+            SearchDetailCardView(program: program)
+        }
     }
 }

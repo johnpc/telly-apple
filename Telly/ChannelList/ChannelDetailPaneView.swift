@@ -27,7 +27,11 @@ struct ChannelDetailPaneView: View {
             Spacer(minLength: 0)
         }
         .padding(32)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        // Cap the reading column and centre it so a 13" landscape pane reads as
+        // a balanced block instead of clinging to the left with one wide, empty
+        // right gutter. Portrait / narrower panes are below the cap so they fill.
+        .frame(maxWidth: 720, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
     private func playButton(_ channel: ChannelEntity) -> some View {
