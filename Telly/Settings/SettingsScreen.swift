@@ -33,9 +33,23 @@ struct SettingsScreen: View {
             .navigationTitle("Settings")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button("Done", action: onClose)
+                    Button(action: onClose) { doneLabel }
                 }
             }
         }
+    }
+
+    /// The Done button's label. tvOS renders a bare xmark `Image` (not a `Label`):
+    /// a plain "Done" text button in the tvOS navigation bar washes out to an
+    /// illegible bright-white capsule, and the bar re-expands a `Label` back to a
+    /// truncated title even under `.labelStyle(.iconOnly)` — a lone `Image` has no
+    /// title to expand, so the icon reads crisply (the accessibility label keeps
+    /// VoiceOver naming). iPhone / iPad keep the legible "Done" text title.
+    @ViewBuilder private var doneLabel: some View {
+        #if os(tvOS)
+        Image(systemName: "xmark").accessibilityLabel(Text("Done"))
+        #else
+        Text("Done")
+        #endif
     }
 }

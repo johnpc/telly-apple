@@ -38,6 +38,11 @@ struct ChannelListScreen: View {
     @State var showSettings = false
     /// The sidebar's selected row, resolved into the detail pane's channel.
     @State var selectedChannelId: Int?
+    #if os(tvOS)
+    /// The channel the tvOS two-column home's remote focus rests on; drives the
+    /// right-hand detail/preview pane (`+TvSplitView`) and the launch default focus.
+    @FocusState var focusedChannelId: Int?
+    #endif
 
     init(model: ChannelListModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
          makeGuideGridModel: @escaping () -> GuideGridModel,

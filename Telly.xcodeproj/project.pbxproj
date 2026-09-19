@@ -481,6 +481,7 @@
 		D185D838DBA0AF34C0175868 /* HttpUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA761F0C2AC5B545A070F9 /* HttpUrl.swift */; };
 		D1A2A23F3518A4A6AD1B6363 /* PlaybackStateChromeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A2E6331B7FDDF758782CDD /* PlaybackStateChromeView.swift */; };
 		D1C4A6C921D8AB96EA6DEA15 /* GuideActivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8202CB683496FD7847F8BA0 /* GuideActivation.swift */; };
+		D2776E9BF3F3C68AE0DD4160 /* ChannelListScreen+TvSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7541D05B36D8E2BC09171402 /* ChannelListScreen+TvSplitView.swift */; };
 		D29B46864FD0DC0D1297731B /* EpgSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD4C85A8FD60FEC0027FEFD /* EpgSource.swift */; };
 		D3251335303D7591E5B09CE6 /* LoadStateScaffoldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3908C14168373EEEFEE606BA /* LoadStateScaffoldView.swift */; };
 		D32A640461973351A35E1324 /* PlaylistGroupFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6B217FFBF93E89613ACC7 /* PlaylistGroupFilterTests.swift */; };
@@ -873,6 +874,7 @@
 		731BD51573E3891745723D89 /* ChannelCatchupPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCatchupPersistenceTests.swift; sourceTree = "<group>"; };
 		74891A89FD1D353272AC7147 /* PlayerKeymapChoices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerKeymapChoices.swift; sourceTree = "<group>"; };
 		74F9824DE072E26C3727BECA /* TrackLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackLabels.swift; sourceTree = "<group>"; };
+		7541D05B36D8E2BC09171402 /* ChannelListScreen+TvSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelListScreen+TvSplitView.swift"; sourceTree = "<group>"; };
 		75DC1A7E98A008F3B7422D84 /* WatchHistoryRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHistoryRows.swift; sourceTree = "<group>"; };
 		77E5B544E685228404DE7353 /* TransportReadoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportReadoutTests.swift; sourceTree = "<group>"; };
 		78BF2A1EC1133E2A158963ED /* CatchupLiveEdgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupLiveEdgeTests.swift; sourceTree = "<group>"; };
@@ -1351,6 +1353,7 @@
 				2222BD2B7B88F998E7236128 /* ChannelListScreen+SplitView.swift */,
 				CECFA7F9094CFAC498A1EEB7 /* ChannelListScreen+Targets.swift */,
 				E84ED3DEE3D16442F212DB2C /* ChannelListScreen+Toolbar.swift */,
+				7541D05B36D8E2BC09171402 /* ChannelListScreen+TvSplitView.swift */,
 				33AA761F0C2AC5B545A070F9 /* HttpUrl.swift */,
 				1E33824048D9B8A7E968723D /* PlaylistSummary.swift */,
 				1B41BEA510401C8A0D0BE9FC /* UrlFieldView.swift */,
@@ -2215,6 +2218,7 @@
 				CB4374E937526ED68367B86A /* ChannelListScreen+SplitView.swift in Sources */,
 				28811160360B8513C256CA2F /* ChannelListScreen+Targets.swift in Sources */,
 				BC36F7A2831CD7B6E53FE6E2 /* ChannelListScreen+Toolbar.swift in Sources */,
+				D2776E9BF3F3C68AE0DD4160 /* ChannelListScreen+TvSplitView.swift in Sources */,
 				DCFD07384D5A31E7CDF25EA2 /* ChannelListScreen.swift in Sources */,
 				D7958E4339F9DE07E8FB5790 /* ChannelPanelGroups.swift in Sources */,
 				FA40A140201985A060E7EAED /* ChannelPanelGroupsColumnView.swift in Sources */,

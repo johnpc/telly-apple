@@ -17,7 +17,7 @@ extension ChannelListScreen {
 
     @ViewBuilder private var layoutRoot: some View {
         #if os(tvOS)
-        stackBody
+        tvBody
         #else
         if ChannelListLayout.usesSplit(sizeClass) { splitBody } else { stackBody }
         #endif
