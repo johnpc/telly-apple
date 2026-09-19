@@ -29,4 +29,16 @@ struct CompactLayoutTests {
     @Test func groupStripDoesNotAutoScrollWhenSizeClassUnknown() {
         #expect(CompactLayout.autoScrollsGroupStrip(nil) == false)
     }
+
+    @Test func posterColumnMinimumIsSmallerOnCompact() {
+        #expect(CompactLayout.posterColumnMinimum(.compact) == 100)
+    }
+
+    @Test func posterColumnMinimumIsPosterScaleOnRegular() {
+        #expect(CompactLayout.posterColumnMinimum(.regular) == 168)
+    }
+
+    @Test func posterColumnMinimumIsPosterScaleWhenSizeClassUnknown() {
+        #expect(CompactLayout.posterColumnMinimum(nil) == 168)
+    }
 }

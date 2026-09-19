@@ -212,6 +212,7 @@
 		58A9C3F9DB2BABEF041C88B2 /* VLCKitPlayerEngine+Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD69B16A6204B62B0D09CFE /* VLCKitPlayerEngine+Audio.swift */; };
 		59C549DDFC2C2D82A23D719A /* SettingsSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E306AC942B24F4A1FBA142 /* SettingsSnapshotTests.swift */; };
 		59C56541C781ABB2D6BD1D1B /* PlaybackReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60695790FA29713F6F4EFD9 /* PlaybackReducerTests.swift */; };
+		59C70D730677C4F915DF88FC /* VodBrowseScreen+Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B37FFDA4B435B00E5314EE /* VodBrowseScreen+Grid.swift */; };
 		5BF3F6867DE020282B0B3795 /* GuideRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE0F1175610370DBEC8AABA /* GuideRow.swift */; };
 		5C1D2FDBE4952EB14FE194BC /* ContentView+DebugTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9FE057C27056761D2F4AFC /* ContentView+DebugTransport.swift */; };
 		5CA7F564719F5537FA577C8F /* KeyValueStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA075A908EE3F8C650F0A3 /* KeyValueStore.swift */; };
@@ -673,6 +674,7 @@
 		1EA339923CFDB0A71EF6E6AE /* MyListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListRowView.swift; sourceTree = "<group>"; };
 		1ED18947163B698A9C4F121C /* DebugLaunch+MyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DebugLaunch+MyList.swift"; sourceTree = "<group>"; };
 		217DA577D0F88D7385009AA2 /* PlaybackKeyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackKeyPolicy.swift; sourceTree = "<group>"; };
+		21B37FFDA4B435B00E5314EE /* VodBrowseScreen+Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VodBrowseScreen+Grid.swift"; sourceTree = "<group>"; };
 		21F1CA563F371B43B8FB3B66 /* MultiviewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewLayout.swift; sourceTree = "<group>"; };
 		2222BD2B7B88F998E7236128 /* ChannelListScreen+SplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelListScreen+SplitView.swift"; sourceTree = "<group>"; };
 		223C2DEAE5C0DF5F7BB17856 /* MyListRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListRecord.swift; sourceTree = "<group>"; };
@@ -1641,6 +1643,7 @@
 				53DAED8D3B3DEF858DADF0B8 /* VodBrowse.swift */,
 				0F0CFC0DAA7FDB4C8CEAEE82 /* VodBrowseModel.swift */,
 				ACDB1D388B033E4FE83806E4 /* VodBrowseScreen.swift */,
+				21B37FFDA4B435B00E5314EE /* VodBrowseScreen+Grid.swift */,
 				DB85A5C7554E4203822378CF /* VodCard.swift */,
 				55C2A1CBC9EBC5A2A95993D0 /* VodCardView.swift */,
 				5F03ECE75DB7F86A250D44D7 /* VodPlaybackKeys.swift */,
@@ -2494,6 +2497,7 @@
 				1EB5E93BAFDEF8159D24E1E2 /* VlcTrackReader.swift in Sources */,
 				934561BECCACC0BD8CB9ACCC /* VodBrowse.swift in Sources */,
 				EE0A5C9F6DC7DEF78225F61B /* VodBrowseModel.swift in Sources */,
+				59C70D730677C4F915DF88FC /* VodBrowseScreen+Grid.swift in Sources */,
 				E46D819D45057FB53FA55C3C /* VodBrowseScreen.swift in Sources */,
 				D5ECDBA96489C0D9637D6F68 /* VodCard.swift in Sources */,
 				8000D89213539D0800DFE3D8 /* VodCardView.swift in Sources */,

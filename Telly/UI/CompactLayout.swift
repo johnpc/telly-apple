@@ -17,4 +17,12 @@ enum CompactLayout {
     static func autoScrollsGroupStrip(_ sizeClass: UserInterfaceSizeClass?) -> Bool {
         sizeClass == .compact
     }
+
+    /// The adaptive minimum width for a Movies-browser poster column. Compact
+    /// iPhone width needs a smaller tile so portrait still lands ≥3 columns; iPad
+    /// / tvOS / regular keep the poster-scale 168 that fills their wide canvas
+    /// with fewer columns instead of a stranded trailing gutter.
+    static func posterColumnMinimum(_ sizeClass: UserInterfaceSizeClass?) -> CGFloat {
+        sizeClass == .compact ? 100 : 168
+    }
 }

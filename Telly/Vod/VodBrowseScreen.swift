@@ -1,19 +1,17 @@
 import SwiftUI
 
-/// The Movies browser (Apple mirror of Android's VOD screen): a category column
-/// beside an adaptive poster grid for the selected category, an empty state when
-/// no movies are imported, and a "Movies" navigation title. Selecting a card
-/// presents ``VodPlaybackScreen`` full-screen, built via the injected
-/// `makePlaybackModel` factory; on exit the browser reloads so a just-watched
-/// card's Continue-watching bar updates. Logic lives in ``VodBrowseModel``.
+/// The Movies browser (Apple mirror of Android's VOD screen): a horizontal
+/// category chip strip above a full-width adaptive poster grid that fills the
+/// canvas on every platform, an empty state when no movies are imported, and a
+/// "Movies" navigation title. Selecting a card presents ``VodPlaybackScreen``
+/// full-screen, built via the injected `makePlaybackModel` factory; on exit the
+/// browser reloads so a just-watched card's Continue-watching bar updates. Layout
+/// lives in ``VodBrowseScreen`` `+Grid`; logic in ``VodBrowseModel``.
 struct VodBrowseScreen: View {
-    @State private var model: VodBrowseModel
-    @State private var target: VodPlayTarget?
+    @State var model: VodBrowseModel
+    @State var target: VodPlayTarget?
+    @Environment(\.horizontalSizeClass) var sizeClass
     let makePlaybackModel: (String, @escaping () -> Void) -> VodPlaybackModel
-    // A poster-sized adaptive minimum: 120 packed a 13" iPad / tvOS row with many
-    // tiny columns and stranded wide trailing whitespace; ~168 fills the canvas
-    // with fewer, poster-scale columns while iPhone still lands on a sensible 1–2.
-    private let columns = [GridItem(.adaptive(minimum: 168), spacing: 16)]
 
     init(model: VodBrowseModel,
          makePlaybackModel: @escaping (String, @escaping () -> Void) -> VodPlaybackModel) {
@@ -22,9 +20,8 @@ struct VodBrowseScreen: View {
     }
 
     var body: some View {
-        HStack(spacing: 0) {
-            categoryColumn
-            Divider()
+        VStack(spacing: 0) {
+            if !model.categories.isEmpty { categoryChips }
             grid
         }
         .navigationTitle("Movies")
@@ -33,41 +30,7 @@ struct VodBrowseScreen: View {
         .fullScreenCover(item: $target) { player($0) }
     }
 
-    @ViewBuilder private var categoryColumn: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-                ForEach(model.categories, id: \.self) { category in
-                    Button(category) { model.select(category) }
-                        .buttonStyle(.plain)
-                        .fontWeight(model.selected == category ? .bold : .regular)
-                }
-            }
-            .padding()
-        }
-        .frame(maxWidth: 220)
-    }
-
-    private var grid: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 16) {
-                ForEach(model.cards) { card in
-                    Button { target = VodPlayTarget(key: card.item.itemKey) } label: {
-                        VodCardView(card: card)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding()
-        }
-    }
-
-    @ViewBuilder private var emptyState: some View {
-        if model.isEmpty {
-            ContentUnavailableView("No movies", systemImage: "film")
-        }
-    }
-
-    private func player(_ target: VodPlayTarget) -> some View {
+    func player(_ target: VodPlayTarget) -> some View {
         VodPlaybackScreen(model: makePlaybackModel(target.key) {
             self.target = nil
             model.load()
