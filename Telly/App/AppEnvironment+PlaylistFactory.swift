@@ -52,7 +52,7 @@ extension AppEnvironment {
     /// reloads the playlist feed so re-created playlists surface immediately.
     func makeSettingsBackupModel() -> SettingsBackupModel {
         SettingsBackupModel(manager: makeSettingsBackupManager(),
-                            reload: { [weak self] in self?.reload() })
+                            reload: { [weak self] in self?.reload(); self?.mirrorSyncedConfig() })
     }
 
     /// The Playlists management model composing the update/refresh/EPG-source and
@@ -64,7 +64,7 @@ extension AppEnvironment {
             channelStore: channelStore, settings: settings, parental: parentalStore,
             updater: makePlaylistUpdater(), makeAddModel: makeAddPlaylistModel,
             refreshEpg: { [weak self] in await self?.refreshEpgNow() },
-            reload: { [weak self] in self?.reload() })
+            reload: { [weak self] in self?.reload(); self?.mirrorSyncedConfig() })
     }
 
     /// The single group-filter wiring both the guide feed and the channel list

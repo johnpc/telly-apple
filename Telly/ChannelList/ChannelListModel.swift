@@ -49,9 +49,13 @@ final class ChannelListModel {
     }
 
     /// (Re)loads the visible channels and the custom groups from the store.
+    /// Content always wins: a load that surfaces channels promotes `phase` to
+    /// `.loaded`, so a late import (e.g. a cross-reinstall restore) reveals its
+    /// rows even if the screen had already resolved to `.empty`.
     func load() {
         channels = filter((try? store.visibleChannels()) ?? [])
         customGroups = (try? CustomGroupStore(db: store.db).all()) ?? []
+        if !channels.isEmpty { phase = .loaded }
     }
 
     /// Switches the active group filter.

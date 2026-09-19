@@ -51,6 +51,16 @@ struct ChannelListModelLoadTests {
         #expect(model.channels.count == 1)
     }
 
+    @Test func lateLoadAfterEmptyPromotesToLoaded() async throws {
+        let (model, store) = try make()
+        await model.start()               // empty store → resolves .empty
+        #expect(model.phase == .empty)
+        seed(store, "a")                  // a later restore import lands a channel
+        model.load()                      // a bare reload must reveal it
+        #expect(model.phase == .loaded)
+        #expect(model.channels.count == 1)
+    }
+
     @Test func retryReinvokesRefreshAndRecovers() async throws {
         let (model, store) = try make()
         var calls = 0

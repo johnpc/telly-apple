@@ -21,7 +21,8 @@ final class PlaylistsSettingsModel {
     let makeAddModel: () -> AddPlaylistModel
     private let updater: PlaylistUpdater
     let refreshEpg: () async -> Void
-    private let reload: () -> Void
+    /// Republish + write-through; internal so EPG-source/add seams fire the mirror.
+    let reload: () -> Void
 
     init(playlistStore: PlaylistStore, epgSourceStore: EpgSourceStore,
          channelStore: ChannelStore, settings: SettingsStore, parental: ParentalStore,

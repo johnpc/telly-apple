@@ -13,16 +13,32 @@ protocol SecretStore {
 }
 
 /// Real `SecretStore` over the Keychain: generic-password items, scoped to one
-/// service, readable only while the device is unlocked and never migrated to a
-/// new device. Thin `SecItem*` glue — `read` copies the item, `write` is an
+/// service. Thin `SecItem*` glue — `read` copies the item, `write` is an
 /// add-or-update, `remove` deletes; any non-success status collapses to nil.
+/// Defaults match the parental PIN's use (device-only, this-device accessible).
+/// Passing `synchronizable: true` with an `AfterFirstUnlock` (non-`…ThisDevice`)
+/// accessibility rides iCloud Keychain, so the item survives app uninstall AND
+/// syncs across the user's devices — the seam the synced-config store reuses.
 struct KeychainSecretStore: SecretStore {
-    private let service = "com.johncorser.telly.parental"
+    private let service: String
+    private let synchronizable: Bool
+    private let accessible: CFString
+
+    init(service: String = "com.johncorser.telly.parental",
+         synchronizable: Bool = false,
+         accessible: CFString = kSecAttrAccessibleWhenUnlockedThisDeviceOnly) {
+        self.service = service
+        self.synchronizable = synchronizable
+        self.accessible = accessible
+    }
 
     private func query(_ key: String) -> [String: Any] {
-        [kSecClass as String: kSecClassGenericPassword,
-         kSecAttrService as String: service,
-         kSecAttrAccount as String: key]
+        var q: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: key]
+        if synchronizable { q[kSecAttrSynchronizable as String] = kCFBooleanTrue }
+        return q
     }
 
     func read(_ key: String) -> String? {
@@ -38,7 +54,7 @@ struct KeychainSecretStore: SecretStore {
     func write(_ value: String, _ key: String) {
         let attrs: [String: Any] = [
             kSecValueData as String: Data(value.utf8),
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+            kSecAttrAccessible as String: accessible,
         ]
         if SecItemUpdate(query(key) as CFDictionary, attrs as CFDictionary) == errSecItemNotFound {
             SecItemAdd(query(key).merging(attrs) { $1 } as CFDictionary, nil)

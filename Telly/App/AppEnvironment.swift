@@ -25,11 +25,17 @@ final class AppEnvironment {
     /// its in-memory state across renders. The salted-hash PIN lives in the
     /// Keychain; the enable flag shares the settings ``KeyValueStore``.
     let parentalStore: ParentalStore
+    /// Cross-reinstall / cross-device provider config, in the synchronizable
+    /// Keychain (rides iCloud Keychain like the PIN — no new entitlement). Tests
+    /// inject an in-memory fake.
+    @ObservationIgnored let syncedConfigStore: SyncedConfigStore
     private(set) var playlists: [PlaylistEntity] = []
 
     init(database: AppDatabase, settings: SettingsStore? = nil,
+         syncedConfig: SyncedConfigStore? = nil,
          now: @escaping () -> Int = { Int(Date().timeIntervalSince1970 * 1_000) }) {
         clock = now
+        syncedConfigStore = syncedConfig ?? KeychainSyncedConfigStore()
         playlistStore = PlaylistStore(db: database)
         epgSourceStore = EpgSourceStore(db: database)
         channelStore = ChannelStore(db: database)

@@ -50,11 +50,13 @@ struct ContentView: View {
             AddPlaylistScreen(model: env.makeAddPlaylistModel()) {
                 adding = false
                 env.reload()
+                env.mirrorSyncedConfig()  // write-through the new playlist config
             }
         }
-        // Playlist refresh-on-start is now owned by the channel list's load seam
-        // (`ChannelListModel.start` → `reloadChannels`); only the EPG stays here.
-        .task { await env.refreshEpgIfDue() }
+        // Restore a synced config first (fresh install / new device → repopulate),
+        // then refresh EPG. Playlist refresh-on-start is owned by the channel
+        // list's load seam (`ChannelListModel.start` → `reloadChannels`).
+        .task { await env.restoreSyncedConfigIfNeeded(); await env.refreshEpgIfDue() }
     }
 }
 

@@ -19,6 +19,7 @@ extension AppEnvironment {
         _ = try? playlistStore.add(sourceUrl: seed.playlistUrl, playlist: playlist,
                                    name: nil, nowMs: Int64(clock()))
         reload()
+        mirrorSyncedConfig()  // a real-seed simulates a user add → write-through
         await refreshEpgNow()
         channelListModel.load()
     }

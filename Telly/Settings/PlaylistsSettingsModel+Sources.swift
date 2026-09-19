@@ -43,6 +43,7 @@ extension PlaylistsSettingsModel {
         guard HttpUrl.isValid(url) else { return false }
         try? epgSourceStore.add(playlistUrl: playlistUrl, url: url,
                                 nowMs: Int64(Date().timeIntervalSince1970 * 1_000))
+        reload()  // write-through: EPG source URLs embed provider tokens too.
         return true
     }
 
@@ -51,10 +52,11 @@ extension PlaylistsSettingsModel {
     func setSourceUrl(id: Int64, url: String) -> Bool {
         guard HttpUrl.isValid(url) else { return false }
         try? epgSourceStore.setUrl(id: id, url: url)
+        reload()
         return true
     }
 
-    func removeSource(id: Int64) { try? epgSourceStore.remove(id: id) }
+    func removeSource(id: Int64) { try? epgSourceStore.remove(id: id); reload() }
 
     // MARK: App-wide EPG refresh
 

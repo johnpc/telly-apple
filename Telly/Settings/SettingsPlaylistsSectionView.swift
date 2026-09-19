@@ -25,6 +25,7 @@ struct SettingsPlaylistsSectionView: View {
             AddPlaylistScreen(model: model.makeAddModel()) {
                 addingPlaylist = false
                 model.load()
+                model.reload()  // republish + write-through the new playlist config
             }
         }
     }
