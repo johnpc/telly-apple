@@ -19,15 +19,28 @@ struct ChannelListScreen: View {
     let makeVodPlaybackModel: (String, @escaping () -> Void) -> VodPlaybackModel
     let makeMyListModel: () -> MyListModel
     let clearVodPositions: () -> Void
+    /// The selected channel's now/next for the iPad detail pane; identity ({ nil })
+    /// off the split path, so compact iPhone / tvOS / tests need not wire the EPG.
+    let nowNext: (ChannelEntity) -> NowNext?
+    /// Wall clock (ms) the detail pane's now/next progress reads; injected so the
+    /// split render is deterministic. Unused on the compact/tvOS stack path.
+    let nowMs: () -> Int
     let settings: SettingsStore
     let parental: ParentalStore
     let onAdd: () -> Void
     /// Drives the initial `model.start()`; DEBUG screenshots pass false to pin a phase.
     let autoStart: Bool
+    #if !os(tvOS)
+    /// Gates the iPad split layout: `.regular` earns the sidebar + detail split,
+    /// `.compact` keeps the iPhone stack unchanged (see `ChannelListLayout`).
+    @Environment(\.horizontalSizeClass) var sizeClass
+    #endif
     @State var target: PlaybackTarget?
     @State var showSettings = false
     @State var challenge: ParentalChannelBox?
     @State var lockTarget: ParentalChannelBox?
+    /// The sidebar's selected row, resolved into the detail pane's channel.
+    @State var selectedChannelId: Int?
 
     init(model: ChannelListModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
          makeGuideGridModel: @escaping () -> GuideGridModel,
@@ -44,6 +57,8 @@ struct ChannelListScreen: View {
          clearVodPositions: @escaping () -> Void,
          settings: SettingsStore,
          parental: ParentalStore,
+         nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil },
+         nowMs: @escaping () -> Int = { 0 },
          autoStart: Bool = true,
          onAdd: @escaping () -> Void) {
         _model = State(initialValue: model)
@@ -63,38 +78,8 @@ struct ChannelListScreen: View {
         self.clearVodPositions = clearVodPositions
         self.settings = settings
         self.parental = parental
+        self.nowNext = nowNext
+        self.nowMs = nowMs
         self.onAdd = onAdd
-    }
-
-    var body: some View {
-        NavigationStack {
-            loadStateContent
-            .navigationTitle("Channels")
-            .toolbar { toolbarContent }
-            #if !os(tvOS)
-            // iPhone/iPad only: on tvOS an inline `.searchable` forces a full-screen
-            // keyboard onto the home screen, so search is a dedicated toolbar item.
-            .searchable(text: $model.query, prompt: "Search channels")
-            .overlay {
-                if !model.query.isEmpty && model.rows.isEmpty {
-                    ContentUnavailableView.search(text: model.query)
-                }
-            }
-            #endif
-        }
-        .task { if autoStart { await model.start() } }
-        .fullScreenCover(item: $target) { target in
-            PlaybackScreen(streamUrl: target.url, engine: makeEngine())
-        }
-        .sheet(item: $challenge) { challengeSheet($0.channel) }
-        .sheet(item: $lockTarget) { lockSheet($0.channel) }
-        .sheet(isPresented: $showSettings) {
-            SettingsScreen(settings: settings, parental: parental,
-                           backup: makeBackupModel(),
-                           playlists: makePlaylistsSettingsModel(),
-                           makeVisibilityEditModel: makeVisibilityEditModel,
-                           clearVodPositions: clearVodPositions,
-                           onClose: { showSettings = false })
-        }
     }
 }

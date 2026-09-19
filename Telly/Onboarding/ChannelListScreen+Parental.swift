@@ -14,20 +14,25 @@ extension ChannelListScreen {
             #else
             .buttonStyle(TellyPressButtonStyle())
             #endif
-            .contextMenu {
-                Button(channel.flags.favorite ? "Remove Favorite" : "Add to Favorites") {
-                    model.toggleFavorite(channel)
-                }
-                Button(channel.flags.blocked ? "Unlock Channel" : "Lock Channel") {
-                    lockTarget = ParentalChannelBox(channel: channel)
-                }
-                Button("Hide channel", role: .destructive) { model.hide(channel) }
-            }
+            .contextMenu { rowContextMenu(channel) }
+    }
+
+    /// The favourite / lock / hide long-press menu shared by the stack row and
+    /// the iPad split sidebar row, so neither carries a copy.
+    @ViewBuilder func rowContextMenu(_ channel: ChannelEntity) -> some View {
+        Button(channel.flags.favorite ? "Remove Favorite" : "Add to Favorites") {
+            model.toggleFavorite(channel)
+        }
+        Button(channel.flags.blocked ? "Unlock Channel" : "Lock Channel") {
+            lockTarget = ParentalChannelBox(channel: channel)
+        }
+        Button("Hide channel", role: .destructive) { model.hide(channel) }
     }
 
     /// A row tunes directly unless it is a locked channel with an active PIN —
-    /// then the challenge sheet is presented instead of setting the target.
-    private func tapped(_ channel: ChannelEntity) {
+    /// then the challenge sheet is presented instead of setting the target. The
+    /// iPad detail pane's Play button routes here too, so the PIN gate holds.
+    func tapped(_ channel: ChannelEntity) {
         if parental.mustChallenge(channel) {
             challenge = ParentalChannelBox(channel: channel)
         } else {
