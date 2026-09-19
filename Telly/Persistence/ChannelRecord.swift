@@ -18,7 +18,6 @@ struct ChannelRecord: Codable, FetchableRecord, MutablePersistableRecord {
     var favorite: Bool
     var hidden: Bool
     var favoriteOrder: Int
-    var blocked: Bool
     var catchupType: String?
     var catchupSource: String?
     var catchupDays: Int?

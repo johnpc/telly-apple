@@ -21,7 +21,6 @@ extension ContentView {
                           makeMyListModel: env.makeMyListModel,
                           clearVodPositions: env.clearVodPositions,
                           settings: env.settings,
-                          parental: env.parentalStore,
                           nowNext: { env.guideEpgStore.nowNext(forEpgId: $0.epgId) },
                           nowMs: env.clock,
                           autoStart: autoStart,

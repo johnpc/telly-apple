@@ -61,19 +61,6 @@ struct MultiviewSessionTests {
         #expect(engines.allSatisfy { $0.stopCount == 1 && $0.releaseCount == 1 })
     }
 
-    @Test func startSkipsCellsThatCannotLoad() {
-        var engines: [FakePlayerEngine] = []
-        let grid = MultiviewGrid(channels: channels, capacity: 4, activeChannelId: 10)!
-        let session = MultiviewSession(grid: grid, makeEngine: {
-            let engine = FakePlayerEngine(); engines.append(engine); return engine
-        }, canLoad: { $0.id != 30 })                      // ch30 (index 2) is gated
-        session.start()
-        #expect(engines[0].loaded == ["http://127.0.0.1/10.ts"])
-        #expect(engines[2].loaded.isEmpty)                // gated tile never decodes
-        #expect(engines[3].loaded == ["http://127.0.0.1/40.ts"])
-        #expect(engines.map(\.muted) == [false, true, true, true])   // mute policy intact
-    }
-
     @Test func engineAtReturnsNilOutOfRange() {
         let (session, _) = makeSession()
         #expect(session.engine(at: 9) == nil)

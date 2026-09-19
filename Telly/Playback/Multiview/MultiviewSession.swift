@@ -11,16 +11,11 @@ final class MultiviewSession {
     private(set) var grid: MultiviewGrid
     let engines: [any PlayerEngine]
     let maxColumns: Int
-    /// Per-channel gate: a tile whose channel fails this (a blocked channel) never
-    /// loads its stream, so it can't decode without a PIN. Defaults to load-all.
-    private let canLoad: (ChannelEntity) -> Bool
 
     init(grid: MultiviewGrid, maxColumns: Int = 2,
-         makeEngine: @MainActor () -> any PlayerEngine,
-         canLoad: @escaping (ChannelEntity) -> Bool = { _ in true }) {
+         makeEngine: @MainActor () -> any PlayerEngine) {
         self.grid = grid
         self.maxColumns = maxColumns
-        self.canLoad = canLoad
         self.engines = grid.cells.map { _ in makeEngine() }
     }
 
@@ -30,7 +25,6 @@ final class MultiviewSession {
     init(grid: MultiviewGrid, maxColumns: Int = 2) {
         self.grid = grid
         self.maxColumns = maxColumns
-        self.canLoad = { _ in true }
         self.engines = []
     }
     #endif
@@ -43,8 +37,7 @@ final class MultiviewSession {
     /// Tunes each tile's stream (index-aligned) and applies the mute policy.
     func start() {
         for (index, engine) in engines.enumerated() where grid.cells.indices.contains(index) {
-            let cell = grid.cells[index]
-            if canLoad(cell.channel) { engine.load(cell.streamUrl, isLive: true) }
+            engine.load(grid.cells[index].streamUrl, isLive: true)
         }
         applyAudio()
     }

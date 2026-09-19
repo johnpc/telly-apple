@@ -67,20 +67,6 @@ struct ChannelListModelTests {
         #expect(model.rows.map(\.source.name) == ["B", "C"])
     }
 
-    @Test func setBlockedPersistsAndUnblocks() throws {
-        let model = try seededModel()
-        let id = model.channels[0].id
-        model.setBlocked(model.channels[0], true)
-        #expect(model.channels.first { $0.id == id }?.flags.blocked == true)
-        // A fresh model over the same store sees the persisted lock.
-        let reloaded = ChannelListModel(store: model.store)
-        reloaded.load()
-        #expect(reloaded.channels.first { $0.id == id }?.flags.blocked == true)
-        // Unlocking flips it back.
-        model.setBlocked(try #require(model.channels.first { $0.id == id }), false)
-        #expect(model.channels.first { $0.id == id }?.flags.blocked == false)
-    }
-
     @Test func visibilityOffDropsPseudoGroup() throws {
         let model = try seededModel()
         model.visibility.favorites = false

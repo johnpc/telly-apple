@@ -2,7 +2,7 @@
 import Foundation
 
 /// DEBUG-only catch-up / archive screenshot proof (`-tellyCatchup`), kept out of
-/// the 99-line `DebugLaunch` core (the `+History`/`+Parental` precedent). Seeds a
+/// the 99-line `DebugLaunch` core (the `+History`/`+Groups` precedent). Seeds a
 /// single catch-up-capable fixture channel plus an already-aired programme so the
 /// archive `PlaybackScreen` (with its "Catch-up" badge) can be captured on a
 /// simulator — using only a fake local template URL, never the real provider.

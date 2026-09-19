@@ -5,7 +5,7 @@ import GRDB
 /// The backup manager composed over an in-memory database + fake key-value
 /// store: export gathers settings/playlists/sources; import restores settings
 /// and re-creates zero-channel playlists with their custom EPG sources, never
-/// carrying parental-lock state and never crashing on malformed JSON.
+/// crashing on malformed JSON.
 @MainActor
 struct SettingsBackupManagerTests {
     private func manager(db: AppDatabase, kv: KeyValueStore) -> SettingsBackupManager {
@@ -38,7 +38,6 @@ struct SettingsBackupManagerTests {
         let srcDb = try AppDatabase.makeInMemory()
         let srcKv = InMemoryKeyValueStore()
         srcKv.writeBool(false, SettingsKey.use24hClock.rawValue)
-        srcKv.writeBool(true, SettingsKey.parentalEnabled.rawValue)  // must NOT travel
         let a = "http://127.0.0.1:8000/a.m3u"
         try PlaylistStore(db: srcDb).add(sourceUrl: a,
             playlist: M3uPlaylist(epgURL: nil, channels: [chan("A1"), chan("A2")]), name: "A", nowMs: 0)
@@ -49,7 +48,6 @@ struct SettingsBackupManagerTests {
         let kv = InMemoryKeyValueStore()
         #expect(try manager(db: db, kv: kv).importJson(json))
         #expect(kv.readBool(SettingsKey.use24hClock.rawValue) == false)
-        #expect(kv.readBool(SettingsKey.parentalEnabled.rawValue) == nil)  // lock state untouched
         #expect(try PlaylistStore(db: db).all().map(\.url) == [a])
         #expect(try ChannelStore(db: db).visibleChannels().isEmpty)  // channels re-fetch pending
         #expect(try EpgSourceStore(db: db).forPlaylist(a).map(\.url) == ["http://127.0.0.1:8000/x.xml"])

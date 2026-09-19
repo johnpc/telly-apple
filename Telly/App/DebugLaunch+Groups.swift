@@ -23,19 +23,14 @@ extension DebugLaunch {
 
     static func manageGroupsRequested(in args: [String]) -> Bool { args.contains("-tellyManageGroups") }
     static func groupsStripRequested(in args: [String]) -> Bool { args.contains("-tellyGroupsStrip") }
-    static func manageBlockingRequested(in args: [String]) -> Bool { args.contains("-tellyManageBlocking") }
     static func assignEpgRequested(in args: [String]) -> Bool { args.contains("-tellyAssignEpg") }
     static func copyChannelsRequested(in args: [String]) -> Bool { args.contains("-tellyCopyChannels") }
-    /// The PIN to pre-seed + enable so Manage Blocking shows its PIN gate
-    /// (`-tellySeedPin 1234`); nil leaves the editor unlocked.
-    static func groupsSeedPin(in args: [String]) -> String? { value(for: "-tellySeedPin", in: args) }
 
     /// Whether any Slice-7 custom-groups route was requested (the single branch
     /// `ContentView+Debug` checks before dispatching to `groupsDebug`).
     static func groupsDebugRequested(in args: [String]) -> Bool {
         manageGroupsRequested(in: args) || groupsStripRequested(in: args)
-            || manageBlockingRequested(in: args) || assignEpgRequested(in: args)
-            || copyChannelsRequested(in: args)
+            || assignEpgRequested(in: args) || copyChannelsRequested(in: args)
     }
 
     /// Seeds the synthetic playlist + its now-airing EPG. Idempotent: `add`

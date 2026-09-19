@@ -19,11 +19,6 @@ struct DebugLaunchTests {
         #expect(!DebugLaunch.settingsRequested(in: ["Telly"]))
     }
 
-    @Test func playbackBlockRequestedReflectsTheFlag() {
-        #expect(DebugLaunch.playbackBlockRequested(in: ["Telly", "-tellyPlaybackBlock"]))
-        #expect(!DebugLaunch.playbackBlockRequested(in: ["Telly"]))
-    }
-
     @Test func clock24hOverrideReadsTheFlagValue() {
         #expect(DebugLaunch.clock24hOverride(in: ["Telly", "-tellyClock24h", "false"]) == false)
         #expect(DebugLaunch.clock24hOverride(in: ["Telly", "-tellyClock24h", "true"]) == true)
@@ -129,36 +124,6 @@ struct DebugLaunchTests {
         #expect(snapshot.selectedAudioId == "0")
         #expect(snapshot.texts.map(\.language) == ["en"])
         #expect(snapshot.selectedTextId == nil)
-    }
-
-    @Test func parentalChallengeRequestedReadsFlag() {
-        #expect(DebugLaunch.parentalChallengeRequested(in: ["Telly", "-tellyParentalChallenge"]))
-        #expect(!DebugLaunch.parentalChallengeRequested(in: ["Telly"]))
-        #expect(!DebugLaunch.parentalChallengeRequested(in: ["Telly", "-tellyOverlay"]))
-    }
-
-    @Test func seedParentalPinReadsFlagValue() {
-        #expect(DebugLaunch.seedParentalPin(in: ["Telly", "-tellyParentalPin", "1234"]) == "1234")
-        #expect(DebugLaunch.seedParentalPin(in: ["Telly", "-tellyParentalPin"]) == nil)
-        #expect(DebugLaunch.seedParentalPin(in: ["Telly"]) == nil)
-    }
-
-    @MainActor @Test func seedParentalBlockLocksFirstChannelAndSeedsEnabledPin() throws {
-        let db = try AppDatabase.makeInMemory()
-        let playlists = PlaylistStore(db: db)
-        _ = try playlists.add(sourceUrl: "u",
-                              playlist: DebugLaunch.fixturePlaylist(base: "http://127.0.0.1:8000/"),
-                              name: nil, nowMs: 0)
-        let store = ChannelStore(db: db)
-        let parental = ParentalStore(secret: InMemorySecretStore(), backing: InMemoryKeyValueStore())
-        DebugLaunch.seedParentalBlock(into: store, parental: parental, pin: "1234")
-        let channels = try store.visibleChannels()
-        #expect(channels.first?.flags.blocked == true)                 // only the first is locked
-        #expect(channels.dropFirst().allSatisfy { !$0.flags.blocked })
-        #expect(parental.isSet == true)
-        #expect(parental.isEnabled == true)                            // enforcement on
-        #expect(parental.verify(pin: "1234") == true)                  // the seeded PIN verifies
-        #expect(parental.mustChallenge(try #require(channels.first)) == true)
     }
 
     @Test func forcedGuideReadsFlag() {

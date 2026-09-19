@@ -1,9 +1,8 @@
 import Foundation
 
 /// Bulk "Manage visibility" editor (the Apple port of Android
-/// `features/groups/BulkFlagSession`, VISIBILITY kind only — blocking/parental
-/// PIN deferred): every channel, hidden included, with a per-row hidden toggle
-/// that persists immediately.
+/// `features/groups/BulkFlagSession`, VISIBILITY kind): every channel, hidden
+/// included, with a per-row hidden toggle that persists immediately.
 @MainActor
 @Observable
 final class VisibilityEditModel {

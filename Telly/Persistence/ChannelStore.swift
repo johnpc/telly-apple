@@ -27,7 +27,7 @@ struct ChannelStore {
         try fetch("SELECT * FROM channels WHERE hidden = 0 ORDER BY sortIndex, number", [])
     }
 
-    /// Every channel, hidden included — the bulk visibility/blocking editors.
+    /// Every channel, hidden included — the bulk visibility editor.
     func allChannels() throws -> [ChannelEntity] {
         try fetch("SELECT * FROM channels ORDER BY number", [])
     }

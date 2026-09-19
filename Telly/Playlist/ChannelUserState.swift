@@ -7,8 +7,6 @@ struct ChannelFlags: Equatable {
     var hidden = false
     /// Manage-Favorites position; ties keep the base zap order.
     var favoriteOrder = 0
-    /// PIN-gated to tune: blocked channels stay listed with a lock.
-    var blocked = false
 }
 
 /// Per-channel "Channel options" overrides: all default to "follow the

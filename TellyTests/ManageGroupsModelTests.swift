@@ -5,7 +5,7 @@ import GRDB
 /// The Manage-Groups editor model against a REAL in-memory GRDB database: create
 /// adds an EMPTY group and reloads the feed, a blank/whitespace name is ignored
 /// on both create and rename, rename reflects in `groups`, and delete removes the
-/// group. Sibling of ``BlockingEditModelTests`` / ``CustomGroupStoreTests``.
+/// group. Sibling of ``CustomGroupStoreTests``.
 @MainActor
 struct ManageGroupsModelTests {
     private func model() throws -> ManageGroupsModel {

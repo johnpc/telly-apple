@@ -1,9 +1,9 @@
 import SwiftUI
 
 /// The post-onboarding channel list: a group-filter strip over the visible
-/// channels, a long-press menu (favourite / lock / hide) and toolbar links to
-/// the Guide, Search, History and the editors. A row opens the live player
-/// unless a PIN-lock gates it (`+Parental`); logic lives in ``ChannelListModel``.
+/// channels, a long-press menu (favourite / hide) and toolbar links to the
+/// Guide, Search, History and the editors. A row opens the live player
+/// (`+Row`); logic lives in ``ChannelListModel``.
 struct ChannelListScreen: View {
     @State var model: ChannelListModel
     let makeEngine: () -> VLCKitPlayerEngine
@@ -26,7 +26,6 @@ struct ChannelListScreen: View {
     /// split render is deterministic. Unused on the compact/tvOS stack path.
     let nowMs: () -> Int
     let settings: SettingsStore
-    let parental: ParentalStore
     let onAdd: () -> Void
     /// Drives the initial `model.start()`; DEBUG screenshots pass false to pin a phase.
     let autoStart: Bool
@@ -37,8 +36,6 @@ struct ChannelListScreen: View {
     #endif
     @State var target: PlaybackTarget?
     @State var showSettings = false
-    @State var challenge: ParentalChannelBox?
-    @State var lockTarget: ParentalChannelBox?
     /// The sidebar's selected row, resolved into the detail pane's channel.
     @State var selectedChannelId: Int?
 
@@ -56,7 +53,6 @@ struct ChannelListScreen: View {
          makeMyListModel: @escaping () -> MyListModel,
          clearVodPositions: @escaping () -> Void,
          settings: SettingsStore,
-         parental: ParentalStore,
          nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil },
          nowMs: @escaping () -> Int = { 0 },
          autoStart: Bool = true,
@@ -77,7 +73,6 @@ struct ChannelListScreen: View {
         self.makeMyListModel = makeMyListModel
         self.clearVodPositions = clearVodPositions
         self.settings = settings
-        self.parental = parental
         self.nowNext = nowNext
         self.nowMs = nowMs
         self.onAdd = onAdd

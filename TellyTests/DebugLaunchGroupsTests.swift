@@ -11,17 +11,13 @@ struct DebugLaunchGroupsTests {
 
     @Test func flagsSelectTheirRoutes() {
         #expect(DebugLaunch.manageGroupsRequested(in: ["Telly", "-tellyManageGroups"]))
-        #expect(DebugLaunch.manageBlockingRequested(in: ["Telly", "-tellyManageBlocking"]))
         #expect(DebugLaunch.assignEpgRequested(in: ["Telly", "-tellyAssignEpg"]))
         #expect(DebugLaunch.copyChannelsRequested(in: ["Telly", "-tellyCopyChannels"]))
         #expect(DebugLaunch.groupsStripRequested(in: ["Telly", "-tellyGroupsStrip"]))
-        #expect(DebugLaunch.groupsSeedPin(in: ["Telly", "-tellySeedPin", "1234"]) == "1234")
-        #expect(DebugLaunch.groupsSeedPin(in: ["Telly", "-tellyManageBlocking"]) == nil)
     }
 
     @Test func groupsDebugRequestedIsTheUnionOfTheRoutes() {
         #expect(DebugLaunch.groupsDebugRequested(in: ["Telly", "-tellyManageGroups"]))
-        #expect(DebugLaunch.groupsDebugRequested(in: ["Telly", "-tellyManageBlocking"]))
         #expect(DebugLaunch.groupsDebugRequested(in: ["Telly", "-tellyAssignEpg"]))
         #expect(DebugLaunch.groupsDebugRequested(in: ["Telly", "-tellyCopyChannels"]))
         #expect(DebugLaunch.groupsDebugRequested(in: ["Telly", "-tellyGroupsStrip"]))

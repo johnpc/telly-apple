@@ -3,8 +3,8 @@ import SwiftUI
 /// The channel list's platform-adaptive shell, split from `ChannelListScreen` to
 /// keep both within the source-line budget. Compact iPhone and tvOS keep the
 /// single stacked `NavigationStack` verbatim; iPad regular width routes to the
-/// `NavigationSplitView` (`+SplitView`). The playback cover and the challenge / lock
-/// / settings sheets hang off the shared root so both layouts present them.
+/// `NavigationSplitView` (`+SplitView`). The playback cover and the settings
+/// sheet hang off the shared root so both layouts present them.
 extension ChannelListScreen {
     var body: some View {
         layoutRoot
@@ -12,8 +12,6 @@ extension ChannelListScreen {
             .fullScreenCover(item: $target) { target in
                 PlaybackScreen(streamUrl: target.url, engine: makeEngine())
             }
-            .sheet(item: $challenge) { challengeSheet($0.channel) }
-            .sheet(item: $lockTarget) { lockSheet($0.channel) }
             .sheet(isPresented: $showSettings) { settingsSheet }
     }
 
@@ -49,7 +47,7 @@ extension ChannelListScreen {
     #endif
 
     var settingsSheet: some View {
-        SettingsScreen(settings: settings, parental: parental,
+        SettingsScreen(settings: settings,
                        backup: makeBackupModel(),
                        playlists: makePlaylistsSettingsModel(),
                        makeVisibilityEditModel: makeVisibilityEditModel,

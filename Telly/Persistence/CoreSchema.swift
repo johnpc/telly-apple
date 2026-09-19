@@ -32,6 +32,8 @@ enum CoreSchema {
             t.column("favorite", .boolean).notNull().defaults(to: false)
             t.column("hidden", .boolean).notNull().defaults(to: false)
             t.column("favoriteOrder", .integer).notNull().defaults(to: 0)
+            // Dormant: the removed parental block-PIN feature owned this column.
+            // Kept (unread/unwritten) so the shipped v1-core migration is intact.
             t.column("blocked", .boolean).notNull().defaults(to: false)
             t.column("catchupType", .text)
             t.column("catchupSource", .text)

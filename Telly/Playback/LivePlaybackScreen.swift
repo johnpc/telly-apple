@@ -44,7 +44,6 @@ struct LivePlaybackScreen: View {
         .fullScreenCover(isPresented: $model.searchRequested) {
             if let make = model.makeSearchModel { SearchScreen(model: make()) }
         }
-        .fullScreenCover(isPresented: blockChallengePresented) { blockChallenge }
         .playbackKeyForwarder(model)
         #if !os(tvOS)
         .gesture(DragGesture(minimumDistance: 0).onEnded { v in

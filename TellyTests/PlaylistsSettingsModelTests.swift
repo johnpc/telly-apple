@@ -42,10 +42,9 @@ struct PlaylistsSettingsModelTests {
         let settings = SettingsStore(backing: InMemoryKeyValueStore())
         var count = 0
         let epg = Counter()
-        let parental = ParentalStore(secret: InMemorySecretStore(), backing: InMemoryKeyValueStore())
         let model = PlaylistsSettingsModel(
             playlistStore: store, epgSourceStore: epgStore, channelStore: channels,
-            settings: settings, parental: parental,
+            settings: settings,
             updater: PlaylistUpdater(fetch: fetch, store: store, now: { 1 }),
             makeAddModel: { AddPlaylistModel(fetch: fetch, store: store, now: { 1 }) },
             refreshEpg: { epg.value += 1 }, reload: { count += 1 })

@@ -1,11 +1,11 @@
 import Foundation
 import Security
 
-/// A string-only persistence seam for sensitive credentials — the parental
-/// PIN's salt and salted hash. Deliberately separate from ``KeyValueStore``:
-/// these values belong in the Keychain, never plaintext `UserDefaults`. Tests
-/// inject an in-memory fake; production uses ``KeychainSecretStore``. An unset
-/// key reads back nil so callers can detect "no PIN set".
+/// A string-only persistence seam for sensitive credentials (the synced provider
+/// config). Deliberately separate from ``KeyValueStore``: these values belong in
+/// the Keychain, never plaintext `UserDefaults`. Tests inject an in-memory fake;
+/// production uses ``KeychainSecretStore``. An unset key reads back nil so callers
+/// can detect "nothing stored".
 protocol SecretStore {
     func read(_ key: String) -> String?
     func write(_ value: String, _ key: String)
@@ -15,16 +15,16 @@ protocol SecretStore {
 /// Real `SecretStore` over the Keychain: generic-password items, scoped to one
 /// service. Thin `SecItem*` glue — `read` copies the item, `write` is an
 /// add-or-update, `remove` deletes; any non-success status collapses to nil.
-/// Defaults match the parental PIN's use (device-only, this-device accessible).
-/// Passing `synchronizable: true` with an `AfterFirstUnlock` (non-`…ThisDevice`)
-/// accessibility rides iCloud Keychain, so the item survives app uninstall AND
-/// syncs across the user's devices — the seam the synced-config store reuses.
+/// Defaults are device-only, this-device accessible. Passing `synchronizable:
+/// true` with an `AfterFirstUnlock` (non-`…ThisDevice`) accessibility rides
+/// iCloud Keychain, so the item survives app uninstall AND syncs across the
+/// user's devices — the seam the synced-config store uses.
 struct KeychainSecretStore: SecretStore {
     private let service: String
     private let synchronizable: Bool
     private let accessible: CFString
 
-    init(service: String = "com.johncorser.telly.parental",
+    init(service: String = "com.johncorser.telly.secret",
          synchronizable: Bool = false,
          accessible: CFString = kSecAttrAccessibleWhenUnlockedThisDeviceOnly) {
         self.service = service

@@ -1,8 +1,7 @@
 import Foundation
 
-/// The persisted scalar-preference keys. Sensitive credentials (e.g. a parental
-/// PIN) are deliberately absent — those belong in the Keychain as a salted hash,
-/// never in plaintext `UserDefaults`.
+/// The persisted scalar-preference keys. Sensitive credentials are deliberately
+/// absent — those belong in the Keychain, never in plaintext `UserDefaults`.
 enum SettingsKey: String, CaseIterable {
     case use24hClock
     case panelTimeoutSeconds
@@ -12,7 +11,6 @@ enum SettingsKey: String, CaseIterable {
     case playerKeyUpDown
     case playerKeyLeftRight
     case playerKeyLongOk
-    case parentalEnabled
     case colorScheme
     case updateOnPlaylistsChange
     case saveSearchHistory
@@ -33,7 +31,6 @@ enum SettingsDefaults {
     static let playerKeyUpDown = PlayerUpDownAction.showInfo.rawValue
     static let playerKeyLeftRight = PlayerLeftRightAction.nothing.rawValue
     static let playerKeyLongOk = PlayerLongOkAction.quickMenu.rawValue
-    static let parentalEnabled = false
     static let colorScheme = AppearanceTheme.system.rawValue
     static let updateOnPlaylistsChange = false
     static let saveSearchHistory = true

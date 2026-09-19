@@ -5,8 +5,8 @@ import SwiftUI
 /// group strip + a selectable channel list, and whose detail pane shows the
 /// selected channel's now/next and a Play button. This fills the large canvas
 /// the stretched single column wasted, mirroring how TiviMate uses the width.
-/// Selecting a row drives the detail; Play tunes through the same parental-gated
-/// `tapped` path a compact tap uses, so playback behaviour is preserved.
+/// Selecting a row drives the detail; Play tunes through the same `tapped` path
+/// a compact tap uses, so playback behaviour is preserved.
 extension ChannelListScreen {
     var splitBody: some View {
         NavigationSplitView {
@@ -33,7 +33,7 @@ extension ChannelListScreen {
 
     /// A sidebar row: plain content so the `List(selection:)` tap drives the
     /// detail (rather than a Button swallowing it), with the same long-press
-    /// favourite / lock / hide menu the stack row carries.
+    /// favourite / hide menu the stack row carries.
     @ViewBuilder private func sidebarRow(_ channel: ChannelEntity) -> some View {
         ChannelListRowView(channel: channel)
             .contentShape(Rectangle())

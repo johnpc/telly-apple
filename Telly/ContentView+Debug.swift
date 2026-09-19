@@ -2,8 +2,8 @@
 import SwiftUI
 
 /// DEBUG-only launch-argument routing for `ContentView`: seeds local fixtures and
-/// jumps to a prepared route per proof (live player, autoplay, guide, locked-
-/// channel PIN challenge — see `+ParentalDebug`), never touching the real provider.
+/// jumps to a prepared route per proof (live player, autoplay, guide), never
+/// touching the real provider.
 extension ContentView {
     var debugArgs: [String] { ProcessInfo.processInfo.arguments }
 
@@ -11,7 +11,7 @@ extension ContentView {
         if let loadState = DebugLaunch.loadStateDemo(in: debugArgs) {
             loadStateDemo(loadState)
         } else if DebugLaunch.settingsRequested(in: debugArgs) {
-            SettingsScreen(settings: env.settings, parental: env.parentalStore,
+            SettingsScreen(settings: env.settings,
                            backup: env.makeSettingsBackupModel(),
                            playlists: env.makePlaylistsSettingsModel(),
                            makeVisibilityEditModel: env.makeVisibilityEditModel, clearVodPositions: env.clearVodPositions, onClose: {})
@@ -28,10 +28,6 @@ extension ContentView {
         } else if DebugLaunch.vodBrowseRequested(in: debugArgs) {
             vodBrowseDemo
         } else if DebugLaunch.vodPlaybackRequested(in: debugArgs) { vodPlaybackDemo
-        } else if DebugLaunch.playbackBlockRequested(in: debugArgs) {
-            playbackBlockDemo
-        } else if DebugLaunch.parentalChallengeRequested(in: debugArgs) {
-            parentalChallengeDemo
         } else if DebugLaunch.catchupTransportRequested(in: debugArgs) {
             catchupTransportDemo
         } else if DebugLaunch.catchupDemoRequested(in: debugArgs) {

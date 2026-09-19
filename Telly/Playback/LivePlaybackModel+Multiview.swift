@@ -14,14 +14,12 @@ extension LivePlaybackModel {
 
     /// Enter multiview: build the grid, stop the primary fullscreen engine (so its
     /// audio can't compete with the active tile), spin up one engine per tile,
-    /// load every unblocked stream (only the active tile audible), and raise the
-    /// sticky overlay. The active tile is PIN-gated exactly like a fullscreen tune.
+    /// load every stream (only the active tile audible), and raise the sticky
+    /// overlay.
     func openMultiview() {
         guard let grid = multiviewGrid() else { return }
-        if let active = grid.activeCell?.channel, blockGate?.intercept(active) == true { return }
         engine.stop()
-        let session = MultiviewSession(grid: grid, makeEngine: makeEngine,
-                                       canLoad: { [blockGate] in blockGate?.blocks($0) != true })
+        let session = MultiviewSession(grid: grid, makeEngine: makeEngine)
         session.start()
         multiview = session
         visibility.set(.multiview)

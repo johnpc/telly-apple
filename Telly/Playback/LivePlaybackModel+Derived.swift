@@ -1,8 +1,8 @@
 import Foundation
 
 /// The screen-facing derived state of ``LivePlaybackModel``, split into a
-/// same-module extension so the main type stays within the source-line budget
-/// once the block-gate seam lands. These are pure computed views over the
+/// same-module extension so the main type stays within the source-line budget.
+/// These are pure computed views over the
 /// tracked stored properties (`current` / `visibility` / `keepFrame`), so the
 /// `@Observable` macro still tracks their inputs and the screen re-renders as
 /// before — a pure move, no behaviour change.

@@ -20,14 +20,9 @@ final class AppEnvironment {
     let channelListModel: ChannelListModel
     /// Injected scalar preferences (24-h clock, panel timeout, EPG cadence).
     let settings: SettingsStore
-    /// The single, stable parental-controls store observed by the settings UI;
-    /// built once here (mirroring `channelListModel`) so the enable toggle keeps
-    /// its in-memory state across renders. The salted-hash PIN lives in the
-    /// Keychain; the enable flag shares the settings ``KeyValueStore``.
-    let parentalStore: ParentalStore
     /// Cross-reinstall / cross-device provider config, in the synchronizable
-    /// Keychain (rides iCloud Keychain like the PIN — no new entitlement). Tests
-    /// inject an in-memory fake.
+    /// Keychain (rides iCloud Keychain — no new entitlement). Tests inject an
+    /// in-memory fake.
     @ObservationIgnored let syncedConfigStore: SyncedConfigStore
     private(set) var playlists: [PlaylistEntity] = []
 
@@ -52,7 +47,6 @@ final class AppEnvironment {
             channelStore: channelStore, repository: EpgRepository(store: programStore),
             now: now, filter: groupFilter)
         channelListModel = ChannelListModel(store: channelStore, filter: groupFilter)
-        parentalStore = ParentalStore(secret: KeychainSecretStore(), backing: resolvedSettings.backing)
         reload()
         // The channel list drives its own load lifecycle off this seam: cached
         // channels render at once while it refreshes silently, an empty store

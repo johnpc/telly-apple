@@ -36,11 +36,11 @@ protocol SyncedConfigStore {
     func clear()
 }
 
-/// Real ``SyncedConfigStore`` over the synchronizable Keychain. It reuses the
-/// parental PIN's ``KeychainSecretStore`` glue — configured `synchronizable` with
+/// Real ``SyncedConfigStore`` over the synchronizable Keychain. It uses the
+/// ``KeychainSecretStore`` glue — configured `synchronizable` with
 /// `AfterFirstUnlock` accessibility so the single JSON blob survives uninstall
 /// and rides iCloud Keychain across the user's devices. No new app entitlement
-/// is needed (it rides the same iCloud Keychain the PIN already uses).
+/// is needed (it rides the standard iCloud Keychain).
 struct KeychainSyncedConfigStore: SyncedConfigStore {
     /// The single Keychain account holding the whole config as one JSON blob.
     static let account = "config.v1"

@@ -5,8 +5,7 @@ import Foundation
 /// one — the Apple mirror of Android's `SettingsBackupManager`. This is the
 /// seam Slice 6's `FileDocument` export/import UI drives. Restore re-creates
 /// each playlist with ZERO channels (a subsequent "Update playlist" re-fetches
-/// them, matching Android) and re-attaches its custom EPG sources; parental-
-/// lock state is never exported or imported (see ``SettingsSnapshot``).
+/// them, matching Android) and re-attaches its custom EPG sources.
 @MainActor
 struct SettingsBackupManager {
     let playlistStore: PlaylistStore

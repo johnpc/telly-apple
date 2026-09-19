@@ -20,8 +20,7 @@ struct BackupEpgSource: Codable, Equatable {
 /// The serialisable shape of a settings/playlist backup — the Apple mirror of
 /// Android's `BackupPayload`, extended with `epgSources` (custom EPG sources,
 /// which the Android payload omitted). `version` guards forward-compat alongside
-/// the tolerant decoder. Parental-lock state is never present here (see
-/// ``SettingsSnapshot``).
+/// the tolerant decoder.
 struct BackupPayload: Codable, Equatable {
     var version = 1
     var settings: [String: String]

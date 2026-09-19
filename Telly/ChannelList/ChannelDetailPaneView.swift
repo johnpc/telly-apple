@@ -2,7 +2,7 @@ import SwiftUI
 
 /// The iPad split-view detail pane: the selected channel's identity (logo,
 /// number, name, group, favourite), its EPG now/next, and a prominent Play
-/// button that tunes through the caller's parental-gated path. A neutral
+/// button that tunes through the caller's tune path. A neutral
 /// placeholder fills the pane until a channel is chosen. Pure presentation.
 struct ChannelDetailPaneView: View {
     let channel: ChannelEntity?

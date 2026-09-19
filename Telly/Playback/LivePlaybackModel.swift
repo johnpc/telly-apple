@@ -26,9 +26,6 @@ final class LivePlaybackModel {
     var searchRequested = false
     /// Builds the search screen's model for that cover (nil in unit tests).
     let makeSearchModel: (@MainActor () -> SearchModel)?
-    /// The parental tune-time gate; nil (default) means every channel tunes
-    /// freely, so existing call sites and tests are unchanged.
-    let blockGate: PlaybackBlockGate?
 
     var visibility = OverlayVisibility()
     /// Which live-transport control the expanded `.infoTransport` row has focused.
@@ -66,11 +63,9 @@ final class LivePlaybackModel {
          loadLastChannel: @escaping () -> Int?,
          onExitToGuide: @escaping () -> Void,
          nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil },
-         makeSearchModel: (@MainActor () -> SearchModel)? = nil,
-         blockGate: PlaybackBlockGate? = nil) {
+         makeSearchModel: (@MainActor () -> SearchModel)? = nil) {
         self.engine = engine
         self.makeSearchModel = makeSearchModel
-        self.blockGate = blockGate
         self.channels = channels
         self.makeEngine = makeEngine
         self.keymap = keymap
@@ -87,7 +82,6 @@ final class LivePlaybackModel {
     func start() {
         current = ChannelZapper.restore(channels, lastChannelId: loadLastChannel())
         guard let channel = current else { return }
-        if blockGate?.intercept(channel) == true { current = nil; return }
         engine.load(channel.source.streamUrl, isLive: true)
         persistLastChannel(channel.id)
     }

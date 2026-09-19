@@ -41,7 +41,7 @@ extension AppEnvironment {
 
     /// The settings/playlist/EPG-source backup manager over the environment's
     /// real stores and the settings backing store; Slice 6's export/import UI
-    /// drives it. Parental-lock state is never included (see ``SettingsSnapshot``).
+    /// drives it.
     func makeSettingsBackupManager() -> SettingsBackupManager {
         SettingsBackupManager(playlistStore: playlistStore, epgSourceStore: epgSourceStore,
                               settings: settings.backing,
@@ -61,7 +61,7 @@ extension AppEnvironment {
     func makePlaylistsSettingsModel() -> PlaylistsSettingsModel {
         PlaylistsSettingsModel(
             playlistStore: playlistStore, epgSourceStore: epgSourceStore,
-            channelStore: channelStore, settings: settings, parental: parentalStore,
+            channelStore: channelStore, settings: settings,
             updater: makePlaylistUpdater(), makeAddModel: makeAddPlaylistModel,
             refreshEpg: { [weak self] in await self?.refreshEpgNow() },
             reload: { [weak self] in self?.reload(); self?.mirrorSyncedConfig() })
