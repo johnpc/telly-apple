@@ -12,11 +12,16 @@ extension LivePlaybackModel {
                       activeChannelId: current?.id)
     }
 
-    /// Enter multiview: build the grid, spin up one engine per tile, load every
-    /// stream (only the active tile audible), and raise the sticky overlay.
+    /// Enter multiview: build the grid, stop the primary fullscreen engine (so its
+    /// audio can't compete with the active tile), spin up one engine per tile,
+    /// load every unblocked stream (only the active tile audible), and raise the
+    /// sticky overlay. The active tile is PIN-gated exactly like a fullscreen tune.
     func openMultiview() {
         guard let grid = multiviewGrid() else { return }
-        let session = MultiviewSession(grid: grid, makeEngine: makeEngine)
+        if let active = grid.activeCell?.channel, blockGate?.intercept(active) == true { return }
+        engine.stop()
+        let session = MultiviewSession(grid: grid, makeEngine: makeEngine,
+                                       canLoad: { [blockGate] in blockGate?.blocks($0) != true })
         session.start()
         multiview = session
         visibility.set(.multiview)
@@ -27,18 +32,33 @@ extension LivePlaybackModel {
         multiview?.moveActive(direction)
     }
 
-    /// Promote the active tile to fullscreen: tear multiview down, then tune it.
+    /// Promote the active tile to fullscreen: tear multiview down, then tune it
+    /// (which re-loads the primary engine for that channel).
     func promoteMultiviewActive() {
         guard let channel = multiview?.grid.activeCell?.channel else { return }
-        exitMultiview()
+        teardownMultiview()
         tune(channel)
     }
 
-    /// Leave multiview: release every tile engine and return to single playback.
+    /// Leave multiview: release every tile engine and restore single playback of
+    /// the previously-active channel on the primary engine.
     func exitMultiview() {
+        teardownMultiview()
+        restorePrimaryPlayback()
+    }
+
+    /// Release the tile engines and drop the overlay without touching the primary.
+    private func teardownMultiview() {
         multiview?.close()
         multiview = nil
         visibility.set(.none)
+    }
+
+    /// Reload the previously-active channel on the primary engine so single
+    /// playback resumes where it left off before multiview opened.
+    private func restorePrimaryPlayback() {
+        guard let channel = current else { return }
+        engine.load(channel.source.streamUrl, isLive: true)
     }
 }
 

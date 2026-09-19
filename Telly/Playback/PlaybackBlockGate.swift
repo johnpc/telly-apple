@@ -42,6 +42,10 @@ final class PlaybackBlockGate {
         return channel
     }
 
+    /// A pure blocked check (no `pending` side effect) so multiview can keep a
+    /// blocked non-active tile from decoding without raising a challenge for it.
+    func blocks(_ channel: ChannelEntity) -> Bool { parental.mustChallenge(channel) }
+
     /// Clears the prompt without tuning (Cancel).
     func dismiss() { pending = nil }
 }

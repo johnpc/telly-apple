@@ -77,4 +77,16 @@ struct PlaybackBlockGateTests {
     @Test func unlockWithoutPendingReturnsNil() {
         #expect(PlaybackBlockGate(parental: armed()).unlock(pin: "1234") == nil)
     }
+
+    @Test func blocksIsAPureCheckWithoutRecordingPending() {
+        let gate = PlaybackBlockGate(parental: armed())
+        #expect(gate.blocks(channel(1, blocked: true)) == true)
+        #expect(gate.blocks(channel(2, blocked: false)) == false)
+        #expect(gate.pending == nil)           // no side effect, unlike intercept
+    }
+
+    @Test func blocksIsFalseWhenParentalDisabled() {
+        let gate = PlaybackBlockGate(parental: parental())     // no PIN, disabled
+        #expect(gate.blocks(channel(1, blocked: true)) == false)
+    }
 }

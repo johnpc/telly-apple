@@ -40,6 +40,7 @@ extension LivePlaybackModel {
     func onQuickBarAction(_ action: QuickBarAction) {
         switch action {
         case .search: searchRequested = true
+        case .multiview: openMultiview()
         case .audio: openTrackPicker(.audio)
         case .subtitles: openTrackPicker(.subtitles)
         case .latency: openTrackPicker(.sync)
