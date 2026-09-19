@@ -25,4 +25,13 @@ enum CompactLayout {
     static func posterColumnMinimum(_ sizeClass: UserInterfaceSizeClass?) -> CGFloat {
         sizeClass == .compact ? 100 : 168
     }
+
+    /// The readable maximum width for the grouped Settings form, or nil for no
+    /// constraint. Regular width (iPad) caps it so each value sits near its label
+    /// instead of stranded at the far edge of the wide canvas, like native iPad
+    /// Settings; compact iPhone keeps the full width. tvOS is excluded at the call
+    /// site (compiled out), never here.
+    static func settingsFormMaxWidth(_ sizeClass: UserInterfaceSizeClass?) -> CGFloat? {
+        sizeClass == .compact ? nil : 640
+    }
 }

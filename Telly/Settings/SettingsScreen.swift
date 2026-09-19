@@ -10,6 +10,9 @@ struct SettingsScreen: View {
     let makeVisibilityEditModel: () -> VisibilityEditModel
     let clearVodPositions: () -> Void
     let onClose: () -> Void
+    #if !os(tvOS)
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    #endif
 
     var body: some View {
         NavigationStack {
@@ -30,6 +33,10 @@ struct SettingsScreen: View {
                 SettingsAboutSectionView()
                 SettingsOtherSectionView(settings: settings)
             }
+            #if !os(tvOS)
+            .frame(maxWidth: CompactLayout.settingsFormMaxWidth(sizeClass) ?? .infinity)
+            .frame(maxWidth: .infinity)
+            #endif
             .navigationTitle("Settings")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

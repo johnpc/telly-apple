@@ -13,7 +13,9 @@ extension ChannelListScreen {
             sidebar
                 .navigationTitle("Channels")
                 .toolbar { toolbarContent }
-                .searchable(text: $model.query, prompt: "Search channels")
+                .searchable(text: $model.query,
+                            placement: .navigationBarDrawer(displayMode: .always),
+                            prompt: "Search channels")
                 .overlay { searchEmptyOverlay }
         } detail: {
             NavigationStack { detailPane }

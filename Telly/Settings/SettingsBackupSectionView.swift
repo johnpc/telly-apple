@@ -15,13 +15,21 @@ struct SettingsBackupSectionView: View {
     #endif
 
     var body: some View {
-        Section("Backup") {
+        Section {
             #if os(tvOS)
             Text("Backup is not available on Apple TV.")
                 .foregroundStyle(.secondary)
             #else
             Button("Export Backup", action: export)
             Button("Restore Backup") { isImporting = true }
+            #endif
+        } header: {
+            Text("Backup")
+        } footer: {
+            #if !os(tvOS)
+            Text("Saves your playlists, their custom EPG sources, and app settings "
+                 + "to a file. Channels are re-downloaded when you next update a "
+                 + "playlist after restoring.")
             #endif
         }
         #if !os(tvOS)

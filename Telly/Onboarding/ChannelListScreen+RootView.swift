@@ -26,13 +26,18 @@ extension ChannelListScreen {
     /// The single-column list: the iPhone/tvOS home, unchanged from before the
     /// iPad split landed. tvOS omits the inline `.searchable` (it would force a
     /// full-screen keyboard onto the home screen); search there is a toolbar item.
+    /// `.navigationBarDrawer(.always)` pins the field in the opaque header rather
+    /// than iOS 26's translucent floating bottom bar, whose Liquid-Glass backdrop
+    /// let the channel rows ghost through it (§L6).
     var stackBody: some View {
         NavigationStack {
             loadStateContent
                 .navigationTitle("Channels")
                 .toolbar { toolbarContent }
                 #if !os(tvOS)
-                .searchable(text: $model.query, prompt: "Search channels")
+                .searchable(text: $model.query,
+                            placement: .navigationBarDrawer(displayMode: .always),
+                            prompt: "Search channels")
                 .overlay { searchEmptyOverlay }
                 #endif
         }

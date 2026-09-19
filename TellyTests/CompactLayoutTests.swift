@@ -41,4 +41,16 @@ struct CompactLayoutTests {
     @Test func posterColumnMinimumIsPosterScaleWhenSizeClassUnknown() {
         #expect(CompactLayout.posterColumnMinimum(nil) == 168)
     }
+
+    @Test func settingsFormIsUnconstrainedOnCompact() {
+        #expect(CompactLayout.settingsFormMaxWidth(.compact) == nil)
+    }
+
+    @Test func settingsFormIsConstrainedOnRegular() {
+        #expect(CompactLayout.settingsFormMaxWidth(.regular) == 640)
+    }
+
+    @Test func settingsFormIsConstrainedWhenSizeClassUnknown() {
+        #expect(CompactLayout.settingsFormMaxWidth(nil) == 640)
+    }
 }
