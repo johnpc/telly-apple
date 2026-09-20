@@ -15,8 +15,8 @@ struct GuideGridScreen: View {
     @State private var dragAnchor: CGFloat = 0
     #endif
     @State var target: GuidePlaybackTarget?
-    /// The info-cell whose My List menu is open (set by `activate`, `+Activate`).
-    @State var menuTarget: GuideCellMenuTarget?
+    /// The cell whose program info panel is open (set by `activate`, `+Activate`).
+    @State var infoTarget: GuideInfoTarget?
 
     init(model: GuideGridModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
          makeCatchupModel: @escaping (CatchupRequest) -> CatchupPlaybackModel,
@@ -36,9 +36,9 @@ struct GuideGridScreen: View {
         .task { await model.start() }
         .guideMinuteTick { model.tick() }
         .fullScreenCover(item: $target) { playbackCover($0) }
-        .guideCellMenu($menuTarget, model: model)
+        .guideProgramInfo($infoTarget, model: model, onPlay: play)
         #if DEBUG
-        .task { await GuideMenuScreenshotSeed.present($menuTarget, model: model) }
+        .task { await GuideMenuScreenshotSeed.present($infoTarget, model: model) }
         #endif
         #if os(tvOS)
         .focusable()

@@ -4,11 +4,12 @@ import Foundation
 import GRDB
 @testable import Telly
 
-/// The guide cell's My List entry point (`GuideGridModel+MyList` + the pure
-/// `GuideCellActions`): a menu is offered only for an info-carrying, non-airing
-/// cell; toggling snapshots that programme into the shared `my_list` store and
-/// flips `isSaved`/`myListKeys`; a nil store is a no-op; `load()` reflects a
-/// pre-seeded store. Real in-memory GRDB is the backend.
+/// The guide cell's My List entry point (`GuideGridModel+MyList`/`+Info` + the
+/// pure `GuideCellActions`): the info panel opens for any info-carrying cell and
+/// offers the per-selection action (a future cell → My List); toggling snapshots
+/// that programme into the shared `my_list` store and flips `isSaved`/`myListKeys`;
+/// a nil store is a no-op; `load()` reflects a pre-seeded store. Real in-memory
+/// GRDB is the backend.
 @MainActor
 struct GuideGridModelMyListTests {
     static let originMs = 3_600_000
@@ -45,23 +46,31 @@ struct GuideGridModelMyListTests {
         rowA(model).cells.first { $0.program?.details.title == title }!
     }
 
-    @Test func actionsOfferMyListForProgrammeCellsOnly() throws {
-        let db = try AppDatabase.makeInMemory()
-        let model = try makeModel(db, store: MyListStore(db: db))
-        #expect(GuideCellActions.actions(for: cell(model, "NextA")) == [.myList])
-        let filler = model.rows.first { $0.channel.epgId == "c" }!.cells.first!
-        #expect(GuideCellActions.actions(for: filler).isEmpty)
-    }
-
-    @Test func cellMenuTargetOnlyForInfoCells() throws {
+    @Test func actionsOfferMyListForFutureCells() throws {
         let db = try AppDatabase.makeInMemory()
         let model = try makeModel(db, store: MyListStore(db: db))
         let a = rowA(model)
-        // Future cell → menu; airing-now cell tunes (no menu); filler → nil.
-        #expect(model.cellMenuTarget(for: cell(model, "NextA"), row: a)?.channel.id == a.channel.id)
-        #expect(model.cellMenuTarget(for: cell(model, "NowA"), row: a) == nil)
+        // Future cell → My List; airing cell → Watch; filler → nothing.
+        #expect(GuideCellActions.actions(for: model.selectCell(cell(model, "NextA"), row: a))
+            == [.myList])
+        #expect(GuideCellActions.actions(for: model.selectCell(cell(model, "NowA"), row: a))
+            == [.watch])
+        let filler = model.rows.first { $0.channel.epgId == "c" }!.cells.first!
         let cRow = model.rows.first { $0.channel.epgId == "c" }!
-        #expect(model.cellMenuTarget(for: cRow.cells.first!, row: cRow) == nil)
+        #expect(GuideCellActions.actions(for: model.selectCell(filler, row: cRow)).isEmpty)
+    }
+
+    @Test func infoTargetForInfoCarryingCells() throws {
+        let db = try AppDatabase.makeInMemory()
+        let model = try makeModel(db, store: MyListStore(db: db))
+        let a = rowA(model)
+        // Future and airing cells both open the panel; a filler slot does not.
+        #expect(model.infoTarget(for: cell(model, "NextA"), row: a)?.selection
+            == .info(cell(model, "NextA")))
+        #expect(model.infoTarget(for: cell(model, "NowA"), row: a)?.selection
+            == .tune(a.channel))
+        let cRow = model.rows.first { $0.channel.epgId == "c" }!
+        #expect(model.infoTarget(for: cRow.cells.first!, row: cRow) == nil)
     }
 
     @Test func toggleSavesThenRemoves() throws {
@@ -98,19 +107,19 @@ struct GuideGridModelMyListTests {
         #expect(model.isSaved(channel: a.channel, cell: next))
     }
 
-    @Test func firstCellMenuTargetIsAnInfoCell() throws {
+    @Test func firstInfoTargetIsAMyListCell() throws {
         let db = try AppDatabase.makeInMemory()
         let model = try makeModel(db, store: MyListStore(db: db))
-        let hit = try #require(model.firstCellMenuTarget())
-        // The found cell must itself resolve to an info-cell menu (the affordance's gate).
-        #expect(model.cellMenuTarget(for: hit.cell, row: rowA(model)) != nil)
+        let hit = try #require(model.firstInfoTarget())
+        // The screenshot seed's cell must offer My List (the flippable proof row).
+        #expect(GuideCellActions.actions(for: hit.selection) == [.myList])
     }
 
     @Test func ensureSavedIsIdempotent() throws {
         let db = try AppDatabase.makeInMemory()
         let store = MyListStore(db: db)
         let model = try makeModel(db, store: store)
-        let hit = try #require(model.firstCellMenuTarget())
+        let hit = try #require(model.firstInfoTarget())
         model.ensureSaved(hit)
         model.ensureSaved(hit)
         #expect(model.isSaved(channel: hit.channel, cell: hit.cell))

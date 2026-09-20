@@ -1,36 +1,28 @@
 import SwiftUI
 
-/// The guide's selection→playback bridge, extracted from ``GuideGridScreen`` so
-/// the at-cap screen file stays lean. Maps the pure ``GuideActivation`` outcome
-/// to the shared `.fullScreenCover` target: a catch-up cell resolves an archive
-/// URL (mirroring Android `TuneController.tune(catchupUrl:)`) and carries a
-/// ``CatchupBadge``; an airing cell tunes live. An info cell instead opens its
-/// My List menu (``GuideGridModel/cellMenuTarget(for:row:)`` sets `menuTarget`);
-/// a filler cell stays inert.
+/// The guide's selection→panel/playback bridge, extracted from ``GuideGridScreen``
+/// so the at-cap screen file stays lean. OK/tap on an info-carrying cell opens the
+/// program info panel (``GuideGridModel/infoTarget(for:row:)``), where the synopsis
+/// sits above the per-cell action (Watch / catch-up / My List). A "No information"
+/// filler carries no panel, so it tunes straight through (`play`) as before; the
+/// panel's Watch/catch-up buttons route back through the same `play`.
 extension GuideGridScreen {
     func activate(_ cell: GuideCell, row: GuideRow) {
-        menuTarget = model.cellMenuTarget(for: cell, row: row)
-        switch model.selectCell(cell, row: row) {
-        case let .catchup(channel, cell):
-            guard let attributes = channel.catchupAttributes(),
-                  let url = CatchupUrlBuilder.build(
-                      streamUrl: channel.source.streamUrl, attributes: attributes,
-                      startMs: cell.startMs, endMs: cell.endMs, nowMs: model.now()) else { return }
-            let request = CatchupRequest(channel: channel, url: url,
-                                         title: cell.program?.details.title,
-                                         startMs: cell.startMs, endMs: cell.endMs)
-            target = GuidePlaybackTarget(
-                id: channel.id, url: url,
-                catchup: CatchupBadge(title: cell.program?.details.title,
-                                      startMs: cell.startMs, endMs: cell.endMs),
-                request: request)
-        case let .tune(channel):
-            if let onLiveTune { onLiveTune(channel) } else {
-                target = GuidePlaybackTarget(id: channel.id, url: channel.source.streamUrl,
-                                             catchup: nil, request: nil)
-            }
-        case .info, .none:
-            break
+        if let target = model.infoTarget(for: cell, row: row) {
+            infoTarget = target
+        } else {
+            play(model.selectCell(cell, row: row))
+        }
+    }
+
+    /// Runs a resolved selection: catch-up resolves an archive URL (mirroring
+    /// Android `TuneController.tune(catchupUrl:)`), an airing cell tunes live, and
+    /// info / filler outcomes are inert (the panel, not playback, handles info).
+    func play(_ selection: GuideSelection) {
+        switch selection {
+        case let .catchup(channel, cell): playCatchup(channel, cell)
+        case let .tune(channel): tune(channel)
+        case .info, .none: break
         }
     }
 }
