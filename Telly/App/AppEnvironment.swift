@@ -54,6 +54,7 @@ final class AppEnvironment {
             channelStore: channelStore, repository: EpgRepository(store: programStore),
             now: now, filter: groupFilter)
         channelListModel = ChannelListModel(store: channelStore, filter: groupFilter)
+        channelListModel.channelSort = { [resolvedSettings] in resolvedSettings.channelSort }
         reload()
         // The channel list drives its own load lifecycle off this seam: cached
         // channels render at once while it refreshes silently, an empty store

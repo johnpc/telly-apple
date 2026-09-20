@@ -12,7 +12,7 @@ extension AppEnvironment {
                                    repository: EpgRepository(store: programStore),
                                    now: { Int(Date().timeIntervalSince1970 * 1_000) },
                                    timeZone: .current, is24h: settings.use24hClock,
-                                   filter: groupFilter)
+                                   sort: settings.channelSort, filter: groupFilter)
         model.refresh = { [weak self, weak model] in
             await self?.refreshEpgNow()
             model?.load()

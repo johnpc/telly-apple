@@ -29,6 +29,8 @@ final class GuideGridModel {
     let now: () -> Int
     let timeZone: TimeZone
     let is24h: Bool
+    /// The persisted channel-sort (snapshotted at build, like `is24h`).
+    let sort: ChannelSort
     /// Width in points of the programme pane; only `setViewport` mutates it.
     var viewport: CGFloat
 
@@ -54,6 +56,7 @@ final class GuideGridModel {
 
     init(channelStore: ChannelStore, repository: EpgRepository, now: @escaping () -> Int,
          timeZone: TimeZone, is24h: Bool, viewport: CGFloat = 960,
+         sort: ChannelSort = .default,
          filter: @escaping ([ChannelEntity]) -> [ChannelEntity] = { $0 }) {
         self.channelStore = channelStore
         self.repository = repository
@@ -61,6 +64,7 @@ final class GuideGridModel {
         self.now = now
         self.timeZone = timeZone
         self.is24h = is24h
+        self.sort = sort
         self.viewport = viewport
     }
 

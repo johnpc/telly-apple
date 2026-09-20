@@ -16,6 +16,7 @@ enum SettingsKey: String, CaseIterable {
     case saveSearchHistory
     case vodRememberPosition
     case resizeMode
+    case channelSort
 }
 
 /// Factory-fresh values used until the user changes a setting, plus the choice
@@ -37,4 +38,5 @@ enum SettingsDefaults {
     static let saveSearchHistory = true
     static let vodRememberPosition = true
     static let resizeMode = ResizeMode.fit.rawValue
+    static let channelSort = ChannelSort.default.rawValue
 }

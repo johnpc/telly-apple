@@ -334,6 +334,7 @@
 		7CF8AF962F8504758E4A8303 /* EpgSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFFB19D5F393DDD193B564B /* EpgSourceTests.swift */; };
 		7D19A3B2707F80FC7F7C6E3D /* MiniPlayerPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEA653F8986C85B0EEE277A /* MiniPlayerPlacement.swift */; };
 		7D24A2A2D02ED1A2B07E9C06 /* VlcPlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93E291DDF653770BE71DECE /* VlcPlaybackState.swift */; };
+		7D5A6D1DD6BC630FCF8B92F8 /* ChannelSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5DFBC9F19FFC9CF20C78B0 /* ChannelSortTests.swift */; };
 		7E06CDE16B7F38DA7648EE31 /* MultiviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837E11BAD7B9A30A652BEE /* MultiviewCell.swift */; };
 		7E0E9FD3AE5F11F1B11172C9 /* DebugSeedPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E07CE5E63319B9E088FDB9D /* DebugSeedPlaylist.swift */; };
 		7E665CDF4BFE580F9D6B8209 /* ChannelListScreen+RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB1056F15469211B3D5C803 /* ChannelListScreen+RootView.swift */; };
@@ -553,6 +554,7 @@
 		D32A640461973351A35E1324 /* PlaylistGroupFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6B217FFBF93E89613ACC7 /* PlaylistGroupFilterTests.swift */; };
 		D3A54456DF450B8A1DCD3414 /* MyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B0D44CB50E8DC5C18411A0 /* MyListScreen.swift */; };
 		D3EEA8E47DAB8EBA1E87CEC3 /* GroupVisibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C597DC8382D9A3585D59D /* GroupVisibilityTests.swift */; };
+		D4ADCFCDABD92B89336EBB92 /* SettingsStore+ChannelSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB947DE212C6365CD70CF10 /* SettingsStore+ChannelSort.swift */; };
 		D4E28E752CE510D149344DA2 /* TrackPickerKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3AF6BB726F90FB3667BF32 /* TrackPickerKind.swift */; };
 		D53B3BE5A1B2F6604D8DD115 /* ChannelRecord+Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEF82B37AB908441A8656A /* ChannelRecord+Entity.swift */; };
 		D53F175E5064331E1E69DB0D /* ChannelRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6955066FC099926C6950564 /* ChannelRecord.swift */; };
@@ -645,6 +647,7 @@
 		F68583C2DAE121F4B0CE8D65 /* PlaylistStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74EFF331827B16223EC8123 /* PlaylistStoreTests.swift */; };
 		F7CC3A4342025053029E3628 /* SearchModelMyListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97EF49505E66ED628DE4D1 /* SearchModelMyListTests.swift */; };
 		F875BC23E3E80ACA4A0D9EB1 /* GuideCellsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BA7D47EFD28A33508C5B /* GuideCellsBuilder.swift */; };
+		FA1DF728B8F04DDB9F1D3B9F /* ChannelSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC0555D5EDC413DE743CA3C /* ChannelSort.swift */; };
 		FA40A140201985A060E7EAED /* ChannelPanelGroupsColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6939E107E0ABB98E7CFCF5D /* ChannelPanelGroupsColumnView.swift */; };
 		FB0EEBC64C1409F35579A3C7 /* InMemorySyncedConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBA857B9D23D11F8DEA8DDB /* InMemorySyncedConfigStore.swift */; };
 		FB5CDFC3969190C951C5326C /* SearchModel+MyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9425707276B766B8470A7A10 /* SearchModel+MyList.swift */; };
@@ -707,6 +710,7 @@
 		0A4C8AC8093E3006F1CA592B /* SettingsStore+Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsStore+Playlist.swift"; sourceTree = "<group>"; };
 		0A8F42028E61ED46E220F996 /* VodTransportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodTransportView.swift; sourceTree = "<group>"; };
 		0AB6039E0A01C3584879C7E7 /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
+		0BB947DE212C6365CD70CF10 /* SettingsStore+ChannelSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsStore+ChannelSort.swift"; sourceTree = "<group>"; };
 		0C010236732512A23A055E84 /* SettingsGroupsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsGroupsSectionView.swift; sourceTree = "<group>"; };
 		0C60AA94791B303A581B53DD /* VodStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodStage.swift; sourceTree = "<group>"; };
 		0C660A31E271C20D5E8DE577 /* DebugLaunchCatchupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLaunchCatchupTests.swift; sourceTree = "<group>"; };
@@ -963,6 +967,7 @@
 		6A2EB84167324657439C9945 /* ChannelListLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListLayoutTests.swift; sourceTree = "<group>"; };
 		6A4DD10F7CCEDA448B8DE3A6 /* EpgAssignmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgAssignmentModel.swift; sourceTree = "<group>"; };
 		6B05EDBD060E6847221879F2 /* PlaylistKeyPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistKeyPlanTests.swift; sourceTree = "<group>"; };
+		6B5DFBC9F19FFC9CF20C78B0 /* ChannelSortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSortTests.swift; sourceTree = "<group>"; };
 		6BCEDF66246565A56BBABD8B /* PlayerStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStateTests.swift; sourceTree = "<group>"; };
 		6C75E52CDEC9F7474FCCDB38 /* WizardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizardState.swift; sourceTree = "<group>"; };
 		6C91A9ED346D9F495A803F9C /* InfoOverlayTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoOverlayTextTests.swift; sourceTree = "<group>"; };
@@ -1114,6 +1119,7 @@
 		AB0DF4EFD19D08E01C961C76 /* SettingsStore+Consumers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsStore+Consumers.swift"; sourceTree = "<group>"; };
 		AB23BF7F828B6C569D6B8A31 /* AppEnvironmentGuideWiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironmentGuideWiringTests.swift; sourceTree = "<group>"; };
 		AB4FF7C837678EA2A486040F /* CompactLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactLayout.swift; sourceTree = "<group>"; };
+		ABC0555D5EDC413DE743CA3C /* ChannelSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSort.swift; sourceTree = "<group>"; };
 		AC6ABA6AAD7CC04167F5A6EF /* CopyChannelsPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyChannelsPlan.swift; sourceTree = "<group>"; };
 		ACDB1D388B033E4FE83806E4 /* VodBrowseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodBrowseScreen.swift; sourceTree = "<group>"; };
 		AE2E4442DE30ED21130CC0C4 /* LivePlaybackModel+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LivePlaybackModel+Keys.swift"; sourceTree = "<group>"; };
@@ -1753,6 +1759,7 @@
 				310AA80E44CF4A8E35058A85 /* ChannelEntity.swift */,
 				87966A245CDF0CD3EA797FF5 /* ChannelGroups.swift */,
 				909FB3CA9271132E09114364 /* ChannelImporter.swift */,
+				ABC0555D5EDC413DE743CA3C /* ChannelSort.swift */,
 				5483AF43B34E97A74EF02761 /* ChannelSource.swift */,
 				EA72C528BC282E97C463256B /* ChannelUserState.swift */,
 				4DFA418FED683F1A3C08B547 /* M3uModels.swift */,
@@ -1911,6 +1918,7 @@
 				15C1A93E778A13434029F770 /* ChannelPanelGroupsTests.swift */,
 				D1A0DAB58022ACAFBD92CFFD /* ChannelReorderTests.swift */,
 				72E60F3CB2CB365AB9D98A83 /* ChannelSearchTests.swift */,
+				6B5DFBC9F19FFC9CF20C78B0 /* ChannelSortTests.swift */,
 				F06A6C4B7C8423DF4D41E23F /* ChannelStoreTests.swift */,
 				1A9674BB6F6F4077491E2A06 /* ChannelZapperTests.swift */,
 				AEF108F9F5A763467A86BEA6 /* CompactLayoutTests.swift */,
@@ -2147,6 +2155,7 @@
 				46BF964F92748A8000E9D046 /* SettingsSnapshot.swift */,
 				A480F430EF4DA3B833F03ECD /* SettingsStore.swift */,
 				C7D1F2D502A53C22A32E9FC1 /* SettingsStore+Appearance.swift */,
+				0BB947DE212C6365CD70CF10 /* SettingsStore+ChannelSort.swift */,
 				AB0DF4EFD19D08E01C961C76 /* SettingsStore+Consumers.swift */,
 				3C9BDBAE8FA910E236FBA6AB /* SettingsStore+Keymap.swift */,
 				0A4C8AC8093E3006F1CA592B /* SettingsStore+Playlist.swift */,
@@ -2471,6 +2480,7 @@
 				46D0BAE497703E5FB9FBDD2D /* ChannelReorder+Move.swift in Sources */,
 				004F5830774A22871CB67423 /* ChannelReorder.swift in Sources */,
 				BBB12E3FF13FB38D9C4CD8C8 /* ChannelSearch.swift in Sources */,
+				FA1DF728B8F04DDB9F1D3B9F /* ChannelSort.swift in Sources */,
 				54070F54B8C9170E185D46A7 /* ChannelSource.swift in Sources */,
 				C853572B16CB7A97483A6E6A /* ChannelStore.swift in Sources */,
 				789A545F1ABB75F2793A3565 /* ChannelUserState.swift in Sources */,
@@ -2738,6 +2748,7 @@
 				95EE673F79B381EB2033128B /* SettingsScreen.swift in Sources */,
 				B709E535880863744286827B /* SettingsSnapshot.swift in Sources */,
 				7B5B0DEABBCEDBA7BCCB817B /* SettingsStore+Appearance.swift in Sources */,
+				D4ADCFCDABD92B89336EBB92 /* SettingsStore+ChannelSort.swift in Sources */,
 				574183C1D3677FCAD09C9068 /* SettingsStore+Consumers.swift in Sources */,
 				784C70DDFB71012E585C8521 /* SettingsStore+Keymap.swift in Sources */,
 				14937A2786ADFA479CF5AC08 /* SettingsStore+Playlist.swift in Sources */,
@@ -2878,6 +2889,7 @@
 				B78BA5F797EB6596DE2DD3CE /* ChannelPanelGroupsTests.swift in Sources */,
 				FCB422095E97FC6637C95B3C /* ChannelReorderTests.swift in Sources */,
 				80039A30576650B8EF181C0B /* ChannelSearchTests.swift in Sources */,
+				7D5A6D1DD6BC630FCF8B92F8 /* ChannelSortTests.swift in Sources */,
 				54E66C55F838A6A6050394B6 /* ChannelStoreTests.swift in Sources */,
 				9B1F3AF7AD5A8F1F3FFC02C4 /* ChannelZapperTests.swift in Sources */,
 				48DF0EDF94AC435AC61020E4 /* CompactLayoutTests.swift in Sources */,

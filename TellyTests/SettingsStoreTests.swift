@@ -137,6 +137,22 @@ struct SettingsStoreTests {
         #expect(s.resizeMode == .fit)
     }
 
+    @Test func channelSortDefaultsToPlaylistOrderRoundTripsAndResets() {
+        let s = store()
+        #expect(s.channelSort == .default)           // TiviMate playlist order
+        s.channelSortRaw = ChannelSort.nameAZ.rawValue
+        #expect(s.channelSort == .nameAZ)
+        #expect(store2(s).channelSort == .nameAZ)    // persisted through backing
+        s.resetToDefaults()
+        #expect(s.channelSort == .default)
+    }
+
+    @Test func corruptChannelSortRawCoercesToDefault() {
+        let s = store()
+        s.channelSortRaw = 9_999
+        #expect(s.channelSort == .default)
+    }
+
     @Test func emptyStoreReturnsKeymapDefaults() {
         let s = store()
         #expect(s.playerKeyOkRaw == SettingsDefaults.playerKeyOk)

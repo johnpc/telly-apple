@@ -28,6 +28,10 @@ final class ChannelListModel {
     /// on Retry; the composition root wires the real playlist refresh, tests and
     /// the DEBUG screenshot harness inject a fake that succeeds/fails/stalls.
     var refresh: () async throws -> Void = {}
+    /// The persisted channel-sort seam, read live per render so a Settings change
+    /// re-orders the list at once; the composition root wires the `SettingsStore`,
+    /// tests/previews keep the default (playlist order).
+    var channelSort: () -> ChannelSort = { .default }
 
     init(store: ChannelStore, filter: @escaping ([ChannelEntity]) -> [ChannelEntity] = { $0 }) {
         self.store = store
@@ -43,9 +47,9 @@ final class ChannelListModel {
     /// (overriding the group filter), otherwise the selected group's channels.
     var rows: [ChannelEntity] {
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty
-            ? ChannelListGroups.channels(channels, in: selectedGroup, customs: customGroups)
-            : ChannelSearch.filter(channels, query: query)
+        guard trimmed.isEmpty else { return ChannelSearch.filter(channels, query: query) }
+        let grouped = ChannelListGroups.channels(channels, in: selectedGroup, customs: customGroups)
+        return channelSort().sorted(grouped)
     }
 
     /// (Re)loads the visible channels and the custom groups from the store.

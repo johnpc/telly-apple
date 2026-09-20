@@ -42,4 +42,15 @@ extension SettingsStore {
     func setGroupEnabled(url: String, group: String, _ on: Bool) {
         backing.writeBool(on, PlaylistSettingsKeys.groupEnabledKey(url, group: group))
     }
+
+    /// Force a full EPG refresh after any playlist changes (default: false). A
+    /// global toggle (not per-`url`) but housed here beside the playlist-update
+    /// seams; the tracked mirror lives in the base store so the picker observes it.
+    var updateOnPlaylistsChange: Bool {
+        get { rawUpdateOnPlaylistsChange }
+        set {
+            rawUpdateOnPlaylistsChange = newValue
+            backing.writeBool(newValue, SettingsKey.updateOnPlaylistsChange.rawValue)
+        }
+    }
 }

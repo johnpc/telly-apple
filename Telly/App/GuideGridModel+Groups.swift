@@ -15,7 +15,7 @@ extension GuideGridModel {
     /// The channels under the selected group (every channel for "All channels",
     /// favourites for the Favorites pseudo-group, a custom group's members else).
     var selectedChannels: [ChannelEntity] {
-        ChannelListGroups.channels(channels, in: selectedGroup, customs: customGroups)
+        sort.sorted(ChannelListGroups.channels(channels, in: selectedGroup, customs: customGroups))
     }
 
     /// Switches the active group filter and re-materialises the visible window

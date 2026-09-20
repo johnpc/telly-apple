@@ -35,6 +35,19 @@ struct ChannelListModelTests {
         #expect(model.rows.map(\.source.name) == ["A", "B"])
     }
 
+    @Test func channelSortReordersRowsAndDefaultPreservesPlaylistOrder() throws {
+        let db = try AppDatabase.makeInMemory()
+        let playlists = PlaylistStore(db: db)
+        let list = M3uPlaylist(channels: [m("Zeta", "Live"), m("Alpha", "Live"), m("Mid", "Live")])
+        _ = try playlists.add(sourceUrl: "u", playlist: list, name: nil, nowMs: 0)
+        let model = ChannelListModel(store: ChannelStore(db: db))
+        model.load()
+        model.channelSort = { .default }
+        #expect(model.rows.map(\.source.name) == ["Zeta", "Alpha", "Mid"])
+        model.channelSort = { .nameAZ }
+        #expect(model.rows.map(\.source.name) == ["Alpha", "Mid", "Zeta"])
+    }
+
     @Test func favoritesGroupEmptyUntilToggled() throws {
         let model = try seededModel()
         model.select("Favorites")

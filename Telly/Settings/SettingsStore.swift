@@ -14,7 +14,8 @@ final class SettingsStore {
     private var rawTimeout: Int
     private var rawRefresh: Int
     private var rawKeep: Int
-    private var rawUpdateOnPlaylistsChange: Bool
+    var rawUpdateOnPlaylistsChange: Bool
+    var rawChannelSort: Int
     var rawSaveSearchHistory: Bool
     var rawVodRememberPosition: Bool
     var rawKeyOk: Int
@@ -30,6 +31,7 @@ final class SettingsStore {
         rawRefresh = backing.readInt(SettingsKey.epgRefreshHours.rawValue) ?? SettingsDefaults.epgRefreshHours
         rawKeep = backing.readInt(SettingsKey.epgKeepPastDays.rawValue) ?? SettingsDefaults.epgKeepPastDays
         rawUpdateOnPlaylistsChange = backing.readBool(SettingsKey.updateOnPlaylistsChange.rawValue) ?? SettingsDefaults.updateOnPlaylistsChange
+        rawChannelSort = backing.readInt(SettingsKey.channelSort.rawValue) ?? SettingsDefaults.channelSort
         rawSaveSearchHistory = backing.readBool(SettingsKey.saveSearchHistory.rawValue) ?? SettingsDefaults.saveSearchHistory
         rawVodRememberPosition = backing.readBool(SettingsKey.vodRememberPosition.rawValue) ?? SettingsDefaults.vodRememberPosition
         rawKeyOk = backing.readInt(SettingsKey.playerKeyOk.rawValue) ?? SettingsDefaults.playerKeyOk
@@ -66,15 +68,6 @@ final class SettingsStore {
         set { rawKeep = max(0, newValue); backing.writeInt(rawKeep, SettingsKey.epgKeepPastDays.rawValue) }
     }
 
-    /// Force a full EPG refresh after any playlist changes (default: false).
-    var updateOnPlaylistsChange: Bool {
-        get { rawUpdateOnPlaylistsChange }
-        set {
-            rawUpdateOnPlaylistsChange = newValue
-            backing.writeBool(newValue, SettingsKey.updateOnPlaylistsChange.rawValue)
-        }
-    }
-
     /// Restores every setting to its factory default by clearing the store.
     func resetToDefaults() {
         SettingsKey.allCases.forEach { backing.remove($0.rawValue) }
@@ -83,6 +76,7 @@ final class SettingsStore {
         rawRefresh = SettingsDefaults.epgRefreshHours
         rawKeep = SettingsDefaults.epgKeepPastDays
         rawUpdateOnPlaylistsChange = SettingsDefaults.updateOnPlaylistsChange
+        rawChannelSort = SettingsDefaults.channelSort
         rawSaveSearchHistory = SettingsDefaults.saveSearchHistory
         rawVodRememberPosition = SettingsDefaults.vodRememberPosition
         rawKeyOk = SettingsDefaults.playerKeyOk

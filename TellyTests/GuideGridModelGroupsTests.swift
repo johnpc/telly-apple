@@ -46,6 +46,21 @@ struct GuideGridModelGroupsTests {
         #expect(try names(makeModel()) == ["A", "B", "C"])
     }
 
+    @Test func nameSortReordersGuideRowsLikeTheChannelList() throws {
+        let db = try AppDatabase.makeInMemory()
+        _ = try PlaylistStore(db: db).add(
+            sourceUrl: "u",
+            playlist: M3uPlaylist(channels: [ch("Zeta", "Live"), ch("Alpha", "Live"), ch("Mid", "Live")]),
+            name: nil, nowMs: 0)
+        let model = GuideGridModel(
+            channelStore: ChannelStore(db: db),
+            repository: EpgRepository(store: ProgramStore(db: db)),
+            now: { 3_600_000 }, timeZone: TimeZone(identifier: "UTC")!, is24h: true,
+            sort: .nameAZ)
+        model.load()
+        #expect(names(model) == ["Alpha", "Mid", "Zeta"])
+    }
+
     @Test func selectGroupFiltersRowsLive() throws {
         let model = try makeModel()
         model.selectGroup("News")
