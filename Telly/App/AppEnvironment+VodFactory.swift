@@ -21,9 +21,12 @@ extension AppEnvironment {
                          clock: { [clock] in Int64(clock()) })
     }
 
-    /// Empties every stored VOD position (Settings → Clear playback positions).
-    func clearVodPositions() {
-        try? makeVodPositionStore().clear()
+    /// Empties every stored VOD position (Settings → Clear playback positions),
+    /// reporting success/failure so the Settings control can confirm it.
+    @discardableResult
+    func clearVodPositions() -> UpdateOutcome {
+        let ok = (try? makeVodPositionStore().clear()) != nil
+        return .done(ok, success: "Playback positions cleared", failure: "Couldn’t clear positions")
     }
 
     /// A VOD playback model over a fresh VLCKit engine and the shared-handle

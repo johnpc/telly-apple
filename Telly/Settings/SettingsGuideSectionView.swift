@@ -6,7 +6,7 @@ import SwiftUI
 struct SettingsGuideSectionView: View {
     @Bindable var settings: SettingsStore
     /// The forced EPG refresh reached by "Update EPG now" (injected by the host).
-    let updateEpgNow: () async -> Void
+    let updateEpgNow: () async -> UpdateOutcome
     /// The per-channel EPG-assignment entry list (vended off the cap-safe carrier).
     let makeEpgAssignmentModel: () -> EpgAssignmentModel
 
@@ -23,7 +23,7 @@ struct SettingsGuideSectionView: View {
                 }
             }
             Toggle("Update on Playlists Change", isOn: $settings.updateOnPlaylistsChange)
-            Button("Update EPG Now") { Task { await updateEpgNow() } }
+            UpdateActionButton(title: "Update EPG Now") { await updateEpgNow() }
             NavigationLink("EPG Assignment") {
                 EpgAssignmentScreen(model: makeEpgAssignmentModel())
             }

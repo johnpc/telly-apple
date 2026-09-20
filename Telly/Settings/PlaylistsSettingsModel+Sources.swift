@@ -60,8 +60,14 @@ extension PlaylistsSettingsModel {
 
     // MARK: App-wide EPG refresh
 
-    /// The "Update EPG now" action: an unconditional forced EPG refresh.
-    func refreshEpgNow() async { await refreshEpg() }
+    /// The "Update EPG now" action: an unconditional forced EPG refresh. The
+    /// underlying refresh reports no result, so this always confirms success once
+    /// the awaited refresh completes.
+    @discardableResult
+    func refreshEpgNow() async -> UpdateOutcome {
+        await refreshEpg()
+        return .success("Guide data updated")
+    }
 
     /// Forces an EPG refresh iff the pure ``EpgRefreshPolicy`` says a completed
     /// update warrants one under the current app-wide toggle — decision stays

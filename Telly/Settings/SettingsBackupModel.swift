@@ -10,8 +10,9 @@ import Foundation
 @MainActor
 @Observable
 final class SettingsBackupModel {
-    /// The outcome of the most recent restore, surfaced to the user as an alert.
-    enum Outcome: Equatable { case restored, failed }
+    /// The outcome of the most recent backup action, surfaced to the user as an
+    /// alert — a completed restore, a completed export, or a failure of either.
+    enum Outcome: Equatable { case restored, exported, failed }
 
     var outcome: Outcome?
     private let manager: SettingsBackupManager
@@ -25,6 +26,12 @@ final class SettingsBackupModel {
     /// The backup JSON to write to the exported file; rethrows serialisation
     /// failures so the caller can report them rather than exporting a blank.
     func exportText() throws -> String { try manager.exportJson() }
+
+    /// Records the file-exporter's result so the export is confirmed (or its
+    /// failure surfaced) rather than silently discarded.
+    func noteExport(_ result: Result<URL, Error>) {
+        outcome = (try? result.get()) != nil ? .exported : .failed
+    }
 
     /// Applies restored backup text: a valid decode reloads the playlist feed
     /// and reports `.restored`; malformed or throwing input reports `.failed`

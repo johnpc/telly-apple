@@ -48,7 +48,7 @@ struct AppEnvironmentVodWiringTests {
         let store = env.makeVodPositionStore()
         try store.save(itemKey: "k|A", positionMs: 30_000, durationMs: 90_000)
         #expect(try !store.all().isEmpty)
-        env.clearVodPositions()
+        #expect(env.clearVodPositions() == .success("Playback positions cleared"))
         #expect(try store.all().isEmpty)
     }
 }

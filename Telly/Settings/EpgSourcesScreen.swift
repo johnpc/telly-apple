@@ -10,6 +10,7 @@ struct EpgSourcesScreen: View {
     let url: String
     @State private var sources: [EpgSource] = []
     @State private var draft = ""
+    @State private var addInvalid = false
 
     var body: some View {
         Form {
@@ -24,7 +25,11 @@ struct EpgSourcesScreen: View {
                 }
                 HStack {
                     TextField("https://…", text: $draft).textContentType(.URL)
+                        .onChange(of: draft) { addInvalid = false }
                     Button("Add") { add() }.disabled(draft.trimmed.isEmpty)
+                }
+                if addInvalid {
+                    Text("Enter a valid http(s) URL").font(.footnote).foregroundStyle(.red)
                 }
             }
         }
@@ -33,13 +38,16 @@ struct EpgSourcesScreen: View {
     }
 
     private func add() {
-        if model.addSource(playlistUrl: url, url: draft.trimmed) { draft = "" }
+        if model.addSource(playlistUrl: url, url: draft.trimmed) { draft = ""; addInvalid = false }
+        else { addInvalid = true }
         sources = model.sources(for: url)
     }
 
-    private func rename(_ id: Int64, _ newUrl: String) {
-        _ = model.setSourceUrl(id: id, url: newUrl)
+    @discardableResult
+    private func rename(_ id: Int64, _ newUrl: String) -> Bool {
+        let ok = model.setSourceUrl(id: id, url: newUrl)
         sources = model.sources(for: url)
+        return ok
     }
 
     private func remove(_ id: Int64) {

@@ -1,4 +1,5 @@
 import Testing
+import Foundation
 import GRDB
 @testable import Telly
 
@@ -48,6 +49,15 @@ struct SettingsBackupModelTests {
         subject.restore(from: "not json")
         #expect(subject.outcome == .failed)
         #expect(!reloaded)
+    }
+
+    @Test func noteExportReportsSuccessAndFailure() {
+        let subject = model(env(), reload: {})
+        subject.noteExport(.success(URL(fileURLWithPath: "/tmp/telly-backup.json")))
+        #expect(subject.outcome == .exported)
+        struct Boom: Error {}
+        subject.noteExport(.failure(Boom()))
+        #expect(subject.outcome == .failed)
     }
 
     #if !os(tvOS)

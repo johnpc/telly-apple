@@ -8,7 +8,7 @@ struct SettingsScreen: View {
     let backup: SettingsBackupModel
     let playlists: PlaylistsSettingsModel
     let makeVisibilityEditModel: () -> VisibilityEditModel
-    let clearVodPositions: () -> Void
+    let clearVodPositions: () -> UpdateOutcome
     let onClose: () -> Void
     #if !os(tvOS)
     @Environment(\.horizontalSizeClass) private var sizeClass

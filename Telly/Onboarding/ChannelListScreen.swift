@@ -21,7 +21,7 @@ struct ChannelListScreen: View {
     /// The per-channel Assign-EPG picker factory the row menu's "Assign EPG"
     /// action presents (same picker the Settings EPG-assignment list vends).
     let makeAssignEpgModel: (ChannelEntity) -> AssignEpgModel
-    let clearVodPositions: () -> Void
+    let clearVodPositions: () -> UpdateOutcome
     /// The selected channel's now/next for the iPad detail pane; identity ({ nil })
     /// off the split path, so compact iPhone / tvOS / tests need not wire the EPG.
     let nowNext: (ChannelEntity) -> NowNext?
@@ -66,7 +66,7 @@ struct ChannelListScreen: View {
          makeVodPlaybackModel: @escaping (String, @escaping () -> Void) -> VodPlaybackModel,
          makeMyListModel: @escaping () -> MyListModel,
          makeAssignEpgModel: @escaping (ChannelEntity) -> AssignEpgModel,
-         clearVodPositions: @escaping () -> Void,
+         clearVodPositions: @escaping () -> UpdateOutcome,
          settings: SettingsStore,
          nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil },
          nowMs: @escaping () -> Int = { 0 },

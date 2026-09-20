@@ -17,8 +17,8 @@ struct SettingsPlaylistsSectionView: View {
                 }
             }
             Button("Add Playlist") { addingPlaylist = true }
-            Button("Update All Playlists") { Task { await model.updateAll() } }
-                .disabled(model.playlists.isEmpty)
+            UpdateActionButton(title: "Update All Playlists",
+                               isDisabled: model.playlists.isEmpty) { await model.updateAll() }
         }
         .task { model.load() }
         .sheet(isPresented: $addingPlaylist) {

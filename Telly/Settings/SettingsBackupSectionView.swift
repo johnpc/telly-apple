@@ -34,20 +34,27 @@ struct SettingsBackupSectionView: View {
         }
         #if !os(tvOS)
         .fileExporter(isPresented: $isExporting, document: document,
-                      contentType: .json, defaultFilename: "telly-backup") { _ in }
+                      contentType: .json, defaultFilename: "telly-backup") { model.noteExport($0) }
         .fileImporter(isPresented: $isImporting, allowedContentTypes: [.json]) { result in
             if case let .success(url) = result { restore(from: url) }
         }
         .alert("Backup", isPresented: alertBinding) {
             Button("OK") { model.outcome = nil }
         } message: {
-            Text(model.outcome == .restored ? "Backup restored."
-                 : "Could not restore backup.")
+            Text(alertMessage)
         }
         #endif
     }
 
     #if !os(tvOS)
+    private var alertMessage: String {
+        switch model.outcome {
+        case .restored: "Backup restored."
+        case .exported: "Backup saved."
+        default: "Couldn’t complete the backup."
+        }
+    }
+
     private var alertBinding: Binding<Bool> {
         Binding(get: { model.outcome != nil },
                 set: { if !$0 { model.outcome = nil } })

@@ -18,7 +18,7 @@ final class PlaylistsSettingsModel {
     let channelStore: ChannelStore
     let settings: SettingsStore
     let makeAddModel: () -> AddPlaylistModel
-    private let updater: PlaylistUpdater
+    let updater: PlaylistUpdater
     let refreshEpg: () async -> Void
     /// Republish + write-through; internal so EPG-source/add seams fire the mirror.
     let reload: () -> Void
@@ -40,19 +40,6 @@ final class PlaylistsSettingsModel {
 
     /// Re-reads the stored playlists into the observed feed.
     func load() { playlists = (try? playlistStore.all()) ?? [] }
-
-    /// Re-fetches one playlist, republishes the feeds, then refreshes the EPG
-    /// when the change succeeded and "Update on playlists change" is enabled.
-    func updateNow(_ url: String) async {
-        let updated = await updater.update(url)
-        refreshed(); await maybeRefreshEpg(anyUpdated: updated)
-    }
-
-    /// Re-fetches every stored playlist, then conditionally refreshes the EPG.
-    func updateAll() async {
-        let updated = await updater.updateAll(playlists.map(\.url))
-        refreshed(); await maybeRefreshEpg(anyUpdated: !updated.isEmpty)
-    }
 
     /// Deletes a playlist and cascades: its channels (via the store), its custom
     /// EPG sources, and every preference key it owned.
@@ -88,5 +75,5 @@ final class PlaylistsSettingsModel {
         PlaylistKeyPlan.allKeys(old, groups: groups).forEach { settings.backing.remove($0) }
     }
 
-    private func refreshed() { load(); reload() }
+    func refreshed() { load(); reload() }
 }

@@ -15,6 +15,8 @@ extension ContentView {
                            backup: env.makeSettingsBackupModel(),
                            playlists: env.makePlaylistsSettingsModel(),
                            makeVisibilityEditModel: env.makeVisibilityEditModel, clearVodPositions: env.clearVodPositions, onClose: {})
+        } else if debugArgs.contains("-tellyFeedbackProof") {
+            feedbackProof
         } else if DebugLaunch.playlistDebugRequested(in: debugArgs) {
             playlistsDebug
         } else if DebugLaunch.forcedGuide(in: debugArgs) {

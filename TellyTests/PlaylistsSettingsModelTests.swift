@@ -71,7 +71,7 @@ struct PlaylistsSettingsModelTests {
     @Test func updateNowReimportsChannelsAndReloads() async throws {
         let r = try rig(fetch: { _ in Self.m3u(["A", "B", "C"]) })
         let id = try seedA(r)
-        await r.model.updateNow(a)
+        #expect(await r.model.updateNow(a) == .success("Updated 3 channels"))
         #expect(try r.channels.channels(playlistId: Int(id)).count == 3)
         #expect(r.reloads() >= 1)
     }
@@ -79,9 +79,29 @@ struct PlaylistsSettingsModelTests {
     @Test func updateAllRefreshesEveryPlaylistAndReloads() async throws {
         let r = try rig(fetch: { _ in Self.m3u(["X", "Y"]) })
         let id = try seedA(r)
-        await r.model.updateAll()
+        #expect(await r.model.updateAll() == .success("Updated 2 channels"))
         #expect(try r.channels.channels(playlistId: Int(id)).count == 2)
         #expect(r.reloads() >= 1)
+    }
+
+    @Test func updateNowFailureReportsAndKeepsStoredCopy() async throws {
+        struct Boom: Error {}
+        let r = try rig(fetch: { _ in throw Boom() })
+        let id = try seedA(r, names: ["A", "B"])   // seeded before the failing fetch
+        #expect(await r.model.updateNow(a) == .failure("Couldn’t update playlist"))
+        #expect(try r.channels.channels(playlistId: Int(id)).count == 2)   // intact
+    }
+
+    @Test func updateAllFailureReportsWhenNothingRefreshes() async throws {
+        struct Boom: Error {}
+        let r = try rig(fetch: { _ in throw Boom() })
+        try seedA(r)
+        #expect(await r.model.updateAll() == .failure("Couldn’t update playlists"))
+    }
+
+    @Test func refreshEpgNowReportsSuccess() async throws {
+        let r = try rig()
+        #expect(await r.model.refreshEpgNow() == .success("Guide data updated"))
     }
 
     @Test func updateTriggersEpgRefreshWhenToggleOn() async throws {
