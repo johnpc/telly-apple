@@ -77,6 +77,18 @@ struct MultiviewGridTests {
         #expect(grid.removed(at: 9) == grid)
     }
 
+    @Test func replacedSwapsCellKeepingPosition() {
+        let grid = MultiviewGrid(channels: channels, capacity: 4, activeChannelId: 20)!
+        let swapped = grid.replaced(at: 0, with: ch(99))
+        #expect(swapped.cells.map(\.id) == [99, 20, 30, 40])
+        #expect(swapped.activeIndex == 1)   // active selection unchanged
+    }
+
+    @Test func replacedIsNoOpForOutOfRange() {
+        let grid = MultiviewGrid(channels: channels, capacity: 4, activeChannelId: nil)!
+        #expect(grid.replaced(at: 9, with: ch(99)) == grid)
+    }
+
     @Test func withActiveClampsIntoRange() {
         let grid = MultiviewGrid(channels: channels, capacity: 4, activeChannelId: nil)!
         #expect(grid.withActive(2).activeIndex == 2)

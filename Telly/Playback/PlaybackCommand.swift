@@ -30,6 +30,8 @@ enum PlaybackCommand: Equatable, Sendable {
     case openMultiview
     /// Move the active multiview tile one D-pad step (wrapping at edges).
     case moveMultiviewActive(MultiviewDirection)
+    /// Open the per-pane menu over the active tile (Android's OK-on-pane).
+    case openMultiviewPaneMenu
     /// Promote the active multiview tile to fullscreen: exit, then tune it.
     case promoteMultiviewActive
     /// Leave multiview, returning to single-stream playback.

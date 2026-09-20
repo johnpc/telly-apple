@@ -22,6 +22,8 @@ extension ContentView {
         let model = env.makeLivePlaybackModel()
         if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
         if DebugLaunch.forcedMultiviewOverlay(in: debugArgs) { model.debugPresentMultiviewOverlay() }
+        if DebugLaunch.forcedMultiviewMenuOverlay(in: debugArgs) { model.debugPresentMultiviewPaneMenu() }
+        if DebugLaunch.forcedMultiviewPickerOverlay(in: debugArgs) { model.debugPresentMultiviewPicker() }
         if DebugLaunch.forcedQuickBarOverlay(in: debugArgs) { model.debugPresentQuickBarOverlay() }
         if let kind = DebugLaunch.forcedTrackPicker(in: debugArgs) { model.debugPresentTrackPicker(kind) }
         seedInfoOverlayIfRequested(model)

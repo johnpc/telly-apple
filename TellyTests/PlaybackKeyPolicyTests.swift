@@ -91,7 +91,7 @@ struct PlaybackKeyPolicyTests {
         Row(overlay: .multiview, key: .down, expected: .moveMultiviewActive(.down)),
         Row(overlay: .multiview, key: .left, expected: .moveMultiviewActive(.left)),
         Row(overlay: .multiview, key: .right, expected: .moveMultiviewActive(.right)),
-        Row(overlay: .multiview, key: .ok, expected: .promoteMultiviewActive),
+        Row(overlay: .multiview, key: .ok, expected: .openMultiviewPaneMenu),
         Row(overlay: .multiview, key: .back, expected: .exitMultiview),
         Row(overlay: .multiview, key: .menu, expected: .exitMultiview),
         Row(overlay: .multiview, key: .channelUp, expected: .nothing),

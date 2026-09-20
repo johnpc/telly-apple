@@ -1,13 +1,12 @@
 import Testing
 @testable import Telly
 
-/// The live orchestrator's multiview entry/move/promote/exit, composed over the
-/// `makeEngine` tile factory and ``FakePlayerEngine`` so every load, mute and
-/// teardown is asserted without VLCKit. Mirrors ``LivePlaybackModelTests``.
+/// The live orchestrator's multiview entry/menu/picker/promote/exit, composed
+/// over the `makeEngine` tile factory and ``FakePlayerEngine`` so every load,
+/// mute and teardown is asserted without VLCKit. Android model: enter with ONE
+/// pane, add more from the pane menu; OK opens the pane menu (not fullscreen).
 @MainActor
 struct LivePlaybackMultiviewTests {
-    /// Captures the tile engines the model mints via `makeEngine`, plus the
-    /// single primary engine, so their loads/mutes/teardown can be inspected.
     @MainActor
     final class Harness {
         let engine = FakePlayerEngine()
@@ -33,85 +32,114 @@ struct LivePlaybackMultiviewTests {
     }
     private var channels: [ChannelEntity] { [ch(10, 1), ch(20, 2), ch(30, 3), ch(40, 4)] }
 
-    @Test func openBuildsSessionOverlayAndLoadsMuted() {
+    private func opened() -> (Harness, LivePlaybackModel) {
         let harness = Harness()
         let model = harness.makeModel(channels)
         model.start()
-        _ = model.onKey(.menu)             // → quick bar
-        #expect(model.onKey(.ok))          // quick-bar OK is the v1 multiview entry
+        model.openMultiview()
+        return (harness, model)
+    }
+
+    @Test func openStartsWithOnePaneOnTunedChannel() {
+        let (harness, model) = opened()
         #expect(model.overlay == .multiview)
-        #expect(model.multiview != nil)
-        #expect(harness.tiles.count == 4)
+        #expect(model.multiview?.grid.cells.map(\.id) == [10])
+        #expect(harness.tiles.count == 1)
         #expect(harness.tiles[0].loaded == ["http://127.0.0.1/10.ts"])
-        #expect(harness.tiles.map(\.muted) == [false, true, true, true])
+        #expect(harness.tiles.map(\.muted) == [false])
     }
 
-    @Test func moveUpdatesActiveAndAudio() {
-        let harness = Harness()
-        let model = harness.makeModel(channels)
-        model.start()
-        model.openMultiview()
-        _ = model.onKey(.right)            // active 0 → 1 in the 2×2 grid
+    @Test func okOpensPaneMenuInsteadOfPromoting() {
+        let (_, model) = opened()
+        #expect(model.onKey(.ok))
+        #expect(model.overlay == .multiview)     // still multiview, menu layered on top
+        #expect(model.multiview?.menu != nil)
+        #expect(model.multiview != nil)          // did NOT promote / tear down to fullscreen
+    }
+
+    @Test func menuDownMovesHighlightAndBackClosesToGrid() {
+        let (_, model) = opened()
+        _ = model.onKey(.ok)
+        _ = model.onKey(.down)
+        #expect(model.multiview?.menu?.selection == 1)
+        _ = model.onKey(.back)                   // BACK closes the menu, keeps the grid
+        #expect(model.multiview?.menu == nil)
+        #expect(model.overlay == .multiview)
+    }
+
+    @Test func fullscreenRowPromotesActivePaneAndExits() {
+        let (harness, model) = opened()
+        _ = model.onKey(.ok)
+        model.runMultiviewMenuRow(.fullscreen)
+        #expect(model.overlay == .none)
+        #expect(model.multiview == nil)
+        #expect(model.current?.id == 10)
+        #expect(harness.tiles.allSatisfy { $0.stopCount == 1 && $0.releaseCount == 1 })
+    }
+
+    @Test func addPaneViaPickerMintsAndLoadsMutedEngine() {
+        let (harness, model) = opened()
+        _ = model.onKey(.ok)
+        model.runMultiviewMenuRow(.addPane)
+        model.selectMultiviewChannel(ch(20, 2))
+        #expect(model.multiview?.grid.cells.map(\.id) == [10, 20])
+        #expect(harness.tiles.count == 2)
+        #expect(harness.tiles[1].loaded == ["http://127.0.0.1/20.ts"])
+        #expect(harness.tiles.map(\.muted) == [false, true])
+        #expect(model.multiview?.picker == nil)  // picker closed back to grid
+    }
+
+    @Test func moveActiveAcrossAddedPanesReMutes() {
+        let (harness, model) = opened()
+        _ = model.onKey(.ok)
+        model.runMultiviewMenuRow(.addPane)
+        model.selectMultiviewChannel(ch(20, 2))
+        _ = model.onKey(.right)                  // 1×2 grid: active 0 → 1
         #expect(model.multiview?.grid.activeIndex == 1)
-        #expect(harness.tiles.map(\.muted) == [true, false, true, true])
+        #expect(harness.tiles.map(\.muted) == [true, false])
     }
 
-    @Test func promoteExitsAndTunesActiveCell() {
-        let harness = Harness()
-        let model = harness.makeModel(channels)
-        model.start()
-        model.openMultiview()
-        _ = model.onKey(.right)            // active → ch20
-        _ = model.onKey(.ok)               // promote to fullscreen
+    @Test func removePaneTearsDownItsEngineAndRelaysOut() {
+        let (harness, model) = opened()
+        _ = model.onKey(.ok)
+        model.runMultiviewMenuRow(.addPane)
+        model.selectMultiviewChannel(ch(20, 2))  // 2 panes, active 0
+        _ = model.onKey(.ok)                      // reopen menu over active pane 0
+        model.runMultiviewMenuRow(.removePane)
+        #expect(model.multiview?.grid.cells.map(\.id) == [20])
+        #expect(harness.tiles[0].stopCount == 1 && harness.tiles[0].releaseCount == 1)
+        #expect(model.multiview?.menu == nil)
+    }
+
+    @Test func changeChannelReloadsJustThatPane() {
+        let (harness, model) = opened()
+        _ = model.onKey(.ok)
+        model.runMultiviewMenuRow(.changeChannel)
+        model.selectMultiviewChannel(ch(30, 3))
+        #expect(model.multiview?.grid.cells.map(\.id) == [30])
+        #expect(harness.tiles[0].loaded == ["http://127.0.0.1/10.ts", "http://127.0.0.1/30.ts"])
+    }
+
+    @Test func exitClosesEnginesAndRestoresPrimary() {
+        let (harness, model) = opened()
+        _ = model.onKey(.back)                    // BACK at bare grid exits multiview
         #expect(model.overlay == .none)
         #expect(model.multiview == nil)
-        #expect(model.current?.id == 20)
-        #expect(harness.tiles.allSatisfy { $0.stopCount == 1 && $0.releaseCount == 1 })
-    }
-
-    @Test func exitClosesEnginesAndResets() {
-        let harness = Harness()
-        let model = harness.makeModel(channels)
-        model.start()
-        model.openMultiview()
-        _ = model.onKey(.back)             // exit
-        #expect(model.overlay == .none)
-        #expect(model.multiview == nil)
-        #expect(harness.tiles.allSatisfy { $0.stopCount == 1 && $0.releaseCount == 1 })
-    }
-
-    // MARK: Bug 1 — the primary engine is freed on open, restored on close.
-
-    @Test func openStopsPrimaryEngineToFreeAudio() {
-        let harness = Harness()
-        let model = harness.makeModel(channels)
-        model.start()
-        #expect(harness.engine.loaded == ["http://127.0.0.1/10.ts"])
-        model.openMultiview()
-        #expect(harness.engine.stopCount == 1)     // primary freed → no double audio
-    }
-
-    @Test func exitRestoresPrimaryPlaybackOfActiveChannel() {
-        let harness = Harness()
-        let model = harness.makeModel(channels)
-        model.start()
-        model.openMultiview()
-        model.exitMultiview()
-        #expect(harness.engine.stopCount == 1)
-        // reloaded the previously-active channel on the primary engine
         #expect(harness.engine.loaded == ["http://127.0.0.1/10.ts", "http://127.0.0.1/10.ts"])
         #expect(harness.tiles.allSatisfy { $0.stopCount == 1 && $0.releaseCount == 1 })
     }
 
-    // MARK: Bug 3 — the iPhone/iPad quick-bar `.multiview` tap opens multiview.
+    @Test func openStopsPrimaryEngineToFreeAudio() {
+        let (harness, _) = opened()
+        #expect(harness.engine.stopCount == 1)
+    }
 
-    @Test func quickBarMultiviewActionOpensMultiviewOnTouchPath() {
+    @Test func quickBarMultiviewActionOpensSinglePane() {
         let harness = Harness()
         let model = harness.makeModel(channels)
         model.start()
-        model.onQuickBarAction(.multiview)         // the compact quick-bar tap entry
+        model.onQuickBarAction(.multiview)
         #expect(model.overlay == .multiview)
-        #expect(model.multiview != nil)
-        #expect(harness.tiles.count == 4)
+        #expect(harness.tiles.count == 1)
     }
 }

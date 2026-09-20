@@ -9,13 +9,23 @@ import Foundation
 @Observable
 final class MultiviewSession {
     private(set) var grid: MultiviewGrid
-    let engines: [any PlayerEngine]
+    /// Index-aligned to `grid.cells`; grown/shrunk in lock-step by the mutation
+    /// extension, so `internal` (not `private(set)`) to let that sibling edit it.
+    var engines: [any PlayerEngine]
     let maxColumns: Int
+    /// Mints an engine for a pane added at runtime; nil in the engine-free DEBUG
+    /// session, where add/remove mutate the grid only (nothing to decode).
+    let makeTileEngine: (@MainActor () -> any PlayerEngine)?
+    /// The pane menu opened by OK on a tile, nil when the grid is bare.
+    var menu: MultiviewPaneMenu?
+    /// The channel picker opened from the pane menu, nil when none is up.
+    var picker: MultiviewPicker?
 
     init(grid: MultiviewGrid, maxColumns: Int = 2,
-         makeEngine: @MainActor () -> any PlayerEngine) {
+         makeEngine: @escaping @MainActor () -> any PlayerEngine) {
         self.grid = grid
         self.maxColumns = maxColumns
+        self.makeTileEngine = makeEngine
         self.engines = grid.cells.map { _ in makeEngine() }
     }
 
@@ -25,9 +35,17 @@ final class MultiviewSession {
     init(grid: MultiviewGrid, maxColumns: Int = 2) {
         self.grid = grid
         self.maxColumns = maxColumns
+        self.makeTileEngine = nil
         self.engines = []
     }
     #endif
+
+    /// Re-point the grid (used by the add/remove/swap transforms) and re-apply the
+    /// mute policy so exactly the active tile stays audible.
+    func retarget(_ next: MultiviewGrid) {
+        grid = next
+        applyAudio()
+    }
 
     /// The engine backing tile `index`, or nil when out of range (fake tiles).
     func engine(at index: Int) -> (any PlayerEngine)? {
@@ -64,8 +82,9 @@ final class MultiviewSession {
         }
     }
 
-    /// Exactly the active tile is audible; every other tile is muted.
-    private func applyAudio() {
+    /// Exactly the active tile is audible; every other tile is muted. Internal so
+    /// the mutation extension can re-apply it after add/remove/swap.
+    func applyAudio() {
         for (index, engine) in engines.enumerated() {
             engine.setMuted(index != grid.activeIndex)
         }

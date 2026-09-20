@@ -6,11 +6,17 @@ extension LivePlaybackModel {
     /// is centralised here so that fallback is a one-line change.
     private var multiviewCapacity: Int { 4 }
 
-    /// The grid over the current visible channels, active on the tuned one.
+    /// The starting grid: a SINGLE pane on the tuned channel (Android's model —
+    /// enter with one, add more up to `multiviewCapacity` from the pane menu),
+    /// falling back to the first channel when nothing is tuned yet.
     private func multiviewGrid() -> MultiviewGrid? {
-        MultiviewGrid(channels: channels, capacity: multiviewCapacity,
-                      activeChannelId: current?.id)
+        let seed = current.map { [$0] } ?? Array(channels.prefix(1))
+        return MultiviewGrid(channels: seed, capacity: multiviewCapacity,
+                             activeChannelId: current?.id)
     }
+
+    /// The full channel list the pane-menu picker chooses from.
+    var multiviewPickerChannels: [ChannelEntity] { channels }
 
     /// Enter multiview: build the grid, stop the primary fullscreen engine (so its
     /// audio can't compete with the active tile), spin up one engine per tile,

@@ -26,6 +26,8 @@ struct LivePlaybackScreen: View {
             quickBarOverlay
             panelOverlay
             multiviewOverlay
+            multiviewMenuOverlay
+            multiviewPickerOverlay
             trackPickerOverlay
             resizePickerOverlay
             stateOverlay

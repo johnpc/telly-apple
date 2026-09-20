@@ -46,6 +46,31 @@ extension LivePlaybackModel {
         visibility.set(.pushed(back: .quickBar))
     }
 
+    /// Pin the multiview pane menu open over a 2-pane engine-free grid so the
+    /// full row set (incl. Remove + Add) renders — `-tellyOverlay multiviewMenu`.
+    func debugPresentMultiviewPaneMenu() {
+        debugSeedMultiviewSession(paneCount: 2)
+        multiview?.openMenu()
+    }
+
+    /// Pin the Add-pane channel picker open over a 2-pane engine-free grid —
+    /// `-tellyOverlay multiviewPicker`.
+    func debugPresentMultiviewPicker() {
+        debugSeedMultiviewSession(paneCount: 2)
+        multiview?.openPicker(.add)
+    }
+
+    /// Raise an engine-free multiview session of `paneCount` fake tiles (held
+    /// frame, nothing decoded) as the base for the pane-menu / picker proofs.
+    private func debugSeedMultiviewSession(paneCount: Int) {
+        debugHoldFrame = true
+        let seed = Array(channels.prefix(paneCount))
+        guard let grid = MultiviewGrid(channels: seed, capacity: 4,
+                                       activeChannelId: seed.first?.id) else { return }
+        multiview = MultiviewSession(grid: grid)
+        visibility.set(.multiview)
+    }
+
     /// Deliver a real remote `key` through ``onKey(_:)`` so the resolved command
     /// honours the model's captured ``keymap``, then pin the resulting overlay
     /// (frame held) — the keymap-remap proof (`-tellyKeymapUpDown switch`).

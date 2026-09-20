@@ -42,6 +42,13 @@ struct MultiviewGrid: Equatable {
         }
     }
 
+    /// Swaps the channel shown by the tile at `index` for `channel`, keeping the
+    /// tile's grid position and the active selection. A no-op out of range.
+    func replaced(at index: Int, with channel: ChannelEntity) -> MultiviewGrid {
+        guard cells.indices.contains(index) else { return self }
+        return with { $0.cells[index] = MultiviewCell(channel: channel) }
+    }
+
     /// Moves the active tile to `index`, clamped into the current tile range.
     func withActive(_ index: Int) -> MultiviewGrid {
         with { $0.activeIndex = min(max(index, 0), max($0.cells.count - 1, 0)) }

@@ -8,6 +8,7 @@ extension LivePlaybackModel {
     @discardableResult
     func onKey(_ key: PlaybackKey) -> Bool {
         visibility.keepAlive(at: now())
+        if let handled = handleMultiviewSubKey(key) { return handled }
         let command = PlaybackKeyPolicy.command(overlay: visibility.overlay, key: key, keymap: keymap)
         execute(command)
         return command != .nothing
@@ -43,6 +44,8 @@ extension LivePlaybackModel {
             openMultiview()
         case let .moveMultiviewActive(direction):
             moveMultiviewActive(direction)
+        case .openMultiviewPaneMenu:
+            openMultiviewPaneMenu()
         case .promoteMultiviewActive:
             promoteMultiviewActive()
         case .exitMultiview:

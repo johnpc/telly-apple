@@ -33,5 +33,16 @@ extension DebugLaunch {
     static func forcedPanelOverlay(in args: [String]) -> Bool {
         value(for: "-tellyOverlay", in: args) == "panel"
     }
+
+    /// Whether to pin the multiview pane menu open — `-tellyOverlay multiviewMenu`.
+    static func forcedMultiviewMenuOverlay(in args: [String]) -> Bool {
+        value(for: "-tellyOverlay", in: args) == "multiviewMenu"
+    }
+
+    /// Whether to pin the multiview channel picker open —
+    /// `-tellyOverlay multiviewPicker`.
+    static func forcedMultiviewPickerOverlay(in args: [String]) -> Bool {
+        value(for: "-tellyOverlay", in: args) == "multiviewPicker"
+    }
 }
 #endif
