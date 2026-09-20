@@ -25,8 +25,10 @@ extension GuideGridScreen {
                                       startMs: cell.startMs, endMs: cell.endMs),
                 request: request)
         case let .tune(channel):
-            target = GuidePlaybackTarget(id: channel.id, url: channel.source.streamUrl,
-                                         catchup: nil, request: nil)
+            if let onLiveTune { onLiveTune(channel) } else {
+                target = GuidePlaybackTarget(id: channel.id, url: channel.source.streamUrl,
+                                             catchup: nil, request: nil)
+            }
         case .info, .none:
             break
         }

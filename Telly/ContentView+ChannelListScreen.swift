@@ -8,6 +8,7 @@ extension ContentView {
     func makeChannelListScreen(autoStart: Bool = true) -> ChannelListScreen {
         ChannelListScreen(model: env.channelListModel,
                           makeEngine: env.makeEngine,
+                          liveEngineStore: env.liveEngineStore,
                           makeGuideGridModel: env.makeGuideGridModel,
                           makeCatchupModel: env.makeCatchupPlaybackModel,
                           makeHistoryModel: env.makeHistoryModel,

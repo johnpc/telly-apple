@@ -10,7 +10,9 @@ extension ChannelListScreen {
         layoutRoot
             .task { if autoStart { await model.start() } }
             .fullScreenCover(item: $target) { target in
-                PlaybackScreen(streamUrl: target.url, engine: makeEngine())
+                LivePlayerHostView(store: liveEngineStore, url: target.url,
+                                   makeGuideModel: makeGuideGridModel, makeEngine: makeEngine,
+                                   makeCatchupModel: makeCatchupModel)
             }
             .sheet(isPresented: $showSettings) { settingsSheet }
             .assignEpgSheet($assignEpgTarget, make: makeAssignEpgModel, onReload: model.load)

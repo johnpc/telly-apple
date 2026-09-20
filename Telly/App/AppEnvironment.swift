@@ -18,6 +18,9 @@ final class AppEnvironment {
     let clock: () -> Int
     /// The single, stable channel-list state observed by `ChannelListScreen`.
     let channelListModel: ChannelListModel
+    /// The app-lifetime owner of the LIVE playback engine, so the guide can layer
+    /// over the still-playing channel without a reconnect (see ``LiveEngineStore``).
+    let liveEngineStore = LiveEngineStore()
     /// The shared playlist-group filter (disabled groups removed) both the
     /// channel list and the guide grid route through — built once here so the
     /// two agree on which channels (and thus which groups) exist.

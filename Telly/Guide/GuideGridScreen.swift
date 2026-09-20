@@ -8,6 +8,8 @@ struct GuideGridScreen: View {
     @State var model: GuideGridModel
     let makeEngine: () -> VLCKitPlayerEngine
     let makeCatchupModel: (CatchupRequest) -> CatchupPlaybackModel
+    /// Overlay mode: when set, an airing cell tunes the SHARED engine (nil pushes).
+    let onLiveTune: ((ChannelEntity) -> Void)?
     #if !os(tvOS)
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var dragAnchor: CGFloat = 0
@@ -17,10 +19,12 @@ struct GuideGridScreen: View {
     @State var menuTarget: GuideCellMenuTarget?
 
     init(model: GuideGridModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
-         makeCatchupModel: @escaping (CatchupRequest) -> CatchupPlaybackModel) {
+         makeCatchupModel: @escaping (CatchupRequest) -> CatchupPlaybackModel,
+         onLiveTune: ((ChannelEntity) -> Void)? = nil) {
         _model = State(initialValue: model)
         self.makeEngine = makeEngine
         self.makeCatchupModel = makeCatchupModel
+        self.onLiveTune = onLiveTune
     }
 
     var body: some View {
