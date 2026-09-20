@@ -11,7 +11,7 @@ extension ContentView {
     @ViewBuilder var historyDemo: some View {
         if let historyModel {
             NavigationStack {
-                HistoryScreen(model: historyModel, makeEngine: env.makeEngine)
+                HistoryScreen(model: historyModel, liveStage: env.liveStage)
             }
         } else {
             Color.black.ignoresSafeArea().task { prepareHistoryDemo() }

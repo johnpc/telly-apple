@@ -39,7 +39,7 @@ struct ChannelListScreen: View {
     /// `.compact` keeps the iPhone stack unchanged (see `ChannelListLayout`).
     @Environment(\.horizontalSizeClass) var sizeClass
     #endif
-    @State var target: PlaybackTarget?
+    @State var target: LiveStageTarget?
     /// The channel whose Assign-EPG picker sheet is open (raised by the row menu).
     @State var assignEpgTarget: AssignEpgTarget?
     @State var showSettings = false

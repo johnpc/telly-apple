@@ -2,17 +2,18 @@ import SwiftUI
 
 /// The recently-watched channels screen: a list of the channels most recently
 /// tuned (newest first), reusing the same ``ChannelListRowView`` as the channel
-/// list. Selecting a row opens the live player via the identical
-/// `.fullScreenCover` path `ChannelListScreen` uses; the toolbar trash button
-/// clears the history. Pure presentation — logic lives in ``HistoryListModel``.
+/// list. Selecting a row opens the SHARED live stage via the identical
+/// `.liveStageCover` path the home screen uses — the SAME persistent engine, so
+/// re-entering a channel never reconnects. The toolbar trash button clears the
+/// history. Pure presentation — logic lives in ``HistoryListModel``.
 struct HistoryScreen: View {
     @State private var model: HistoryListModel
-    let makeEngine: () -> VLCKitPlayerEngine
-    @State private var target: HistoryPlaybackTarget?
+    let liveStage: LiveStagePresentation
+    @State private var target: LiveStageTarget?
 
-    init(model: HistoryListModel, makeEngine: @escaping () -> VLCKitPlayerEngine) {
+    init(model: HistoryListModel, liveStage: LiveStagePresentation) {
         _model = State(initialValue: model)
-        self.makeEngine = makeEngine
+        self.liveStage = liveStage
     }
 
     var body: some View {
@@ -25,9 +26,7 @@ struct HistoryScreen: View {
             }
             .overlay { emptyState }
             .task { model.load() }
-            .fullScreenCover(item: $target) { target in
-                PlaybackScreen(streamUrl: target.url, engine: makeEngine())
-            }
+            .liveStageCover($target, using: liveStage)
     }
 
     /// Shown when nothing has been watched yet so the empty List isn't blank.
@@ -39,16 +38,10 @@ struct HistoryScreen: View {
 
     @ViewBuilder private func row(_ channel: ChannelEntity) -> some View {
         Button {
-            target = HistoryPlaybackTarget(id: channel.id, url: channel.source.streamUrl)
+            target = LiveStageTarget(channel: channel)
         } label: {
             ChannelListRowView(channel: channel)
         }
         .buttonStyle(.plain)
     }
-}
-
-/// Identifies the channel currently being played (drives the fullscreen cover).
-private struct HistoryPlaybackTarget: Identifiable {
-    let id: Int
-    let url: String
 }

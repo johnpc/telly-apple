@@ -1,20 +1,21 @@
 import SwiftUI
 
 /// The My List screen: saved programmes newest-added first (``MyListRowView``).
-/// Tapping an airing row tunes its channel via the identical `.fullScreenCover`
-/// path the channel list uses; tapping a future row shows its description in a
-/// sheet (Android's overlay). Rows remove via a swipe action (iOS/iPadOS) and a
-/// context menu (tvOS-safe). No clear-all — Android's my_list has none. Pure
-/// presentation; logic lives in ``MyListModel``.
+/// Tapping an airing row tunes its channel via the identical `.liveStageCover`
+/// path the channel list uses (the SAME persistent live engine — no reconnect);
+/// tapping a future row shows its description in a sheet (Android's overlay).
+/// Rows remove via a swipe action (iOS/iPadOS) and a context menu (tvOS-safe).
+/// No clear-all — Android's my_list has none. Pure presentation; logic lives in
+/// ``MyListModel``.
 struct MyListScreen: View {
     @State private var model: MyListModel
-    let makeEngine: () -> VLCKitPlayerEngine
-    @State private var target: MyListPlaybackTarget?
+    let liveStage: LiveStagePresentation
+    @State private var target: LiveStageTarget?
     @State private var described: MyListRow?
 
-    init(model: MyListModel, makeEngine: @escaping () -> VLCKitPlayerEngine) {
+    init(model: MyListModel, liveStage: LiveStagePresentation) {
         _model = State(initialValue: model)
-        self.makeEngine = makeEngine
+        self.liveStage = liveStage
     }
 
     var body: some View {
@@ -22,9 +23,7 @@ struct MyListScreen: View {
             .navigationTitle("My List")
             .overlay { emptyState }
             .task { model.load() }
-            .fullScreenCover(item: $target) { target in
-                PlaybackScreen(streamUrl: target.url, engine: makeEngine())
-            }
+            .liveStageCover($target, using: liveStage)
             .sheet(item: $described) { row in descriptionSheet(row) }
     }
 
@@ -52,7 +51,7 @@ struct MyListScreen: View {
 
     private func open(_ row: MyListRow) {
         if row.airing {
-            target = MyListPlaybackTarget(id: row.channel.id, url: row.channel.source.streamUrl)
+            target = LiveStageTarget(channel: row.channel)
         } else {
             described = row
         }
@@ -70,10 +69,4 @@ struct MyListScreen: View {
 /// Makes a My List row addressable by `List`/`.sheet(item:)` via its identity.
 extension MyListRow: Identifiable {
     var id: String { MyListToggle.key(channelKey: entry.channelKey, startMs: entry.startMs) }
-}
-
-/// Identifies the channel currently being tuned (drives the fullscreen cover).
-private struct MyListPlaybackTarget: Identifiable {
-    let id: Int
-    let url: String
 }

@@ -8,17 +8,16 @@ extension ChannelListScreen {
     @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             NavigationLink {
-                GuideGridScreen(model: makeGuideGridModel(), makeEngine: makeEngine,
-                                makeCatchupModel: makeCatchupModel)
+                GuideStageScreen(stage: liveStage)
             } label: { barLabel("Guide", "tv") }
         }
         ToolbarItem(placement: .primaryAction) {
             NavigationLink {
-                HistoryScreen(model: makeHistoryModel(), makeEngine: makeEngine)
+                HistoryScreen(model: makeHistoryModel(), liveStage: liveStage)
             } label: { barLabel("History", "clock.arrow.circlepath") }
         }
         ToolbarItem(placement: .primaryAction) {
-            NavigationLink { SearchScreen(model: makeSearchModel()) }
+            NavigationLink { SearchScreen(model: makeSearchModel(), liveStage: liveStage) }
                 label: { barLabel("Search", "magnifyingglass") }
         }
         ToolbarItem(placement: .primaryAction) {
@@ -29,7 +28,7 @@ extension ChannelListScreen {
         }
         ToolbarItem(placement: .primaryAction) {
             NavigationLink {
-                MyListScreen(model: makeMyListModel(), makeEngine: makeEngine)
+                MyListScreen(model: makeMyListModel(), liveStage: liveStage)
             } label: { barIconLabel("My List", "bookmark") }
         }
         ToolbarItem(placement: .primaryAction) {

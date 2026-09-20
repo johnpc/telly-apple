@@ -19,6 +19,6 @@ extension ChannelListScreen {
     /// iPad detail pane's Play button routes here too.
     func tapped(_ channel: ChannelEntity) {
         TellyHaptics.selection()
-        target = PlaybackTarget(id: channel.id, url: channel.source.streamUrl)
+        target = LiveStageTarget(channel: channel)
     }
 }

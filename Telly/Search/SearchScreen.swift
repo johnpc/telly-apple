@@ -4,15 +4,20 @@ import SwiftUI
 /// recomputes results on every keystroke. An empty query lands on the recent-
 /// query history (tap a row to re-run it, the trash button clears it); a
 /// non-empty query shows the Channels shelf then the Programs master-lane via
-/// ``SearchResultsView``. Selecting any result tunes it through the same
-/// `.fullScreenCover` → ``PlaybackScreen`` path History uses. Pure presentation
-/// — logic lives in ``SearchModel``.
+/// ``SearchResultsView``. Selecting a result opens the SHARED live stage via the
+/// `.liveStageCover` path History / the home screen use (the SAME persistent
+/// engine — no reconnect). `liveStage == nil` (the DEBUG search-within-live
+/// surface, which has no shared store) falls back to a terminal per-screen
+/// ``PlaybackScreen``. Pure presentation — logic lives in ``SearchModel``.
 struct SearchScreen: View {
     @State private var model: SearchModel
+    let liveStage: LiveStagePresentation?
     let makeEngine: @MainActor () -> VLCKitPlayerEngine
 
-    init(model: SearchModel, makeEngine: @escaping @MainActor () -> VLCKitPlayerEngine = { VLCKitPlayerEngine() }) {
+    init(model: SearchModel, liveStage: LiveStagePresentation? = nil,
+         makeEngine: @escaping @MainActor () -> VLCKitPlayerEngine = { VLCKitPlayerEngine() }) {
         _model = State(initialValue: model)
+        self.liveStage = liveStage
         self.makeEngine = makeEngine
     }
 
@@ -24,9 +29,8 @@ struct SearchScreen: View {
                 .onChange(of: model.query) { model.search() }
         }
         .onAppear { model.load() }
-        .fullScreenCover(item: $model.tuneTarget) { target in
-            PlaybackScreen(streamUrl: target.url, engine: makeEngine())
-        }
+        .modifier(SearchTuneCover(target: $model.tuneTarget, liveStage: liveStage,
+                                  makeEngine: makeEngine))
     }
 
     @ViewBuilder private var content: some View {

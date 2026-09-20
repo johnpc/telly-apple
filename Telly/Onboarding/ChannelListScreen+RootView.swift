@@ -6,14 +6,18 @@ import SwiftUI
 /// `NavigationSplitView` (`+SplitView`). The playback cover and the settings
 /// sheet hang off the shared root so both layouts present them.
 extension ChannelListScreen {
+    /// The shared live stage the toolbar's live entry points (Guide / History /
+    /// Search / My List) and the home cover all present, so each reuses the SAME
+    /// persistent engine (no per-screen reconnect).
+    var liveStage: LiveStagePresentation {
+        LiveStagePresentation(store: liveEngineStore, makeGuideModel: makeGuideGridModel,
+                              makeEngine: makeEngine, makeCatchupModel: makeCatchupModel)
+    }
+
     var body: some View {
         layoutRoot
             .task { if autoStart { await model.start() } }
-            .fullScreenCover(item: $target) { target in
-                LivePlayerHostView(store: liveEngineStore, url: target.url,
-                                   makeGuideModel: makeGuideGridModel, makeEngine: makeEngine,
-                                   makeCatchupModel: makeCatchupModel)
-            }
+            .liveStageCover($target, using: liveStage)
             .sheet(isPresented: $showSettings) { settingsSheet }
             .assignEpgSheet($assignEpgTarget, make: makeAssignEpgModel, onReload: model.load)
             #if DEBUG

@@ -11,7 +11,7 @@ import SwiftUI
 extension ContentView {
     @ViewBuilder var searchDebug: some View {
         if let searchModel {
-            SearchScreen(model: searchModel, makeEngine: env.makeEngine)
+            SearchScreen(model: searchModel, liveStage: env.liveStage)
         } else {
             Color.black.ignoresSafeArea().task { prepareSearchDebug() }
         }

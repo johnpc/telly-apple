@@ -11,7 +11,7 @@ extension ContentView {
     @ViewBuilder var myListDemo: some View {
         if let myListModel {
             NavigationStack {
-                MyListScreen(model: myListModel, makeEngine: env.makeEngine)
+                MyListScreen(model: myListModel, liveStage: env.liveStage)
             }
         } else {
             Color.black.ignoresSafeArea().task { prepareMyListDemo() }

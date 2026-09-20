@@ -22,8 +22,8 @@ final class SearchModel {
     private(set) var selectedChannel: SearchProgramChannel?
     /// Feeds the right-side detail card (the selected channel's focused airing).
     private(set) var focusedProgram: SearchProgramHit?
-    /// Non-nil launches the fullscreen player at the tuned channel's stream.
-    var tuneTarget: SearchTuneTarget?
+    /// Non-nil launches the shared live stage at the tuned channel's stream.
+    var tuneTarget: LiveStageTarget?
     /// Saved-airing identity keys backing the row bookmark glyph (My List state).
     var myListKeys: Set<String> = []
 
@@ -86,14 +86,7 @@ final class SearchModel {
     }
 
     private func tune(_ channel: ChannelEntity) {
-        tuneTarget = SearchTuneTarget(url: channel.source.streamUrl)
+        tuneTarget = LiveStageTarget(channel: channel)
         commit()
     }
-}
-
-/// Identifies the channel a search result tunes to (drives the fullscreen cover),
-/// keyed by its stream URL — the sibling of History's inline playback target.
-struct SearchTuneTarget: Identifiable {
-    let url: String
-    var id: String { url }
 }
