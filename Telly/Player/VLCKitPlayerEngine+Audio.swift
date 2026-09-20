@@ -1,5 +1,5 @@
 import Foundation
-import VLCKitSPM
+import VLCKit
 
 /// Audio control for the real engine, split from the primary adapter to keep it
 /// within the source-line budget. `muted` is a read-write VLCKit property

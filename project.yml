@@ -27,11 +27,14 @@ packages:
     url: https://github.com/groue/GRDB.swift
     from: "6.0.0"
   # VLCKit behind a protocol seam — IPTV serves raw MPEG-TS which AVPlayer
-  # cannot decode, so the real PlayerEngine wraps libVLC. Prebuilt XCFramework
-  # with iOS + tvOS slices; import as `VLCKitSPM`. App target only.
-  VLCKitSPM:
-    url: https://github.com/tylerjonesio/vlckit-spm
-    from: "3.6.0"
+  # cannot decode, so the real PlayerEngine wraps libVLC. Official VideoLAN
+  # Swift Package (libvlc 4.x); monolithic XCFramework with iOS + tvOS slices;
+  # import as `VLCKit`. App target only. VLCKit 4 exposes the public
+  # Picture-in-Picture API live streams need. BRANCH-ONLY: alpha pin, exact
+  # only — never merged to main (which stays on stable VLCKitSPM 3.6.0).
+  VLCKit:
+    url: https://code.videolan.org/videolan/VLCKit.git
+    exactVersion: "4.0.0-a24"
 
 targets:
   Telly:
@@ -42,11 +45,16 @@ targets:
     dependencies:
       - package: SWCompression
       - package: GRDB
-      - package: VLCKitSPM
+      - package: VLCKit
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.johncorser.telly
         GENERATE_INFOPLIST_FILE: "YES"
+        # Playback must continue when the app is backgrounded into the PiP window.
+        # UIBackgroundModes can't be generated via an INFOPLIST_KEY_ setting (not
+        # on Xcode's auto-mapped allowlist), so it lives in a partial Info.plist
+        # merged UNDER the generated keys. Harmless on tvOS (no system PiP).
+        INFOPLIST_FILE: Config/TellyInfo.plist
         INFOPLIST_KEY_CFBundleDisplayName: Telly
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: "NO"
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.entertainment"

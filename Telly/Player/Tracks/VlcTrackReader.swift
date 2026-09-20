@@ -1,33 +1,26 @@
 import Foundation
 
-/// Pure builder of a ``TrackSnapshot`` from VLCKit's parallel name/index arrays.
-/// Zips names↔indexes to the shorter length, drops the negative "Disable"
-/// sentinel VLCKit prepends, and derives the selected id from the current index
-/// (nil when -1 / disabled). No VLCKit types here so it is fully unit-tested;
-/// ``VlcTrackFacade`` does the ObjC bridging and hands over plain Swift arrays.
+/// A VLCKit-free description of one media track, extracted by ``VlcTrackFacade``
+/// from a `VLCMediaPlayer.Track` so this reader stays pure and unit-testable
+/// without linking VLCKit. `id` is VLCKit 4's string `trackId`.
+struct VlcTrackInfo: Equatable {
+    let id: String
+    let name: String
+    let isSelected: Bool
+}
+
+/// Pure builder of a ``TrackSnapshot`` from the object-track lists VLCKit 4
+/// exposes (`audioTracks`/`textTracks`). Track identity is now a string id (was
+/// an int index in 3.x); the selected id is whichever track reports
+/// `isSelected`, nil when none. No VLCKit types here so it is fully unit-tested;
+/// ``VlcTrackFacade`` does the ObjC bridging and hands over plain Swift values.
 enum VlcTrackReader {
-    static func snapshot(audioNames: [String], audioIndexes: [Int], currentAudio: Int,
-                         subNames: [String], subIndexes: [Int], currentSub: Int) -> TrackSnapshot {
+    static func snapshot(audio: [VlcTrackInfo], text: [VlcTrackInfo]) -> TrackSnapshot {
         var snapshot = TrackSnapshot()
-        snapshot.audios = zipped(audioNames, audioIndexes).map { name, index in
-            AudioTrack(id: String(index), language: name, channels: 0)
-        }
-        snapshot.texts = zipped(subNames, subIndexes).map { name, index in
-            TextTrack(id: String(index), language: name)
-        }
-        snapshot.selectedAudioId = selected(currentAudio)
-        snapshot.selectedTextId = selected(currentSub)
+        snapshot.audios = audio.map { AudioTrack(id: $0.id, language: $0.name, channels: 0) }
+        snapshot.texts = text.map { TextTrack(id: $0.id, language: $0.name) }
+        snapshot.selectedAudioId = audio.first(where: \.isSelected)?.id
+        snapshot.selectedTextId = text.first(where: \.isSelected)?.id
         return snapshot
-    }
-
-    /// Pairs parallel arrays (truncating to the shorter) and drops the negative
-    /// "Disable" sentinel VLCKit lists at index 0 of each track kind.
-    private static func zipped(_ names: [String], _ indexes: [Int]) -> [(String, Int)] {
-        zip(names, indexes).filter { $0.1 >= 0 }
-    }
-
-    /// The selected track id for a VLCKit "current index": nil when disabled (-1).
-    private static func selected(_ index: Int) -> String? {
-        index >= 0 ? String(index) : nil
     }
 }

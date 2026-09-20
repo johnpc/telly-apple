@@ -13,6 +13,7 @@ final class FakePlayerEngine: PlayerEngine {
     var paused = false
     var positionMs = 0
     var durationMs = 0
+    var isSeekable = false
     var tracks: TrackFacade = NoTracks()
 
     private(set) var loaded: [String] = []

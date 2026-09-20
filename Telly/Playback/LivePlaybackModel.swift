@@ -53,6 +53,16 @@ final class LivePlaybackModel {
     var debugSnapshot: TrackSnapshot?
     #endif
 
+    #if os(iOS)
+    /// Set once the live screen learns the device supports PiP
+    /// (`AVPictureInPictureController.isPictureInPictureSupported()`, injected —
+    /// kept off this Foundation-only model). Read by ``pipActionable``.
+    var isPipSupported = false
+    /// PiP intent flag flipped by ``requestPip()``; ``LivePlaybackScreen+Pip``
+    /// consumes it and asks the engine to start the system PiP window.
+    var pipRequested = false
+    #endif
+
     init(engine: any PlayerEngine,
          channels: [ChannelEntity],
          makeEngine: @escaping @MainActor () -> any PlayerEngine = { VLCKitPlayerEngine() },

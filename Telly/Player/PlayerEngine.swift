@@ -19,6 +19,10 @@ protocol PlayerEngine {
     /// Total length of a finite (VOD / catch-up) stream, ms; 0 while unknown.
     var durationMs: Int { get }
 
+    /// Whether the current stream honours seeking (a live edge is not seekable).
+    /// The VLCKit-4 PiP window queries this to enable/disable its scrubber.
+    var isSeekable: Bool { get }
+
     /// Tunes the given stream URL and begins playback (fresh reconnect budget).
     /// `isLive` marks an infinite stream: a live stream reporting EOF has really
     /// dropped and is retried, a finite one (VOD / catch-up archive) has finished.
@@ -41,6 +45,7 @@ protocol PlayerEngine {
 /// implement it; the VLCKit adapter and finite-stream tests override it.
 extension PlayerEngine {
     var durationMs: Int { 0 }
+    var isSeekable: Bool { false }
 
     /// Finite-stream convenience: VOD and catch-up archives load non-live, so
     /// their `.ended` stays terminal. Live call sites pass `isLive: true`.

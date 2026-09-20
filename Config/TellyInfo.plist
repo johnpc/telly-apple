@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Partial Info.plist merged UNDER the generated one (GENERATE_INFOPLIST_FILE
+	  stays YES; this file is the base, generated INFOPLIST_KEY_* values are added
+	  on top). Needed because Xcode's Info.plist generator does NOT emit
+	  UIBackgroundModes from INFOPLIST_KEY_UIBackgroundModes — that key isn't on
+	  its auto-mapped allowlist — yet Picture-in-Picture requires the "audio"
+	  background mode to keep playing when the app is backgrounded into the PiP
+	  window. Harmless on tvOS (no system PiP; honours background audio too).
+	-->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
+</dict>
+</plist>
