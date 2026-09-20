@@ -13,7 +13,7 @@ settings:
     DEVELOPMENT_TEAM: JW5SC3NYUV
     CODE_SIGN_STYLE: Automatic
     MARKETING_VERSION: "0.1.0"
-    CURRENT_PROJECT_VERSION: "5"
+    CURRENT_PROJECT_VERSION: "7"
 
 packages:
   # gzip/xz EPG decompression (providers serve guide.xml.gz / .xz). Pure Swift,
