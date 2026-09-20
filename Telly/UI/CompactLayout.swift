@@ -20,10 +20,14 @@ enum CompactLayout {
 
     /// The adaptive minimum width for a Movies-browser poster column. Compact
     /// iPhone width needs a smaller tile so portrait still lands ≥3 columns; iPad
-    /// / tvOS / regular keep the poster-scale 168 that fills their wide canvas
-    /// with fewer columns instead of a stranded trailing gutter.
-    static func posterColumnMinimum(_ sizeClass: UserInterfaceSizeClass?) -> CGFloat {
-        sizeClass == .compact ? 100 : 168
+    /// / regular keep the poster-scale 168 that fills their wide canvas with fewer
+    /// columns instead of a stranded trailing gutter. tvOS is a 10-foot surface:
+    /// 168 packed its wide canvas with ~11 tiny posters, so it takes a larger
+    /// minimum for ~6 legible columns, like the Apple TV media apps.
+    static func posterColumnMinimum(_ sizeClass: UserInterfaceSizeClass?,
+                                    television: Bool = false) -> CGFloat {
+        if television { return 260 }
+        return sizeClass == .compact ? 100 : 168
     }
 
     /// The readable maximum width for the grouped Settings form, or nil for no

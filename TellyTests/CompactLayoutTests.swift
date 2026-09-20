@@ -42,6 +42,14 @@ struct CompactLayoutTests {
         #expect(CompactLayout.posterColumnMinimum(nil) == 168)
     }
 
+    @Test func posterColumnMinimumIsLargerOn10FootTelevision() {
+        #expect(CompactLayout.posterColumnMinimum(.regular, television: true) == 260)
+    }
+
+    @Test func posterColumnMinimumTelevisionWinsOverCompact() {
+        #expect(CompactLayout.posterColumnMinimum(.compact, television: true) == 260)
+    }
+
     @Test func settingsFormIsUnconstrainedOnCompact() {
         #expect(CompactLayout.settingsFormMaxWidth(.compact) == nil)
     }

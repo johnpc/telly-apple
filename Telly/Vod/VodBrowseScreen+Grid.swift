@@ -8,7 +8,17 @@ import SwiftUI
 /// iPhone so portrait still lands ≥3 poster columns.
 extension VodBrowseScreen {
     var columns: [GridItem] {
-        [GridItem(.adaptive(minimum: CompactLayout.posterColumnMinimum(sizeClass)), spacing: 16)]
+        [GridItem(.adaptive(minimum: posterMinimum), spacing: 16)]
+    }
+
+    /// tvOS is a 10-foot surface regardless of size class, so it opts into the
+    /// larger poster minimum; iPhone/iPad key off the reported size class.
+    private var posterMinimum: CGFloat {
+        #if os(tvOS)
+        CompactLayout.posterColumnMinimum(sizeClass, television: true)
+        #else
+        CompactLayout.posterColumnMinimum(sizeClass)
+        #endif
     }
 
     @ViewBuilder var categoryChips: some View {
