@@ -33,6 +33,7 @@ struct AddPlaylistScreen: View {
         switch model.state.step {
         case .typeChooser: WizardTypeStepView(model: model)
         case .urlEntry: WizardUrlStepView(model: model)
+        case .xtreamEntry: WizardXtreamStepView(model: model)
         case .processing: ProgressView("Loading playlist…")
         case .processed: WizardProcessedStepView(model: model)
         case .epgUrl: WizardEpgStepView(model: model)
@@ -44,6 +45,7 @@ struct AddPlaylistScreen: View {
         switch model.state.step {
         case .typeChooser: return "Add playlist"
         case .urlEntry: return "Playlist URL"
+        case .xtreamEntry: return "Xtream Codes"
         case .processing: return "Loading"
         case .processed: return "Playlist ready"
         case .epgUrl: return "EPG URL"

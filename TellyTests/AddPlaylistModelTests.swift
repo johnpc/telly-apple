@@ -128,6 +128,77 @@ struct AddPlaylistModelTests {
         #expect(model.state.epgUrl == "http://host.tv/list.m3u")
     }
 
+    // MARK: - Xtream Codes
+
+    /// A model whose Xtream import returns a fixture playlist built from the
+    /// parsed credentials (mirrors the real mapper's `xmltv.php` EPG + stream URLs).
+    private func makeXtream(
+        _ xtream: @escaping @Sendable (XtreamCredentials) async throws -> M3uPlaylist)
+        throws -> (AddPlaylistModel, PlaylistStore) {
+        let db = try AppDatabase.makeInMemory()
+        let store = PlaylistStore(db: db)
+        return (AddPlaylistModel(fetch: { _ in "" }, store: store, now: { 42 },
+                                 sleep: { _ in }, xtream: xtream), store)
+    }
+
+    private nonisolated static func fixture(_ creds: XtreamCredentials) -> M3uPlaylist {
+        M3uPlaylist(epgURL: creds.xmltvUrl, channels: [
+            M3uChannel(title: "A", streamURL: creds.liveUrl(streamId: 1), tvgID: "a",
+                       tvgName: nil, tvgLogo: nil, groupTitle: "News",
+                       catchup: "xc", catchupSource: nil, catchupDays: 7),
+        ])
+    }
+
+    @Test func choosingXtreamOpensCredentialsStep() throws {
+        let (model, _) = try makeXtream { Self.fixture($0) }
+        model.chooseType(.xtreamCodes)
+        #expect(model.state.step == .xtreamEntry)
+        #expect(model.state.sourceType == .xtreamCodes)
+    }
+
+    @Test func invalidXtreamInputShowsError() async throws {
+        let (model, _) = try makeXtream { Self.fixture($0) }
+        model.chooseType(.xtreamCodes)
+        model.setServer("not a url")
+        await model.submitXtream()
+        #expect(model.state.step == .xtreamEntry)
+        #expect(model.state.error == .invalidURL)
+    }
+
+    @Test func xtreamAuthFailureReturnsToStep() async throws {
+        let (model, _) = try makeXtream { _ in throw XtreamError.unauthorized }
+        model.chooseType(.xtreamCodes)
+        model.setServer("http://host.tv:8080")
+        model.setUsername("demo"); model.setPassword("demo")
+        await model.submitXtream()
+        #expect(model.state.step == .xtreamEntry)
+        #expect(model.state.error == .authFailed)
+    }
+
+    @Test func xtreamSuccessPersistsUnderApiUrlWithXmltvEpg() async throws {
+        let (model, store) = try makeXtream { Self.fixture($0) }
+        model.chooseType(.xtreamCodes)
+        model.setServer("http://host.tv:8080")
+        model.setUsername("demo"); model.setPassword("demo")
+        await model.submitXtream()
+        #expect(model.state.step == .processed)
+        model.confirm()
+        let creds = XtreamCredentials.parse(server: "http://host.tv:8080", username: "demo", password: "demo")!
+        #expect(model.state.epgUrl == creds.xmltvUrl)
+        await model.finishEpg()
+        let stored = try store.all()
+        #expect(stored.count == 1)
+        #expect(stored[0].url == creds.apiUrl)
+        #expect(stored[0].epgUrl == creds.xmltvUrl)
+    }
+
+    @Test func backFromXtreamEntryLeavesTypeChooser() throws {
+        let (model, _) = try makeXtream { Self.fixture($0) }
+        model.chooseType(.xtreamCodes)
+        #expect(model.back())
+        #expect(model.state.step == .typeChooser)
+    }
+
     @Test func backWalksStepsAndLeavesAtTheEnds() async throws {
         let (model, _, _) = try make { _ in Self.m3u }
         model.chooseType(.m3u)

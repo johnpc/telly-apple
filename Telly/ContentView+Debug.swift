@@ -47,6 +47,8 @@ extension ContentView {
                 seedDebugFixtures()
                 await env.seedRealPlaylistIfRequested(
                     environment: ProcessInfo.processInfo.environment)
+                await env.seedXtreamIfRequested(
+                    environment: ProcessInfo.processInfo.environment)
             }
         }
     }

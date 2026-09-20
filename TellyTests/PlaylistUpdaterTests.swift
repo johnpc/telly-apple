@@ -63,6 +63,27 @@ struct PlaylistUpdaterTests {
         #expect(rows.map(\.source.name) == ["A", "B"])
     }
 
+    @Test func updateReimportsAnXtreamPlaylistViaTheClientSeam() async throws {
+        let (_, store, channels) = try fixture()
+        let creds = XtreamCredentials.parse(server: "http://example.com:8080",
+                                            username: "demo", password: "demo")!
+        let initial = M3uPlaylist(epgURL: creds.xmltvUrl, channels: [
+            M3uChannel(title: "A", streamURL: creds.liveUrl(streamId: 1), tvgID: "a",
+                       tvgName: nil, tvgLogo: nil, groupTitle: nil,
+                       catchup: nil, catchupSource: nil, catchupDays: nil)])
+        let id = try store.add(sourceUrl: creds.apiUrl, playlist: initial, name: nil, nowMs: 1)
+        var up = updater(store) { _ in throw FetchFailed() }  // M3U fetch must not be used
+        up.xtream = { _ in M3uPlaylist(epgURL: creds.xmltvUrl, channels: [
+            M3uChannel(title: "A", streamURL: creds.liveUrl(streamId: 1), tvgID: "a",
+                       tvgName: nil, tvgLogo: nil, groupTitle: nil, catchup: nil,
+                       catchupSource: nil, catchupDays: nil),
+            M3uChannel(title: "B", streamURL: creds.liveUrl(streamId: 2), tvgID: "b",
+                       tvgName: nil, tvgLogo: nil, groupTitle: nil, catchup: nil,
+                       catchupSource: nil, catchupDays: nil)]) }
+        #expect(await up.update(creds.apiUrl))
+        #expect(try channels.channels(playlistId: Int(id)).map(\.source.name) == ["A", "B"])
+    }
+
     @Test func updateAllReturnsOnlySuccessfulUrls() async throws {
         let (_, store, _) = try fixture()
         _ = try store.add(sourceUrl: good, playlist: M3uParser.parse(m3u(["A"])), name: nil, nowMs: 1)

@@ -5,10 +5,15 @@ import Foundation
 /// source-line budget. BACK goes one step backwards; `false` means the caller
 /// should leave the wizard entirely (mirrors the Android back semantics).
 extension AddPlaylistModel {
-    /// Only the M3U path exists in this slice; other types are inert.
+    /// Routes the chooser to each source's entry step; Stalker stays inert.
     func chooseType(_ type: PlaylistType) {
-        if type == .m3u { state.step = .urlEntry }
+        guard type != .stalkerPortal else { return }
+        state.sourceType = type
+        state.step = type == .xtreamCodes ? .xtreamEntry : .urlEntry
     }
+
+    /// The entry step BACK returns to — Xtream credentials or the M3U URL.
+    private var entryStep: WizardStep { state.sourceType == .xtreamCodes ? .xtreamEntry : .urlEntry }
 
     func setUrl(_ url: String) { state.url = url; state.error = nil }
     func setName(_ name: String) { state.name = name }
@@ -20,9 +25,9 @@ extension AddPlaylistModel {
     @discardableResult
     func back() -> Bool {
         switch state.step {
-        case .urlEntry: state.step = .typeChooser; state.error = nil
-        case .processing: state.step = .urlEntry
-        case .processed: parsed = nil; state.step = .urlEntry
+        case .urlEntry, .xtreamEntry: state.step = .typeChooser; state.error = nil
+        case .processing: state.step = entryStep
+        case .processed: parsed = nil; state.step = entryStep
         case .epgUrl: state.step = .processed; state.error = nil
         default: return false
         }

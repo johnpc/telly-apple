@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// The source-type chooser. Only M3U is wired in this slice; the other rows
-/// render disabled with a "Soon" tag, matching the Android chooser.
+/// The source-type chooser. M3U and Xtream Codes are wired; the Stalker row
+/// renders disabled with a "Soon" tag, matching the Android chooser.
 struct WizardTypeStepView: View {
     let model: AddPlaylistModel
 

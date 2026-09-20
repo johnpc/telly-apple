@@ -10,7 +10,15 @@ extension AppEnvironment {
     func makePlaylistUpdater() -> PlaylistUpdater {
         PlaylistUpdater(fetch: HttpPlaylistFetcher.fetch,
                         store: playlistStore,
-                        now: { Int64(Date().timeIntervalSince1970 * 1_000) })
+                        now: { Int64(Date().timeIntervalSince1970 * 1_000) },
+                        xtream: Self.xtreamReimport)
+    }
+
+    /// Rebuilds credentials from a stored Xtream `apiUrl` and re-runs the client
+    /// import — the refresh counterpart of the wizard's Xtream add.
+    static func xtreamReimport(_ url: String) async throws -> M3uPlaylist {
+        guard let creds = XtreamCredentials.fromApiUrl(url) else { throw XtreamError.unauthorized }
+        return try await XtreamClient(fetch: HttpPlaylistFetcher.fetch).importPlaylist(creds)
     }
 
     /// The auto-refresh scheduler over the stored playlists, their per-playlist

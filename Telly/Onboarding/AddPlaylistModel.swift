@@ -8,30 +8,33 @@ import Foundation
 @MainActor
 @Observable
 final class AddPlaylistModel {
-    /// Internal setter (not file-private) so the step mutators in `+Steps` can
-    /// advance it; the view still only reads it.
+    /// Internal setter so the step mutators in `+Back`/`+Xtream` advance it.
     var state = WizardUiState()
 
-    /// The playlist fetch may not outrun this bound — a stalled provider fails
-    /// into `.loadFailed` (with the URL step's Retry) instead of spinning forever.
+    /// The fetch may not outrun this bound — a stall fails into `.loadFailed`.
     static let fetchTimeoutMs = 25_000
-
     private let fetch: (String) async throws -> String
     private let store: PlaylistStore
     private let now: () -> Int64
-    /// Injected so the timeout branch is deterministic in tests (no real waiting).
-    private let sleep: @Sendable (UInt64) async throws -> Void
-    /// Internal (not file-private) so the BACK step machine in `+Back` can clear it.
+    /// Injected timeout clock (deterministic in tests); internal so `+Xtream` reuses it.
+    let sleep: @Sendable (UInt64) async throws -> Void
+    /// The Xtream import seam (auth + fetch + map); internal so `+Xtream` drives it.
+    let xtream: @Sendable (XtreamCredentials) async throws -> M3uPlaylist
+    /// Internal so the BACK step machine in `+Back` can clear it.
     var parsed: M3uPlaylist?
+    /// The source URL the playlist persists under (M3U URL or Xtream `apiUrl`).
+    var importSourceUrl = ""
 
-    init(fetch: @escaping (String) async throws -> String,
-         store: PlaylistStore,
+    init(fetch: @escaping (String) async throws -> String, store: PlaylistStore,
          now: @escaping () -> Int64,
-         sleep: @escaping @Sendable (UInt64) async throws -> Void = { try await Task.sleep(nanoseconds: $0) }) {
+         sleep: @escaping @Sendable (UInt64) async throws -> Void = { try await Task.sleep(nanoseconds: $0) },
+         xtream: @escaping @Sendable (XtreamCredentials) async throws -> M3uPlaylist
+            = { _ in throw XtreamError.unauthorized }) {
         self.fetch = fetch
         self.store = store
         self.now = now
         self.sleep = sleep
+        self.xtream = xtream
     }
 
     /// Validates the URL (http/https only), then fetches + parses it.
@@ -59,8 +62,11 @@ final class AddPlaylistModel {
         }
     }
 
-    private func showProcessed(_ url: String, _ playlist: M3uPlaylist) {
+    /// Internal so `+Xtream` reuses the processed-summary transition; records the
+    /// source ``importSourceUrl`` the playlist will persist under.
+    func showProcessed(_ url: String, _ playlist: M3uPlaylist) {
         parsed = playlist
+        importSourceUrl = url
         state.step = .processed
         state.name = PlaylistSummary.suggestName(url)
         state.liveCount = PlaylistSummary.liveCount(playlist.channels)
@@ -87,7 +93,7 @@ final class AddPlaylistModel {
         var committed = playlist
         committed.epgURL = epgUrl.isEmpty ? nil : epgUrl
         let name = state.name.trimmed
-        _ = try? store.add(sourceUrl: state.url.trimmed, playlist: committed,
+        _ = try? store.add(sourceUrl: importSourceUrl, playlist: committed,
                            name: name.isEmpty ? nil : name, nowMs: now())
         state.step = .done
     }

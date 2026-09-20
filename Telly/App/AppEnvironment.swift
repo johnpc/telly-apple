@@ -78,7 +78,8 @@ final class AppEnvironment {
 
     func makeAddPlaylistModel() -> AddPlaylistModel {
         AddPlaylistModel(fetch: HttpPlaylistFetcher.fetch, store: playlistStore,
-                         now: { Int64(Date().timeIntervalSince1970 * 1000) })
+                         now: { Int64(Date().timeIntervalSince1970 * 1000) },
+                         xtream: { try await XtreamClient(fetch: HttpPlaylistFetcher.fetch).importPlaylist($0) })
     }
 
     /// The Manage-Favorites (group nil) / Reorder-in-group editor state.
