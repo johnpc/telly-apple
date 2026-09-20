@@ -11,7 +11,8 @@ extension AppEnvironment {
         let model = GuideGridModel(channelStore: channelStore,
                                    repository: EpgRepository(store: programStore),
                                    now: { Int(Date().timeIntervalSince1970 * 1_000) },
-                                   timeZone: .current, is24h: settings.use24hClock)
+                                   timeZone: .current, is24h: settings.use24hClock,
+                                   filter: groupFilter)
         model.refresh = { [weak self, weak model] in
             await self?.refreshEpgNow()
             model?.load()

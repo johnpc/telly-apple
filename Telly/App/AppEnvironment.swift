@@ -18,6 +18,10 @@ final class AppEnvironment {
     let clock: () -> Int
     /// The single, stable channel-list state observed by `ChannelListScreen`.
     let channelListModel: ChannelListModel
+    /// The shared playlist-group filter (disabled groups removed) both the
+    /// channel list and the guide grid route through — built once here so the
+    /// two agree on which channels (and thus which groups) exist.
+    @ObservationIgnored let groupFilter: ([ChannelEntity]) -> [ChannelEntity]
     /// Injected scalar preferences (24-h clock, panel timeout, EPG cadence).
     let settings: SettingsStore
     /// Cross-reinstall / cross-device provider config, in the synchronizable
@@ -40,7 +44,7 @@ final class AppEnvironment {
         self.settings = resolvedSettings
         // One shared group-filter closure both feeds route through, so the
         // wiring lives in a single place (the duplication gate flags copies).
-        let groupFilter: ([ChannelEntity]) -> [ChannelEntity] = { [playlistStore] channels in
+        groupFilter = { [playlistStore] channels in
             AppEnvironment.groupFiltered(channels, playlistStore: playlistStore, settings: resolvedSettings)
         }
         guideEpgStore = GuideEpgStore(

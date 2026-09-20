@@ -13,8 +13,19 @@ final class GuideGridModel {
     /// horizon); the forward horizon lives in `GuideWindowMath.forwardDays`.
     static let pastDays = 7
 
-    private let channelStore: ChannelStore
+    let channelStore: ChannelStore
     private let repository: EpgRepository
+    /// Hides channels in disabled playlist groups; identity unless the composition
+    /// root wires the shared `PlaylistGroupFilter` in (channel-list/guide-feed parity).
+    private let filter: ([ChannelEntity]) -> [ChannelEntity]
+    /// User-created custom groups, reloaded with the channels so the group strip
+    /// lists them after the playlist groups (channel-list parity).
+    var customGroups: [CustomGroup] = []
+    /// The interactive group-chip selection; "All channels" until the user picks
+    /// another (not persisted, matching the channel list). `+Groups` filters `rows`.
+    var selectedGroup = ChannelPanelGroups.allChannels
+    /// Pseudo-group visibility, mirroring the channel list's Appearance toggles.
+    var visibility = GroupVisibility.standard
     let now: () -> Int
     let timeZone: TimeZone
     let is24h: Bool
@@ -42,9 +53,11 @@ final class GuideGridModel {
     var myListKeys: Set<String> = []
 
     init(channelStore: ChannelStore, repository: EpgRepository, now: @escaping () -> Int,
-         timeZone: TimeZone, is24h: Bool, viewport: CGFloat = 960) {
+         timeZone: TimeZone, is24h: Bool, viewport: CGFloat = 960,
+         filter: @escaping ([ChannelEntity]) -> [ChannelEntity] = { $0 }) {
         self.channelStore = channelStore
         self.repository = repository
+        self.filter = filter
         self.now = now
         self.timeZone = timeZone
         self.is24h = is24h
@@ -54,7 +67,8 @@ final class GuideGridModel {
     /// Snapshots the visible channels, floors the clock to the origin, and
     /// materialises the first window of rows + initial focus.
     func load() {
-        channels = (try? channelStore.visibleChannels()) ?? []
+        channels = filter((try? channelStore.visibleChannels()) ?? [])
+        customGroups = (try? CustomGroupStore(db: channelStore.db).all()) ?? []
         originMs = GuideGeometry.halfHourFloor(now(), timeZone: timeZone)
         nowMs = now()
         materializeRows()
@@ -64,13 +78,14 @@ final class GuideGridModel {
     /// Rebuilds the rows for the current window (offsets via the shared
     /// `EpgOffsets.map(for:)` helper), then re-derives a stable focus.
     func materializeRows() {
-        let offsets = EpgOffsets.map(for: channels)
-        let epgIds = channels.compactMap(\.epgId)
+        let visible = selectedChannels
+        let offsets = EpgOffsets.map(for: visible)
+        let epgIds = visible.compactMap(\.epgId)
         let span = GuideWindowMath.materializeSpan(
             originMs: originMs, scrollX: scrollX, viewport: viewport)
         let programs = (try? repository.programs(
             tvgIds: epgIds, fromMs: span.fromMs, toMs: span.toMs, offsets: offsets)) ?? []
-        rows = GuideRowsBuilder.build(channels: channels, programs: programs, span: span)
+        rows = GuideRowsBuilder.build(channels: visible, programs: programs, span: span)
         focus = GuideFocusNav.resolve(rows: rows, nowMs: now(), current: focus)
     }
 

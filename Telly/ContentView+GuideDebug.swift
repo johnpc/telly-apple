@@ -21,7 +21,10 @@ extension ContentView {
         if let use24h = DebugLaunch.clock24hOverride(in: debugArgs) { env.settings.use24hClock = use24h }
         DebugLaunch.seedGuideEpg(into: env.programStore, args: debugArgs,
                                  now: { Int(Date().timeIntervalSince1970 * 1_000) })
-        guideModel = env.makeGuideGridModel()
+        let model = env.makeGuideGridModel()
+        model.load()
+        if let group = DebugLaunch.forcedChannelGroup(in: debugArgs) { model.selectGroup(group) }
+        guideModel = model
     }
 }
 #endif
