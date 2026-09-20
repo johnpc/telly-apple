@@ -22,6 +22,11 @@ final class LivePlaybackModel {
     var current: ChannelEntity?
     /// The track picker `.pushed` over the quick-bar shows, nil when none is up.
     var activePicker: TrackPickerKind?
+    /// The current video resize / aspect-ratio mode, applied on start / tune.
+    var resizeMode: ResizeMode
+    /// True while the aspect-ratio picker is `.pushed` over the quick-bar.
+    var resizePickerActive = false
+    let persistResizeMode: (ResizeMode) -> Void
     /// Set by the search quick-bar slot; the screen presents the search cover.
     var searchRequested = false
     /// Builds the search screen's model for that cover (nil in unit tests).
@@ -63,8 +68,12 @@ final class LivePlaybackModel {
          loadLastChannel: @escaping () -> Int?,
          onExitToGuide: @escaping () -> Void,
          nowNext: @escaping (ChannelEntity) -> NowNext? = { _ in nil },
+         resizeMode: ResizeMode = .fit,
+         persistResizeMode: @escaping (ResizeMode) -> Void = { _ in },
          makeSearchModel: (@MainActor () -> SearchModel)? = nil) {
         self.engine = engine
+        self.resizeMode = resizeMode
+        self.persistResizeMode = persistResizeMode
         self.makeSearchModel = makeSearchModel
         self.channels = channels
         self.makeEngine = makeEngine
@@ -83,6 +92,7 @@ final class LivePlaybackModel {
         current = ChannelZapper.restore(channels, lastChannelId: loadLastChannel())
         guard let channel = current else { return }
         engine.load(channel.source.streamUrl, isLive: true)
+        engine.setResizeMode(resizeMode)
         persistLastChannel(channel.id)
     }
 }

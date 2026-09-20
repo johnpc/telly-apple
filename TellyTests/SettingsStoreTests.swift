@@ -121,6 +121,22 @@ struct SettingsStoreTests {
         _ = SettingsStore.standard
     }
 
+    @Test func resizeModeDefaultsToFitRoundTripsAndResets() {
+        let s = store()
+        #expect(s.resizeMode == .fit)               // TiviMate default
+        s.resizeMode = .ratio16x9
+        #expect(s.resizeMode == .ratio16x9)
+        #expect(store2(s).resizeMode == .ratio16x9)  // persisted through backing
+        s.resetToDefaults()
+        #expect(s.resizeMode == .fit)
+    }
+
+    @Test func corruptResizeRawCoercesToFit() {
+        let s = store()
+        s.resizeModeRaw = 9_999
+        #expect(s.resizeMode == .fit)
+    }
+
     @Test func emptyStoreReturnsKeymapDefaults() {
         let s = store()
         #expect(s.playerKeyOkRaw == SettingsDefaults.playerKeyOk)

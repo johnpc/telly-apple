@@ -10,6 +10,7 @@ extension LivePlaybackModel {
         current = channel
         keepFrame.onZapTune(at: now())
         engine.load(channel.source.streamUrl, isLive: true)
+        engine.setResizeMode(resizeMode)
         persistLastChannel(channel.id)
     }
 

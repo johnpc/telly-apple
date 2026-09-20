@@ -21,6 +21,7 @@ final class FakePlayerEngine: PlayerEngine {
     private(set) var releaseCount = 0
     private(set) var muted = false
     private(set) var seeks: [Int] = []
+    private(set) var resizeModes: [ResizeMode] = []
 
     func load(_ streamUrl: String, isLive: Bool) {
         loaded.append(streamUrl); loadedLive.append(isLive)
@@ -31,4 +32,5 @@ final class FakePlayerEngine: PlayerEngine {
     func resume() { paused = false }
     func seek(toMs m: Int) { positionMs = m; seeks.append(m) }
     func setMuted(_ m: Bool) { muted = m }
+    func setResizeMode(_ mode: ResizeMode) { resizeModes.append(mode) }
 }

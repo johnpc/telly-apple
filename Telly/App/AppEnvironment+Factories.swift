@@ -75,6 +75,8 @@ extension AppEnvironment {
             loadLastChannel: { defaults.object(forKey: key) as? Int },
             onExitToGuide: {},
             nowNext: { [guideEpgStore] channel in guideEpgStore.nowNext(forEpgId: channel.epgId) },
+            resizeMode: settings.resizeMode,
+            persistResizeMode: { [settings] mode in settings.resizeMode = mode },
             makeSearchModel: makeSearchModel)
     }
 }

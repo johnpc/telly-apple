@@ -109,10 +109,12 @@ struct LivePlaybackModelTracksTests {
         #expect(model.activePicker == .sync)
     }
 
-    @Test func resolutionActionOpensNoPicker() {
+    @Test func resolutionActionOpensResizePicker() {
         let model = makeModel(FakeTrackFacade())
         model.onQuickBarAction(.resolution)
         #expect(model.activePicker == nil)
+        #expect(model.resizePickerActive == true)
+        #expect(model.overlay == .pushed(back: .quickBar))
     }
 
     @Test func backFromPickerPopsToQuickBarAndClears() {

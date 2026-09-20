@@ -14,6 +14,7 @@ extension LivePlaybackModel {
     /// BACK pops straight back there via the pure ``PlaybackKeyPolicy``.
     func openTrackPicker(_ kind: TrackPickerKind) {
         activePicker = kind
+        resizePickerActive = false
         visibility.set(.pushed(back: .quickBar))
     }
 
@@ -44,6 +45,7 @@ extension LivePlaybackModel {
         case .audio: openTrackPicker(.audio)
         case .subtitles: openTrackPicker(.subtitles)
         case .latency: openTrackPicker(.sync)
+        case .resolution: openResizePicker()
         default: break
         }
     }

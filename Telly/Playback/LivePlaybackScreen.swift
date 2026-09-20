@@ -27,6 +27,7 @@ struct LivePlaybackScreen: View {
             panelOverlay
             multiviewOverlay
             trackPickerOverlay
+            resizePickerOverlay
             stateOverlay
             #if !os(tvOS)
             PlaybackCloseButton()
