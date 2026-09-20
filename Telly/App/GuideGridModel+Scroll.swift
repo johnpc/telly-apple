@@ -34,7 +34,6 @@ extension GuideGridModel {
     }
 
     func clampScroll(_ x: CGFloat) -> CGFloat {
-        min(max(x, GuideWindowMath.scrollFloor(pastDays: Self.pastDays)),
-            GuideWindowMath.scrollCeil())
+        GuideDayNavigation.clamp(x, floor: scrollFloorPoints, ceil: scrollCeilPoints)
     }
 }

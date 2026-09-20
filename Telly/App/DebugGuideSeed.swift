@@ -24,7 +24,9 @@ extension DebugLaunch {
     /// set; never touches the real provider EPG.
     static func seedGuideEpg(into store: ProgramStore, args: [String], now: () -> Int) {
         guard forcedGuide(in: args) else { return }
-        try? store.upsertReplacing(document: guideEpgDocument(nowMs: now()),
+        let programs = guideEpgDocument(nowMs: now()).programs
+            + dayPageStrips(nowMs: now(), args: args)
+        try? store.upsertReplacing(document: XmltvDocument(programs: programs),
                                    keepDescriptions: false)
     }
 

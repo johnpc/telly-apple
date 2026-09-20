@@ -53,7 +53,7 @@ struct GuideGridScreen: View {
         LoadStateScaffold(phase: model.phase, emptyTitle: "No channels",
                           emptySystemImage: "tv.slash", emptyMessage: "Nothing to show in the guide yet.",
                           retry: { Task { await model.retry() } }) {
-            VStack(spacing: 0) { groupStrip; header; grid }
+            VStack(spacing: 0) { groupStrip; dayNavBar; header; grid }
         }
     }
 

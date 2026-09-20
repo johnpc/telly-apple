@@ -143,4 +143,34 @@ struct GuideGridModelTests {
             .program?.details.title == "OnlyB")
         #expect(row(plain, "b").cells.first { $0.contains(Self.originMs) }?.hasInfo == false)
     }
+
+    @Test func pageDayForwardShiftsWindowOneDayAndRelabels() throws {
+        let model = try makeModel()
+        #expect(model.scrollX == 0)
+        #expect(model.dayLabel == "Today")
+        model.pageDay(1)
+        #expect(model.scrollX == GuideDayNavigation.dayWidth)
+        #expect(model.dayLabel == "Tomorrow")
+        #expect(!model.rows.isEmpty)
+    }
+
+    @Test func pageDayClampsAndDisablesControlsAtBothHorizons() throws {
+        let model = try makeModel()
+        #expect(model.canPageDayBack && model.canPageDayForward)   // room both ways at "now"
+        model.pageDay(8)   // past the 7-day forward horizon
+        #expect(model.scrollX == model.scrollCeilPoints)
+        #expect(!model.canPageDayForward)
+        model.pageDay(-99)  // past the 7-day past horizon
+        #expect(model.scrollX == model.scrollFloorPoints)
+        #expect(!model.canPageDayBack)
+    }
+
+    @Test func jumpToNowReturnsToTheCurrentDay() throws {
+        let model = try makeModel()
+        model.pageDay(2)
+        #expect(model.dayLabel != "Today")
+        model.jumpToNow()
+        #expect(model.scrollX == 0)
+        #expect(model.dayLabel == "Today")
+    }
 }

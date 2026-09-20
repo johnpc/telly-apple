@@ -24,6 +24,7 @@ extension ContentView {
         let model = env.makeGuideGridModel()
         model.load()
         if let group = DebugLaunch.forcedChannelGroup(in: debugArgs) { model.selectGroup(group) }
+        if let dayOffset = DebugLaunch.forcedGuideDayOffset(in: debugArgs) { model.pageDay(dayOffset) }
         guideModel = model
     }
 }

@@ -416,6 +416,7 @@
 		9DE4A4C341E7E47F742B9FD1 /* VodItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE338F7089943087B2412B /* VodItemStoreTests.swift */; };
 		9E4583100C7440E7F9F382E5 /* WatchHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2E09A686F0E45DB52D9496 /* WatchHistoryRecord.swift */; };
 		9E9E518FA7C3DF0912E0D004 /* VlcTrackFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91877CA21F82EA5143CE1AE /* VlcTrackFacade.swift */; };
+		9F7B14F35744D186D2EA80BB /* DebugGuideDaySeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87898AB18567BC8B239E6275 /* DebugGuideDaySeed.swift */; };
 		9F9B975A9F45777B9BD8256E /* UpdateFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722D22F313E167E0A2B1790D /* UpdateFeedback.swift */; };
 		A078C88BE3B354B61D3B57F5 /* ChannelEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64019BA7CA9CBCB76BC0A19B /* ChannelEditModel.swift */; };
 		A084E2A83751DED974724C8B /* AppEnvironmentVodWiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D94A955E809D884538C3E14 /* AppEnvironmentVodWiringTests.swift */; };
@@ -434,6 +435,7 @@
 		A4D32587C987D3DF8F7FB42A /* AppEnvironmentPlaylistWiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CCADF5782E37B03FC82731 /* AppEnvironmentPlaylistWiringTests.swift */; };
 		A4F7F150334E2728CFBD73BF /* UpdateFeedbackModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6751A915AD760C8B1E26096 /* UpdateFeedbackModelTests.swift */; };
 		A4FB7E8AC7A794738332B2B8 /* EpgDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23427A4417240AC10B0B2C7E /* EpgDownloaderTests.swift */; };
+		A5243E5861E3DDB8813A9451 /* GuideDayNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79297DD18550BDB1E9419F2C /* GuideDayNavigationTests.swift */; };
 		A572FA9D804985C3A2AE16D5 /* MyListToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80E6DA1C279FE67FDDBA9B /* MyListToggle.swift */; };
 		A60A1F181B3A240EBBB30ED7 /* ResizeModeVlcTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947F3C67EE41676DFF85F1D2 /* ResizeModeVlcTests.swift */; };
 		A640D64B37238FCF71658322 /* DebugLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378960B36436AF8BCF69A520 /* DebugLaunch.swift */; };
@@ -477,6 +479,7 @@
 		B526AFFA1E84AF1430D400FD /* WatchHistoryRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DC1A7E98A008F3B7422D84 /* WatchHistoryRows.swift */; };
 		B5E20E00B757D36276B5BB30 /* PlaylistsSettingsModel+Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C4FCE00E8E9D613977377F /* PlaylistsSettingsModel+Groups.swift */; };
 		B65F3516D43EF800162DDBDD /* CustomGroupChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FD89BFF832D8CDA18B6966 /* CustomGroupChannels.swift */; };
+		B6A6437D49806201334744A0 /* GuideGridScreen+DayNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED77F902E481BFA1091A73D /* GuideGridScreen+DayNav.swift */; };
 		B709E535880863744286827B /* SettingsSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BF964F92748A8000E9D046 /* SettingsSnapshot.swift */; };
 		B78BA5F797EB6596DE2DD3CE /* ChannelPanelGroupsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C1A93E778A13434029F770 /* ChannelPanelGroupsTests.swift */; };
 		B826F580BB07CFE4540034AB /* VlcStateMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987AD818A024549B071BDBE1 /* VlcStateMappingTests.swift */; };
@@ -585,6 +588,7 @@
 		DE090B4D962E1101EEDA6F2D /* AsyncTimeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8FC5C5D5FB73BF5B3369D4 /* AsyncTimeout.swift */; };
 		DE8CDB265A9EADD2F628A71D /* ProgramInfoPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F5159856339F089A6197F /* ProgramInfoPresentationTests.swift */; };
 		DEB85D8DC27BD3D71E240CAE /* AppEnvironment+PlaylistFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB450B91B7A7BBC6E4F07FE /* AppEnvironment+PlaylistFactory.swift */; };
+		DEC4139B86CD008F789F530F /* GuideDayNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143B24409A180A0F71F01563 /* GuideDayNavigation.swift */; };
 		DEF13494AAE56A761A67B2AB /* CatchupKeyPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E9189A589DF59C74AD7F0 /* CatchupKeyPolicyTests.swift */; };
 		DF124DD1E7EB5AC3AC11FEF4 /* M3uModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA418FED683F1A3C08B547 /* M3uModels.swift */; };
 		DF2DF5153A6886A54EEC555A /* LiveTransportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1926E451BC7330E40CBABC0C /* LiveTransportButton.swift */; };
@@ -606,6 +610,7 @@
 		E619964FC6B807E3871E32BA /* FocusStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD4802C968ABFCB7CE316B1 /* FocusStyleView.swift */; };
 		E6A78447C7F1F09295010E5F /* PlaybackKeyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217DA577D0F88D7385009AA2 /* PlaybackKeyPolicy.swift */; };
 		E6E3DC04CE2D1922CBBC6448 /* GuideGridModel+Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B27DF9D9707B296B91BD2FF /* GuideGridModel+Groups.swift */; };
+		E6E95E7DDD49AF0C3CE77F84 /* GuideGridModel+DayNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4958E22D985EDB6D7B0B1D /* GuideGridModel+DayNav.swift */; };
 		E6F09BB0FF8C13199F16E891 /* ChannelDetailPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F2B923B5C92E3FB03263DB /* ChannelDetailPaneView.swift */; };
 		E70B0AAAB6C673FD65F8B6B2 /* GuideGridModel+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A0FFDDB0818EB4858B71DD /* GuideGridModel+View.swift */; };
 		E7F2F5293F558F2047DDA701 /* TouchKeyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C80D848981CA7C52124E5D6 /* TouchKeyMap.swift */; };
@@ -722,6 +727,7 @@
 		11E97EE8D1FED25CC7334483 /* ShiftUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftUrl.swift; sourceTree = "<group>"; };
 		13052430DE44D78BE7130B44 /* SettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsKeys.swift; sourceTree = "<group>"; };
 		14033232878B1B40DEEEACB2 /* ProgramInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramInfoHeaderView.swift; sourceTree = "<group>"; };
+		143B24409A180A0F71F01563 /* GuideDayNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideDayNavigation.swift; sourceTree = "<group>"; };
 		14588FC10B2B0E30FBAB0B0C /* GuideGridModelLoadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideGridModelLoadTests.swift; sourceTree = "<group>"; };
 		148680C9B2DB597FFB1FF7A0 /* ChannelZapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelZapper.swift; sourceTree = "<group>"; };
 		14AC8D5939183EFF23730549 /* PendingZap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingZap.swift; sourceTree = "<group>"; };
@@ -984,6 +990,7 @@
 		77E5B544E685228404DE7353 /* TransportReadoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportReadoutTests.swift; sourceTree = "<group>"; };
 		78BF2A1EC1133E2A158963ED /* CatchupLiveEdgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupLiveEdgeTests.swift; sourceTree = "<group>"; };
 		78E85F670F92055A671E4CF8 /* GuideWindowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideWindowTests.swift; sourceTree = "<group>"; };
+		79297DD18550BDB1E9419F2C /* GuideDayNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideDayNavigationTests.swift; sourceTree = "<group>"; };
 		7940776C0BEB4CD499B77BE8 /* LoadPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPhase.swift; sourceTree = "<group>"; };
 		7990407C8B27CE7E0DD64D6E /* LivePlaybackScreen+ResizePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LivePlaybackScreen+ResizePickerView.swift"; sourceTree = "<group>"; };
 		79A49A7D5F0B7ED807A9C851 /* PlaybackBadges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackBadges.swift; sourceTree = "<group>"; };
@@ -1002,6 +1009,7 @@
 		7E59CFAB43CDEE56FCE7DA99 /* ContentView+HistoryDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+HistoryDebug.swift"; sourceTree = "<group>"; };
 		7F2C93CA285C2D457D0088FF /* LiveStagePresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStagePresentation.swift; sourceTree = "<group>"; };
 		7F42D7B59194F0FF71DD9804 /* ContentView+DebugCatchup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+DebugCatchup.swift"; sourceTree = "<group>"; };
+		7F4958E22D985EDB6D7B0B1D /* GuideGridModel+DayNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GuideGridModel+DayNav.swift"; sourceTree = "<group>"; };
 		7F902F6E6221B1F0D0C09C18 /* EpgSourceEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgSourceEntity.swift; sourceTree = "<group>"; };
 		80065BE343C89835E0022337 /* PlaylistKeyPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistKeyPlan.swift; sourceTree = "<group>"; };
 		80CDEC3595A9E4BF0A4E7B88 /* EpgRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgRepositoryTests.swift; sourceTree = "<group>"; };
@@ -1016,6 +1024,7 @@
 		85F0E1D12CE90D49B42BC711 /* SearchDetailCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailCardView.swift; sourceTree = "<group>"; };
 		8609692487B825F8621F9A86 /* AppEnvironment+VodFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppEnvironment+VodFactory.swift"; sourceTree = "<group>"; };
 		861434D6F4BA0C57B7E13007 /* BackupCodecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodecTests.swift; sourceTree = "<group>"; };
+		87898AB18567BC8B239E6275 /* DebugGuideDaySeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugGuideDaySeed.swift; sourceTree = "<group>"; };
 		87966A245CDF0CD3EA797FF5 /* ChannelGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelGroups.swift; sourceTree = "<group>"; };
 		87D32FC95E589778A718BD96 /* MultiviewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewCellView.swift; sourceTree = "<group>"; };
 		88B0D44CB50E8DC5C18411A0 /* MyListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListScreen.swift; sourceTree = "<group>"; };
@@ -1033,6 +1042,7 @@
 		8E7A3CEBB9D93EA5C284FBA0 /* QuickBarSlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBarSlotView.swift; sourceTree = "<group>"; };
 		8EB4C77F365C06D45ECDEF03 /* VodTimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VodTimes.swift; sourceTree = "<group>"; };
 		8ECE607F205B0B7CC468CFB1 /* CopyChannelsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyChannelsScreen.swift; sourceTree = "<group>"; };
+		8ED77F902E481BFA1091A73D /* GuideGridScreen+DayNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GuideGridScreen+DayNav.swift"; sourceTree = "<group>"; };
 		8EEC0E7348B3665023C2953B /* AssignEpgModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignEpgModel.swift; sourceTree = "<group>"; };
 		9093E35B464699B81C815F74 /* ProgramStoreSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramStoreSearchTests.swift; sourceTree = "<group>"; };
 		909FB3CA9271132E09114364 /* ChannelImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelImporter.swift; sourceTree = "<group>"; };
@@ -1419,6 +1429,7 @@
 				E76E3C0E759DF1EC63EB1F44 /* AppEnvironment+SyncedConfig.swift */,
 				8609692487B825F8621F9A86 /* AppEnvironment+VodFactory.swift */,
 				EF8FC5C5D5FB73BF5B3369D4 /* AsyncTimeout.swift */,
+				87898AB18567BC8B239E6275 /* DebugGuideDaySeed.swift */,
 				FE6A31B855DA60358B0C20F5 /* DebugGuideSeed.swift */,
 				378960B36436AF8BCF69A520 /* DebugLaunch.swift */,
 				7B55A60F579FC84B6E386B68 /* DebugLaunch+Catchup.swift */,
@@ -1438,6 +1449,7 @@
 				B89B5B4B0263D22EA7842260 /* DebugVodEngine.swift */,
 				CBEB9E975114FB04C5DBF8EF /* GuideEpgStore.swift */,
 				7B25194BFD082C9DD98A7935 /* GuideGridModel.swift */,
+				7F4958E22D985EDB6D7B0B1D /* GuideGridModel+DayNav.swift */,
 				C6062AFD2B43FCB44C47F52E /* GuideGridModel+Focus.swift */,
 				9B27DF9D9707B296B91BD2FF /* GuideGridModel+Groups.swift */,
 				566834CBB21B79282CA2D53A /* GuideGridModel+Info.swift */,
@@ -1695,6 +1707,7 @@
 				43444A8C83E8EBD55063B762 /* GuideGridScreen.swift */,
 				C95DC16353B99B7E279F3466 /* GuideGridScreen+Activate.swift */,
 				EA145DDA5A4D74F919831DF6 /* GuideGridScreen+Cover.swift */,
+				8ED77F902E481BFA1091A73D /* GuideGridScreen+DayNav.swift */,
 				F0E0697013C9FA63A2A407E6 /* GuideGridScreen+Groups.swift */,
 				D7E90C475BC7E25C390C31A4 /* GuideGridScreen+Input.swift */,
 				3A54055C40632B055E49478E /* GuideGridScreen+Play.swift */,
@@ -1931,6 +1944,7 @@
 				19F4FD0068833D246DD8CBE5 /* GuideCellLayoutTests.swift */,
 				2854E444282D186EC2DB6176 /* GuideCellsBuilderTests.swift */,
 				290FAD1887FCB280E4FE50A9 /* GuideCellTests.swift */,
+				79297DD18550BDB1E9419F2C /* GuideDayNavigationTests.swift */,
 				48A9F5FFF68774C764EFF990 /* GuideEpgStoreTests.swift */,
 				5AD3C268BEFE47B9C4F5ACA5 /* GuideFocusNavTests.swift */,
 				313E3F562A89B95A002594FD /* GuideGeometryTests.swift */,
@@ -2068,6 +2082,7 @@
 				E11345FDE4D29891DA5870A7 /* GuideCell.swift */,
 				E27F9AF8A7E4482215D6BDE8 /* GuideCellLayout.swift */,
 				C847BA7D47EFD28A33508C5B /* GuideCellsBuilder.swift */,
+				143B24409A180A0F71F01563 /* GuideDayNavigation.swift */,
 				F3C6E232AB22C1BE5B465668 /* GuideFocus.swift */,
 				C3B1A73E4AB873351C024B83 /* GuideFocusNav.swift */,
 				6F34F44A1997C1444F50B521 /* GuideGeometry.swift */,
@@ -2488,6 +2503,7 @@
 				8E9C177ADC828C70124C642C /* CustomGroupRecord.swift in Sources */,
 				62E72480AB80ECD0749FB596 /* CustomGroupSchema.swift in Sources */,
 				B831B454FA33D1F431C93757 /* CustomGroupStore.swift in Sources */,
+				9F7B14F35744D186D2EA80BB /* DebugGuideDaySeed.swift in Sources */,
 				81E88E930E0ECDD0DA879E98 /* DebugGuideSeed.swift in Sources */,
 				5160F0BA5E298E36912401D0 /* DebugLaunch+Catchup.swift in Sources */,
 				B8334807A251499F66BF5651 /* DebugLaunch+Channels.swift in Sources */,
@@ -2530,10 +2546,12 @@
 				F875BC23E3E80ACA4A0D9EB1 /* GuideCellsBuilder.swift in Sources */,
 				4B302D7BF35D8A04A183DC69 /* GuideChannelColumnView.swift in Sources */,
 				E615BDD5B0941C4E852E3726 /* GuideChannelTileView.swift in Sources */,
+				DEC4139B86CD008F789F530F /* GuideDayNavigation.swift in Sources */,
 				451E456E72C6DE0ABA1D6575 /* GuideEpgStore.swift in Sources */,
 				A86A0116D344E152AC408CEE /* GuideFocus.swift in Sources */,
 				EE3023ADC1C621A329A366A5 /* GuideFocusNav.swift in Sources */,
 				4A4B1FFD4534FB07FA6FA5FC /* GuideGeometry.swift in Sources */,
+				E6E95E7DDD49AF0C3CE77F84 /* GuideGridModel+DayNav.swift in Sources */,
 				494883ACCB66C20457A9BBB1 /* GuideGridModel+Focus.swift in Sources */,
 				E6E3DC04CE2D1922CBBC6448 /* GuideGridModel+Groups.swift in Sources */,
 				317AC8A7EA87616E13CE1A27 /* GuideGridModel+Info.swift in Sources */,
@@ -2545,6 +2563,7 @@
 				5DD9E84C1CBDA7E90453F871 /* GuideGridModel.swift in Sources */,
 				61B01765D394FFD59C930741 /* GuideGridScreen+Activate.swift in Sources */,
 				AA24EBFAE4CF42BC5E863793 /* GuideGridScreen+Cover.swift in Sources */,
+				B6A6437D49806201334744A0 /* GuideGridScreen+DayNav.swift in Sources */,
 				8D97B3EDFDF30D661E1BAE02 /* GuideGridScreen+Groups.swift in Sources */,
 				A8BE93AAA31CF0D523C5AF37 /* GuideGridScreen+Input.swift in Sources */,
 				605E9FBF3567A34E0D04F18A /* GuideGridScreen+Play.swift in Sources */,
@@ -2892,6 +2911,7 @@
 				AA784893C5F2258344B76AB2 /* GuideCellLayoutTests.swift in Sources */,
 				D77ABF40C9AEB8B1D47DA90B /* GuideCellTests.swift in Sources */,
 				5E39EEE03B90029C1F92EF7C /* GuideCellsBuilderTests.swift in Sources */,
+				A5243E5861E3DDB8813A9451 /* GuideDayNavigationTests.swift in Sources */,
 				C5B846D2AB5BC86E4AE6469A /* GuideEpgStoreTests.swift in Sources */,
 				1933A88113B4AD3CE234686F /* GuideFocusNavTests.swift in Sources */,
 				657B8CAF92D1C6B41CB45225 /* GuideGeometryTests.swift in Sources */,
