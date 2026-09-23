@@ -20,8 +20,14 @@ final class VLCKitPlayerEngine: PlayerEngine {
     private let proxy = VlcDelegateProxy()
     private var reducer = PlaybackReducer()
     private var retry: Task<Void, Never>?
+    private let buffer: BufferSize
 
-    init() {
+    /// `buffer` falls back to the persisted setting at mint time (`nil`), so
+    /// EVERY engine (live, multiview tiles, VOD, catch-up) honors the user's
+    /// "Buffer size" pick; the composition root passes its injected store's
+    /// value explicitly. A changed setting applies on the next engine mint.
+    init(buffer: BufferSize? = nil) {
+        self.buffer = buffer ?? SettingsStore.standard.bufferSize
         proxy.onStateChange = { [weak self] in self?.onStateChange() }
         player.delegate = proxy
         trackFacade.player = player
@@ -38,7 +44,9 @@ final class VLCKitPlayerEngine: PlayerEngine {
         reducer.isLive = isLive
         reducer.onLoad(); state = reducer.state
         guard let url = URL(string: streamUrl) else { return }
-        player.media = VLCMedia(url: url)
+        let media = VLCMedia(url: url)
+        BufferPolicy.mediaOptions(for: buffer).forEach { media.addOption($0) }
+        player.media = media
         player.play()
     }
 
@@ -64,23 +72,6 @@ final class VLCKitPlayerEngine: PlayerEngine {
         }
         if let effect = reducer.onVlcState(vlc) { perform(effect) }
         state = reducer.state
-    }
-
-    /// Thin, untestable translation of VLCKit's ObjC state enum into our own
-    /// ``VlcPlaybackState`` mirror — the only place that touches VLCKit types.
-    /// All decision logic lives in the pure ``PlaybackReducer/onVlcState(_:)``.
-    private static func mapped(_ state: VLCMediaPlayerState) -> VlcPlaybackState {
-        switch state {
-        case .opening: return .opening
-        case .buffering: return .buffering
-        case .esAdded: return .esAdded
-        case .playing: return .playing
-        case .paused: return .paused
-        case .stopped: return .stopped
-        case .ended: return .ended
-        case .error: return .error
-        @unknown default: return .buffering
-        }
     }
 
     private func perform(_ effect: PlaybackReducer.ErrorEffect) {

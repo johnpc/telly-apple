@@ -30,8 +30,11 @@ extension AppEnvironment {
         guideEpgStore.refresh()
     }
 
-    /// A fresh VLC-backed playback engine per presented player.
-    func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine() }
+    /// A fresh VLC-backed playback engine per presented player, buffered per
+    /// the injected store's "Buffer size" setting (read at mint time, so a
+    /// changed pick applies on the next tune). Bare `VLCKitPlayerEngine()`
+    /// mints elsewhere default to the same persisted setting.
+    func makeEngine() -> VLCKitPlayerEngine { VLCKitPlayerEngine(buffer: settings.bufferSize) }
 
     /// The recently-watched screen's observable state over the watch-history
     /// and channel stores.

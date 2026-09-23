@@ -16,6 +16,7 @@ final class SettingsStore {
     private var rawKeep: Int
     var rawUpdateOnPlaylistsChange: Bool
     var rawChannelSort: Int
+    var rawBufferSize: Int
     var rawSaveSearchHistory: Bool
     var rawVodRememberPosition: Bool
     var rawKeyOk: Int
@@ -32,6 +33,7 @@ final class SettingsStore {
         rawKeep = backing.readInt(SettingsKey.epgKeepPastDays.rawValue) ?? SettingsDefaults.epgKeepPastDays
         rawUpdateOnPlaylistsChange = backing.readBool(SettingsKey.updateOnPlaylistsChange.rawValue) ?? SettingsDefaults.updateOnPlaylistsChange
         rawChannelSort = backing.readInt(SettingsKey.channelSort.rawValue) ?? SettingsDefaults.channelSort
+        rawBufferSize = backing.readInt(SettingsKey.bufferSize.rawValue) ?? SettingsDefaults.bufferSize
         rawSaveSearchHistory = backing.readBool(SettingsKey.saveSearchHistory.rawValue) ?? SettingsDefaults.saveSearchHistory
         rawVodRememberPosition = backing.readBool(SettingsKey.vodRememberPosition.rawValue) ?? SettingsDefaults.vodRememberPosition
         rawKeyOk = backing.readInt(SettingsKey.playerKeyOk.rawValue) ?? SettingsDefaults.playerKeyOk
@@ -77,6 +79,7 @@ final class SettingsStore {
         rawKeep = SettingsDefaults.epgKeepPastDays
         rawUpdateOnPlaylistsChange = SettingsDefaults.updateOnPlaylistsChange
         rawChannelSort = SettingsDefaults.channelSort
+        rawBufferSize = SettingsDefaults.bufferSize
         rawSaveSearchHistory = SettingsDefaults.saveSearchHistory
         rawVodRememberPosition = SettingsDefaults.vodRememberPosition
         rawKeyOk = SettingsDefaults.playerKeyOk

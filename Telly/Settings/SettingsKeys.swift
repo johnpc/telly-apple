@@ -17,6 +17,7 @@ enum SettingsKey: String, CaseIterable {
     case vodRememberPosition
     case resizeMode
     case channelSort
+    case bufferSize
 }
 
 /// Factory-fresh values used until the user changes a setting, plus the choice
@@ -39,4 +40,5 @@ enum SettingsDefaults {
     static let vodRememberPosition = true
     static let resizeMode = ResizeMode.fit.rawValue
     static let channelSort = ChannelSort.default.rawValue
+    static let bufferSize = BufferSize.medium.rawValue
 }

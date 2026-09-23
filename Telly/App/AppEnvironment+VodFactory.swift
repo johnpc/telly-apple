@@ -33,7 +33,7 @@ extension AppEnvironment {
     /// stores; `onExit` dismisses the presenting cover and reloads the browser.
     /// Does NOT auto-start — the screen calls `start` in `.task`.
     func makeVodPlaybackModel(itemKey: String, onExit: @escaping () -> Void) -> VodPlaybackModel {
-        VodPlaybackModel(engine: VLCKitPlayerEngine(),
+        VodPlaybackModel(engine: makeEngine(),
                          itemStore: VodItemStore(db: channelStore.db),
                          positionStore: makeVodPositionStore(),
                          itemKey: itemKey, now: clock, onExit: onExit)

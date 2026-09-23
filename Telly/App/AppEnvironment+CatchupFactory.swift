@@ -12,7 +12,7 @@ extension AppEnvironment {
     func makeCatchupPlaybackModel(request: CatchupRequest) -> CatchupPlaybackModel {
         let repository = EpgRepository(store: programStore)
         return CatchupPlaybackModel(
-            engine: VLCKitPlayerEngine(),
+            engine: makeEngine(),
             neighbours: CatchupNeighbours(
                 programs: { tvgIds, fromMs, toMs in
                     (try? repository.programs(tvgIds: tvgIds, fromMs: fromMs,
