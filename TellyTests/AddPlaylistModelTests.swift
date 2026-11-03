@@ -137,8 +137,13 @@ struct AddPlaylistModelTests {
         throws -> (AddPlaylistModel, PlaylistStore) {
         let db = try AppDatabase.makeInMemory()
         let store = PlaylistStore(db: db)
+        // No sleep override: the mock `xtream` operation always resolves near-
+        // instantly, so it reliably beats the real fetchTimeoutMs deadline. An
+        // instant no-op sleep here would race the operation instead (and did --
+        // see stalledFetchTimesOutToLoadFailed above for where that override
+        // actually belongs: paired with a deliberately slow mock operation).
         return (AddPlaylistModel(fetch: { _ in "" }, store: store, now: { 42 },
-                                 sleep: { _ in }, xtream: xtream), store)
+                                 xtream: xtream), store)
     }
 
     private nonisolated static func fixture(_ creds: XtreamCredentials) -> M3uPlaylist {
