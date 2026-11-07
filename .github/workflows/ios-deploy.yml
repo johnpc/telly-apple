@@ -40,10 +40,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Select Xcode 26
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: "26.0"
 
       - name: Install xcodegen
         run: brew install xcodegen
@@ -59,36 +55,41 @@ jobs:
           ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
         run: |
-          mkdir -p private_keys
-          echo "$ASC_KEY_CONTENT" > "private_keys/AuthKey_${ASC_KEY_ID}.p8"
+          mkdir -p ~/private_keys
+          echo "$ASC_KEY_CONTENT" > ~/private_keys/AuthKey_${ASC_KEY_ID}.p8
 
       # Archive + upload once per platform (single universal target, two SDKs).
+      - name: Unlock CI signing keychain
+        env:
+          CI_KEYCHAIN_PASSWORD: ${{ secrets.CI_KEYCHAIN_PASSWORD }}
+        run: security unlock-keychain -p "$CI_KEYCHAIN_PASSWORD" "$HOME/Library/Keychains/ci-signing.keychain-db"
+
       - name: Archive & upload (iOS)
         env:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
           TEAM_ID: ${{ secrets.TEAM_ID }}
         run: |
+          # Runner jobs run in the system launchd context: sign manually from the CI keychain
+          # (see ~/ci-signing/ios_manual_signing.py).
+          python3 ~/ci-signing/ios_manual_signing.py apply Telly.xcodeproj --platform ios \
+            --destination export --export-options /tmp/ExportOptions-ios.plist
           xcodebuild -scheme "$SCHEME" \
             -sdk iphoneos \
             -destination "generic/platform=iOS" \
             -archivePath build/Telly-iOS.xcarchive \
-            DEVELOPMENT_TEAM="$TEAM_ID" \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath "$PWD/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
-            -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
             archive
           xcodebuild -exportArchive \
             -archivePath build/Telly-iOS.xcarchive \
-            -exportOptionsPlist .github/exportOptions.plist \
+            -exportOptionsPlist /tmp/ExportOptions-ios.plist \
             -exportPath build/export-iOS \
             -allowProvisioningUpdates \
-            -authenticationKeyPath "$PWD/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
+            -authenticationKeyPath "$HOME/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
             -authenticationKeyID "$ASC_KEY_ID" \
             -authenticationKeyIssuerID "$ASC_ISSUER_ID"
           xcrun altool --upload-app -f build/export-iOS/*.ipa -t ios \
             --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
+          python3 ~/ci-signing/ios_manual_signing.py revert Telly.xcodeproj
 
       - name: Archive & upload (tvOS)
         env:
@@ -96,30 +97,29 @@ jobs:
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
           TEAM_ID: ${{ secrets.TEAM_ID }}
         run: |
+          # Runner jobs run in the system launchd context: sign manually from the CI keychain
+          # (see ~/ci-signing/ios_manual_signing.py).
+          python3 ~/ci-signing/ios_manual_signing.py apply Telly.xcodeproj --platform tvos \
+            --destination export --export-options /tmp/ExportOptions-tvos.plist
           xcodebuild -scheme "$SCHEME" \
             -sdk appletvos \
             -destination "generic/platform=tvOS" \
             -archivePath build/Telly-tvOS.xcarchive \
-            DEVELOPMENT_TEAM="$TEAM_ID" \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath "$PWD/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
-            -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
             archive
           xcodebuild -exportArchive \
             -archivePath build/Telly-tvOS.xcarchive \
-            -exportOptionsPlist .github/exportOptions.plist \
+            -exportOptionsPlist /tmp/ExportOptions-tvos.plist \
             -exportPath build/export-tvOS \
             -allowProvisioningUpdates \
-            -authenticationKeyPath "$PWD/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
+            -authenticationKeyPath "$HOME/private_keys/AuthKey_${ASC_KEY_ID}.p8" \
             -authenticationKeyID "$ASC_KEY_ID" \
             -authenticationKeyIssuerID "$ASC_ISSUER_ID"
           xcrun altool --upload-app -f build/export-tvOS/*.ipa -t tvos \
             --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
 
-      - name: Clean up API key
+      - name: Revert CI signing
         if: always()
-        run: rm -rf private_keys
+        run: python3 ~/ci-signing/ios_manual_signing.py revert Telly.xcodeproj
 
 # You also need .github/exportOptions.plist committed, e.g.:
 #   <plist version="1.0"><dict>
