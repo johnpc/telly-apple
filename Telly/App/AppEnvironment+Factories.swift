@@ -53,30 +53,36 @@ extension AppEnvironment {
             now: clock, timeZone: .current, myListStore: myListStore())
     }
 
-    /// A live-playback orchestrator over a fresh engine and the current visible
-    /// channel snapshot, wired to `UserDefaults` for last-channel persistence.
-    /// `engineFactory` defaults to the real VLCKit engine; wiring tests inject a
-    /// fake so the recording seam runs without the untestable device glue.
+    /// A live-playback orchestrator over `engine` and the current visible channel
+    /// snapshot, wired to `UserDefaults` for last-channel persistence and to the
+    /// watch history. `initialChannelId` tunes a tapped channel first; `onTuned`
+    /// lets the shared ``LiveEngineStore`` follow the model; `onExitToGuide` is
+    /// what BACK at bare playback does. Multiview tiles mint via `tileEngine`.
     func makeLivePlaybackModel(
-        engineFactory: @escaping @MainActor () -> any PlayerEngine = { VLCKitPlayerEngine() }
+        engine: any PlayerEngine, initialChannelId: Int? = nil,
+        tileEngine: @escaping @MainActor () -> any PlayerEngine = { VLCKitPlayerEngine() },
+        onTuned: @escaping (ChannelEntity) -> Void = { _ in },
+        onExitToGuide: @escaping () -> Void = {}
     ) -> LivePlaybackModel {
         let key = "lastChannelId"
         let defaults = UserDefaults.standard
         let channels = settings.channelSort.sorted(filteredVisibleChannels())
         return LivePlaybackModel(
-            engine: engineFactory(),
+            engine: engine,
             channels: channels,
-            makeEngine: engineFactory,
+            makeEngine: tileEngine,
             keymap: settings.playerKeymap,
             timeouts: settings.panelTimeouts,
             now: clock,
             persistLastChannel: { [watchHistoryStore, clock] id in
                 defaults.set(id, forKey: key)
                 guard let channel = channels.first(where: { $0.id == id }) else { return }
+                onTuned(channel)
                 try? watchHistoryStore.record(channelKey: ChannelImporter.keyOf(channel), atMs: clock())
             },
             loadLastChannel: { defaults.object(forKey: key) as? Int },
-            onExitToGuide: {},
+            initialChannelId: initialChannelId,
+            onExitToGuide: onExitToGuide,
             nowNext: { [guideEpgStore] channel in guideEpgStore.nowNext(forEpgId: channel.epgId) },
             resizeMode: settings.resizeMode,
             persistResizeMode: { [settings] mode in settings.resizeMode = mode },

@@ -10,31 +10,31 @@ extension LivePlaybackModel {
     /// Pin the compact zap overlay open — `-tellyOverlay zap`.
     func debugPresentZapOverlay() {
         debugHoldFrame = true
-        visibility.set(.zapInfo)
+        setOverlay(.zapInfo)
     }
 
     /// Pin the info overlay open (no spinner) — `-tellyOverlay info`.
     func debugPresentInfoOverlay() {
         debugHoldFrame = true
-        visibility.set(.info)
+        setOverlay(.info)
     }
 
     /// Pin the expanded transport overlay open — `-tellyOverlay transport`.
     func debugPresentTransportOverlay() {
         debugHoldFrame = true
-        visibility.set(.infoTransport)
+        setOverlay(.infoTransport)
     }
 
     /// Pin the quick-bar open — `-tellyOverlay quickBar`.
     func debugPresentQuickBarOverlay() {
         debugHoldFrame = true
-        visibility.set(.quickBar)
+        setOverlay(.quickBar)
     }
 
     /// Pin the channel panel open — `-tellyOverlay panel`.
     func debugPresentPanelOverlay() {
         debugHoldFrame = true
-        visibility.set(.panel)
+        setOverlay(.panel)
     }
 
     /// Pin a track picker open over the quick-bar with the canned fixture snapshot
@@ -42,7 +42,7 @@ extension LivePlaybackModel {
     func debugPresentTrackPicker(_ kind: TrackPickerKind) {
         debugHoldFrame = true
         debugSnapshot = DebugLaunch.trackFixtureSnapshot()
-        visibility.set(.pushed(.trackPicker(kind), back: .quickBar))
+        setOverlay(.pushed(.trackPicker(kind), back: .quickBar))
     }
 
     /// Pin the multiview pane menu open over a 2-pane engine-free grid so the
@@ -66,8 +66,7 @@ extension LivePlaybackModel {
         let seed = Array(channels.prefix(paneCount))
         guard let grid = MultiviewGrid(channels: seed, capacity: 4,
                                        activeChannelId: seed.first?.id) else { return }
-        multiview = MultiviewSession(grid: grid)
-        visibility.set(.multiview)
+        enterMultiview(MultiviewSession(grid: grid))
     }
 
     /// Deliver a real remote `key` through ``onKey(_:)`` so the resolved command
@@ -76,7 +75,7 @@ extension LivePlaybackModel {
     func debugApplyKey(_ key: PlaybackKey) {
         debugHoldFrame = true
         onKey(key)
-        visibility.set(visibility.overlay)
+        setOverlay(overlay)
     }
 }
 #endif

@@ -20,14 +20,9 @@ extension ChannelListScreen {
     func channelLoadScaffold<Content: View>(
         @ViewBuilder _ content: @escaping () -> Content
     ) -> some View {
-        LoadStateScaffold(
-            phase: model.phase,
-            emptyTitle: "No channels",
-            emptySystemImage: "tv.slash",
-            emptyMessage: "This playlist has no channels yet.",
-            retry: { Task { await model.retry() } },
-            content: content
-        )
+        LoadableScaffold(model: model, empty: EmptyCopy(
+            title: "No channels", systemImage: "tv.slash",
+            message: "This playlist has no channels yet."), content: content)
     }
 
     /// The horizontal group filter strip shared by the stack list and the split

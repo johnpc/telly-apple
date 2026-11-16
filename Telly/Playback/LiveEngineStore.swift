@@ -1,34 +1,19 @@
 import Foundation
 
-/// The app-lifetime owner of the single LIVE playback engine and the
-/// guide-over-player presentation flag. Promoting the engine out of the
-/// per-cover ``PlaybackScreen`` lets it survive navigation: bringing the guide
-/// up as an overlay (and dismissing it) re-parents the SAME engine's drawable
-/// with no reconnect, so live playback never gaps. The engine is minted lazily
-/// on the first `play` and torn down only on a real `exit` from live — never
-/// merely because a view covers it. VOD / catch-up keep their own per-screen
-/// engines, so their `.ended` stays terminal and nothing leaks.
+/// The app-lifetime owner of the single LIVE playback engine and of WHERE the live
+/// stage is (``LiveStage``: idle, or live on one URL with the guide overlay shown
+/// or hidden). One engine, one state: every live entry point acquires the same
+/// engine here, the ``LivePlaybackModel`` hosted over it drives tuning and reports
+/// back through `noteTuned`, and the guide overlay only flips the flag — so a
+/// guide round-trip never reconnects. The engine is released only on a real `exit`.
+/// VOD / catch-up keep their own per-screen engines, so their `.ended` stays terminal.
 @MainActor
 @Observable
 final class LiveEngineStore {
-    /// The live engine, non-nil between `play` and `exit`. `any PlayerEngine` so
-    /// tests inject a fake; the surface view casts to the VLCKit concrete type.
+    /// The live engine, non-nil between `acquire` and `exit`. `any PlayerEngine`
+    /// so tests inject a fake; the surface view casts to the VLCKit concrete type.
     private(set) var engine: (any PlayerEngine)?
-    /// Where the live stage is: idle, or live on one URL with the guide shown or
-    /// not. One value, so "guide visible" can never outlive "something playing".
     private(set) var stage: LiveStage = .idle
-
-    /// The stream currently loaded. A repeat `play` of the same URL is a no-op,
-    /// so re-entering a channel never re-opens (and re-buffers) the stream.
-    var currentUrl: String? {
-        if case let .live(url, _) = stage { return url }
-        return nil
-    }
-    /// Whether the EPG guide is layered over the live player (mini-player inset).
-    var guideVisible: Bool {
-        if case .live(_, true) = stage { return true }
-        return false
-    }
 
     private let makeEngine: @MainActor () -> any PlayerEngine
 
@@ -36,16 +21,28 @@ final class LiveEngineStore {
         self.makeEngine = makeEngine
     }
 
-    /// Resolve the shared engine and tune `url` on it. Reuses the live engine
-    /// across navigation; only actually loads when the URL changed, so a guide
-    /// round-trip (or a re-tap of the current channel) causes no reconnect.
-    func play(_ url: String) {
-        let resolved = engine ?? makeEngine()
-        engine = resolved
-        guard url != currentUrl else { return }
-        stage = .live(url: url, guideVisible: guideVisible)
-        resolved.load(url, isLive: true)
+    /// The URL currently live, or nil while idle.
+    var currentUrl: String? {
+        if case let .live(url, _) = stage { return url }
+        return nil
     }
+
+    /// Whether the EPG guide is layered over the live player (mini-player inset).
+    var guideVisible: Bool {
+        if case .live(_, true) = stage { return true }
+        return false
+    }
+
+    /// The one live engine: minted on first use, reused until `exit`.
+    func acquire() -> any PlayerEngine {
+        if let engine { return engine }
+        let minted = makeEngine()
+        engine = minted
+        return minted
+    }
+
+    /// The hosted model tuned `url`: the stage follows, keeping the guide flag.
+    func noteTuned(_ url: String) { stage = .live(url: url, guideVisible: guideVisible) }
 
     /// Show / hide the guide overlay without touching the engine (it survives).
     /// Inert while idle: there is no stage to layer a guide over.
@@ -58,7 +55,7 @@ final class LiveEngineStore {
     }
 
     /// The user has left live playback entirely: stop the stream, release the
-    /// engine, and reset. The next `play` mints a fresh engine.
+    /// engine, and reset. The next `acquire` mints a fresh engine.
     func exit() {
         engine?.stop()
         engine?.release()

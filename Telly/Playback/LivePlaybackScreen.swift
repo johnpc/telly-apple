@@ -2,19 +2,27 @@ import SwiftUI
 
 /// The live playback stage driven by ``LivePlaybackModel``: the VLC surface, the
 /// zap/info/quick-bar/panel/track-picker overlays, and the engine-state chrome,
-/// gated so a held frame shows no spinner. The only coroutine seam is the tick
-/// loop here; all decisions live in the model. tvOS forwards remote keys via
+/// gated so a held frame shows no spinner. The shared ``ticking`` clock is the
+/// only timer; all decisions live in the model. tvOS forwards remote keys via
 /// `onKey`; iPhone/iPad map taps/swipes onto that same vocabulary (S7).
 struct LivePlaybackScreen: View {
     @State var model: LivePlaybackModel
     /// Custom groups surfaced in the panel's group column, forwarded to
     /// ``ChannelPanelView``; empty by default so existing call sites are unchanged.
     let customGroups: [CustomGroup]
+    /// `hosted`: the ``LivePlayerHostView`` owns start / tick / teardown (so the
+    /// engine survives the guide overlay); standalone (DEBUG proofs) drives them here.
+    let hosted: Bool
+    /// Opens the guide overlay (touch platforms' affordance; tvOS uses BACK).
+    let onGuide: (() -> Void)?
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
-    init(model: LivePlaybackModel, customGroups: [CustomGroup] = []) {
+    init(model: LivePlaybackModel, customGroups: [CustomGroup] = [],
+         hosted: Bool = false, onGuide: (() -> Void)? = nil) {
         _model = State(initialValue: model)
         self.customGroups = customGroups
+        self.hosted = hosted
+        self.onGuide = onGuide
     }
 
     var body: some View {
@@ -33,17 +41,13 @@ struct LivePlaybackScreen: View {
             stateOverlay
             #if !os(tvOS)
             PlaybackCloseButton()
+            guideButton
             #endif
         }
         .animation(Motion.gated(Motion.overlayIn, reduceMotion: reduceMotion), value: model.overlay)
-        .task {
-            model.start()
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .milliseconds(200))
-                model.tick()
-            }
-        }
-        .onDisappear { model.close() }
+        .task { if !hosted { model.start() } }
+        .ticking(every: 0.2) { if !hosted { model.tick() } }
+        .onDisappear { if !hosted { model.close() } }
         .fullScreenCover(isPresented: $model.searchRequested) {
             if let make = model.makeSearchModel { SearchScreen(model: make()) }
         }
@@ -61,6 +65,16 @@ struct LivePlaybackScreen: View {
             VideoSurfaceView(engine: vlc).ignoresSafeArea()
         }
     }
+
+    #if !os(tvOS)
+    @ViewBuilder private var guideButton: some View {
+        if let onGuide {
+            Button(action: onGuide) { Label("Guide", systemImage: "tv").foregroundStyle(.white) }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+        }
+    }
+    #endif
 
     @ViewBuilder private var infoOverlay: some View {
         switch model.overlay {

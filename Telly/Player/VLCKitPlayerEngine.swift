@@ -21,6 +21,12 @@ final class VLCKitPlayerEngine: PlayerEngine {
     private var reducer = PlaybackReducer()
     private var retry: Task<Void, Never>?
     private let buffer: BufferSize
+    /// EVERY libVLC control call (media swap, play, stop, pause, seek) runs here, in
+    /// order, off the main actor: `stop()` on a live network stream can block for
+    /// seconds while the demuxer tears down, and the UI must never wait on it
+    /// (closing the player froze the whole app for a minute under host load).
+    /// libVLC is thread-safe; only the `drawable` (a UIView) stays on main.
+    let control = DispatchQueue(label: "com.johncorser.telly.vlc-control", qos: .userInitiated)
 
     /// `buffer` falls back to the persisted setting at mint time (`nil`), so
     /// EVERY engine (live, multiview tiles, VOD, catch-up) honors the user's
@@ -46,21 +52,23 @@ final class VLCKitPlayerEngine: PlayerEngine {
         guard let url = URL(string: DemoContent.playableUrl(for: streamUrl)) else { return }
         let media = VLCMedia(url: url)
         BufferPolicy.mediaOptions(for: buffer).forEach { media.addOption($0) }
-        player.media = media
-        player.play()
+        let player = self.player
+        control.async { player.media = media; player.play() }
     }
 
     func stop() {
         retry?.cancel()
-        player.stop()
+        let player = self.player
+        control.async { player.stop() }
         reducer.onStopped(); state = reducer.state
     }
 
     func release() {
         retry?.cancel()
-        player.stop()
         player.delegate = nil
         player.drawable = nil
+        let player = self.player
+        control.async { player.stop() }
     }
 
     private func onStateChange() {
@@ -79,7 +87,8 @@ final class VLCKitPlayerEngine: PlayerEngine {
         retry = Task { [weak self] in
             try? await Task.sleep(nanoseconds: UInt64(delayMs) * 1_000_000)
             guard !Task.isCancelled, let self else { return }
-            self.player.play()
+            let player = self.player
+            self.control.async { player.play() }
         }
     }
 

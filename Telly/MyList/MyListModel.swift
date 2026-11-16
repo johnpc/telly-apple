@@ -15,6 +15,9 @@ final class MyListModel {
     let now: () -> Int
     let timeZone: TimeZone
     var rows: [MyListRow] = []
+    /// The shared load lifecycle (``LoadableModel``); local-only, so `refresh` is a no-op.
+    var phase: LoadPhase = .loading
+    let refresh: () async throws -> Void = {}
 
     init(store: MyListStore, channelStore: ChannelStore,
          now: @escaping () -> Int, timeZone: TimeZone) {
@@ -37,6 +40,10 @@ final class MyListModel {
     /// and republishes the remaining rows.
     func remove(_ row: MyListRow) {
         try? store.remove(channelKey: row.entry.channelKey, startMs: row.entry.startMs)
-        load()
+        reload()
     }
+}
+
+extension MyListModel: LoadableModel {
+    var hasContent: Bool { !rows.isEmpty }
 }

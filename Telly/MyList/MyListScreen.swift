@@ -8,30 +8,21 @@ import SwiftUI
 /// No clear-all — Android's my_list has none. Pure presentation; logic lives in
 /// ``MyListModel``.
 struct MyListScreen: View {
-    @State private var model: MyListModel
+    @State var model: MyListModel
     let liveStage: LiveStagePresentation
-    @State private var target: LiveStageTarget?
-    @State private var described: MyListRow?
-
-    init(model: MyListModel, liveStage: LiveStagePresentation) {
-        _model = State(initialValue: model)
-        self.liveStage = liveStage
-    }
+    @State var target: LiveStageTarget?
+    @State var described: MyListRow?
 
     var body: some View {
-        List(model.rows) { row in rowView(row) }
-            .navigationTitle("My List")
-            .overlay { emptyState }
-            .task { model.load() }
-            .liveStageCover($target, using: liveStage)
-            .sheet(item: $described) { row in descriptionSheet(row) }
-    }
-
-    /// Shown when nothing is saved yet so the empty List isn't blank.
-    @ViewBuilder private var emptyState: some View {
-        if model.rows.isEmpty {
-            ContentUnavailableView("No saved programmes", systemImage: "bookmark")
+        LoadableScaffold(model: model, empty: EmptyCopy(
+            title: "No saved programmes", systemImage: "bookmark",
+            message: "Save a programme from the guide or search to see it here.")) {
+            List(model.rows) { row in rowView(row) }
         }
+        .navigationTitle("My List")
+        .task { await model.start() }
+        .liveStageCover($target, using: liveStage)
+        .sheet(item: $described) { row in descriptionSheet(row) }
     }
 
     @ViewBuilder private func rowView(_ row: MyListRow) -> some View {

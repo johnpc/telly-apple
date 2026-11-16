@@ -3,9 +3,9 @@ import SwiftUI
 /// The VOD playback stage driven by ``VodPlaybackModel`` (Apple mirror of the
 /// Android `VodPlaybackScreen`): the VLC surface, the engine-state chrome, and —
 /// switched on ``VodPlaybackModel/stage`` — either the auto-hiding transport or
-/// the Resume/Start-over prompt (see the `+Layers` sibling). The only coroutine
-/// seam is the 500 ms tick loop here, which samples position, persists past the
-/// threshold and finishes an ended movie; every decision lives in the model.
+/// the Resume/Start-over prompt (see the `+Layers` sibling). The shared 500 ms
+/// ``ticking`` clock samples position, persists past the threshold and finishes
+/// an ended movie; every decision lives in the model.
 /// tvOS forwards remote keys through ``VodPlaybackKeys``; iPhone/iPad add a Close
 /// button and a tap/swipe mapped onto the same vocabulary. BACK persists+exits.
 struct VodPlaybackScreen: View {
@@ -30,13 +30,8 @@ struct VodPlaybackScreen: View {
         }
         .animation(Motion.gated(Motion.overlayIn, reduceMotion: reduceMotion),
                    value: model.visibility.visible)
-        .task {
-            model.start()
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .milliseconds(500))
-                model.tick()
-            }
-        }
+        .task { model.start() }
+        .ticking(every: 0.5) { model.tick() }
         .onDisappear { model.exit() }
         .vodPlaybackKeys(model)
     }

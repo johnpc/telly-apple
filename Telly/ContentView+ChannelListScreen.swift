@@ -7,10 +7,7 @@ import SwiftUI
 extension ContentView {
     func makeChannelListScreen(autoStart: Bool = true) -> ChannelListScreen {
         ChannelListScreen(model: env.channelListModel,
-                          makeEngine: env.makeEngine,
-                          liveEngineStore: env.liveEngineStore,
-                          makeGuideGridModel: env.makeGuideGridModel,
-                          makeCatchupModel: env.makeCatchupPlaybackModel,
+                          liveStage: env.liveStage,
                           makeHistoryModel: env.makeHistoryModel,
                           makeSearchModel: env.makeSearchModel,
                           makeChannelEditModel: env.makeChannelEditModel,

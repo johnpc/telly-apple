@@ -17,7 +17,7 @@ extension LivePlaybackModel {
     /// The heartbeat the screen's timer calls (~5 Hz): expire transient overlays,
     /// fire a settled coalesced zap, and clear the keep-frame once video is live.
     func tick() {
-        visibility.resolve(at: now())
+        resolveOverlay()
         if let delta = pendingZap.resolve(at: now()) { performZap(delta) }
         if engine.state == .reconnecting { keepFrame.onReconnect(at: now()) }
         if engine.state == .playing { keepFrame.onPlaying() }
@@ -25,7 +25,7 @@ extension LivePlaybackModel {
 
     /// Show the compact zap overlay, auto-hiding after the zap timeout.
     func showZapInfo() {
-        visibility.showAutoHiding(.zapInfo, timeoutMs: timeouts.zapMs, at: now())
+        showAutoHiding(.zapInfo, timeoutMs: timeouts.zapMs)
     }
 
     /// Turn a settled net delta into an actual neighbour tune (net-zero = no-op).

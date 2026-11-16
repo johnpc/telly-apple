@@ -156,6 +156,24 @@ struct CatchupPlaybackModelTests {
         #expect(model.positionMs == 30 * 60_000 - 60_000)   // now-δ-start
     }
 
+    @Test func toLiveKeepsTheChannelSoRewindWorksAgain() {
+        let harness = Harness(now: now)
+        harness.airing = program(now - 30 * 60_000, now + 30 * 60_000, "Airing")
+        let model = harness.makeModel()
+        model.start(request(start: now - hourMs, end: now))
+        model.toLive()
+        #expect(model.state == nil)
+        #expect(model.stage.channel != nil)
+        #expect(model.mode == .liveCapable)             // rewind-into-archive keys are live again
+        model.rewindLive(deltaMs: 60_000)
+        #expect(model.state?.fromLive == true)
+        model.back()                                    // from-live archive → back to live, not out
+        #expect(model.mode == .liveCapable)
+        #expect(harness.exitCount == 0)
+        model.back()                                    // BACK at live leaves the transport
+        #expect(model.stage == .idle && harness.exitCount == 1)
+    }
+
     // MARK: - Back / Ended
 
     @Test func backWithoutFromLiveExitsToGuide() {
