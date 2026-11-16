@@ -77,8 +77,8 @@ struct PlaybackKeyPolicyTests {
     static let dismissal: [Row] = [
         Row(overlay: .channelMenu(channelId: 7), key: .back, expected: .backToPanel),
         Row(overlay: .channelMenu(channelId: 7), key: .ok, expected: .nothing),
-        Row(overlay: .pushed(back: .panel), key: .back, expected: .popTo(.panel)),
-        Row(overlay: .pushed(back: .panel), key: .ok, expected: .nothing),
+        Row(overlay: .pushed(.resizePicker, back: .panel), key: .back, expected: .popTo(.panel)),
+        Row(overlay: .pushed(.trackPicker(.audio), back: .panel), key: .ok, expected: .nothing),
         Row(overlay: .quickBar, key: .back, expected: .dismiss),
         // Quick bar is display-only in v1 → OK is the documented multiview entry.
         Row(overlay: .quickBar, key: .ok, expected: .openMultiview),

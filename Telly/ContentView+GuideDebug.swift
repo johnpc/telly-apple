@@ -12,7 +12,7 @@ extension ContentView {
             GuideGridScreen(model: guideModel, makeEngine: env.makeEngine,
                             makeCatchupModel: env.makeCatchupPlaybackModel)
         } else {
-            Color.black.ignoresSafeArea().task { prepareGuideDemo() }
+            Color.black.ignoresSafeArea().task { await installDemoIfRequested(); prepareGuideDemo() }
         }
     }
 

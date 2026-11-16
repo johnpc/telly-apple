@@ -16,10 +16,9 @@ final class MultiviewSession {
     /// Mints an engine for a pane added at runtime; nil in the engine-free DEBUG
     /// session, where add/remove mutate the grid only (nothing to decode).
     let makeTileEngine: (@MainActor () -> any PlayerEngine)?
-    /// The pane menu opened by OK on a tile, nil when the grid is bare.
-    var menu: MultiviewPaneMenu?
-    /// The channel picker opened from the pane menu, nil when none is up.
-    var picker: MultiviewPicker?
+    /// The interaction layer over the grid (bare / pane menu / channel picker);
+    /// `internal` setter so the `+Menu` sibling drives its transitions.
+    var layer: MultiviewLayer = .grid
 
     init(grid: MultiviewGrid, maxColumns: Int = 2,
          makeEngine: @escaping @MainActor () -> any PlayerEngine) {

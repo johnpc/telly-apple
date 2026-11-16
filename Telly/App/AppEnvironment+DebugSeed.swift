@@ -16,12 +16,7 @@ extension AppEnvironment {
         guard let text = try? await fetch(seed.playlistUrl) else { return }
         var playlist = M3uParser.parse(text)
         if let epg = seed.epgUrl { playlist.epgURL = epg }
-        _ = try? playlistStore.add(sourceUrl: seed.playlistUrl, playlist: playlist,
-                                   name: nil, nowMs: Int64(clock()))
-        reload()
-        mirrorSyncedConfig()  // a real-seed simulates a user add → write-through
-        await refreshEpgNow()
-        channelListModel.load()
+        await importPlaylist(sourceUrl: seed.playlistUrl, playlist: playlist, name: nil)
     }
 
     /// Parses the seed from `environment` and imports it; a no-op when unset.

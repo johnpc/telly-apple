@@ -25,7 +25,7 @@ struct LivePlaybackModelResizeTests {
         model.openResizePicker()
         #expect(model.resizePickerActive == true)
         #expect(model.activePicker == nil)
-        #expect(model.overlay == .pushed(back: .quickBar))
+        #expect(model.overlay == .pushed(.resizePicker, back: .quickBar))
         #expect(model.resizePickerRows.map(\.label) == ["Fit", "Fill", "16:9", "4:3", "Zoom"])
     }
 
@@ -48,7 +48,7 @@ struct LivePlaybackModelResizeTests {
         model.openResizePicker()
         model.selectResizeRow("nonsense")
         #expect(model.resizeMode == .fit)
-        #expect(model.overlay == .pushed(back: .quickBar))
+        #expect(model.overlay == .pushed(.resizePicker, back: .quickBar))
     }
 
     @Test func backClearsTheResizePicker() {

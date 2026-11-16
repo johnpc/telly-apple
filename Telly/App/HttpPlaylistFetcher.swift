@@ -18,7 +18,10 @@ enum HttpPlaylistFetcher {
         return URLSession(configuration: config)
     }()
 
+    /// Fetches `text`; the built-in demo playlist is served in-process, every
+    /// other URL goes over the network (so refreshes of the demo never hit it).
     static func fetch(_ text: String) async throws -> String {
+        if let demo = DemoContent.playlistText(for: text) { return demo }
         guard let url = URL(string: text) else { throw URLError(.badURL) }
         let (data, _) = try await session.data(from: url)
         return String(decoding: data, as: UTF8.self)

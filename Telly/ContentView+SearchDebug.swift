@@ -13,7 +13,7 @@ extension ContentView {
         if let searchModel {
             SearchScreen(model: searchModel, liveStage: env.liveStage)
         } else {
-            Color.black.ignoresSafeArea().task { prepareSearchDebug() }
+            Color.black.ignoresSafeArea().task { await installDemoIfRequested(); prepareSearchDebug() }
         }
     }
 

@@ -20,7 +20,6 @@ final class VodPlaybackModel {
     private(set) var stage: VodStage = .loading
     var visibility = VodTransportVisibility()
     private var lastPersistMs = 0
-    private var exited = false
     static let persistIntervalMs = 10_000
 
     init(engine: any PlayerEngine, itemStore: VodItemStore, positionStore: VodPositionStore,
@@ -75,7 +74,7 @@ final class VodPlaybackModel {
     }
 
     func play(fromMs: Int) {
-        guard let movie = item else { return }
+        guard let movie = item, stage != .exited else { return }
         stage = .playing
         engine.load(movie.streamUrl)
         if fromMs > 0 { engine.seek(toMs: fromMs) }
@@ -93,8 +92,8 @@ final class VodPlaybackModel {
     }
 
     private func leave() {
-        guard !exited else { return }
-        exited = true
+        guard stage != .exited else { return }
+        stage = .exited
         onExit()
     }
 }

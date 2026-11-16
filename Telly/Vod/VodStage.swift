@@ -1,11 +1,14 @@
 import Foundation
 
 /// Where VOD playback is: loading the item, the resume prompt (carrying the
-/// stored position to seek to), or playing. Mirrors the Android `VodStage`.
+/// stored position to seek to), playing, or exited (the route has been left —
+/// terminal, so a second BACK / disappear can never fire `onExit` twice).
+/// Mirrors the Android `VodStage` plus the explicit terminal state.
 enum VodStage: Equatable {
     case loading
     case resumePrompt(positionMs: Int)
     case playing
+    case exited
 }
 
 /// The transport's clock sample: current position and known duration. `permille`

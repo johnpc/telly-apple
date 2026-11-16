@@ -4,15 +4,15 @@ import SwiftUI
 /// DEBUG-only live-player screenshot route for `ContentView`, split out of
 /// `ContentView+Debug` to keep that file within the source-line budget while a
 /// new demo branch is added. `-tellyLiveDemo` seeds the fixture playlist and
-/// presents `LivePlaybackScreen`, optionally pinning an overlay open (zap /
-/// info / quick-bar / panel / track picker) for the capture — a pure move, no
-/// behaviour change.
+/// presents `LivePlaybackScreen`, optionally pinning ONE ``DebugLaunch/Overlay``
+/// open (zap / info / transport / quick-bar / panel / multiview layers / track
+/// pickers) for the capture.
 extension ContentView {
     @ViewBuilder var liveDemo: some View {
         if let liveModel {
             LivePlaybackScreen(model: liveModel)
         } else {
-            Color.black.ignoresSafeArea().task { prepareLiveDemo() }
+            Color.black.ignoresSafeArea().task { await installDemoIfRequested(); prepareLiveDemo() }
         }
     }
 
@@ -20,35 +20,33 @@ extension ContentView {
         applyKeymapOverrideIfRequested()
         seedDebugFixtures()
         let model = env.makeLivePlaybackModel()
-        if DebugLaunch.forcedZapOverlay(in: debugArgs) { model.debugPresentZapOverlay() }
-        if DebugLaunch.forcedMultiviewOverlay(in: debugArgs) { model.debugPresentMultiviewOverlay() }
-        if DebugLaunch.forcedMultiviewMenuOverlay(in: debugArgs) { model.debugPresentMultiviewPaneMenu() }
-        if DebugLaunch.forcedMultiviewPickerOverlay(in: debugArgs) { model.debugPresentMultiviewPicker() }
-        if DebugLaunch.forcedQuickBarOverlay(in: debugArgs) { model.debugPresentQuickBarOverlay() }
-        if let kind = DebugLaunch.forcedTrackPicker(in: debugArgs) { model.debugPresentTrackPicker(kind) }
-        seedInfoOverlayIfRequested(model)
-        seedPanelOverlayIfRequested(model)
+        if let overlay = DebugLaunch.forcedOverlay(in: debugArgs) { pin(overlay, on: model) }
         deliverKeymapProofKeyIfNeeded(model)
         liveModel = model
     }
 
-    func seedPanelOverlayIfRequested(_ model: LivePlaybackModel) {
-        guard DebugLaunch.forcedPanelOverlay(in: debugArgs) else { return }
-        let nowMs = Int(Date().timeIntervalSince1970 * 1_000)
-        try? env.programStore.upsertReplacing(
-            document: DebugLaunch.guideEpgDocument(nowMs: nowMs), keepDescriptions: false)
-        env.guideEpgStore.refresh()
-        model.debugPresentPanelOverlay()
+    /// Pin exactly the requested layer open — exhaustive, so a new `Overlay`
+    /// case must be given a presentation here to compile.
+    private func pin(_ overlay: DebugLaunch.Overlay, on model: LivePlaybackModel) {
+        switch overlay {
+        case .zap: model.debugPresentZapOverlay()
+        case .info: seedEpg(DebugLaunch.infoFixtureDocument); model.debugPresentInfoOverlay()
+        case .transport: seedEpg(DebugLaunch.infoFixtureDocument); model.debugPresentTransportOverlay()
+        case .quickBar: model.debugPresentQuickBarOverlay()
+        case .panel: seedEpg(DebugLaunch.guideEpgDocument); model.debugPresentPanelOverlay()
+        case .multiview: model.debugPresentMultiviewOverlay()
+        case .multiviewMenu: model.debugPresentMultiviewPaneMenu()
+        case .multiviewPicker: model.debugPresentMultiviewPicker()
+        case .trackAudio, .trackSubtitles:
+            overlay.trackPicker.map { model.debugPresentTrackPicker($0) }
+        }
     }
 
-    func seedInfoOverlayIfRequested(_ model: LivePlaybackModel) {
-        let transport = DebugLaunch.forcedTransportOverlay(in: debugArgs)
-        guard transport || DebugLaunch.forcedInfoOverlay(in: debugArgs) else { return }
+    /// Seed the overlay's now/next from a synthetic document anchored to the clock.
+    private func seedEpg(_ document: (Int) -> XmltvDocument) {
         let nowMs = Int(Date().timeIntervalSince1970 * 1_000)
-        try? env.programStore.upsertReplacing(
-            document: DebugLaunch.infoFixtureDocument(nowMs: nowMs), keepDescriptions: false)
+        try? env.programStore.upsertReplacing(document: document(nowMs), keepDescriptions: false)
         env.guideEpgStore.refresh()
-        if transport { model.debugPresentTransportOverlay() } else { model.debugPresentInfoOverlay() }
     }
 }
 #endif

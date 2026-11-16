@@ -11,21 +11,30 @@ extension MultiviewSession {
         MultiviewMenu.rows(paneCount: grid.cells.count, capacity: grid.capacity)
     }
 
-    /// Open the pane menu over the active tile (closing any picker).
-    func openMenu() {
-        picker = nil
-        menu = MultiviewPaneMenu()
+    /// The open pane menu, or nil when the layer is the grid or the picker.
+    var menu: MultiviewPaneMenu? {
+        if case let .menu(menu) = layer { return menu }
+        return nil
     }
 
+    /// The open channel picker, or nil when the layer is the grid or the menu.
+    var picker: MultiviewPicker? {
+        if case let .picker(picker) = layer { return picker }
+        return nil
+    }
+
+    /// Open the pane menu over the active tile (replacing any picker).
+    func openMenu() { layer = .menu(MultiviewPaneMenu()) }
+
     /// Close the pane menu, returning to the bare grid.
-    func closeMenu() { menu = nil }
+    func closeMenu() { layer = .grid }
 
     /// Step the pane-menu highlight, clamped into the visible row range.
     func moveMenu(_ delta: Int) {
         guard let current = menu else { return }
-        menu = MultiviewPaneMenu(selection:
+        layer = .menu(MultiviewPaneMenu(selection:
             MultiviewMenuPolicy.moved(selection: current.selection, by: delta,
-                                      count: menuRows.count))
+                                      count: menuRows.count)))
     }
 
     /// The highlighted pane-menu row, or nil when the menu is closed.
@@ -35,19 +44,16 @@ extension MultiviewSession {
     }
 
     /// Open the channel picker in `mode` (replacing the menu).
-    func openPicker(_ mode: MultiviewPickerMode) {
-        menu = nil
-        picker = MultiviewPicker(mode: mode)
-    }
+    func openPicker(_ mode: MultiviewPickerMode) { layer = .picker(MultiviewPicker(mode: mode)) }
 
     /// Close the picker, returning to the bare grid.
-    func closePicker() { picker = nil }
+    func closePicker() { layer = .grid }
 
     /// Step the picker highlight, clamped into `0..<count`.
     func movePicker(_ delta: Int, count: Int) {
         guard let current = picker else { return }
-        picker = MultiviewPicker(mode: current.mode,
+        layer = .picker(MultiviewPicker(mode: current.mode,
             selection: MultiviewMenuPolicy.moved(selection: current.selection,
-                                                 by: delta, count: count))
+                                                 by: delta, count: count)))
     }
 }

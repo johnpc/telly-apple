@@ -43,7 +43,7 @@ final class VLCKitPlayerEngine: PlayerEngine {
         retry?.cancel()
         reducer.isLive = isLive
         reducer.onLoad(); state = reducer.state
-        guard let url = URL(string: streamUrl) else { return }
+        guard let url = URL(string: DemoContent.playableUrl(for: streamUrl)) else { return }
         let media = VLCMedia(url: url)
         BufferPolicy.mediaOptions(for: buffer).forEach { media.addOption($0) }
         player.media = media

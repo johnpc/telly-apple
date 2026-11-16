@@ -18,7 +18,7 @@ extension VodPlaybackScreen {
                                  progress: model.progress, isPaused: model.isPaused)
                     .overlayTransition(reduceMotion: reduceMotion)
             }
-        case .loading:
+        case .loading, .exited:
             EmptyView()
         }
     }

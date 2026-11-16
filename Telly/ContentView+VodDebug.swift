@@ -14,7 +14,7 @@ extension ContentView {
                 VodBrowseScreen(model: vodModel, makePlaybackModel: env.makeVodPlaybackModel)
             }
         } else {
-            Color.black.ignoresSafeArea().task { prepareVodBrowseDemo() }
+            Color.black.ignoresSafeArea().task { await installDemoIfRequested(); prepareVodBrowseDemo() }
         }
     }
 

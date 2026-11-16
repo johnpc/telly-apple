@@ -5,10 +5,9 @@ import Foundation
 /// `Pushed` sub-interface: any screen stacked on top of another overlay whose
 /// BACK pops to `back` (hence `indirect`). Android's concrete pushed subtypes
 /// (ComingSoon / Description / ChannelOptions / RecordingStop / CustomRecording
-/// / BlockPin / TrackPicker / GroupTool) are trimmed — each carries a payload
-/// for an un-ported feature (recording, tracks, groups, block-PIN,
-/// channel-options), and the S1 key policy treats every pushed screen the same
-/// (BACK pops to `back`), so a single `pushed(back:)` case is faithful.
+/// / BlockPin / TrackPicker / GroupTool) collapse to the ported ``PushedSheet``
+/// cases; the S1 key policy treats every pushed screen the same (BACK pops to
+/// `back`), so one `pushed(sheet, back:)` case stays faithful.
 indirect enum PlaybackOverlay: Equatable, Sendable {
     /// Bare playback: zero chrome.
     case none
@@ -27,6 +26,18 @@ indirect enum PlaybackOverlay: Equatable, Sendable {
     /// The N-up multiview grid over the dimmed video; OK promotes the active
     /// tile to fullscreen, MENU/BACK exit back to single-stream playback.
     case multiview
-    /// A screen pushed on top of another overlay; BACK pops to `back`.
-    case pushed(back: PlaybackOverlay)
+    /// A card pushed on top of another overlay — WHICH card is part of the
+    /// state (no sibling flags to keep in sync); BACK pops to `back`.
+    case pushed(PushedSheet, back: PlaybackOverlay)
+}
+
+/// The cards the live player can push over the quick-bar. Carried inside
+/// ``PlaybackOverlay/pushed(_:back:)`` so "a sheet is up" and "which sheet" are
+/// one value: dismissing the overlay closes the card by construction, and the
+/// screen renders exactly one card per state.
+enum PushedSheet: Equatable, Sendable {
+    /// The audio / captions / audio-sync picker for one ``TrackPickerKind``.
+    case trackPicker(TrackPickerKind)
+    /// The aspect-ratio (``ResizeMode``) picker.
+    case resizePicker
 }

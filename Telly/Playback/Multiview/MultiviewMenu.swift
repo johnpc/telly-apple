@@ -60,3 +60,12 @@ struct MultiviewPicker: Equatable {
     let mode: MultiviewPickerMode
     var selection = 0
 }
+
+/// Which interaction layer sits over the multiview grid: none (D-pad moves the
+/// active tile), the pane menu, or the channel picker. One value — so a menu
+/// and a picker can never both be open — that the session transitions through.
+enum MultiviewLayer: Equatable {
+    case grid
+    case menu(MultiviewPaneMenu)
+    case picker(MultiviewPicker)
+}

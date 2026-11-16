@@ -12,8 +12,13 @@ struct EpgDownloader {
         return bytes
     }
 
+    /// The clock the in-process demo guide is generated around (injectable).
+    var now: () -> Int = { Int(Date().timeIntervalSince1970 * 1_000) }
+
     /// Fetches `epgUrl`, transparently decompresses (gzip/xz/plain), and parses.
+    /// The built-in demo guide is generated in-process instead of fetched.
     func download(epgUrl: String) async throws -> XmltvDocument {
+        if DemoContent.isEpgUrl(epgUrl) { return DemoEpg.document(nowMs: now()) }
         guard let url = URL(string: epgUrl) else { throw URLError(.badURL) }
         return XmltvParser.parse(CompressedXmltv.decompress(try await data(url)))
     }

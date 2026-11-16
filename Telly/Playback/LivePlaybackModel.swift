@@ -20,12 +20,9 @@ final class LivePlaybackModel {
     // `internal` setter (not `private(set)`): `tune`/`start` live in sibling
     // extension files in this module and must assign it.
     var current: ChannelEntity?
-    /// The track picker `.pushed` over the quick-bar shows, nil when none is up.
-    var activePicker: TrackPickerKind?
     /// The current video resize / aspect-ratio mode, applied on start / tune.
+    /// (Which picker card is up lives in ``overlay`` as ``PushedSheet`` — not here.)
     var resizeMode: ResizeMode
-    /// True while the aspect-ratio picker is `.pushed` over the quick-bar.
-    var resizePickerActive = false
     let persistResizeMode: (ResizeMode) -> Void
     /// Set by the search quick-bar slot; the screen presents the search cover.
     var searchRequested = false

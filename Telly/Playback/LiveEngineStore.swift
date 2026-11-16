@@ -14,11 +14,21 @@ final class LiveEngineStore {
     /// The live engine, non-nil between `play` and `exit`. `any PlayerEngine` so
     /// tests inject a fake; the surface view casts to the VLCKit concrete type.
     private(set) var engine: (any PlayerEngine)?
+    /// Where the live stage is: idle, or live on one URL with the guide shown or
+    /// not. One value, so "guide visible" can never outlive "something playing".
+    private(set) var stage: LiveStage = .idle
+
     /// The stream currently loaded. A repeat `play` of the same URL is a no-op,
     /// so re-entering a channel never re-opens (and re-buffers) the stream.
-    private(set) var currentUrl: String?
+    var currentUrl: String? {
+        if case let .live(url, _) = stage { return url }
+        return nil
+    }
     /// Whether the EPG guide is layered over the live player (mini-player inset).
-    var guideVisible = false
+    var guideVisible: Bool {
+        if case .live(_, true) = stage { return true }
+        return false
+    }
 
     private let makeEngine: @MainActor () -> any PlayerEngine
 
@@ -33,13 +43,19 @@ final class LiveEngineStore {
         let resolved = engine ?? makeEngine()
         engine = resolved
         guard url != currentUrl else { return }
-        currentUrl = url
+        stage = .live(url: url, guideVisible: guideVisible)
         resolved.load(url, isLive: true)
     }
 
     /// Show / hide the guide overlay without touching the engine (it survives).
-    func showGuide() { guideVisible = true }
-    func hideGuide() { guideVisible = false }
+    /// Inert while idle: there is no stage to layer a guide over.
+    func showGuide() { setGuide(true) }
+    func hideGuide() { setGuide(false) }
+
+    private func setGuide(_ visible: Bool) {
+        guard case let .live(url, _) = stage else { return }
+        stage = .live(url: url, guideVisible: visible)
+    }
 
     /// The user has left live playback entirely: stop the stream, release the
     /// engine, and reset. The next `play` mints a fresh engine.
@@ -47,7 +63,13 @@ final class LiveEngineStore {
         engine?.stop()
         engine?.release()
         engine = nil
-        currentUrl = nil
-        guideVisible = false
+        stage = .idle
     }
+}
+
+/// The shared live stage's lifecycle: nothing playing, or one live URL with the
+/// guide overlay shown or hidden.
+enum LiveStage: Equatable {
+    case idle
+    case live(url: String, guideVisible: Bool)
 }

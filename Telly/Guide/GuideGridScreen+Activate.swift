@@ -26,14 +26,3 @@ extension GuideGridScreen {
         }
     }
 }
-
-/// Identifies the stream being played from the grid (drives the fullscreen
-/// cover); `catchup` is non-nil only for an archive playback.
-struct GuidePlaybackTarget: Identifiable {
-    let id: Int
-    let url: String
-    let catchup: CatchupBadge?
-    /// The resolved archive request; non-nil only for a catch-up target, which
-    /// routes to ``CatchupPlaybackScreen`` (nil plays through ``PlaybackScreen``).
-    let request: CatchupRequest?
-}

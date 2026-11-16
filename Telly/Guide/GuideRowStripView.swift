@@ -35,6 +35,7 @@ struct GuideRowStripView: View {
             .tellyFocus(isFocused(cell), cornerRadius: 4)
             .offset(x: placement.offset)
             .onTapGesture { onTap(cell) }
+            .accessibilityIdentifier("guide.cell.\(row.channel.displayName)|")  // "|" ends the name (News One ≠ News One HD)
     }
 
     /// The app's model-driven focus for this cell (tvOS D-pad); nil elsewhere, so

@@ -7,3 +7,10 @@ Feature: App Launch
     Given the app is launched
     Then I should see the welcome screen
     And I should see a prompt to add a playlist
+
+  Scenario: Add playlist opens the wizard and Cancel returns to the welcome screen
+    Given the app is launched
+    When I tap Add playlist
+    Then I should see the add-playlist wizard
+    When I cancel the wizard
+    Then I should see the welcome screen

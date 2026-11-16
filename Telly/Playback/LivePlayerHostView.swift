@@ -50,6 +50,8 @@ struct LivePlayerHostView: View {
                 Button { dismiss() } label: {
                     Image(systemName: "xmark.circle.fill").font(.title).foregroundStyle(.white)
                 }
+                .accessibilityIdentifier("player.close")
+                .accessibilityLabel("Close player")
                 #endif
                 Spacer()
                 Button { store.showGuide() } label: {

@@ -10,19 +10,14 @@ extension GuideGridScreen {
               let url = CatchupUrlBuilder.build(
                   streamUrl: channel.source.streamUrl, attributes: attributes,
                   startMs: cell.startMs, endMs: cell.endMs, nowMs: model.now()) else { return }
-        let title = cell.program?.details.title
-        let request = CatchupRequest(channel: channel, url: url, title: title,
-                                     startMs: cell.startMs, endMs: cell.endMs)
-        target = GuidePlaybackTarget(
-            id: channel.id, url: url,
-            catchup: CatchupBadge(title: title, startMs: cell.startMs, endMs: cell.endMs),
-            request: request)
+        target = .catchup(CatchupRequest(channel: channel, url: url,
+                                         title: cell.program?.details.title,
+                                         startMs: cell.startMs, endMs: cell.endMs))
     }
 
     func tune(_ channel: ChannelEntity) {
         if let onLiveTune { onLiveTune(channel) } else {
-            target = GuidePlaybackTarget(id: channel.id, url: channel.source.streamUrl,
-                                         catchup: nil, request: nil)
+            target = .live(channelId: channel.id, url: channel.source.streamUrl)
         }
     }
 }

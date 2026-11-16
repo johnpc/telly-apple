@@ -16,9 +16,10 @@ name: iOS Deploy
 # NOTE: GitHub Actions credits may be exhausted (as on Android telly). Ship this
 # only if automated TestFlight uploads are wanted; otherwise keep just ci.yml.
 #
-# TRIGGER: manual (workflow_dispatch) ONLY — this is intentionally NOT wired to
-# push / workflow_run so it can never fail spuriously when the ASC secrets are
-# absent. Run it by hand from the Actions tab once the secrets below are set.
+# TRIGGER: automatically after the "CI" workflow succeeds on main (every merged
+# PR ships to TestFlight), plus manual workflow_dispatch. The build number is
+# derived from the commit count so consecutive uploads never collide
+# (CURRENT_PROJECT_VERSION in project.yml is only the floor).
 #
 # REQUIRED repo secrets (Settings → Secrets and variables → Actions):
 #   * ASC_KEY_ID      — App Store Connect API key id
@@ -28,6 +29,10 @@ name: iOS Deploy
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
 
 env:
   SCHEME: Telly
@@ -35,10 +40,25 @@ env:
 jobs:
   testflight:
     name: Upload to TestFlight
+    # Manual runs always proceed; automatic runs only after a GREEN CI on main.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: [self-hosted, mac-mini]
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 0
+
+      # Monotonic, collision-free build number: commits on the branch, floored at
+      # the project's CURRENT_PROJECT_VERSION so it never goes backwards.
+      - name: Derive build number
+        run: |
+          COMMITS=$(git rev-list --count HEAD)
+          FLOOR=$(sed -n 's/.*CURRENT_PROJECT_VERSION: "\([0-9]*\)".*/\1/p' project.yml)
+          BUILD=$(( COMMITS > FLOOR ? COMMITS : FLOOR + 1 ))
+          echo "BUILD_NUMBER=$BUILD" >> "$GITHUB_ENV"
+          echo "Build number: $BUILD (commits=$COMMITS floor=$FLOOR)"
 
 
       - name: Install xcodegen
@@ -78,6 +98,7 @@ jobs:
             -sdk iphoneos \
             -destination "generic/platform=iOS" \
             -archivePath build/Telly-iOS.xcarchive \
+            CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
             archive
           xcodebuild -exportArchive \
             -archivePath build/Telly-iOS.xcarchive \
@@ -105,6 +126,7 @@ jobs:
             -sdk appletvos \
             -destination "generic/platform=tvOS" \
             -archivePath build/Telly-tvOS.xcarchive \
+            CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
             archive
           xcodebuild -exportArchive \
             -archivePath build/Telly-tvOS.xcarchive \

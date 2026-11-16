@@ -31,6 +31,10 @@ final class AcceptanceTests: XCTestCase {
         }
 
         let app = XCUIApplication()
+        // Every scenario starts from a genuine first launch: the DEBUG flag wipes
+        // the database, defaults and synced config before any store opens, so
+        // no scenario can depend on (or be broken by) what a previous one left.
+        app.launchArguments = ["-tellyResetState"]
         app.launch()
 
         let world = GherkinWorld(app: app)

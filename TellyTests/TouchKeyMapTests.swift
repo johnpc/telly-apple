@@ -8,7 +8,7 @@ struct TouchKeyMapTests {
     /// Every overlay a tap can land on while chrome is up — each must emit `.back`.
     static let overlaysWithChrome: [PlaybackOverlay] = [
         .info, .infoTransport, .zapInfo, .quickBar, .panel,
-        .channelMenu(channelId: 7), .pushed(back: .panel),
+        .channelMenu(channelId: 7), .pushed(.trackPicker(.audio), back: .panel),
     ]
 
     @Test func tapAtBarePlaybackEmitsOk() {

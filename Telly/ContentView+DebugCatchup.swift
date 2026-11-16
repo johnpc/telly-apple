@@ -12,7 +12,7 @@ extension ContentView {
     @ViewBuilder var catchupDemo: some View {
         if let catchupTarget {
             PlaybackScreen(streamUrl: catchupTarget.url, engine: env.makeEngine(),
-                           catchup: catchupTarget.catchup, is24h: env.settings.use24hClock)
+                           catchup: CatchupBadge(catchupTarget), is24h: env.settings.use24hClock)
         } else {
             Color.black.ignoresSafeArea().task { prepareCatchupDemo() }
         }
@@ -35,11 +35,8 @@ extension ContentView {
                                                 attributes: attributes,
                                                 startMs: start, endMs: end, nowMs: nowMs)
         else { return }
-        catchupTarget = GuidePlaybackTarget(
-            id: channel.id, url: url,
-            catchup: CatchupBadge(title: "Aired Documentary", startMs: start, endMs: end),
-            request: CatchupRequest(channel: channel, url: url, title: "Aired Documentary",
-                                    startMs: start, endMs: end))
+        catchupTarget = CatchupRequest(channel: channel, url: url, title: "Aired Documentary",
+                                       startMs: start, endMs: end)
     }
 }
 #endif

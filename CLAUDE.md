@@ -44,12 +44,21 @@ Run everything with `./scripts/quality.sh`. CI and the pre-commit hook
 | Halstead | difficulty ≤ 20 per function | `scripts/halstead_check.py` |
 | Coverage | ≥ 80% | `scripts/coverage_check.py` |
 | CRAP | ≤ 30 per method | `scripts/crap_check.py` |
+| Acceptance | every `.feature` scenario passes (iOS, over the demo provider) | `xcodebuild test -only-testing:TellyUITests` |
 | Build + tests | green on iOS AND tvOS | `xcodebuild` |
 
 Never raise a threshold or skip a gate to get green — restructure the code.
 
+**There is no such thing as a flaky test.** A test that fails intermittently is a
+defect to fix at the root (deterministic seams: injected clock, in-memory DB, fake
+engine, in-process demo provider, `-tellyResetState`) — never retried, skipped or
+quarantined. CI must pass reliably on every run.
+
 ## Conventions
 
+- **State is an enum, not a set of flags.** Properties that must agree are one
+  enum with payloads; flags are derived. `AGENTS.md` keeps the catalogue of the
+  app's state machines, the DEBUG launch routes, and the demo-provider design.
 - **Conventional commits** (`feat:`, `fix:`, `chore:`, `refactor:`, `test:`, `docs:`,
   `ci:`). PR titles: `type(scope): what`.
 - Views render; logic lives in ViewModels / Stores / Services / pure helpers (that's

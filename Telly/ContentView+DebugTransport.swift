@@ -11,7 +11,7 @@ import SwiftUI
 extension ContentView {
     @ViewBuilder var catchupTransportDemo: some View {
         if let model = catchupTransportModel,
-           let request = model.state?.request ?? catchupTarget?.request {
+           let request = model.state?.request ?? catchupTarget {
             CatchupPlaybackScreen(model: model, request: request)
         } else {
             Color.black.ignoresSafeArea().task { prepareCatchupTransportDemo() }
@@ -20,7 +20,7 @@ extension ContentView {
 
     func prepareCatchupTransportDemo() {
         prepareCatchupDemo()
-        guard let request = catchupTarget?.request else { return }
+        guard let request = catchupTarget else { return }
         let model = env.makeCatchupPlaybackModel(request: request)
         model.debugPosition = (request.durationMs * 45) / 100
         model.debugPaused = DebugLaunch.catchupPausedRequested(in: debugArgs)
