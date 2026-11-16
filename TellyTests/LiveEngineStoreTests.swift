@@ -67,6 +67,20 @@ struct LiveEngineStoreTests {
         #expect(!store.guideVisible)
     }
 
+    @Test func stageTracksUrlAndGuideAsOneValue() {
+        let store = makeStore()
+        #expect(store.stage == .idle)
+        store.showGuide()                       // inert while idle
+        #expect(store.stage == .idle)
+        store.play("http://a")
+        store.showGuide()
+        #expect(store.stage == .live(url: "http://a", guideVisible: true))
+        store.play("http://b")                  // retune keeps the guide up
+        #expect(store.stage == .live(url: "http://b", guideVisible: true))
+        store.hideGuide()
+        #expect(store.stage == .live(url: "http://b", guideVisible: false))
+    }
+
     @Test func playAfterExitMintsFreshEngine() {
         let store = makeStore()
         store.play("http://a")

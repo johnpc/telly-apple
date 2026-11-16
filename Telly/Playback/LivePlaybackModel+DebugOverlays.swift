@@ -42,8 +42,7 @@ extension LivePlaybackModel {
     func debugPresentTrackPicker(_ kind: TrackPickerKind) {
         debugHoldFrame = true
         debugSnapshot = DebugLaunch.trackFixtureSnapshot()
-        activePicker = kind
-        visibility.set(.pushed(back: .quickBar))
+        visibility.set(.pushed(.trackPicker(kind), back: .quickBar))
     }
 
     /// Pin the multiview pane menu open over a 2-pane engine-free grid so the

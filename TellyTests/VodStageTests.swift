@@ -22,5 +22,6 @@ struct VodStageTests {
     @Test func stagesAreEquatable() {
         #expect(VodStage.resumePrompt(positionMs: 12) == .resumePrompt(positionMs: 12))
         #expect(VodStage.loading != .playing)
+        #expect(VodStage.exited != .playing)
     }
 }

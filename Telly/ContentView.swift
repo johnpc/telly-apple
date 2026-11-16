@@ -14,7 +14,7 @@ struct ContentView: View {
     @State var historyModel: HistoryListModel?
     @State var searchModel: SearchModel?
     @State var multiviewSession: MultiviewSession?
-    @State var catchupTarget: GuidePlaybackTarget?
+    @State var catchupTarget: CatchupRequest?
     @State var catchupTransportModel: CatchupPlaybackModel?
     @State var playlistsModel: PlaylistsSettingsModel?
     @State var groupsSeeded = false
@@ -39,7 +39,9 @@ struct ContentView: View {
     var mainContent: some View {
         Group {
             if env.playlists.isEmpty {
-                WelcomeView(onAdd: { adding = true }).routeTransition()
+                WelcomeView(onAdd: { adding = true },
+                            onDemo: { Task { await env.installDemoPlaylist() } })
+                    .routeTransition()
             } else {
                 makeChannelListScreen().routeTransition()
             }

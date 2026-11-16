@@ -74,34 +74,21 @@ struct DebugLaunchTests {
         #expect(!DebugLaunch.liveDemoRequested(in: ["Telly"]))
     }
 
-    @Test func forcedZapOverlayReadsFlag() {
-        #expect(DebugLaunch.forcedZapOverlay(in: ["Telly", "-tellyOverlay", "zap"]))
-        #expect(!DebugLaunch.forcedZapOverlay(in: ["Telly", "-tellyOverlay", "info"]))
-        #expect(!DebugLaunch.forcedZapOverlay(in: ["Telly"]))
+    @Test(arguments: DebugLaunch.Overlay.allCases)
+    func forcedOverlayReadsEveryNameAsItsCase(_ overlay: DebugLaunch.Overlay) {
+        #expect(DebugLaunch.forcedOverlay(in: ["Telly", "-tellyOverlay", overlay.rawValue]) == overlay)
     }
 
-    @Test func forcedInfoOverlayReadsFlag() {
-        #expect(DebugLaunch.forcedInfoOverlay(in: ["Telly", "-tellyOverlay", "info"]))
-        #expect(!DebugLaunch.forcedInfoOverlay(in: ["Telly", "-tellyOverlay", "zap"]))
-        #expect(!DebugLaunch.forcedInfoOverlay(in: ["Telly"]))
+    @Test func forcedOverlayIsNilWhenAbsentOrUnknown() {
+        #expect(DebugLaunch.forcedOverlay(in: ["Telly"]) == nil)
+        #expect(DebugLaunch.forcedOverlay(in: ["Telly", "-tellyOverlay", "bogus"]) == nil)
+        #expect(DebugLaunch.forcedOverlay(in: ["Telly", "-tellyOverlay"]) == nil)
     }
 
-    @Test func forcedTransportOverlayReadsFlag() {
-        #expect(DebugLaunch.forcedTransportOverlay(in: ["Telly", "-tellyOverlay", "transport"]))
-        #expect(!DebugLaunch.forcedTransportOverlay(in: ["Telly", "-tellyOverlay", "info"]))
-        #expect(!DebugLaunch.forcedTransportOverlay(in: ["Telly"]))
-    }
-
-    @Test func forcedQuickBarOverlayReadsFlag() {
-        #expect(DebugLaunch.forcedQuickBarOverlay(in: ["Telly", "-tellyOverlay", "quickBar"]))
-        #expect(!DebugLaunch.forcedQuickBarOverlay(in: ["Telly", "-tellyOverlay", "zap"]))
-        #expect(!DebugLaunch.forcedQuickBarOverlay(in: ["Telly"]))
-    }
-
-    @Test func forcedPanelOverlayReadsFlag() {
-        #expect(DebugLaunch.forcedPanelOverlay(in: ["Telly", "-tellyOverlay", "panel"]))
-        #expect(!DebugLaunch.forcedPanelOverlay(in: ["Telly", "-tellyOverlay", "quickBar"]))
-        #expect(!DebugLaunch.forcedPanelOverlay(in: ["Telly"]))
+    @Test func onlyTrackOverlaysOpenAPicker() {
+        #expect(DebugLaunch.Overlay.trackAudio.trackPicker == .audio)
+        #expect(DebugLaunch.Overlay.trackSubtitles.trackPicker == .subtitles)
+        #expect(DebugLaunch.Overlay.allCases.filter { $0.trackPicker != nil }.count == 2)
     }
 
     @Test func fixtureChannelsCarryEpgIds() {
@@ -109,13 +96,6 @@ struct DebugLaunchTests {
         #expect(pl.channels[0].tvgID == DebugLaunch.demoEpgId)
         #expect(pl.channels[1].tvgID == DebugLaunch.moviesEpgId)
         #expect(pl.channels[2].tvgID == "sports.tv")
-    }
-
-    @Test func forcedTrackPickerReadsFlag() {
-        #expect(DebugLaunch.forcedTrackPicker(in: ["Telly", "-tellyOverlay", "trackAudio"]) == .audio)
-        #expect(DebugLaunch.forcedTrackPicker(in: ["Telly", "-tellyOverlay", "trackSubtitles"]) == .subtitles)
-        #expect(DebugLaunch.forcedTrackPicker(in: ["Telly", "-tellyOverlay", "zap"]) == nil)
-        #expect(DebugLaunch.forcedTrackPicker(in: ["Telly"]) == nil)
     }
 
     @Test func trackFixtureSnapshotHasSelectedEnglishAudioAndCaptionsOff() {

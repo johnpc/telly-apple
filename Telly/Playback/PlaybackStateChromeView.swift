@@ -39,6 +39,8 @@ struct PlaybackCloseButton: View {
                     Image(systemName: "xmark.circle.fill")
                         .font(.title).foregroundStyle(.white)
                 }
+                .accessibilityIdentifier("player.close")
+                .accessibilityLabel("Close player")
                 .padding()
                 Spacer()
             }

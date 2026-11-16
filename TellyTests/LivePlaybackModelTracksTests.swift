@@ -42,7 +42,7 @@ struct LivePlaybackModelTracksTests {
         let model = makeModel(FakeTrackFacade())
         model.openTrackPicker(.audio)
         #expect(model.activePicker == .audio)
-        #expect(model.overlay == .pushed(back: .quickBar))
+        #expect(model.overlay == .pushed(.trackPicker(.audio), back: .quickBar))
     }
 
     @Test func rowsAndTitleComeFromSnapshot() {
@@ -89,7 +89,7 @@ struct LivePlaybackModelTracksTests {
         model.selectPickerRow("sync:25")
         #expect(facade.audioOffsetMs == 25)
         #expect(model.activePicker == .sync)
-        #expect(model.overlay == .pushed(back: .quickBar))
+        #expect(model.overlay == .pushed(.trackPicker(.sync), back: .quickBar))
     }
 
     @Test func selectRowWithoutActivePickerIsNoOp() {
@@ -114,7 +114,7 @@ struct LivePlaybackModelTracksTests {
         model.onQuickBarAction(.resolution)
         #expect(model.activePicker == nil)
         #expect(model.resizePickerActive == true)
-        #expect(model.overlay == .pushed(back: .quickBar))
+        #expect(model.overlay == .pushed(.resizePicker, back: .quickBar))
     }
 
     @Test func backFromPickerPopsToQuickBarAndClears() {

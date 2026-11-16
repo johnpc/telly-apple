@@ -94,6 +94,7 @@ struct VodPlaybackModelTests {
         #expect(row.positionMs == 4_000)
         #expect(row.durationMs == 30_000)
         #expect(h.exitCount == 1)
+        #expect(model.stage == .exited)
     }
 
     @Test func exitBeforePlayingJustLeavesWithoutPersisting() throws {
@@ -142,7 +143,7 @@ struct VodPlaybackModelTests {
         let h = Harness()
         let model = h.model()
         model.start()
-        #expect(model.stage == .loading)
+        #expect(model.stage == .exited)  // leaving is an explicit terminal stage
         #expect(h.exitCount == 1)
     }
 

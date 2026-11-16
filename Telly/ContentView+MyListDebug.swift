@@ -14,7 +14,7 @@ extension ContentView {
                 MyListScreen(model: myListModel, liveStage: env.liveStage)
             }
         } else {
-            Color.black.ignoresSafeArea().task { prepareMyListDemo() }
+            Color.black.ignoresSafeArea().task { await installDemoIfRequested(); prepareMyListDemo() }
         }
     }
 

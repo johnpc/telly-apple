@@ -1,16 +1,17 @@
 import SwiftUI
 
 /// The guide's fullscreen-cover fork, extracted from ``GuideGridScreen`` so the
-/// at-cap screen file stays lean: a catch-up target (`request != nil`) opens the
-/// transport-driven ``CatchupPlaybackScreen``; every other target keeps playing
-/// through the chrome-less ``PlaybackScreen`` unchanged.
+/// at-cap screen file stays lean: a `.catchup` target opens the transport-driven
+/// ``CatchupPlaybackScreen``; a `.live` target plays through the chrome-less
+/// ``PlaybackScreen``. The switch is exhaustive over ``GuidePlaybackTarget``.
 extension GuideGridScreen {
     @ViewBuilder func playbackCover(_ target: GuidePlaybackTarget) -> some View {
-        if let request = target.request {
+        switch target {
+        case let .catchup(request):
             CatchupPlaybackScreen(model: makeCatchupModel(request), request: request)
-        } else {
-            PlaybackScreen(streamUrl: target.url, engine: makeEngine(),
-                           catchup: target.catchup, is24h: model.is24h, timeZone: model.timeZone)
+        case let .live(_, url):
+            PlaybackScreen(streamUrl: url, engine: makeEngine(),
+                           is24h: model.is24h, timeZone: model.timeZone)
         }
     }
 }

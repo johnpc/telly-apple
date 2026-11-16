@@ -1,56 +1,56 @@
 #if DEBUG
 import SwiftUI
 
-/// DEBUG-only launch-argument routing for `ContentView`: seeds local fixtures and
-/// jumps to a prepared route per proof (live player, autoplay, guide), never
-/// touching the real provider.
+/// DEBUG-only launch-argument routing for `ContentView`: resolves the arguments
+/// to ONE ``DebugLaunch/Route`` and renders it (exhaustively — a new route must
+/// be rendered to compile), seeding local fixtures per proof and never touching
+/// the real provider.
 extension ContentView {
     var debugArgs: [String] { ProcessInfo.processInfo.arguments }
 
     @ViewBuilder var debugRoot: some View {
-        if let loadState = DebugLaunch.loadStateDemo(in: debugArgs) {
-            loadStateDemo(loadState)
-        } else if DebugLaunch.settingsRequested(in: debugArgs) {
-            SettingsScreen(settings: env.settings,
-                           backup: env.makeSettingsBackupModel(),
-                           playlists: env.makePlaylistsSettingsModel(),
-                           makeVisibilityEditModel: env.makeVisibilityEditModel, clearVodPositions: env.clearVodPositions, onClose: {})
-        } else if debugArgs.contains("-tellyFeedbackProof") {
-            feedbackProof
-        } else if DebugLaunch.playlistDebugRequested(in: debugArgs) {
-            playlistsDebug
-        } else if DebugLaunch.forcedGuide(in: debugArgs) {
-            guideDemo
-        } else if DebugLaunch.historyDemoRequested(in: debugArgs) {
-            historyDemo
-        } else if DebugLaunch.searchDebugRequested(in: debugArgs) {
-            searchDebug
-        } else if DebugLaunch.groupsDebugRequested(in: debugArgs) {
-            groupsDebug
-        } else if DebugLaunch.vodBrowseRequested(in: debugArgs) {
-            vodBrowseDemo
-        } else if DebugLaunch.vodPlaybackRequested(in: debugArgs) { vodPlaybackDemo
-        } else if DebugLaunch.catchupTransportRequested(in: debugArgs) {
-            catchupTransportDemo
-        } else if DebugLaunch.catchupDemoRequested(in: debugArgs) {
-            catchupDemo
-        } else if debugArgs.contains("-tellyMultiviewDemo") {
-            multiviewDemo
-        } else if DebugLaunch.liveDemoRequested(in: debugArgs) {
-            liveDemo
-        } else if DebugLaunch.myListSeedRequested(in: debugArgs) {
-            myListDemo
-        } else if let url = DebugLaunch.autoplayUrl(in: debugArgs) {
-            PlaybackScreen(streamUrl: url, engine: env.makeEngine())
-        } else {
-            mainContent.task {
-                seedDebugFixtures()
-                await env.seedRealPlaylistIfRequested(
-                    environment: ProcessInfo.processInfo.environment)
-                await env.seedXtreamIfRequested(
-                    environment: ProcessInfo.processInfo.environment)
-            }
+        switch DebugLaunch.route(in: debugArgs) {
+        case let .loadState(demo): loadStateDemo(demo)
+        case .settings: settingsDebug
+        case .feedbackProof: feedbackProof
+        case .playlists: playlistsDebug
+        case .guide: guideDemo
+        case .history: historyDemo
+        case .search: searchDebug
+        case .groups: groupsDebug
+        case .vodBrowse: vodBrowseDemo
+        case .vodPlayback: vodPlaybackDemo
+        case .catchupTransport: catchupTransportDemo
+        case .catchup: catchupDemo
+        case .multiview: multiviewDemo
+        case .live: liveDemo
+        case .myList: myListDemo
+        case let .autoplay(url): PlaybackScreen(streamUrl: url, engine: env.makeEngine())
+        case .main: mainContent.task { await seedMainIfRequested() }
         }
+    }
+
+    private var settingsDebug: some View {
+        SettingsScreen(settings: env.settings,
+                       backup: env.makeSettingsBackupModel(),
+                       playlists: env.makePlaylistsSettingsModel(),
+                       makeVisibilityEditModel: env.makeVisibilityEditModel,
+                       clearVodPositions: env.clearVodPositions, onClose: {})
+    }
+
+    /// `-tellyDemo` on ANY route: install the built-in provider first, so every
+    /// screenshot proof can run over the demo channels + guide instead of fixtures.
+    func installDemoIfRequested() async {
+        if DebugLaunch.demoRequested(in: debugArgs) { await env.installDemoPlaylist() }
+    }
+
+    /// The `.main` route's seeds: local fixtures, the built-in demo playlist, and
+    /// the env-driven real-provider imports — each a no-op unless requested.
+    private func seedMainIfRequested() async {
+        seedDebugFixtures()
+        await installDemoIfRequested()
+        await env.seedRealPlaylistIfRequested(environment: ProcessInfo.processInfo.environment)
+        await env.seedXtreamIfRequested(environment: ProcessInfo.processInfo.environment)
     }
 
     func seedDebugFixtures() {

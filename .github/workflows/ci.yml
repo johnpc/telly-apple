@@ -4,6 +4,11 @@ name: CI
 # native SwiftUI, xcodegen-managed project on a macOS runner. Runs the SAME gates
 # as scripts/quality.sh so the Python quality gates run in CI too.
 #
+# RELIABILITY RULE: there is no such thing as a flaky test. Every step must pass
+# on every run; an intermittent failure is a defect in the test or the code and
+# is fixed at the root (deterministic seams, no shared state, no real network),
+# never retried, re-run or quarantined. See AGENTS.md.
+#
 # NOTES / CAVEATS:
 #  * Runner: macos-26 with Xcode 26.x (deploymentTarget iOS 18 / tvOS 18; the
 #    quality gate targets iOS 26 / tvOS 26.5 simulators).
@@ -96,6 +101,18 @@ jobs:
             -enableCodeCoverage YES \
             -resultBundlePath TestResults.xcresult
           xcrun xccov view --report --json TestResults.xcresult > coverage.json
+
+      # Gherkin acceptance scenarios (TellyUITests) run against the in-process
+      # demo provider (DemoContent) with -tellyResetState per scenario: no
+      # server, no network, no shared state — so they pass on every run. A
+      # test that fails intermittently is a bug to fix, never a retry.
+      - name: Acceptance tests (iOS)
+        run: |
+          xcodebuild test \
+            -scheme "$SCHEME" \
+            -destination "$TELLY_DESTINATION" \
+            -only-testing:TellyUITests \
+            -derivedDataPath DerivedData
 
       - name: Coverage floor (>=80%) + CRAP (<=30)
         run: |

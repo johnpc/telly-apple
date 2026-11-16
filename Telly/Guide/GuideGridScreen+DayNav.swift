@@ -8,14 +8,20 @@ import SwiftUI
 extension GuideGridScreen {
     var dayNavBar: some View {
         HStack(spacing: 16) {
-            Button { model.pageDay(-1) } label: { Image(systemName: "chevron.left") }
-                .disabled(!model.canPageDayBack)
+            // Icon-only `Label`s (not bare `Image`s) so the steppers carry a spoken /
+            // automatable name ("Previous day" / "Next day") for VoiceOver + XCUITest.
+            Button { model.pageDay(-1) } label: {
+                Label("Previous day", systemImage: "chevron.left").labelStyle(.iconOnly)
+            }
+            .disabled(!model.canPageDayBack)
             Text(model.dayLabel)
                 .font(.subheadline.weight(.semibold))
                 .monospacedDigit()
                 .frame(minWidth: 132)
-            Button { model.pageDay(1) } label: { Image(systemName: "chevron.right") }
-                .disabled(!model.canPageDayForward)
+            Button { model.pageDay(1) } label: {
+                Label("Next day", systemImage: "chevron.right").labelStyle(.iconOnly)
+            }
+            .disabled(!model.canPageDayForward)
             Spacer()
             Button { model.jumpToNow() } label: { Label("Now", systemImage: "clock") }
         }

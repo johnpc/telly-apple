@@ -7,7 +7,7 @@ import SwiftUI
 /// matching the track-picker overlay.
 extension LivePlaybackScreen {
     @ViewBuilder var resizePickerOverlay: some View {
-        if case .pushed = model.overlay, model.resizePickerActive {
+        if case .pushed(.resizePicker, _) = model.overlay {
             TrackPickerView(title: ResizeModeChoices.title, rows: model.resizePickerRows,
                             onSelect: { model.selectResizeRow($0) })
                 .overlayTransition(reduceMotion: reduceMotion)

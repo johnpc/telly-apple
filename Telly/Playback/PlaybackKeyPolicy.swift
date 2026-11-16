@@ -28,7 +28,7 @@ enum PlaybackKeyPolicy {
         case .infoTransport: return withinTransport(key)
         case .zapInfo: return withinZap(key, keymap)
         case .channelMenu: return dismissalOnly(key, .backToPanel)
-        case .pushed(let back): return dismissalOnly(key, .popTo(back))
+        case .pushed(_, let back): return dismissalOnly(key, .popTo(back))
         // Quick bar is display-only in v1: OK is the documented multiview entry
         // (until a quick-bar-selection slice lands); BACK still dismisses.
         case .quickBar: return key == .ok ? .openMultiview : dismissalOnly(key, .dismiss)

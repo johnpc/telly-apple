@@ -32,9 +32,9 @@ no premium tier — **every feature TiviMate paywalls ships free here**.
 
 ## Screenshots
 
-> All screenshots use Telly's built-in demo/test-fixture playlist (channels
-> "News HD / Movie Time / Dead Channel" with color-bar demo streams) — no real
-> provider is shown.
+> All screenshots use Telly's built-in demo provider (the **Try the demo playlist**
+> channels "News One / Sports Arena / Movie House / …" with their generated guide) or
+> the DEBUG test-fixture playlist — no real provider is shown.
 
 | TV guide (iPhone) | Channel list panel | Onboarding |
 | --- | --- | --- |
@@ -111,6 +111,29 @@ Everything below ships free — Telly has no premium tier and no paywalls.
    otherwise add one under **Settings**.
 3. That's it — playback starts and the TV guide is a tap/press away.
 
+No provider yet? Tap **Try the demo playlist** instead. It installs a built-in
+sample playlist (news / sports / movies / kids / music channels over Apple's public
+HLS test streams, plus a small Movies shelf) with a generated, always-current TV
+guide — so you can explore every screen without a server.
+
+## Demo provider (mock backend)
+
+Telly has no backend, but it does have a *fake provider* that lives inside the app:
+`Telly/Demo/`. It is a real playlist + EPG served through the same fetch seams a
+provider would go through, so the production import/refresh/guide code runs
+unchanged on it. It exists for three audiences:
+
+- **First-time users** — the welcome screen's **Try the demo playlist** button.
+- **App Store review** — reviewers can exercise the whole app without access to a
+  private provider's content; the review notes just say "tap Try the demo playlist".
+- **CI** — the Gherkin acceptance suite runs against it, with no server, no network
+  and `-tellyResetState` wiping on-device state before every scenario.
+
+Streams are Apple's public HLS reference streams and small public sample MP4
+clips; the guide (`DemoEpg`) is generated around the current clock so it never goes
+stale. DEBUG builds can also install it headlessly with the `-tellyDemo` launch
+argument (see `AGENTS.md` for every launch route).
+
 ## Beta (TestFlight)
 
 Telly ships to Apple platforms via **TestFlight** (iPhone, iPad, and Apple TV).
@@ -159,13 +182,29 @@ Run everything locally with one command:
 2. **Acceptance specs in sync** — generated acceptance tests match the `.feature` files.
 3. **Static checks** — dead code, duplication, banned types, and Halstead difficulty ≤ 20.
 4. **Unit tests + coverage (iOS)** — `xcodebuild test` with code coverage.
-5. **Coverage ≥ 80% + CRAP ≤ 30**.
-6. **Build (iOS)**.
-7. **Build (tvOS)**.
+5. **Acceptance tests (iOS)** — the Gherkin scenarios (XCUITest) over the built-in
+   demo provider — onboarding, guide, search, playback, catch-up, My List, Movies,
+   settings — each from a wiped first-launch state.
+6. **Coverage ≥ 80% + CRAP ≤ 30**.
+7. **Build (iOS)**.
+8. **Build (tvOS)**.
 
-CI (`.github/workflows/ci.yml`) runs the same gates on a macOS runner. The pre-commit
-hook (`scripts/pre-commit`, installed via `core.hooksPath`) runs a fast subset
-(line-limit → spec sync → unit tests → build) so broken code never lands.
+CI (`.github/workflows/ci.yml`) runs the same gates on the self-hosted Mac mini
+runner; `main` requires that check, PRs auto-merge when it is green, and every green
+run on `main` ships iOS + tvOS builds to TestFlight (`ios-deploy.yml`). The pre-commit hook (`scripts/pre-commit`, installed via `core.hooksPath`)
+runs a fast subset (line-limit → spec sync → unit tests → build) so broken code
+never lands.
+
+### There is no such thing as a flaky test
+
+Every test and every gate must pass on every run, locally and in CI. A test that
+fails intermittently is a bug — in the test (shared state, real network, wall
+clock, timing) or in the code (a race) — and is fixed at the root. Tests are never
+retried, re-run, skipped or quarantined to get green, and timeouts are never
+loosened to paper over nondeterminism. The seams that make this possible: injected
+clocks, in-memory SQLite for every store test, a fake player engine instead of VLC,
+the in-process demo provider instead of a server, and `-tellyResetState` before
+every acceptance scenario. Agent-facing detail lives in `AGENTS.md`.
 
 ## Contributing
 

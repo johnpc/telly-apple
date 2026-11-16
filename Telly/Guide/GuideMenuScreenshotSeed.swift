@@ -8,7 +8,7 @@ import SwiftUI
 /// captures the affordance without any tap tooling. Adding `-tellyGuideMenuSaved`
 /// first snapshots that programme into My List so the row reads "Remove from My
 /// List" — the mirror of Android's flipped `MyListKeys.label`. Never touches the
-/// real provider. Follows the `-tellyMyListSeed` / `forcedMultiviewOverlay` idiom.
+/// real provider. Follows the `-tellyMyListSeed` / `-tellyOverlay` idiom.
 enum GuideMenuScreenshotSeed {
     @MainActor
     static func present(_ target: Binding<GuideInfoTarget?>, model: GuideGridModel) async {

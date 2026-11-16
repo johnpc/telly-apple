@@ -6,10 +6,94 @@ import XCTest
 extension AcceptanceTests {
 
 
+    // MARK: - Catch-up
+
+    func test_An_aired_programme_on_a_catch_up_channel_offers_the_archive() throws {
+        try runScenario(feature: "catchup.feature", scenario: "An aired programme on a catch-up channel offers the archive")
+    }
+
+
+    // MARK: - Demo playlist
+
+    func test_Trying_the_demo_playlist_lands_on_the_channel_list() throws {
+        try runScenario(feature: "demo.feature", scenario: "Trying the demo playlist lands on the channel list")
+    }
+
+
+    // MARK: - TV guide
+
+    func test_The_guide_renders_the_grid_with_demo_EPG_rows() throws {
+        try runScenario(feature: "guide.feature", scenario: "The guide renders the grid with demo EPG rows")
+    }
+
+    func test_Opening_a_programme_shows_its_details() throws {
+        try runScenario(feature: "guide.feature", scenario: "Opening a programme shows its details")
+    }
+
+
+    // MARK: - My List
+
+    func test_My_List_starts_empty() throws {
+        try runScenario(feature: "mylist.feature", scenario: "My List starts empty")
+    }
+
+    func test_Adding_a_future_programme_from_the_guide_lists_it_in_My_List() throws {
+        try runScenario(feature: "mylist.feature", scenario: "Adding a future programme from the guide lists it in My List")
+    }
+
+
     // MARK: - App Launch
 
     func test_Shows_the_welcome_screen_on_first_launch() throws {
         try runScenario(feature: "onboarding.feature", scenario: "Shows the welcome screen on first launch")
+    }
+
+    func test_Add_playlist_opens_the_wizard_and_Cancel_returns_to_the_welcome_screen() throws {
+        try runScenario(feature: "onboarding.feature", scenario: "Add playlist opens the wizard and Cancel returns to the welcome screen")
+    }
+
+
+    // MARK: - Watch and zap
+
+    func test_Tapping_a_channel_opens_the_live_player() throws {
+        try runScenario(feature: "playback.feature", scenario: "Tapping a channel opens the live player")
+    }
+
+    func test_Closing_the_player_returns_to_the_channel_list() throws {
+        try runScenario(feature: "playback.feature", scenario: "Closing the player returns to the channel list")
+    }
+
+
+    // MARK: - Search
+
+    func test_Typing_a_query_lists_matching_channels() throws {
+        try runScenario(feature: "search.feature", scenario: "Typing a query lists matching channels")
+    }
+
+    func test_A_programme_title_from_the_EPG_finds_its_channel() throws {
+        try runScenario(feature: "search.feature", scenario: "A programme title from the EPG finds its channel")
+    }
+
+
+    // MARK: - Settings
+
+    func test_The_settings_sheet_lists_its_sections() throws {
+        try runScenario(feature: "settings.feature", scenario: "The settings sheet lists its sections")
+    }
+
+    func test_A_toggle_persists_across_an_app_relaunch() throws {
+        try runScenario(feature: "settings.feature", scenario: "A toggle persists across an app relaunch")
+    }
+
+
+    // MARK: - Movies (VOD)
+
+    func test_VOD_entries_never_become_guide_channels() throws {
+        try runScenario(feature: "vod.feature", scenario: "VOD entries never become guide channels")
+    }
+
+    func test_The_Movies_browser_lists_the_demo_films() throws {
+        try runScenario(feature: "vod.feature", scenario: "The Movies browser lists the demo films")
     }
 
 }

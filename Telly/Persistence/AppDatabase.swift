@@ -19,9 +19,15 @@ struct AppDatabase {
 
     /// The on-device database file under Application Support (created lazily).
     static func makeShared() throws -> AppDatabase {
+        try AppDatabase(DatabaseQueue(path: try sharedUrl().path))
+    }
+
+    /// Where the on-device database lives; shared with the DEBUG state reset so
+    /// it wipes exactly the file the app opens.
+    static func sharedUrl() throws -> URL {
         let support = try FileManager.default.url(
             for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        return try AppDatabase(DatabaseQueue(path: support.appendingPathComponent("telly.sqlite").path))
+        return support.appendingPathComponent("telly.sqlite")
     }
 
     private static var migrator: DatabaseMigrator {

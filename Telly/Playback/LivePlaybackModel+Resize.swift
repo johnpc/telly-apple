@@ -6,11 +6,15 @@ import Foundation
 /// applies the mode to the engine, persists it, then closes. The rows and the
 /// id↔mode mapping are the pure ``ResizeModeChoices``; nothing here touches VLC.
 extension LivePlaybackModel {
+    /// Whether the aspect-ratio picker card is pushed, derived from the overlay.
+    var resizePickerActive: Bool {
+        if case .pushed(.resizePicker, _) = visibility.overlay { return true }
+        return false
+    }
+
     /// Open the aspect-ratio picker from the quick-bar's video slot.
     func openResizePicker() {
-        resizePickerActive = true
-        activePicker = nil
-        visibility.set(.pushed(back: .quickBar))
+        visibility.set(.pushed(.resizePicker, back: .quickBar))
     }
 
     /// The rows the aspect-ratio picker renders (empty when it is not open).

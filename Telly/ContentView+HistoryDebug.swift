@@ -14,7 +14,7 @@ extension ContentView {
                 HistoryScreen(model: historyModel, liveStage: env.liveStage)
             }
         } else {
-            Color.black.ignoresSafeArea().task { prepareHistoryDemo() }
+            Color.black.ignoresSafeArea().task { await installDemoIfRequested(); prepareHistoryDemo() }
         }
     }
 

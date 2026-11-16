@@ -125,6 +125,20 @@ struct MultiviewSessionTests {
         #expect(session.menu == nil)
     }
 
+    @Test func layerIsOneValueSoMenuAndPickerAreExclusive() {
+        let (session, _) = makeSession(count: 2)
+        #expect(session.layer == .grid)
+        session.openMenu()
+        #expect(session.layer == .menu(MultiviewPaneMenu()))
+        session.openPicker(.change)
+        #expect(session.layer == .picker(MultiviewPicker(mode: .change)))
+        #expect(session.menu == nil)
+        session.openMenu()
+        #expect(session.picker == nil)
+        session.closeMenu()
+        #expect(session.layer == .grid)
+    }
+
     @Test func pickerOpenReplacesMenuAndClampsMotion() {
         let (session, _) = makeSession(count: 2)
         session.openMenu()
