@@ -12,10 +12,16 @@ import Foundation
 @Observable
 final class CatchupPlaybackModel {
     let engine: any PlayerEngine
-    /// The active archive session, or nil while nothing plays (v1: never live —
-    /// see ``mode``). `internal` setter: hop/back live in sibling extensions.
-    var state: CatchupState?
+    /// Where the transport is (idle / live / archive). `internal` setter: the
+    /// hop/back transitions live in sibling extensions.
+    var stage: CatchupStage = .idle
     var tracker = CatchupPositionTracker()
+
+    /// The active archive session, or nil outside archive playback.
+    var state: CatchupState? {
+        if case let .archive(state) = stage { return state }
+        return nil
+    }
 
     let neighbours: CatchupNeighbours
     let liveEdge: CatchupLiveEdge
@@ -53,40 +59,26 @@ final class CatchupPlaybackModel {
     /// Begin transport on the initial archive request (guide/history hand-off).
     func start(_ request: CatchupRequest) { enter(request, fromLive: false) }
 
-    /// The VOD pause toggle: inert outside catch-up; toggles the engine when a
-    /// session is active. Ports the Android `CatchupPause.toggle`.
+    /// The VOD pause toggle: inert while idle; toggles the engine when live or
+    /// an archive session is active. Ports the Android `CatchupPause.toggle`.
     func togglePause() {
-        guard state != nil else { return }
+        guard stage != .idle else { return }
         if engine.paused { engine.resume() } else { engine.pause() }
     }
 
     /// Sample the live position from the engine (called by the screen's ticker).
     func refreshPosition() { tracker.refresh(from: engine) }
 
-    /// The transport-row position, ms from the archive start.
-    var positionMs: Int {
-        #if DEBUG
-        if let debugPosition { return debugPosition }
-        #endif
-        return tracker.position
+    /// The screen's heartbeat: sample the position, then return to live if the
+    /// finite archive has ended.
+    func tick() {
+        refreshPosition()
+        handleEndedIfNeeded()
     }
 
-    /// The finite archive length (from the EPG window), 0 when idle.
-    var durationMs: Int { state?.request.durationMs ?? 0 }
-
-    /// Whether the transport row should show the paused pill.
-    var isPaused: Bool {
-        #if DEBUG
-        if let debugPaused { return debugPaused }
-        #endif
-        return engine.paused
-    }
-
-    /// How the transport relates to what plays now: `.playing` while an archive
-    /// session is active, else `.none`. This bare model holds no live channel, so
-    /// Android's `.liveCapable` (rewind-into-archive-from-live) is only reachable
-    /// once a live surface hosts it — a v1 deviation (plan §4).
-    var mode: CatchupMode { state == nil ? .none : .playing }
+    /// How the transport relates to what plays now — derived from ``stage``, so
+    /// after returning to live the channel keeps its rewind-into-archive keys.
+    var mode: CatchupMode { stage.mode }
 
     /// Tear the engine down when the screen goes away.
     func close() {

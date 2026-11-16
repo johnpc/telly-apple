@@ -22,7 +22,7 @@ extension CatchupPlaybackModel {
     /// Rewind from live into catch-up of the airing programme, then seek to the
     /// live edge minus `deltaMs`. Ports `CatchupProgrammeHop.rewindFromLive`.
     func rewindLive(deltaMs: Int) {
-        guard let channel = state?.request.channel,
+        guard let channel = stage.channel,
               let request = liveEdge.requestFor(channel) else { return }
         enter(request, fromLive: true)
         let offset = SeekMath.rewindLiveOffset(nowMs: now(), deltaMs: deltaMs, startMs: request.startMs)
@@ -32,30 +32,32 @@ extension CatchupPlaybackModel {
 
     /// Enter an archive session: pin the state, reset the position, load the URL.
     func enter(_ request: CatchupRequest, fromLive: Bool) {
-        state = CatchupState(request: request, fromLive: fromLive)
+        stage = .archive(CatchupState(request: request, fromLive: fromLive))
         tracker.reset()
         engine.load(request.url)
     }
 
-    /// Return to live of the same channel: clear the session, tune the live URL.
+    /// Return to live of the same channel: the stage keeps the channel (so a
+    /// later rewind works), and the engine tunes the live URL.
     func toLive() {
-        guard let channel = state?.request.channel else { return }
-        state = nil
+        guard let channel = stage.channel else { return }
+        stage = .live(channel)
         engine.load(channel.source.streamUrl, isLive: true)
     }
 
-    /// BACK at bare catch-up: to live when entered from live, else exit to guide.
+    /// BACK: an archive entered from live returns to live; anything else leaves
+    /// the transport (idle) and exits to the guide.
     func back() {
-        if state?.fromLive == true {
+        if case let .archive(state) = stage, state.fromLive {
             toLive()
         } else {
-            state = nil
+            stage = .idle
             onExitToGuide()
         }
     }
 
     /// The screen's ticker calls this; a finished archive returns to live.
     func handleEndedIfNeeded() {
-        if engine.state == .ended { toLive() }
+        if case .archive = stage, engine.state == .ended { toLive() }
     }
 }

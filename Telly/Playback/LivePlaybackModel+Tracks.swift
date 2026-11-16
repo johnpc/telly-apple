@@ -13,14 +13,14 @@ extension LivePlaybackModel {
     /// The track picker card currently pushed over the quick-bar, derived from
     /// the overlay state (nil when no track picker is up).
     var activePicker: TrackPickerKind? {
-        if case let .pushed(.trackPicker(kind), _) = visibility.overlay { return kind }
+        if case let .pushed(.trackPicker(kind), _) = overlay { return kind }
         return nil
     }
 
     /// Open the picker for `kind`: push it over the quick-bar so BACK pops
     /// straight back there via the pure ``PlaybackKeyPolicy``.
     func openTrackPicker(_ kind: TrackPickerKind) {
-        visibility.set(.pushed(.trackPicker(kind), back: .quickBar))
+        setOverlay(.pushed(.trackPicker(kind), back: .quickBar))
     }
 
     /// The rows the active picker renders (empty when none is open).

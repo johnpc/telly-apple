@@ -16,22 +16,4 @@ extension View {
         background(Color(.systemBackground).ignoresSafeArea())
         #endif
     }
-
-    /// Advances the now-line once a minute while the guide is on screen; the
-    /// timer subscription is created once and cancels when the view goes away.
-    func guideMinuteTick(_ action: @escaping () -> Void) -> some View {
-        modifier(GuideMinuteTick(action: action))
-    }
-}
-
-/// Drives a once-a-minute callback from a coalesced main-run-loop timer held for
-/// the view's lifetime, so the subscription starts once and cancels on teardown
-/// (no retain past the guide, no fire when the view isn't in the hierarchy).
-private struct GuideMinuteTick: ViewModifier {
-    let action: () -> Void
-    @State private var ticker = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
-
-    func body(content: Content) -> some View {
-        content.onReceive(ticker) { _ in action() }
-    }
 }

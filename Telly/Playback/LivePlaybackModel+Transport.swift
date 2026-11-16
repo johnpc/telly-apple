@@ -17,7 +17,7 @@ extension LivePlaybackModel {
     /// tapped control, then run its command — the touch mirror of the remote's
     /// LEFT/RIGHT-then-OK, funnelled through the same ``execute(_:)`` path.
     func tapTransport(_ button: LiveTransportButton) {
-        visibility.keepAlive(at: now())
+        keepOverlayAlive()
         transportFocus = button
         execute(button.command)
     }

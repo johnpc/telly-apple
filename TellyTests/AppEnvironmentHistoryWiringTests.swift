@@ -30,7 +30,7 @@ struct AppEnvironmentHistoryWiringTests {
     @Test func startTuneRecordsRestoredChannel() throws {
         let env = try seededEnv()
         let channels = try env.channelStore.visibleChannels()
-        let model = env.makeLivePlaybackModel(engineFactory: { FakePlayerEngine() })
+        let model = env.makeLivePlaybackModel(engine: FakePlayerEngine())
         model.start()
 
         let rows = try env.watchHistoryStore.recent()
@@ -41,7 +41,7 @@ struct AppEnvironmentHistoryWiringTests {
     @Test func subsequentTuneRecordsSecondRowNewestFirst() throws {
         let env = try seededEnv()
         let channels = try env.channelStore.visibleChannels()
-        let model = env.makeLivePlaybackModel(engineFactory: { FakePlayerEngine() })
+        let model = env.makeLivePlaybackModel(engine: FakePlayerEngine())
         model.start()
         model.tune(channels[1])
 

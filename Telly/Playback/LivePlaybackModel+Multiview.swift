@@ -27,8 +27,7 @@ extension LivePlaybackModel {
         engine.stop()
         let session = MultiviewSession(grid: grid, makeEngine: makeEngine)
         session.start()
-        multiview = session
-        visibility.set(.multiview)
+        enterMultiview(session)
     }
 
     /// Move the active tile one D-pad step, re-applying the mute policy.
@@ -51,11 +50,10 @@ extension LivePlaybackModel {
         restorePrimaryPlayback()
     }
 
-    /// Release the tile engines and drop the overlay without touching the primary.
+    /// Release the tile engines and return to bare single playback (no primary touch).
     private func teardownMultiview() {
         multiview?.close()
-        multiview = nil
-        visibility.set(.none)
+        leaveMultiview()
     }
 
     /// Reload the previously-active channel on the primary engine so single
@@ -74,8 +72,7 @@ extension LivePlaybackModel {
     func debugPresentMultiviewOverlay() {
         debugHoldFrame = true
         guard let grid = multiviewGrid() else { return }
-        multiview = MultiviewSession(grid: grid)
-        visibility.set(.multiview)
+        enterMultiview(MultiviewSession(grid: grid))
     }
 }
 #endif

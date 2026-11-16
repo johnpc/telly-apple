@@ -22,6 +22,38 @@ RESULT="TestResults.xcresult"
 # status (the gate is never masked).
 xcb() { xcodebuild "$@" 2>&1 | awk '!/exit code 0 but produced no further output/'; }
 
+# The XCUITest runner is a fresh install on every run; on a simulator that is
+# still settling after boot (SpringBoard/widget daemons churning) its first
+# accessibility queries can hang and xcodebuild restarts the runner mid-scenario.
+# Boot the destination and wait for it to be fully up BEFORE the acceptance phase.
+# The Mac mini hosts several repos' runners. XCUITest on a simulator that shares
+# the host with other simulator-heavy jobs (parallel clones, emulators) has its
+# CoreSimulator services die ("ipc/mig server died"). Wait — bounded — for the
+# host to be quiet before starting the acceptance phase; if it never is, proceed.
+wait_for_quiet_host() {
+  local waited=0
+  while [ "$waited" -lt 900 ]; do
+    # `set -euo pipefail`-safe: pgrep exits 1 when nothing matches, so it is braced;
+    # awk/wc never fail. Our own xcodebuild (this script's child) is not running yet.
+    others=$({ pgrep -f "xcodebuild test" || true; } | awk -v me="$$" '$1 != me' | wc -l | tr -d ' ')
+    load=$(sysctl -n vm.loadavg | awk '{print int($2)}')
+    [ "$others" -le 1 ] && [ "$load" -lt 24 ] && return 0
+    [ "$waited" -eq 0 ] && echo "   waiting for a quiet simulator host (xcodebuild test procs=$others load=$load)…"
+    sleep 30; waited=$((waited + 30))
+  done
+  echo "   host still busy after 15 min — proceeding anyway"
+}
+
+warm_simulator() {
+  local name udid
+  name=$(printf '%s' "$1" | sed -n 's/.*name=\([^,]*\).*/\1/p')
+  udid=$({ xcrun simctl list devices available | grep "$name (" || true; } | awk '!/Clone/' | head -1 | sed -E 's/.*\(([0-9A-F-]+)\).*/\1/')
+  [ -n "$udid" ] || return 0
+  xcrun simctl boot "$udid" 2>/dev/null || true
+  xcrun simctl bootstatus "$udid" -b >/dev/null 2>&1 || true
+  sleep 10
+}
+
 echo "▶ [1/8] Source file line limit (≤100)"
 bash scripts/check_source_lines.sh
 
@@ -47,6 +79,8 @@ xcb test \
 xcrun xccov view --report --json "$RESULT" > coverage.json
 
 echo "▶ [5/8] Acceptance tests (iOS) — Gherkin scenarios over the built-in demo provider"
+wait_for_quiet_host
+warm_simulator "$DESTINATION"
 xcb test \
   -scheme "$SCHEME" \
   -destination "$DESTINATION" \

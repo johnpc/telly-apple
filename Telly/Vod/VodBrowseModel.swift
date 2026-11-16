@@ -16,6 +16,9 @@ final class VodBrowseModel {
 
     private var items: [VodItem] = []
     private var positions: [VodPosition] = []
+    /// The shared load lifecycle (``LoadableModel``); local-only, so `refresh` is a no-op.
+    var phase: LoadPhase = .loading
+    let refresh: () async throws -> Void = {}
 
     var isEmpty: Bool { items.isEmpty }
 
@@ -38,4 +41,8 @@ final class VodBrowseModel {
         selected = category
         cards = VodBrowse.cards(items: items, positions: positions, category: category)
     }
+}
+
+extension VodBrowseModel: LoadableModel {
+    var hasContent: Bool { !items.isEmpty }
 }

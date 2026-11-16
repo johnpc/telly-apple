@@ -23,7 +23,7 @@ extension LivePlaybackScreen {
     }
 
     @ViewBuilder var multiviewOverlay: some View {
-        if case .multiview = model.overlay, let session = model.multiview {
+        if let session = model.multiview {
             MultiviewGridView(session: session)
                 .overlayTransition(reduceMotion: reduceMotion)
         }

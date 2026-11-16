@@ -19,7 +19,7 @@ extension ContentView {
     func prepareLiveDemo() {
         applyKeymapOverrideIfRequested()
         seedDebugFixtures()
-        let model = env.makeLivePlaybackModel()
+        let model = env.makeLivePlaybackModel(engine: env.makeEngine())
         if let overlay = DebugLaunch.forcedOverlay(in: debugArgs) { pin(overlay, on: model) }
         deliverKeymapProofKeyIfNeeded(model)
         liveModel = model

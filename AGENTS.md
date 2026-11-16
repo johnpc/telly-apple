@@ -26,21 +26,22 @@ that are not negotiable.
 
 | Domain | Type | States | Driver |
 | --- | --- | --- | --- |
-| Data screens | `LoadPhase` | loading / loaded / empty / failed | `runLoad`, `LoadStateScaffold` |
+| Data screens | `LoadPhase` via `LoadableModel` | loading / loaded / empty / failed | one `start`/`retry`/`reload` for channel list, guide, Movies, My List, History; `LoadableScaffold` |
 | Player engine | `PlayerState` via `PlaybackReducer` | idle / buffering / playing / reconnecting / ended / error | VLC delegate → reducer |
-| Live overlay | `PlaybackOverlay` (+ `PushedSheet`) | none / info / infoTransport / zapInfo / quickBar / panel / channelMenu / multiview / pushed(sheet, back) | `PlaybackKeyPolicy`, `OverlayVisibility` |
+| Live stage | `LiveSession` | single(`OverlayVisibility`) / multiview(`MultiviewSession`) — the `PlaybackOverlay` (none / info / infoTransport / zapInfo / quickBar / panel / channelMenu / pushed(sheet, back) / multiview) is DERIVED | `LivePlaybackModel+Session` (only mutators), `PlaybackKeyPolicy`; transition table in `LivePlaybackTransitionTests` |
 | Multiview layer | `MultiviewLayer` | grid / menu(selection) / picker(mode, selection) | `MultiviewSession+Menu`, `MultiviewMenuPolicy` |
-| Shared live stage | `LiveStage` | idle / live(url, guideVisible) | `LiveEngineStore` |
+| Shared live engine | `LiveStage` | idle / live(url, guideVisible) | `LiveEngineStore` (`acquire` / `noteTuned` / `showGuide` / `exit`) — the ONE live engine; `LivePlayerHostView` hosts the full `LivePlaybackModel` over it |
 | Guide → player | `GuidePlaybackTarget` | live(channel, url) / catchup(request) | `GuideGridScreen+Play/+Cover` |
 | Wizard | `WizardStep` | typeChooser / urlEntry / xtreamEntry / processing / processed / epgUrl / done | `AddPlaylistModel` |
 | VOD | `VodStage` | loading / resumePrompt(position) / playing / exited | `VodPlaybackModel` |
-| Catch-up | `CatchupMode` (+ `CatchupState?`) | none / liveCapable / playing | `CatchupKeyPolicy` |
+| Catch-up | `CatchupStage` | idle / live(channel) / archive(state) — `CatchupMode` is derived | `CatchupPlaybackModel+Hop`, `CatchupKeyPolicy` |
 | Update feedback | `UpdatePhase` | idle / running / success(msg) / failure(msg) | `UpdateFeedbackModel` |
 | DEBUG launch | `DebugLaunch.Route` | one case per screenshot/UI route + `main` | `ContentView+Debug` (exhaustive switch) |
 
 Timed/transient state is deadline math over an injected clock (`OverlayVisibility`,
-`PendingZap`, `ZapKeepFrame`, `VodTransportVisibility`), ticked by the screen —
-never a sleeping coroutine.
+`PendingZap`, `ZapKeepFrame`, `VodTransportVisibility`). The ONLY real timer is the
+`.ticking(every:)` view modifier (`Telly/UI/Ticking.swift`), which calls the model's
+`tick()`; no screen owns a sleep loop.
 
 ## The demo provider (mock backend / fake server)
 

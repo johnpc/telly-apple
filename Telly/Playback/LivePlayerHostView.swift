@@ -1,65 +1,37 @@
 import SwiftUI
 
-/// The production LIVE player stage: a fullscreen VLC surface fed by the shared
-/// ``LiveEngineStore`` engine, with a "Guide" affordance that layers the EPG over
-/// the still-playing channel (``LivePlayerGuideOverlayView``). Because the engine
-/// lives in the store — not this view — bringing the guide up and dismissing it
-/// only toggles `store.guideVisible`; the engine keeps decoding and its drawable
-/// re-parents between the fullscreen surface and the mini-player inset with no
-/// reconnect. The engine is torn down only when this host itself disappears
-/// (a real exit from live), never when the guide covers it.
+/// The production LIVE stage: the full TiviMate-style ``LivePlaybackScreen``
+/// (zap / info / quick-bar / panel / multiview / pickers) driven by ONE
+/// ``LivePlaybackModel`` built over the store's shared engine, with the EPG guide
+/// layered on top on demand (``LivePlayerGuideOverlayView``). The model lives in
+/// this host — not in the screen — so showing the guide only swaps the surface
+/// for the mini-player: the engine keeps decoding and nothing reconnects. BACK at
+/// bare playback opens the guide (TiviMate); BACK on the guide (or the iOS close
+/// button) leaves live, which tears the engine down via `store.exit()`.
 struct LivePlayerHostView: View {
-    let store: LiveEngineStore
-    let url: String
-    let makeGuideModel: () -> GuideGridModel
-    let makeEngine: () -> VLCKitPlayerEngine
-    let makeCatchupModel: (CatchupRequest) -> CatchupPlaybackModel
+    let stage: LiveStagePresentation
+    @State private var model: LivePlaybackModel
     @Environment(\.dismiss) private var dismiss
+
+    init(stage: LiveStagePresentation, target: LiveStageTarget) {
+        self.stage = stage
+        _model = State(initialValue: stage.makeLiveModel(target))
+    }
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            if store.guideVisible {
-                LivePlayerGuideOverlayView(store: store, makeGuideModel: makeGuideModel,
-                                           makeEngine: makeEngine, makeCatchupModel: makeCatchupModel)
+            if stage.store.guideVisible {
+                LivePlayerGuideOverlayView(model: model, stage: stage)
             } else {
-                fullscreen
+                LivePlaybackScreen(model: model, hosted: true, onGuide: { stage.store.showGuide() })
             }
         }
-        .task { store.play(url) }
-        .onDisappear { store.exit() }
+        .task { model.start() }
+        .ticking(every: 0.2) { model.tick() }
+        .onDisappear { stage.store.exit() }
         #if os(tvOS)
-        .onExitCommand { if store.guideVisible { store.hideGuide() } else { dismiss() } }
+        .onExitCommand { dismiss() }   // reached only while the guide overlay owns focus
         #endif
-    }
-
-    @ViewBuilder private var fullscreen: some View {
-        surface.ignoresSafeArea()
-        PlaybackStateOverlay(state: store.engine?.state ?? .idle)
-        chrome
-    }
-
-    @ViewBuilder private var surface: some View {
-        if let vlc = store.engine as? VLCKitPlayerEngine { VideoSurfaceView(engine: vlc) }
-    }
-
-    private var chrome: some View {
-        VStack {
-            HStack {
-                #if !os(tvOS)
-                Button { dismiss() } label: {
-                    Image(systemName: "xmark.circle.fill").font(.title).foregroundStyle(.white)
-                }
-                .accessibilityIdentifier("player.close")
-                .accessibilityLabel("Close player")
-                #endif
-                Spacer()
-                Button { store.showGuide() } label: {
-                    Label("Guide", systemImage: "tv").foregroundStyle(.white)
-                }
-            }
-            Spacer()
-        }
-        .padding()
     }
 }

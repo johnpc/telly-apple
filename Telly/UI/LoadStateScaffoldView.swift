@@ -34,3 +34,23 @@ struct LoadStateScaffold<Content: View>: View {
         .animation(Motion.gated(Motion.route, reduceMotion: reduceMotion), value: phase)
     }
 }
+
+/// The wording of a screen's empty state.
+struct EmptyCopy {
+    let title: String
+    let systemImage: String
+    let message: String?
+}
+
+/// ``LoadStateScaffold`` over any ``LoadableModel``: phase and Retry are wired
+/// from the model exactly once, so screens only supply their empty-state copy.
+struct LoadableScaffold<Model: LoadableModel, Content: View>: View {
+    let model: Model
+    let empty: EmptyCopy
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        LoadStateScaffold(phase: model.phase, emptyTitle: empty.title, emptySystemImage: empty.systemImage,
+                          emptyMessage: empty.message, retry: { Task { await model.retry() } }, content: content)
+    }
+}

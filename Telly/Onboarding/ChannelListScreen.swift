@@ -6,11 +6,9 @@ import SwiftUI
 /// (`+Row`); logic lives in ``ChannelListModel``.
 struct ChannelListScreen: View {
     @State var model: ChannelListModel
-    let makeEngine: () -> VLCKitPlayerEngine
-    /// Shared live engine + guide-overlay state the live host reads (no reconnect).
-    let liveEngineStore: LiveEngineStore
-    let makeGuideGridModel: () -> GuideGridModel
-    let makeCatchupModel: (CatchupRequest) -> CatchupPlaybackModel
+    /// The shared live stage every live entry point here (rows, Guide, History,
+    /// Search, My List) presents — one engine, one overlay machine, no reconnect.
+    let liveStage: LiveStagePresentation
     let makeHistoryModel: () -> HistoryListModel
     let makeSearchModel: () -> SearchModel
     let makeChannelEditModel: (String?) -> ChannelEditModel
@@ -55,10 +53,7 @@ struct ChannelListScreen: View {
     @FocusState var focusedChannelId: Int?
     #endif
 
-    init(model: ChannelListModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
-         liveEngineStore: LiveEngineStore,
-         makeGuideGridModel: @escaping () -> GuideGridModel,
-         makeCatchupModel: @escaping (CatchupRequest) -> CatchupPlaybackModel,
+    init(model: ChannelListModel, liveStage: LiveStagePresentation,
          makeHistoryModel: @escaping () -> HistoryListModel,
          makeSearchModel: @escaping () -> SearchModel,
          makeChannelEditModel: @escaping (String?) -> ChannelEditModel,
@@ -77,10 +72,7 @@ struct ChannelListScreen: View {
          onAdd: @escaping () -> Void) {
         _model = State(initialValue: model)
         self.autoStart = autoStart
-        self.makeEngine = makeEngine
-        self.liveEngineStore = liveEngineStore
-        self.makeGuideGridModel = makeGuideGridModel
-        self.makeCatchupModel = makeCatchupModel
+        self.liveStage = liveStage
         self.makeHistoryModel = makeHistoryModel
         self.makeSearchModel = makeSearchModel
         self.makeChannelEditModel = makeChannelEditModel

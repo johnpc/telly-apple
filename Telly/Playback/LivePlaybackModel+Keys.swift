@@ -7,9 +7,9 @@ extension LivePlaybackModel {
     /// decide whether to consume the event.
     @discardableResult
     func onKey(_ key: PlaybackKey) -> Bool {
-        visibility.keepAlive(at: now())
+        keepOverlayAlive()
         if let handled = handleMultiviewSubKey(key) { return handled }
-        let command = PlaybackKeyPolicy.command(overlay: visibility.overlay, key: key, keymap: keymap)
+        let command = PlaybackKeyPolicy.command(overlay: overlay, key: key, keymap: keymap)
         execute(command)
         return command != .nothing
     }
@@ -20,22 +20,22 @@ extension LivePlaybackModel {
     func execute(_ command: PlaybackCommand) {
         switch command {
         case .showInfo:
-            visibility.showAutoHiding(.info, timeoutMs: timeouts.infoMs, at: now())
+            showAutoHiding(.info, timeoutMs: timeouts.infoMs)
         case .showTransport:
-            visibility.showAutoHiding(.infoTransport, timeoutMs: timeouts.infoMs, at: now())
+            showAutoHiding(.infoTransport, timeoutMs: timeouts.infoMs)
         case .openQuickBar:
-            visibility.showAutoHiding(.quickBar, timeoutMs: timeouts.quickBarMs, at: now())
+            showAutoHiding(.quickBar, timeoutMs: timeouts.quickBarMs)
         case let .zap(delta):
             pendingZap.press(delta: delta, at: now())
             showZapInfo()
         case .exitToGuide:
             onExitToGuide()
         case .openPanel, .backToPanel:
-            visibility.set(.panel)
+            setOverlay(.panel)
         case .dismiss:
-            visibility.set(.none)
+            setOverlay(.none)
         case let .popTo(back):
-            visibility.set(back)
+            setOverlay(back)
         case .openMultiview:
             openMultiview()
         case let .moveMultiviewActive(direction):

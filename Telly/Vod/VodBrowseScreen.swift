@@ -20,20 +20,23 @@ struct VodBrowseScreen: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            if !model.categories.isEmpty { categoryChips }
-            grid
+        LoadableScaffold(model: model, empty: EmptyCopy(
+            title: "No movies", systemImage: "film",
+            message: "Films in your playlist (.mp4 / .mkv entries) show up here.")) {
+            VStack(spacing: 0) {
+                if !model.categories.isEmpty { categoryChips }
+                grid
+            }
         }
         .navigationTitle("Movies")
-        .overlay { emptyState }
-        .task { model.load() }
+        .task { await model.start() }
         .fullScreenCover(item: $target) { player($0) }
     }
 
     func player(_ target: VodPlayTarget) -> some View {
         VodPlaybackScreen(model: makePlaybackModel(target.key) {
             self.target = nil
-            model.load()
+            model.reload()
         })
     }
 }

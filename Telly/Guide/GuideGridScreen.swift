@@ -34,7 +34,7 @@ struct GuideGridScreen: View {
         }
         .guideSurface()
         .task { await model.start() }
-        .guideMinuteTick { model.tick() }
+        .ticking(every: 60) { model.tick() }
         .fullScreenCover(item: $target) { playbackCover($0) }
         .guideProgramInfo($infoTarget, model: model, onPlay: play)
         #if DEBUG
@@ -50,9 +50,8 @@ struct GuideGridScreen: View {
     /// Loaded content is the header + panning grid; loading/empty/error defer to
     /// the shared skeleton / empty / error+retry treatment (Retry re-runs the EPG refresh).
     private var gridScaffold: some View {
-        LoadStateScaffold(phase: model.phase, emptyTitle: "No channels",
-                          emptySystemImage: "tv.slash", emptyMessage: "Nothing to show in the guide yet.",
-                          retry: { Task { await model.retry() } }) {
+        LoadableScaffold(model: model, empty: EmptyCopy(
+            title: "No channels", systemImage: "tv.slash", message: "Nothing to show in the guide yet.")) {
             VStack(spacing: 0) { groupStrip; dayNavBar; header; grid }
         }
     }

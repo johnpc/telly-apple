@@ -40,10 +40,4 @@ extension VodBrowseScreen {
             .padding()
         }
     }
-
-    @ViewBuilder var emptyState: some View {
-        if model.isEmpty {
-            ContentUnavailableView("No movies", systemImage: "film")
-        }
-    }
 }

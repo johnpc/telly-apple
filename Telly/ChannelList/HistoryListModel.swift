@@ -13,6 +13,9 @@ final class HistoryListModel {
     let store: WatchHistoryStore
     let channelStore: ChannelStore
     var rows: [ChannelEntity] = []
+    /// The shared load lifecycle (``LoadableModel``); local-only, so `refresh` is a no-op.
+    var phase: LoadPhase = .loading
+    let refresh: () async throws -> Void = {}
 
     init(store: WatchHistoryStore, channelStore: ChannelStore) {
         self.store = store
@@ -30,6 +33,10 @@ final class HistoryListModel {
     /// Empties the history and republishes the (now empty) rows.
     func clear() {
         try? store.clear()
-        load()
+        reload()
     }
+}
+
+extension HistoryListModel: LoadableModel {
+    var hasContent: Bool { !rows.isEmpty }
 }

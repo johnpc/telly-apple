@@ -2,7 +2,7 @@ import SwiftUI
 
 /// The archive playback stage driven by ``CatchupPlaybackModel``: the VLC
 /// surface, the engine-state chrome, and the read-only ``CatchupTransportRow``.
-/// The only coroutine seam is the 200ms tick loop here (position sample + the
+/// The shared 200 ms ``ticking`` clock drives `tick()` (position sample + the
 /// finished-archive check); every decision lives in the model. tvOS forwards
 /// play/pause + D-pad through the model; iPhone/iPad add a Close button and a
 /// swipe→seek gesture. Mirrors ``LivePlaybackScreen`` beside it, keeping
@@ -33,12 +33,8 @@ struct CatchupPlaybackScreen: View {
         .task {
             model.onExitToGuide = { dismiss() }
             model.start(request)
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .milliseconds(200))
-                model.refreshPosition()
-                model.handleEndedIfNeeded()
-            }
         }
+        .ticking(every: 0.2) { model.tick() }
         .onDisappear { model.close() }
         .catchupKeys(model)
     }

@@ -108,6 +108,20 @@ jobs:
       # test that fails intermittently is a bug to fix, never a retry.
       - name: Acceptance tests (iOS)
         run: |
+          # The mini hosts several repos' runners: wait (max 15 min) until no other
+          # simulator-heavy xcodebuild test job is running and the load is sane, or
+          # CoreSimulator's services can die mid-run ("ipc/mig server died").
+          WAITED=0
+          while [ "$WAITED" -lt 900 ]; do
+            OTHERS=$(pgrep -f "xcodebuild test" | wc -l | tr -d ' '); LOAD=$(sysctl -n vm.loadavg | awk '{print int($2)}')
+            if [ "$OTHERS" -le 0 ] && [ "$LOAD" -lt 24 ]; then break; fi
+            echo "waiting for a quiet simulator host (procs=$OTHERS load=$LOAD)"; sleep 30; WAITED=$((WAITED + 30))
+          done
+          # Boot + settle the destination first: a fresh UI-test runner on a
+          # still-booting simulator can hang its first AX query (see quality.sh).
+          NAME=$(printf '%s' "$TELLY_DESTINATION" | sed -n 's/.*name=\([^,]*\).*/\1/p')
+          UDID=$(xcrun simctl list devices available | grep "$NAME (" | grep -v Clone | head -1 | sed -E 's/.*\(([0-9A-F-]+)\).*/\1/')
+          if [ -n "$UDID" ]; then xcrun simctl boot "$UDID" 2>/dev/null || true; xcrun simctl bootstatus "$UDID" -b || true; sleep 10; fi
           xcodebuild test \
             -scheme "$SCHEME" \
             -destination "$TELLY_DESTINATION" \

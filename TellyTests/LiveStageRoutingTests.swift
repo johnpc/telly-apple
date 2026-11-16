@@ -20,19 +20,17 @@ struct LiveStageRoutingTests {
         #expect(target.url == "http://a")
     }
 
-    /// History taps A, My List re-taps the same channel A (no reconnect), then
-    /// Search zaps to B — all on the SAME engine instance, never a fresh mint.
+    /// History, My List and Search all acquire the SAME engine instance from the
+    /// store (never a fresh mint) until a real exit from live.
     @Test func secondaryEntryPointsReuseOneSharedEngine() {
         let store = LiveEngineStore(makeEngine: { FakePlayerEngine() })
-        store.play(LiveStageTarget(channel: channel(id: 1, url: "http://a")).url)
-        let engine = store.engine as AnyObject
-        store.play(LiveStageTarget(channel: channel(id: 1, url: "http://a")).url)
-        #expect(store.engine as AnyObject === engine)
-        let fake = store.engine as! FakePlayerEngine  // swiftlint:disable:this force_cast
-        #expect(fake.loaded == ["http://a"])
-        store.play(LiveStageTarget(channel: channel(id: 2, url: "http://b")).url)
-        #expect(store.engine as AnyObject === engine)
-        #expect(fake.loaded == ["http://a", "http://b"])
-        #expect(fake.loadedLive == [true, true])
+        let engine = store.acquire() as AnyObject
+        store.noteTuned(LiveStageTarget(channel: channel(id: 1, url: "http://a")).url)
+        #expect(store.acquire() as AnyObject === engine)
+        store.noteTuned(LiveStageTarget(channel: channel(id: 2, url: "http://b")).url)
+        #expect(store.acquire() as AnyObject === engine)
+        #expect(store.currentUrl == "http://b")
+        store.exit()
+        #expect(store.acquire() as AnyObject !== engine)
     }
 }

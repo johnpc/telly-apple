@@ -8,13 +8,13 @@ import Foundation
 extension LivePlaybackModel {
     /// Whether the aspect-ratio picker card is pushed, derived from the overlay.
     var resizePickerActive: Bool {
-        if case .pushed(.resizePicker, _) = visibility.overlay { return true }
+        if case .pushed(.resizePicker, _) = overlay { return true }
         return false
     }
 
     /// Open the aspect-ratio picker from the quick-bar's video slot.
     func openResizePicker() {
-        visibility.set(.pushed(.resizePicker, back: .quickBar))
+        setOverlay(.pushed(.resizePicker, back: .quickBar))
     }
 
     /// The rows the aspect-ratio picker renders (empty when it is not open).

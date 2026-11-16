@@ -1,22 +1,10 @@
 import Foundation
 
-/// The guide grid's load lifecycle, mirroring the channel list's: existing rows
-/// render at once; an empty grid shows the skeleton, then resolves to loaded/
-/// empty or, if its EPG refresh threw, the error+retry state. Kept out of the
-/// core model so both files stay within the source-line budget.
-extension GuideGridModel {
-    /// First-appear load: materialise from the store, and when nothing is there
-    /// await the refresh so an empty grid gets a skeleton, not a bare pane.
-    func start() async {
-        load()
-        if !rows.isEmpty { phase = .loaded; return }
-        await runLoad(setPhase: { phase = $0 }, refresh: refresh, reload: load, hasContent: has)
-    }
-
-    /// Retry from the failure/empty state: skeleton, then re-run the EPG refresh.
-    func retry() async {
-        await runLoad(setPhase: { phase = $0 }, refresh: refresh, reload: load, hasContent: has)
-    }
-
-    private func has() -> Bool { !rows.isEmpty }
+/// The guide grid's load lifecycle is the shared ``LoadableModel`` one, with one
+/// difference: existing rows do NOT trigger a background refresh (the EPG refresh
+/// is a full re-fetch, not a cheap re-read), so the forced refresh runs only for
+/// an empty grid and on Retry.
+extension GuideGridModel: LoadableModel {
+    var hasContent: Bool { !rows.isEmpty }
+    var refreshesInBackground: Bool { false }
 }
