@@ -14,13 +14,15 @@ extension StepDefinitions {
             XCTAssertTrue(w.app.staticTexts[name].waitForExistence(timeout: medium), "Guide row “\(name)” missing")
         }
         r.define("I open the details of the next programme on the first row") { w in
-            // Page a day ahead so every visible cell is a FUTURE programme (the airing
-            // one can span the whole compact pane), then open the first on News One.
+            // Page a day ahead so every visible cell is a FUTURE programme, then open
+            // the one at the pane start on News One. The pane moves by 24 h from the
+            // current half-hour, so how many cells fit the compact pane changes every
+            // 30 minutes — only the FIRST cell is there at every time of day.
             let next = w.app.buttons["Next day"]
             XCTAssertTrue(next.waitForExistence(timeout: medium))
             w.activate(next)
             XCTAssertTrue(w.app.staticTexts["Tomorrow"].waitForExistence(timeout: short), "Day label should read Tomorrow")
-            w.openGuideCell(onRow: "News One", index: 1)
+            w.openGuideCell(onRow: "News One", index: 0)
         }
         r.define("I open the details of the first programme on the row \"([^\"]+)\"") { w in
             w.openGuideCell(onRow: w.capture(), index: 0)
