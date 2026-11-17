@@ -29,8 +29,8 @@ on:
 
 env:
   SCHEME: Telly
-  TELLY_DESTINATION: "platform=iOS Simulator,name=iPhone 16 Pro"
-  TELLY_TVOS_DESTINATION: "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)"
+  # Destinations are Telly's OWN simulator devices, resolved per step by
+  # scripts/simulators.sh (shared stock devices get hijacked by other repos' jobs).
 
 jobs:
   quality:
@@ -93,9 +93,10 @@ jobs:
       - name: Unit tests + coverage (iOS)
         run: |
           rm -rf TestResults.xcresult
+          source scripts/simulators.sh
           xcodebuild test \
             -scheme "$SCHEME" \
-            -destination "$TELLY_DESTINATION" \
+            -destination "$(telly_destination ios)" \
             -only-testing:TellyTests \
             -derivedDataPath DerivedData \
             -enableCodeCoverage YES \
@@ -117,14 +118,23 @@ jobs:
             if [ "$OTHERS" -le 0 ] && [ "$LOAD" -lt 24 ]; then break; fi
             echo "waiting for a quiet simulator host (procs=$OTHERS load=$LOAD)"; sleep 30; WAITED=$((WAITED + 30))
           done
-          # Boot + settle the destination first: a fresh UI-test runner on a
+          # Boot + settle Telly's own device first: a fresh UI-test runner on a
           # still-booting simulator can hang its first AX query (see quality.sh).
-          NAME=$(printf '%s' "$TELLY_DESTINATION" | sed -n 's/.*name=\([^,]*\).*/\1/p')
-          UDID=$(xcrun simctl list devices available | grep "$NAME (" | grep -v Clone | head -1 | sed -E 's/.*\(([0-9A-F-]+)\).*/\1/')
-          if [ -n "$UDID" ]; then xcrun simctl boot "$UDID" 2>/dev/null || true; xcrun simctl bootstatus "$UDID" -b || true; sleep 10; fi
+          source scripts/simulators.sh
+          TELLY_DESTINATION=$(telly_destination ios); telly_warm "$TELLY_DESTINATION"
           xcodebuild test \
             -scheme "$SCHEME" \
             -destination "$TELLY_DESTINATION" \
+            -only-testing:TellyUITests \
+            -derivedDataPath DerivedData
+
+      - name: Acceptance tests (tvOS)
+        run: |
+          source scripts/simulators.sh
+          TELLY_TVOS_DESTINATION=$(telly_destination tvos); telly_warm "$TELLY_TVOS_DESTINATION"
+          xcodebuild test \
+            -scheme "$SCHEME" \
+            -destination "$TELLY_TVOS_DESTINATION" \
             -only-testing:TellyUITests \
             -derivedDataPath DerivedData
 
@@ -136,16 +146,18 @@ jobs:
       # ---- Builds (quality.sh phases 6-7) ----
       - name: Build app (iOS)
         run: |
+          source scripts/simulators.sh
           xcodebuild build \
             -scheme "$SCHEME" \
-            -destination "$TELLY_DESTINATION" \
+            -destination "$(telly_destination ios)" \
             -derivedDataPath DerivedData
 
       - name: Build app (tvOS)
         run: |
+          source scripts/simulators.sh
           xcodebuild build \
             -scheme "$SCHEME" \
-            -destination "$TELLY_TVOS_DESTINATION" \
+            -destination "$(telly_destination tvos)" \
             -derivedDataPath DerivedData
 
       - name: Upload coverage report

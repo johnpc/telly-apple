@@ -9,21 +9,25 @@ extension StepDefinitions {
         r.define("I open Search") { w in w.openToolbarItem("Search") }
         r.define("I open the Movies browser") { w in
             w.openToolbarItem("Movies")
-            XCTAssertTrue(w.app.navigationBars["Movies"].waitForExistence(timeout: medium))
+            XCTAssertTrue(w.sees("Movies"), "Expected the Movies browser")
         }
         r.define("I open My List") { w in
             w.openToolbarItem("My List")
-            XCTAssertTrue(w.app.navigationBars["My List"].waitForExistence(timeout: medium))
+            XCTAssertTrue(w.sees("My List"), "Expected My List")
         }
         r.define("I open Settings") { w in
             w.openToolbarItem("Settings")
-            XCTAssertTrue(w.app.navigationBars["Settings"].waitForExistence(timeout: medium))
+            XCTAssertTrue(w.sees("Settings"), "Expected Settings")
         }
         r.define("I go back to the channel list") { w in
+            #if os(tvOS)
+            w.press(.menu)
+            #else
             let back = w.app.navigationBars.buttons.element(boundBy: 0)
             XCTAssertTrue(back.waitForExistence(timeout: short), "Expected a navigation back button")
             w.activate(back)
-            XCTAssertTrue(w.app.navigationBars["Channels"].waitForExistence(timeout: medium))
+            #endif
+            XCTAssertTrue(w.sees("Channels"), "Expected to be back on the channel list")
         }
         r.define("I should see the empty message \"([^\"]+)\"") { w in
             let text = w.capture()

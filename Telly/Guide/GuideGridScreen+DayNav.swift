@@ -14,6 +14,7 @@ extension GuideGridScreen {
                 Label("Previous day", systemImage: "chevron.left").labelStyle(.iconOnly)
             }
             .disabled(!model.canPageDayBack)
+            .focused($focusArea, equals: .previousDay)
             Text(model.dayLabel)
                 .font(.subheadline.weight(.semibold))
                 .monospacedDigit()
@@ -22,6 +23,7 @@ extension GuideGridScreen {
                 Label("Next day", systemImage: "chevron.right").labelStyle(.iconOnly)
             }
             .disabled(!model.canPageDayForward)
+            .focused($focusArea, equals: .nextDay)
             Spacer()
             Button { model.jumpToNow() } label: { Label("Now", systemImage: "clock") }
         }

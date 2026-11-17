@@ -2,25 +2,33 @@ import Foundation
 
 /// The demo guide: a deterministic XMLTV schedule for every live ``DemoContent``
 /// channel, generated around `nowMs` so it is always current (a static file would
-/// go stale). Covers the past 30 hours and the next two days in half-hour slots, with
-/// 30/60/90-minute programmes, titles per group (the Android e2e fixture's lists)
-/// and rotating synopses so the info panel, search and My List all have content.
-/// Pure over its clock input, so every row is unit-testable.
+/// go stale). Anchored to LOCAL MIDNIGHT — yesterday 00:00 through the end of
+/// tomorrow — in half-hour slots with 30/60/90-minute programmes whose pattern
+/// repeats every 6 h, so every day of every channel starts on the same grid no
+/// matter when the demo is installed (the guide looks the same at 09:00 and at
+/// 23:55, and acceptance scenarios can name "the next programme" by position).
+/// Titles per group (the Android e2e fixture's lists) and rotating synopses give
+/// the info panel, search and My List content. Pure over its clock input.
 enum DemoEpg {
-    /// 30 h back so "Yesterday" in the guide is populated (catch-up demo).
-    static let pastHours = 30
-    /// 48 h ahead so "Tomorrow" in the guide is fully populated too.
-    static let futureHours = 48
+    /// Whole days before today (so "Yesterday" is fully populated for catch-up).
+    static let pastDays = 1
+    /// Whole days from today on (today + "Tomorrow" fully populated).
+    static let futureDays = 2
     private static let slotMs = 30 * 60_000
-    /// Programme lengths in half-hour slots, cycled per channel.
+    /// Programme lengths in half-hour slots, cycled per channel (12 slots = 6 h).
     private static let lengths = [2, 1, 3, 1, 2, 2, 1]
 
+    /// The scheduled span: local midnight `pastDays` ago up to midnight `futureDays` ahead.
+    static func window(nowMs: Int, timeZone: TimeZone) -> Range<Int> {
+        GuideGeometry.startOfDay(nowMs, timeZone: timeZone, days: -pastDays)
+            ..< GuideGeometry.startOfDay(nowMs, timeZone: timeZone, days: futureDays)
+    }
+
     static func document(nowMs: Int, timeZone: TimeZone = .current) -> XmltvDocument {
-        let origin = GuideGeometry.halfHourFloor(nowMs, timeZone: timeZone) - pastHours * 60 * 60_000
-        let endMs = origin + (pastHours + futureHours) * 60 * 60_000
+        let span = window(nowMs: nowMs, timeZone: timeZone)
         var programs: [XmltvProgram] = []
         for (index, channel) in DemoContent.liveChannels.enumerated() {
-            programs += schedule(channel, index: index, fromMs: origin, toMs: endMs)
+            programs += schedule(channel, index: index, fromMs: span.lowerBound, toMs: span.upperBound)
         }
         return XmltvDocument(programs: programs)
     }
@@ -31,7 +39,7 @@ enum DemoEpg {
         let wording = DemoProgramWording.forGroup(channel.groupTitle ?? "")
         var rows: [XmltvProgram] = []
         var start = fromMs
-        var slot = index * 3
+        var slot = index * 3 + 1   // the first channel opens each day with a 30-min slot
         while start < toMs {
             let end = min(toMs, start + lengths[slot % lengths.count] * slotMs)
             let details = ProgramDetails(

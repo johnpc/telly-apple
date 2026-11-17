@@ -12,18 +12,31 @@ import SwiftUI
 extension ChannelListScreen {
     var tvBody: some View {
         NavigationStack {
-            HStack(alignment: .top, spacing: 0) {
-                tvChannelColumn.frame(width: 640)
-                tvDetailPane.frame(maxWidth: .infinity, maxHeight: .infinity)
+            VStack(spacing: 0) {
+                tvRail
+                HStack(alignment: .top, spacing: 0) {
+                    tvChannelColumn.frame(width: 640)
+                    tvDetailPane.frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
+            .navigationTitle("Channels")
         }
     }
 
-    // The title and toolbar hang off the list content (as the single-column
-    // `stackBody` does), not the wrapping `HStack`: on tvOS that keeps the bar
-    // space-constrained so its action items collapse to icon-only pills. Hosting
-    // them on the full-width `HStack` instead lets the bar sprawl and render the
-    // items with washed-out, truncated titles ("Se…gs").
+    /// The Apple TV action rail (TiviMate's rail idiom): the home's primary actions
+    /// as icon pills in the app's own row under the title, LEFT-aligned over the
+    /// group chips so pressing UP from any chip lands on the rail (the focus engine
+    /// needs horizontal overlap), and carrying their titles to VoiceOver — neither
+    /// of which the tvOS navigation bar offers (see `+Toolbar`).
+    private var tvRail: some View {
+        HStack(spacing: 24) {
+            navigationItems
+            Spacer()
+        }
+        .padding(.horizontal, 80)
+        .padding(.vertical, 8)
+    }
+
     private var tvChannelColumn: some View {
         channelLoadScaffold {
             VStack(spacing: 0) {
@@ -34,8 +47,6 @@ extension ChannelListScreen {
                 .defaultFocus($focusedChannelId, model.rows.first?.id)
             }
         }
-        .navigationTitle("Channels")
-        .toolbar { toolbarContent }
     }
 
     /// The channel the preview pane shows: the focused row, else the first row
@@ -47,7 +58,7 @@ extension ChannelListScreen {
 
     /// The preview pane. It deliberately sets no `navigationTitle` on tvOS
     /// (`ChannelDetailPaneView` suppresses it there), so the shared bar keeps
-    /// its "Channels" title and un-truncated toolbar while the pane fills the
+    /// its "Channels" title while the pane fills the
     /// wide right half of the 16:9 home.
     private var tvDetailPane: some View {
         ChannelDetailPaneView(channel: tvDetailChannel,

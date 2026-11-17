@@ -17,6 +17,8 @@ struct GuideGridScreen: View {
     @State var target: GuidePlaybackTarget?
     /// The cell whose program info panel is open (set by `activate`, `+Activate`).
     @State var infoTarget: GuideInfoTarget?
+    /// Which focus region owns the remote (tvOS): the grid cursor or the day chrome.
+    @FocusState var focusArea: GuideFocusArea?
 
     init(model: GuideGridModel, makeEngine: @escaping () -> VLCKitPlayerEngine,
          makeCatchupModel: @escaping (CatchupRequest) -> CatchupPlaybackModel,
@@ -40,11 +42,6 @@ struct GuideGridScreen: View {
         #if DEBUG
         .task { await GuideMenuScreenshotSeed.present($infoTarget, model: model) }
         #endif
-        #if os(tvOS)
-        .focusable()
-        .onMoveCommand { move($0) }
-        .onTapGesture { activateFocused() }
-        #endif
     }
 
     /// Loaded content is the header + panning grid; loading/empty/error defer to
@@ -52,20 +49,11 @@ struct GuideGridScreen: View {
     private var gridScaffold: some View {
         LoadableScaffold(model: model, empty: EmptyCopy(
             title: "No channels", systemImage: "tv.slash", message: "Nothing to show in the guide yet.")) {
-            VStack(spacing: 0) { groupStrip; dayNavBar; header; grid }
+            VStack(spacing: 0) { groupStrip; dayNavBar; gridBody }
         }
     }
 
-    private var header: some View {
-        HStack(spacing: 0) {
-            Color.clear.frame(width: columnWidth, height: GuideGeometry.rowHeight)
-            GuideTimeHeaderView(ticks: model.timelineTicks)
-                .frame(width: model.viewport, height: GuideGeometry.rowHeight, alignment: .leading)
-                .clipped()
-        }
-    }
-
-    private var grid: some View {
+    var grid: some View {
         ScrollView(.vertical, showsIndicators: false) {
             HStack(alignment: .top, spacing: 0) {
                 GuideChannelColumnView(rows: model.rows, width: columnWidth,
@@ -78,7 +66,7 @@ struct GuideGridScreen: View {
         #endif
     }
 
-    private var columnWidth: CGFloat { compact ? 168 : GuideGeometry.channelColumnWidth }
+    var columnWidth: CGFloat { compact ? 168 : GuideGeometry.channelColumnWidth }
     #if os(tvOS)
     private var compact: Bool { false }
     /// The focused row whose channel name marquees (D-pad focus is the cursor).

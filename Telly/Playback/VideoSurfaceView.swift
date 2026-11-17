@@ -10,6 +10,12 @@ struct VideoSurfaceView: UIViewRepresentable {
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
         view.backgroundColor = .black
+        // The one stable automation anchor for "a player is on screen" on every
+        // platform (tvOS has no close button; the list beneath a cover may still be
+        // in the accessibility tree).
+        view.isAccessibilityElement = true
+        view.accessibilityIdentifier = "player.surface"
+        view.accessibilityLabel = "Video"
         engine.drawable = view
         return view
     }

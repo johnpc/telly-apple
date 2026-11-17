@@ -37,7 +37,7 @@ struct DemoContentTests {
     @Test func movieHouseOffersCatchUpAndTheBundledClipResolvesToAFile() {
         let movieHouse = DemoContent.channels.first { $0.title == "Movie House" }
         #expect(movieHouse?.catchup == "default")
-        #expect(movieHouse?.catchupDays == 2)
+        #expect(movieHouse?.catchupDays == 3)   // covers all of "Yesterday" even at 23:59
         #expect(movieHouse?.catchupSource?.contains("{utc}") == true)
         let resolved = DemoContent.playableUrl(for: DemoContent.clipUrl, bundle: Bundle(for: AppEnvironment.self))
         #expect(resolved.hasPrefix("file://") && resolved.hasSuffix("demo-clip.mp4"))

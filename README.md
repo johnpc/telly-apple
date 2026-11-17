@@ -185,9 +185,11 @@ Run everything locally with one command:
 5. **Acceptance tests (iOS)** — the Gherkin scenarios (XCUITest) over the built-in
    demo provider — onboarding, guide, search, playback, catch-up, My List, Movies,
    settings — each from a wiped first-launch state.
-6. **Coverage ≥ 80% + CRAP ≤ 30**.
-7. **Build (iOS)**.
-8. **Build (tvOS)**.
+6. **Acceptance tests (tvOS)** — the same scenarios driven through the Apple TV focus
+   engine (Siri Remote presses), so the 10-foot UX is proven on every change.
+7. **Coverage ≥ 80% + CRAP ≤ 30**.
+8. **Build (iOS)**.
+9. **Build (tvOS)**.
 
 CI (`.github/workflows/ci.yml`) runs the same gates on the self-hosted Mac mini
 runner; `main` requires that check, PRs auto-merge when it is green, and every green

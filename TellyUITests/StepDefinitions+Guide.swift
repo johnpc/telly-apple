@@ -14,8 +14,10 @@ extension StepDefinitions {
             XCTAssertTrue(w.app.staticTexts[name].waitForExistence(timeout: medium), "Guide row “\(name)” missing")
         }
         r.define("I open the details of the next programme on the first row") { w in
-            // Page a day ahead so every visible cell is a FUTURE programme (the airing
-            // one can span the whole compact pane), then open the first on News One.
+            // Page a day ahead so every visible cell is a FUTURE programme, then open
+            // the one at the pane start on News One. The pane moves by 24 h from the
+            // current half-hour, so how many cells fit the compact pane changes every
+            // 30 minutes — only the FIRST cell is there at every time of day.
             let next = w.app.buttons["Next day"]
             XCTAssertTrue(next.waitForExistence(timeout: medium))
             w.activate(next)
@@ -26,8 +28,11 @@ extension StepDefinitions {
             w.openGuideCell(onRow: w.capture(), index: 0)
         }
         r.define("I should see the programme details") { w in
-            XCTAssertTrue(w.app.navigationBars["Programme"].waitForExistence(timeout: medium),
-                          "Expected the programme info panel")
+            // iOS wraps the panel in a "Programme" bar; tvOS shows the bare card, so the
+            // per-cell action button is the panel's signature on both platforms.
+            let actions = w.app.buttons.matching(NSPredicate(
+                format: "label IN %@", ["Add to My List", "Remove from My List", "Watch", "Watch from start"])).firstMatch
+            XCTAssertTrue(actions.waitForExistence(timeout: medium), "Expected the programme info panel")
         }
         r.define("I add the programme to My List") { w in
             let add = w.app.buttons["Add to My List"]
@@ -35,7 +40,15 @@ extension StepDefinitions {
             w.activate(add)
             XCTAssertTrue(w.app.buttons["Remove from My List"].waitForExistence(timeout: short),
                           "The My List button should flip to Remove")
+            #if os(tvOS)
+            w.press(.menu)                                   // dismiss the card…
+            XCTAssertTrue(w.eventually(within: 5) {          // …and wait for focus to return to the
+                !w.app.buttons["Remove from My List"].exists  // grid before the next remote press
+                    && w.focusedElement.identifier == "guide.grid"
+            }, "Closing the card should hand focus back to the guide grid")
+            #else
             w.activate(w.app.buttons["Done"])
+            #endif
         }
         r.define("My List should show a saved programme") { w in
             XCTAssertTrue(w.app.cells.firstMatch.waitForExistence(timeout: medium), "Expected a saved row")
@@ -53,7 +66,11 @@ extension StepDefinitions {
         }
         r.define("I start the catch-up playback") { w in w.activate(w.app.buttons["Watch from start"]) }
         r.define("I should see the archive player") { w in
+            #if os(tvOS)
+            XCTAssertTrue(w.app.otherElements["player.surface"].waitForExistence(timeout: medium), "Expected the archive player")
+            #else
             XCTAssertTrue(w.app.buttons["player.close"].waitForExistence(timeout: medium), "Expected the archive player")
+            #endif
             XCTAssertFalse(w.app.buttons["Watch from start"].exists, "The info panel should have dismissed")
         }
     }

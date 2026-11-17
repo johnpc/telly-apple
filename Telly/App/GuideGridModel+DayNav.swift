@@ -22,10 +22,17 @@ extension GuideGridModel {
     /// Whether the Next-day control is live (unclamped room to pan later).
     var canPageDayForward: Bool { GuideDayNavigation.canPageForward(scrollX: scrollX, ceil: scrollCeilPoints) }
 
-    /// Pages the timeline by `days` days, clamped to the horizon, then re-materialises.
+    /// Pages the timeline by `days` days, clamped to the horizon, re-materialises,
+    /// and re-anchors the D-pad focus to the cell at the pane's left edge on the
+    /// same row — the old anchor (a time on another day) would otherwise clamp the
+    /// focus to an off-screen edge cell and strand the remote.
     func pageDay(_ days: Int) {
         scrollX = GuideDayNavigation.paged(scrollX: scrollX, days: days,
                                            floor: scrollFloorPoints, ceil: scrollCeilPoints)
         materializeRows()
+        let paneStartMs = GuideGeometry.timeAt(scrollX, originMs: originMs)
+        guard let focus, rows.indices.contains(focus.rowIndex),
+              let cell = GuideFocusNav.cellAt(cells: rows[focus.rowIndex].cells, anchorMs: paneStartMs) else { return }
+        self.focus = GuideFocus(rowIndex: focus.rowIndex, cell: cell, anchorMs: paneStartMs)
     }
 }

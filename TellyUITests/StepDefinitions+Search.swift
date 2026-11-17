@@ -7,7 +7,9 @@ extension StepDefinitions {
         r.define("I search for \"([^\"]+)\"") { w in
             let field = w.app.searchFields.firstMatch
             XCTAssertTrue(field.waitForExistence(timeout: medium), "Expected a search field")
-            field.tap()
+            #if !os(tvOS)
+            w.activate(field)                       // Apple TV's search field already holds keyboard focus
+            #endif
             field.typeText(w.capture())
         }
         r.define("the results should list the channel \"([^\"]+)\"") { w in
