@@ -31,6 +31,7 @@ that are not negotiable.
 | Live stage | `LiveSession` | single(`OverlayVisibility`) / multiview(`MultiviewSession`) — the `PlaybackOverlay` (none / info / infoTransport / zapInfo / quickBar / panel / channelMenu / pushed(sheet, back) / multiview) is DERIVED | `LivePlaybackModel+Session` (only mutators), `PlaybackKeyPolicy`; transition table in `LivePlaybackTransitionTests` |
 | Multiview layer | `MultiviewLayer` | grid / menu(selection) / picker(mode, selection) | `MultiviewSession+Menu`, `MultiviewMenuPolicy` |
 | Shared live engine | `LiveStage` | idle / live(url, guideVisible) | `LiveEngineStore` (`acquire` / `noteTuned` / `showGuide` / `exit`) — the ONE live engine; `LivePlayerHostView` hosts the full `LivePlaybackModel` over it |
+| Guide focus (tvOS) | `GuideFocusArea` | grid / previousDay / nextDay — the grid is ONE focus target (`.onMoveCommand` drives the cell cursor); UP on the top row hands off to the day chrome, DOWN comes back via the focus engine | `GuideGridScreen+Input`, `+DayNav` |
 | Guide → player | `GuidePlaybackTarget` | live(channel, url) / catchup(request) | `GuideGridScreen+Play/+Cover` |
 | Wizard | `WizardStep` | typeChooser / urlEntry / xtreamEntry / processing / processed / epgUrl / done | `AddPlaylistModel` |
 | VOD | `VodStage` | loading / resumePrompt(position) / playing / exited | `VodPlaybackModel` |
@@ -95,13 +96,30 @@ TestFlight with a build number derived from the commit count (never collides).
 - Acceptance scenarios are `.feature` files under `TellyUITests/Features/` (one per
   Android e2e feature area that exists on Apple: onboarding, demo, guide, search,
   playback, catch-up, My List, VOD, settings); steps live in `StepDefinitions+*.swift`
-  by area, then `python3 scripts/generate_acceptance_tests.py`. Anchor steps on
+  by area, then `python3 scripts/generate_acceptance_tests.py`. The SAME scenarios run
+  on iPhone (taps) and Apple TV (focus engine via `XCUIRemote`: `GherkinWorld.activate`
+  walks focus toward the target's frame, `sees(title)` accepts a bar or a title text;
+  a `@ios` / `@tvos` tag scopes a scenario to one platform via `XCTSkip`). Anchor steps on
   accessibility identifiers (`welcome.demo`, `player.close`, `guide.cell.<channel>|`,
   the "Previous day" guide stepper), never on time-of-day titles.
+- Apple TV findings that shape the code: the tvOS NAVIGATION BAR is unusable for
+  action items (it re-expands icon-only Labels into truncated titles, drops
+  accessibility labels and speaks SF Symbol names, and is unreachable by pressing UP
+  from content) — the home's actions are the in-app `tvRail`, LEFT-aligned over the
+  chips because the focus engine only moves UP into something that overlaps
+  horizontally. A `.focusable()` view with `.onMoveCommand` swallows EVERY arrow
+  press (focus never leaves it), so such a view must hand focus off itself at its
+  edges (`GuideFocusArea`). Full-screen `.sheet`s keep the presenting screen in the
+  accessibility tree, so "left the list" is not a usable assertion for them.
 - Incremental-build trap: changing the underlying type behind a `some View`
   property (e.g. swapping a `Button<Image>` for a `Button<Label>`) does NOT recompile
   files that already inlined the old layout, and the app then segfaults in SwiftUI's
   copy helpers at runtime. On a reused `DerivedData`, `rm -rf DerivedData/Build`
   before trusting a crash; CI checks out clean so it never sees this.
+- The gate and CI run on Telly's OWN simulator devices ("Telly CI iPhone" / "Telly CI
+  Apple TV", created on first use by `scripts/simulators.sh`): the shared Mac mini's
+  stock devices get hijacked by other repos' UI-test jobs mid-run, which fails every
+  scenario for reasons that are not the app's. `TELLY_DESTINATION` /
+  `TELLY_TVOS_DESTINATION` still override for local runs.
 - UI-affecting work is verified on the simulators with screenshots/recordings
   (`xcrun simctl io <udid> screenshot|recordVideo`) — on both iOS and tvOS.

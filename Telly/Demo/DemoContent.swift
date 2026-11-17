@@ -56,7 +56,7 @@ enum DemoContent {
     \(apple)bipbop_4x3/bipbop_4x3_variant.m3u8
     #EXTINF:-1 tvg-id="sports-arena-2.demo" group-title="Sports",Sports Arena HD
     \(apple)bipbop_4x3/gear4/prog_index.m3u8
-    #EXTINF:-1 tvg-id="movie-house-1.demo" group-title="Movies" catchup="default" catchup-source="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8?utc={utc}&d={duration}" catchup-days="2",Movie House
+    #EXTINF:-1 tvg-id="movie-house-1.demo" group-title="Movies" catchup="default" catchup-source="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8?utc={utc}&d={duration}" catchup-days="3",Movie House
     https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8
     #EXTINF:-1 tvg-id="kids-zone-1.demo" group-title="Kids",Kids Zone
     \(apple)bipbop_16x9/gear1/prog_index.m3u8

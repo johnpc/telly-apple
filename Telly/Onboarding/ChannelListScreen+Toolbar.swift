@@ -1,62 +1,45 @@
 import SwiftUI
 
-/// The channel-list primary-action toolbar, split out to keep `ChannelListScreen`
-/// within the source-line budget: links to the Guide, the recently-watched
-/// History screen, and the Manage-Favorites / Manage-Visibility editors, the
-/// Add-playlist action, and the Settings button that presents the settings sheet.
+/// The home's primary actions (Guide, History, Search, Movies, My List, the
+/// Favorites / Visibility editors, Add playlist, Settings), rendered as the iOS
+/// navigation-bar toolbar or the Apple TV rail from ONE item list.
 extension ChannelListScreen {
-    @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink {
-                GuideStageScreen(stage: liveStage)
-            } label: { barLabel("Guide", "tv") }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink {
-                HistoryScreen(model: makeHistoryModel(), liveStage: liveStage)
-            } label: { barLabel("History", "clock.arrow.circlepath") }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink { SearchScreen(model: makeSearchModel(), liveStage: liveStage) }
-                label: { barLabel("Search", "magnifyingglass") }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink {
-                VodBrowseScreen(model: makeVodBrowseModel(),
-                                makePlaybackModel: makeVodPlaybackModel)
-            } label: { barIconLabel("Movies", "film") }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink {
-                MyListScreen(model: makeMyListModel(), liveStage: liveStage)
-            } label: { barIconLabel("My List", "bookmark") }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink { ManageFavoritesScreen(model: makeChannelEditModel(nil)) }
-                label: { barLabel("Favorites", "star") }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            NavigationLink { ManageVisibilityScreen(model: makeVisibilityEditModel()) }
-                label: { barLabel("Visibility", "eye") }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            Button(action: onAdd) { barLabel("Add", "plus") }
-        }
-        ToolbarItem(placement: .primaryAction) {
-            Button { showSettings = true } label: { barLabel("Settings", "gearshape") }
-        }
+    /// The home's primary actions, as one view list so the iPhone/iPad navigation
+    /// bar and the Apple TV rail render the SAME items with the same destinations.
+    @ViewBuilder var navigationItems: some View {
+        NavigationLink { GuideStageScreen(stage: liveStage) }
+            label: { barLabel("Guide", "tv") }.toolbarAccessibility("Guide")
+        NavigationLink { HistoryScreen(model: makeHistoryModel(), liveStage: liveStage) }
+            label: { barLabel("History", "clock.arrow.circlepath") }.toolbarAccessibility("History")
+        NavigationLink { SearchScreen(model: makeSearchModel(), liveStage: liveStage) }
+            label: { barLabel("Search", "magnifyingglass") }.toolbarAccessibility("Search")
+        NavigationLink { VodBrowseScreen(model: makeVodBrowseModel(), makePlaybackModel: makeVodPlaybackModel) }
+            label: { barIconLabel("Movies", "film") }.toolbarAccessibility("Movies")
+        NavigationLink { MyListScreen(model: makeMyListModel(), liveStage: liveStage) }
+            label: { barIconLabel("My List", "bookmark") }.toolbarAccessibility("My List")
+        NavigationLink { ManageFavoritesScreen(model: makeChannelEditModel(nil)) }
+            label: { barLabel("Favorites", "star") }.toolbarAccessibility("Favorites")
+        NavigationLink { ManageVisibilityScreen(model: makeVisibilityEditModel()) }
+            label: { barLabel("Visibility", "eye") }.toolbarAccessibility("Visibility")
+        Button(action: onAdd) { barLabel("Add", "plus") }.toolbarAccessibility("Add")
+        Button { showSettings = true } label: { barLabel("Settings", "gearshape") }.toolbarAccessibility("Settings")
     }
 
-    /// A toolbar item's label. tvOS renders a bare icon (no `Label`): a plain-text
-    /// button in the tvOS navigation bar washes out to an illegible bright-white
-    /// capsule, and — in the two-column home — the bar re-expands a `Label` back to
-    /// its title even under `.labelStyle(.iconOnly)`, truncating it ("Se…gs"). A
-    /// lone `Image` has no title to expand, so the icon pill always reads crisply;
-    /// the accessibility label keeps VoiceOver naming intact. iPhone / iPad keep
-    /// the legible text title, so their bar is unchanged.
+    /// iPhone / iPad: the items live in the navigation bar (iOS collapses the tail
+    /// into its overflow menu on compact widths). tvOS uses ``tvRail`` instead.
+    @ToolbarContentBuilder var toolbarContent: some ToolbarContent {
+        ToolbarItemGroup(placement: .primaryAction) { navigationItems }
+    }
+
+    /// An item's label. tvOS: an icon-only `Label` in the app's own rail — it keeps
+    /// the icon pill crisp and VoiceOver / automation get the title. (The tvOS
+    /// NAVIGATION BAR is unusable for this: it re-expands icon-only Labels into
+    /// truncated titles, discards accessibility labels on images or controls and
+    /// speaks the SF Symbol's name instead, and its items are not reachable by
+    /// pressing UP from the content — hence the rail.) iPhone / iPad keep text.
     @ViewBuilder func barLabel(_ title: String, _ symbol: String) -> some View {
         #if os(tvOS)
-        Image(systemName: symbol).accessibilityLabel(Text(title))
+        Label(title, systemImage: symbol).labelStyle(.iconOnly)
         #else
         Text(title)
         #endif
@@ -72,5 +55,14 @@ extension ChannelListScreen {
         #else
         Label(title, systemImage: symbol)
         #endif
+    }
+}
+
+extension View {
+    /// Names a toolbar control for VoiceOver AND automation at the control level.
+    /// A label on the inner `Image` alone is ignored by the tvOS toolbar, which
+    /// otherwise speaks the SF Symbol's name ("tv", "movie", "Gear shape").
+    func toolbarAccessibility(_ title: String) -> some View {
+        accessibilityLabel(Text(title)).accessibilityIdentifier("toolbar.\(title)")
     }
 }

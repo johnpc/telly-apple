@@ -11,32 +11,33 @@ final class GherkinWorld {
         self.app = app
     }
 
-    /// Activates a control the way the platform does: a tap on iPhone/iPad, and
-    /// on tvOS a focus walk (DOWN until the element has focus) then Select.
-    func activate(_ element: XCUIElement) {
-        #if os(tvOS)
-        let remote = XCUIRemote.shared
-        var presses = 0
-        while !element.hasFocus && presses < 8 { remote.press(.down); presses += 1 }
-        remote.press(.select)
-        #else
-        // A control can exist while a transition is still animating; tapping then is
-        // swallowed. Wait (bounded) for it to become hittable before the tap.
-        let deadline = Date().addingTimeInterval(5)
-        while !element.isHittable && Date() < deadline { RunLoop.current.run(until: Date().addingTimeInterval(0.1)) }
-        element.tap()
-        #endif
-    }
+    /// The channel the last playback step opened (so later steps can assert on it).
+    var lastOpenedChannel = ""
 
     /// Opens one of the channel list's toolbar screens by name. On a compact
     /// iPhone the bar collapses later items into an overflow menu, so when the
-    /// item is not directly on the bar the overflow ("More") is opened first.
+    /// item is not directly on the bar the overflow ("More") is opened first. On
+    /// tvOS every item is an icon pill on the bar; the group-filter chips share
+    /// labels ("Movies", "Favorites"), so the topmost match is the toolbar's.
     func openToolbarItem(_ name: String) {
+        XCTAssertTrue(sees("Channels"), "Expected the channel list")
+        #if os(tvOS)
+        // The bar exposes each icon-only Label under its title; the group-filter chips
+        // reuse some titles ("Movies", "Favorites"), so take the topmost match.
+        _ = app.buttons.matching(NSPredicate(format: "label == %@", name)).firstMatch.waitForExistence(timeout: 5)
+        let matches = app.buttons.matching(NSPredicate(format: "label == %@", name)).allElementsBoundByIndex
+        guard let item = matches.min(by: { $0.frame.minY < $1.frame.minY }) else {
+            dumpTree("no toolbar item \(name)")
+            return XCTFail("No toolbar item “\(name)”")
+        }
+        activate(item)
+        // Pushed screens leave the list; Settings is a full-screen sheet whose title
+        // appears while the list stays in the tree underneath.
+        XCTAssertTrue(leftChannelList(within: 5) || sees(name, timeout: 2),
+                      "Selecting “\(name)” should open it")
+        #else
         let bar = app.navigationBars["Channels"]
-        XCTAssertTrue(bar.waitForExistence(timeout: 10), "Expected the channel list")
-        // Scoped to the bar: the group-filter strip has chips with the same labels
-        // ("Movies", "Favorites"), so an app-wide `buttons[name]` would be ambiguous.
-        let direct = bar.buttons[name]
+        let direct = bar.buttons["toolbar.\(name)"].exists ? bar.buttons["toolbar.\(name)"] : bar.buttons[name]
         if direct.waitForExistence(timeout: 2) {
             activate(direct)
             if leftChannelList(within: 3) { return }
@@ -50,21 +51,33 @@ final class GherkinWorld {
         let item = app.buttons[name].firstMatch
         XCTAssertTrue(item.waitForExistence(timeout: 5), "Overflow menu should list “\(name)”")
         activate(item)
+        #endif
     }
 
-    /// True once the channel list's bar is no longer the frontmost one.
-    private func leftChannelList(within seconds: TimeInterval) -> Bool {
-        let gone = NSPredicate(format: "exists == false")
-        let wait = XCTNSPredicateExpectation(predicate: gone, object: app.navigationBars["Channels"])
-        return XCTWaiter().wait(for: [wait], timeout: seconds) == .completed
+    /// True once the channel list is no longer the frontmost screen.
+    func leftChannelList(within seconds: TimeInterval) -> Bool {
+        eventually(within: seconds) { !app.navigationBars["Channels"].exists && !app.staticTexts["Channels"].exists }
     }
 
-    /// Taps the `index`-th visible programme cell on the guide row for `channel`.
+    /// Opens the `index`-th visible programme cell on the guide row for `channel`.
+    /// iOS taps the cell; tvOS moves the grid's D-pad cursor: focus the grid, then
+    /// step DOWN to the row (rows are in channel-list order) and RIGHT `index` times.
     func openGuideCell(onRow channel: String, index: Int) {
+        #if os(tvOS)
+        XCTAssertTrue(focusGuideGrid(), "The guide grid should take remote focus")
+        let names = app.staticTexts.matching(NSPredicate(format: "identifier BEGINSWITH 'guide.cell.'")).allElementsBoundByIndex
+            .map { $0.identifier.dropFirst("guide.cell.".count).dropLast() }
+        let rowOrder = NSOrderedSet(array: names.map(String.init)).array as? [String] ?? []
+        let row = rowOrder.firstIndex(of: channel) ?? 0
+        press(.down, times: row)
+        press(.right, times: index)
+        remote.press(.select); settle(0.8)
+        #else
         let cells = app.staticTexts.matching(NSPredicate(format: "identifier == %@", "guide.cell.\(channel)|"))
         let cell = cells.element(boundBy: index)
         XCTAssertTrue(cell.waitForExistence(timeout: 10), "Guide row “\(channel)” should have programme cells")
         activate(cell)
+        #endif
     }
 
     /// Terminates and relaunches WITHOUT the state reset, so persistence across

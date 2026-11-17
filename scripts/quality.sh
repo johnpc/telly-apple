@@ -2,8 +2,8 @@
 # Full local quality gate for telly-apple — the same checks CI enforces, in one
 # command: source-line limit, Gherkin sync, static checks (dead code,
 # duplication, banned types, Halstead ≤20), unit tests + coverage ≥80%,
-# the Gherkin acceptance suite (XCUITest over the in-process demo provider —
-# no server, no network), CRAP ≤30, and a clean build on BOTH platforms.
+# the Gherkin acceptance suite on iOS AND tvOS (XCUITest over the in-process
+# demo provider — no server, no network), CRAP ≤30, and a clean build on BOTH.
 #
 # There is no such thing as a flaky test: every gate here must pass on every
 # run. A test that fails intermittently is a bug in the test or the code and
@@ -12,8 +12,10 @@ set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
 SCHEME="Telly"
-DESTINATION="${TELLY_DESTINATION:-platform=iOS Simulator,name=iPhone 17 Pro}"
-TVOS_DESTINATION="${TELLY_TVOS_DESTINATION:-platform=tvOS Simulator,name=Apple TV 4K (3rd generation)}"
+# Telly's own simulator devices (scripts/simulators.sh) unless overridden.
+source scripts/simulators.sh
+DESTINATION="${TELLY_DESTINATION:-$(telly_destination ios)}"
+TVOS_DESTINATION="${TELLY_TVOS_DESTINATION:-$(telly_destination tvos)}"
 RESULT="TestResults.xcresult"
 
 # `xcodebuild -quiet` prints a spurious "error: the following command failed with
@@ -45,28 +47,28 @@ wait_for_quiet_host() {
 }
 
 warm_simulator() {
-  local name udid
-  name=$(printf '%s' "$1" | sed -n 's/.*name=\([^,]*\).*/\1/p')
-  udid=$({ xcrun simctl list devices available | grep "$name (" || true; } | awk '!/Clone/' | head -1 | sed -E 's/.*\(([0-9A-F-]+)\).*/\1/')
-  [ -n "$udid" ] || return 0
-  xcrun simctl boot "$udid" 2>/dev/null || true
-  xcrun simctl bootstatus "$udid" -b >/dev/null 2>&1 || true
-  sleep 10
+  case "$1" in
+    id=*) telly_warm "$1" ;;
+    *) local name udid
+       name=$(printf '%s' "$1" | sed -n 's/.*name=\([^,]*\).*/\1/p')
+       udid=$({ xcrun simctl list devices available | grep "$name (" || true; } | awk '!/Clone/' | head -1 | sed -E 's/.*\(([0-9A-F-]+)\).*/\1/')
+       [ -n "$udid" ] && telly_warm "$udid" ;;
+  esac
 }
 
-echo "▶ [1/8] Source file line limit (≤100)"
+echo "▶ [1/9] Source file line limit (≤100)"
 bash scripts/check_source_lines.sh
 
-echo "▶ [2/8] Acceptance tests generated from .feature files are in sync"
+echo "▶ [2/9] Acceptance tests generated from .feature files are in sync"
 python3 scripts/generate_acceptance_tests.py --check
 
-echo "▶ [3/8] Static checks: dead code, duplication, banned types, Halstead"
+echo "▶ [3/9] Static checks: dead code, duplication, banned types, Halstead"
 python3 scripts/dead_code_check.py
 python3 scripts/duplication_check.py
 python3 scripts/banned_types_check.py
 python3 scripts/halstead_check.py
 
-echo "▶ [4/8] Unit tests + coverage (iOS)"
+echo "▶ [4/9] Unit tests + coverage (iOS)"
 rm -rf "$RESULT"
 xcb test \
   -scheme "$SCHEME" \
@@ -78,7 +80,7 @@ xcb test \
   -quiet
 xcrun xccov view --report --json "$RESULT" > coverage.json
 
-echo "▶ [5/8] Acceptance tests (iOS) — Gherkin scenarios over the built-in demo provider"
+echo "▶ [5/9] Acceptance tests (iOS) — Gherkin scenarios over the built-in demo provider"
 wait_for_quiet_host
 warm_simulator "$DESTINATION"
 xcb test \
@@ -88,18 +90,28 @@ xcb test \
   -derivedDataPath DerivedData \
   -quiet
 
-echo "▶ [6/8] Coverage threshold (≥80%) + CRAP (≤30)"
+echo "▶ [6/9] Acceptance tests (tvOS) — the SAME scenarios driven through the focus engine"
+wait_for_quiet_host
+warm_simulator "$TVOS_DESTINATION"
+xcb test \
+  -scheme "$SCHEME" \
+  -destination "$TVOS_DESTINATION" \
+  -only-testing:"TellyUITests" \
+  -derivedDataPath DerivedData \
+  -quiet
+
+echo "▶ [7/9] Coverage threshold (≥80%) + CRAP (≤30)"
 python3 scripts/coverage_check.py coverage.json
 python3 scripts/crap_check.py coverage.json
 
-echo "▶ [7/8] Build app (iOS)"
+echo "▶ [8/9] Build app (iOS)"
 xcb build \
   -scheme "$SCHEME" \
   -destination "$DESTINATION" \
   -derivedDataPath DerivedData \
   -quiet
 
-echo "▶ [8/8] Build app (tvOS)"
+echo "▶ [9/9] Build app (tvOS)"
 xcb build \
   -scheme "$SCHEME" \
   -destination "$TVOS_DESTINATION" \

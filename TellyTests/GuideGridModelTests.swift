@@ -154,6 +154,18 @@ struct GuideGridModelTests {
         #expect(!model.rows.isEmpty)
     }
 
+    @Test func pageDayReanchorsFocusToThePaneStartOnTheSameRow() throws {
+        let model = try makeModel()
+        #expect(model.focus != nil)
+        model.pageDay(-1)
+        let focus = try #require(model.focus)
+        let paneStartMs = GuideGeometry.timeAt(model.scrollX, originMs: model.originMs)
+        #expect(focus.rowIndex == 0)
+        #expect(focus.anchorMs == paneStartMs)
+        #expect(focus.cell.startMs <= paneStartMs && paneStartMs < focus.cell.endMs
+                || focus.cell == model.rows[0].cells.first)
+    }
+
     @Test func pageDayClampsAndDisablesControlsAtBothHorizons() throws {
         let model = try makeModel()
         #expect(model.canPageDayBack && model.canPageDayForward)   // room both ways at "now"

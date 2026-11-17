@@ -30,6 +30,14 @@ final class AcceptanceTests: XCTestCase {
             return
         }
 
+        // `@ios` / `@tvos` tags scope a scenario to one platform (e.g. text entry
+        // exists only with a keyboard); skipping is deterministic, never a failure.
+        #if os(tvOS)
+        if scenario.tags.contains("@ios") { throw XCTSkip("iOS-only scenario") }
+        #else
+        if scenario.tags.contains("@tvos") { throw XCTSkip("tvOS-only scenario") }
+        #endif
+
         let app = XCUIApplication()
         // Every scenario starts from a genuine first launch: the DEBUG flag wipes
         // the database, defaults and synced config before any store opens, so

@@ -31,6 +31,16 @@ enum GuideGeometry {
         return localMs - localMs % halfHourMs - offsetMs
     }
 
+    /// Local midnight of the day `days` after the one containing `nowMs`, in
+    /// `timeZone` (calendar arithmetic, so DST days keep their civil midnight).
+    static func startOfDay(_ nowMs: Int, timeZone: TimeZone, days: Int = 0) -> Int {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        let midnight = calendar.startOfDay(for: date(ofMs: nowMs))
+        let day = calendar.date(byAdding: .day, value: days, to: midnight) ?? midnight
+        return Int(day.timeIntervalSince1970 * 1000)
+    }
+
     /// Horizontal offset in points for `timeMs`, measured from the window origin
     /// (0 at `originMs`, growing 160 points per 30 minutes).
     static func xOf(_ timeMs: Int, originMs: Int) -> CGFloat {

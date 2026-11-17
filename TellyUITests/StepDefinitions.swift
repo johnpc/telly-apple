@@ -43,7 +43,7 @@ enum StepDefinitions {
             w.activate(button)
         }
         r.define("I should see the add-playlist wizard") { w in
-            XCTAssertTrue(w.app.navigationBars["Add playlist"].waitForExistence(timeout: medium))
+            XCTAssertTrue(w.sees("Add playlist"), "Expected the add-playlist wizard")
         }
         r.define("I cancel the wizard") { w in w.activate(w.app.buttons["Cancel"]) }
         r.define("I choose the demo playlist") { w in
@@ -55,15 +55,13 @@ enum StepDefinitions {
             let button = w.app.buttons["welcome.demo"]
             XCTAssertTrue(button.waitForExistence(timeout: medium), "Welcome screen should offer the demo")
             w.activate(button)
-            XCTAssertTrue(w.app.navigationBars["Channels"].waitForExistence(timeout: medium),
-                          "Installing the demo playlist should land on the channel list")
+            XCTAssertTrue(w.sees("Channels"), "Installing the demo playlist should land on the channel list")
             // Settled: the rows are in, so the route crossfade (and the bar's morph) is over.
             XCTAssertTrue(w.app.staticTexts["News One"].waitForExistence(timeout: medium),
                           "Demo channels should be listed")
         }
         r.define("I should see the channel list") { w in
-            XCTAssertTrue(w.app.navigationBars["Channels"].waitForExistence(timeout: medium),
-                          "Expected the channel list")
+            XCTAssertTrue(w.sees("Channels"), "Expected the channel list")
         }
         r.define("I should see the channel \"([^\"]+)\"") { w in
             let name = w.capture()
@@ -72,7 +70,7 @@ enum StepDefinitions {
         }
         r.define("the channel list should not list \"([^\"]+)\"") { w in
             let name = w.capture()
-            XCTAssertTrue(w.app.navigationBars["Channels"].waitForExistence(timeout: medium))
+            XCTAssertTrue(w.sees("Channels"))
             XCTAssertFalse(w.app.staticTexts[name].exists, "“\(name)” must not appear as a channel")
         }
         r.define("I relaunch the app keeping its state") { w in w.relaunchKeepingState() }
