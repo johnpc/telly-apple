@@ -113,6 +113,7 @@
 		26820D4C26AD1005CAC2A0E1 /* VodResumePromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F19BDC1F06AD2280A265E3A /* VodResumePromptView.swift */; };
 		278B21B2A976AF12C310C77D /* GroupVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB115F7EA37262F3087C4A7 /* GroupVisibility.swift */; };
 		279D14A464CC3026158F7789 /* PlaybackKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14F51AE186FF1796831BCA2 /* PlaybackKey.swift */; };
+		27ADABDF02F290380959E718 /* VLCKitPlayerEngine+Lifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26D54D32FCBE9B3C58D7BF3 /* VLCKitPlayerEngine+Lifecycle.swift */; };
 		27F421AFD3278BD6039FA90E /* DebugLaunchLoadStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EE97F778B4ABCB944DE01C /* DebugLaunchLoadStateTests.swift */; };
 		28811160360B8513C256CA2F /* ChannelListScreen+Targets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFA7F9094CFAC498A1EEB7 /* ChannelListScreen+Targets.swift */; };
 		29D0A9AEB405D44D30FD399A /* VlcTrackReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB18D880635ED0E366E84B /* VlcTrackReaderTests.swift */; };
@@ -1394,6 +1395,7 @@
 		F13609FA6E5C9EDAB365BF8E /* MultiviewChannelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiviewChannelPickerView.swift; sourceTree = "<group>"; };
 		F1CC40D09A16B0AFA3330197 /* PlaybackCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCommand.swift; sourceTree = "<group>"; };
 		F24A0662102342FC22D252E3 /* LiveTransportRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTransportRow.swift; sourceTree = "<group>"; };
+		F26D54D32FCBE9B3C58D7BF3 /* VLCKitPlayerEngine+Lifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VLCKitPlayerEngine+Lifecycle.swift"; sourceTree = "<group>"; };
 		F26DB071FF6C76812D55E148 /* CustomGroupChannelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGroupChannelsTests.swift; sourceTree = "<group>"; };
 		F3863A80D738009EB4B6CC33 /* CatchupTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchupTemplate.swift; sourceTree = "<group>"; };
 		F3C6E232AB22C1BE5B465668 /* GuideFocus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideFocus.swift; sourceTree = "<group>"; };
@@ -2341,6 +2343,7 @@
 				E55C9FCE4B6E63A1AF16ABF8 /* VlcDelegateProxy.swift */,
 				52696F67557E1FAF73AAFBCC /* VLCKitPlayerEngine.swift */,
 				DFD69B16A6204B62B0D09CFE /* VLCKitPlayerEngine+Audio.swift */,
+				F26D54D32FCBE9B3C58D7BF3 /* VLCKitPlayerEngine+Lifecycle.swift */,
 				9C2C625EDA80E690AB1F6B23 /* VLCKitPlayerEngine+Resize.swift */,
 				B5F011E168A3EEA32A3662B6 /* VLCKitPlayerEngine+State.swift */,
 				AE81FCB5E00F524BCA01679C /* VLCKitPlayerEngine+Transport.swift */,
@@ -2979,6 +2982,7 @@
 				4741F39A0845984660B30AB2 /* UpdateFeedbackModel.swift in Sources */,
 				A48E2133741A5EF0983FE138 /* UrlFieldView.swift in Sources */,
 				58A9C3F9DB2BABEF041C88B2 /* VLCKitPlayerEngine+Audio.swift in Sources */,
+				27ADABDF02F290380959E718 /* VLCKitPlayerEngine+Lifecycle.swift in Sources */,
 				30F7304CAAF50E20DD7CF0ED /* VLCKitPlayerEngine+Resize.swift in Sources */,
 				B8DAD4FA73371CCDF58FE8AA /* VLCKitPlayerEngine+State.swift in Sources */,
 				978439021C1C003FDF46B041 /* VLCKitPlayerEngine+Transport.swift in Sources */,

@@ -8,7 +8,8 @@ import VLCKitSPM
 /// <24-day horizon of a catch-up window). Control calls go through the engine's
 /// serial `control` queue (see the adapter) so the main actor never blocks on libVLC.
 extension VLCKitPlayerEngine {
-    var positionMs: Int { Int(player.time.intValue) }
+    /// 0 while a stop is in flight: `player.time` takes libVLC's input lock.
+    var positionMs: Int { vlcQuiescent ? Int(player.time.intValue) : 0 }
 
     var durationMs: Int { Int(player.media?.length.intValue ?? 0) }
 
@@ -17,7 +18,7 @@ extension VLCKitPlayerEngine {
     func resume() { let player = self.player; control.async { player.play() } }
 
     func seek(toMs ms: Int) {
-        guard player.isSeekable else { return }
+        guard vlcQuiescent, player.isSeekable else { return }
         let player = self.player, time = VLCTime(int: Int32(ms))
         control.async { player.time = time }
     }
