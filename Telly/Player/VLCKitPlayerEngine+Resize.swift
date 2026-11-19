@@ -10,6 +10,7 @@ import VLCKitSPM
 /// own ratio so the picture fills the surface. Untestable device glue by nature.
 extension VLCKitPlayerEngine {
     func setResizeMode(_ mode: ResizeMode) {
+        guard vlcQuiescent else { return }  // the vout setters take libVLC's input lock
         let layout = mode.vlcLayout
         let aspect = layout.stretchToFill ? drawableAspect() : layout.aspectRatio
         player.videoAspectRatio = aspect.flatMap { strdup($0) }

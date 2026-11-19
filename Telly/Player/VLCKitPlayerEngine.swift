@@ -10,17 +10,27 @@ import VLCKitSPM
 @MainActor
 @Observable
 final class VLCKitPlayerEngine: PlayerEngine {
-    private(set) var state: PlayerState = .idle
+    var state: PlayerState = .idle
     private(set) var video: VideoDetails?
     private(set) var paused = false
     var tracks: TrackFacade { trackFacade }
 
-    private let trackFacade = VlcTrackFacade()
+    let trackFacade = VlcTrackFacade()
     let player = VLCMediaPlayer()
     private let proxy = VlcDelegateProxy()
-    private var reducer = PlaybackReducer()
-    private var retry: Task<Void, Never>?
-    private let buffer: BufferSize
+    var reducer = PlaybackReducer()
+    var retry: Task<Void, Never>?
+    let buffer: BufferSize
+    /// libVLC `stop()`s still running on `control` (see `+Lifecycle`). While one is
+    /// in flight the main actor must not call a libVLC getter that takes the input
+    /// lock (tracks, time, seekable, video size, vout geometry): `stop()` holds that
+    /// lock while it joins the input thread, whose vout teardown `dispatch_sync`s
+    /// onto main, so a main-side read deadlocks the whole app (CI run 44576307888:
+    /// 150 s hang after the close tap). Every such read checks `vlcQuiescent`.
+    var teardowns = 0
+    /// A `load()` since the last `stop()` wants the track facade wired to libVLC.
+    var tracksWanted = false
+    var vlcQuiescent: Bool { teardowns == 0 }
     /// EVERY libVLC control call (media swap, play, stop, pause, seek) runs here, in
     /// order, off the main actor: `stop()` on a live network stream can block for
     /// seconds while the demuxer tears down, and the UI must never wait on it
@@ -36,7 +46,6 @@ final class VLCKitPlayerEngine: PlayerEngine {
         self.buffer = buffer ?? SettingsStore.standard.bufferSize
         proxy.onStateChange = { [weak self] in self?.onStateChange() }
         player.delegate = proxy
-        trackFacade.player = player
     }
 
     /// The UIView the surface hands us for VLC to render into.
@@ -45,33 +54,10 @@ final class VLCKitPlayerEngine: PlayerEngine {
         set { player.drawable = newValue }
     }
 
-    func load(_ streamUrl: String, isLive: Bool) {
-        retry?.cancel()
-        reducer.isLive = isLive
-        reducer.onLoad(); state = reducer.state
-        guard let url = URL(string: DemoContent.playableUrl(for: streamUrl)) else { return }
-        let media = VLCMedia(url: url)
-        BufferPolicy.mediaOptions(for: buffer).forEach { media.addOption($0) }
-        let player = self.player
-        control.async { player.media = media; player.play() }
-    }
-
-    func stop() {
-        retry?.cancel()
-        let player = self.player
-        control.async { player.stop() }
-        reducer.onStopped(); state = reducer.state
-    }
-
-    func release() {
-        retry?.cancel()
-        player.delegate = nil
-        player.drawable = nil
-        let player = self.player
-        control.async { player.stop() }
-    }
-
     private func onStateChange() {
+        // Events emitted by a stop() still running on `control` (stopped / ended /
+        // error) carry nothing the reducer has not already applied in stop().
+        guard vlcQuiescent else { return }
         let vlc = Self.mapped(player.state)
         switch vlc {
         case .esAdded, .playing: paused = false; captureVideo()
@@ -93,6 +79,7 @@ final class VLCKitPlayerEngine: PlayerEngine {
     }
 
     private func captureVideo() {
+        guard vlcQuiescent else { return }  // `videoSize` takes libVLC's input lock
         let size = player.videoSize
         video = VideoDetails(width: Int(size.width), height: Int(size.height),
                              frameRate: 0, audioChannels: 0)
