@@ -4,7 +4,8 @@ import SwiftUI
 /// zap/info/quick-bar/panel/track-picker overlays, and the engine-state chrome,
 /// gated so a held frame shows no spinner. The shared ``ticking`` clock is the
 /// only timer; all decisions live in the model. tvOS forwards remote keys via
-/// `onKey`; iPhone/iPad map taps/swipes onto that same vocabulary (S7).
+/// `onKey` from ``PlaybackKeyLayer`` — a sibling of the overlays, not their
+/// parent (see its doc); iPhone/iPad map taps/swipes onto that same vocabulary (S7).
 struct LivePlaybackScreen: View {
     @State var model: LivePlaybackModel
     /// Custom groups surfaced in the panel's group column, forwarded to
@@ -29,6 +30,7 @@ struct LivePlaybackScreen: View {
         ZStack {
             Color.black.ignoresSafeArea()
             surface
+            PlaybackKeyLayer(model: model)
             zapOverlay
             infoOverlay
             quickBarOverlay
@@ -51,7 +53,6 @@ struct LivePlaybackScreen: View {
         .fullScreenCover(isPresented: $model.searchRequested) {
             if let make = model.makeSearchModel { SearchScreen(model: make()) }
         }
-        .playbackKeyForwarder(model)
         #if !os(tvOS)
         .gesture(DragGesture(minimumDistance: 0).onEnded { v in
             let g = TouchGesture.swipe(dx: v.translation.width, dy: v.translation.height)

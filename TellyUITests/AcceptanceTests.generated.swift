@@ -30,6 +30,10 @@ extension AcceptanceTests {
         try runScenario(feature: "guide.feature", scenario: "Opening a programme shows its details")
     }
 
+    func test_Opening_the_Guide_after_watching_a_channel() throws {
+        try runScenario(feature: "guide.feature", scenario: "Opening the Guide after watching a channel")
+    }
+
 
     // MARK: - My List
 
@@ -63,6 +67,10 @@ extension AcceptanceTests {
         try runScenario(feature: "playback.feature", scenario: "Closing the player returns to the channel list")
     }
 
+    func test_The_info_overlay_comes_back_after_it_auto_hides() throws {
+        try runScenario(feature: "playback.feature", scenario: "The info overlay comes back after it auto-hides")
+    }
+
 
     // MARK: - Search
 
@@ -83,6 +91,10 @@ extension AcceptanceTests {
 
     func test_A_toggle_persists_across_an_app_relaunch() throws {
         try runScenario(feature: "settings.feature", scenario: "A toggle persists across an app relaunch")
+    }
+
+    func test_Opening_Settings_after_watching_a_channel() throws {
+        try runScenario(feature: "settings.feature", scenario: "Opening Settings after watching a channel")
     }
 
 

@@ -27,6 +27,10 @@ struct InfoOverlayView: View {
                     }
                 }
             }
+            // The one stable automation anchor for "the info overlay is up" (its texts
+            // — channel name, group — also appear in the channel list beneath the cover).
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("player.info")
         }
     }
 }

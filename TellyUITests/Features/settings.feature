@@ -16,3 +16,11 @@ Feature: Settings
     And I relaunch the app keeping its state
     And I open Settings
     Then the "24-Hour Clock" toggle should be on
+
+  Scenario: Opening Settings after watching a channel
+    Given the demo playlist is installed
+    And I open the channel "News One"
+    And I should see the live player
+    When I close the player
+    And I open Settings
+    Then I should see the settings section "General"
