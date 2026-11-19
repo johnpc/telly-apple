@@ -109,8 +109,14 @@ TestFlight with a build number derived from the commit count (never collides).
   chips because the focus engine only moves UP into something that overlaps
   horizontally. A `.focusable()` view with `.onMoveCommand` swallows EVERY arrow
   press (focus never leaves it), so such a view must hand focus off itself at its
-  edges (`GuideFocusArea`). Full-screen `.sheet`s keep the presenting screen in the
-  accessibility tree, so "left the list" is not a usable assertion for them.
+  edges (`GuideFocusArea`). Full-screen `.sheet`s / covers keep the presenting screen
+  in the accessibility tree, so neither "left the list" nor "the list is back" is a
+  usable assertion for them — anchor on the cover's own element (`player.surface`,
+  `player.info`) appearing or leaving instead. The tvOS key-handling node
+  (`.focusable().onMoveCommand/.onExitCommand`) must be a SIBLING of views that are
+  inserted/removed with transitions, never their ancestor: with the live player's
+  forwarder on the stage ZStack, raising the info overlay a second time after it
+  auto-hid crashed inside SwiftUI's layout engine on tvOS 27.2 (`PlaybackKeyLayer`).
 - Incremental-build trap: changing the underlying type behind a `some View`
   property (e.g. swapping a `Button<Image>` for a `Button<Label>`) does NOT recompile
   files that already inlined the old layout, and the app then segfaults in SwiftUI's

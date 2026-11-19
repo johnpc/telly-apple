@@ -13,3 +13,14 @@ Feature: Watch and zap
     When I open the channel "Sports Arena"
     And I close the player
     Then I should see the channel list
+
+  @tvos
+  Scenario: The info overlay comes back after it auto-hides
+    Given the demo playlist is installed
+    And I open the channel "News One"
+    When I raise the info overlay
+    Then the info overlay should hide by itself
+    When I raise the info overlay
+    Then the info overlay should hide by itself
+    When I raise the info overlay
+    Then I should see the live player
